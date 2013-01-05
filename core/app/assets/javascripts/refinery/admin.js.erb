@@ -204,11 +204,51 @@ submit_and_continue = function(e, redirect_to) {
   e.preventDefault();
 };
 
-init_tooltips = function(args){
+init_tooltips = function (args) {
+  return false;
+  function show (t) {
+    t.show();
+    t.attr('aria-hidden', false);
+  }
+
+  function hide (t) {
+    t.hide();
+    t.attr('aria-hidden', true);
+  }
+
+  $('.tooltip-holder .help').on('click', function () {
+    var tooltip = $(this).parent().find('.tooltip');
+
+    if (tooltip.is(':visible') && tooltip.hasClass('pinned')) {
+      tooltip.removeClass('pinned');
+      hide(tooltip);
+    } else {
+      tooltip.addClass('pinned');
+      show(tooltip);
+    }
+  });
+
+  $('.tooltip-holder .help').on('mouseenter', function () {
+    var elm = $(this);
+    var tooltip = elm.parent().find('.tooltip');
+    show(tooltip);
+  }).on('mouseleave, mouseout', function () {
+    var tooltip = $(this).parent().find('.tooltip');
+    if (!tooltip.hasClass('pinned')) {
+      hide(tooltip);
+    }
+  });
+};
+
+init_tooltips_old = function(args){
+  return false;
   $($(args != null ? args : 'a[title], span[title], #image_grid img[title], *[tooltip]')).not('.no-tooltip').each(function(index, element)
   {
     // create tooltip on hover and destroy it on hoveroff.
     $(element).hover(function(e) {
+
+
+
       if (e.type == 'mouseenter' || e.type == 'mouseover') {
         $(this).oneTime(350, 'tooltip', $.proxy(function() {
           $('.tooltip').remove();
@@ -218,25 +258,8 @@ init_tooltips = function(args){
             tooltip.corner('6px').find('span').corner('6px');
           }
 
-          tooltip_nib_extension = $.browser.msie ? '.gif' : '.png';
-          nib = $("<img src='<%= asset_path 'refinery/tooltip-nib' %>" + tooltip_nib_extension + "' class='tooltip-nib'/>").appendTo('#tooltip_container');
 
-          tooltip.css({
-            'opacity': 0
-            , 'maxWidth': '300px'
-          });
-          required_left_offset = $(this).offset().left - (tooltip.outerWidth() / 2) + ($(this).outerWidth() / 2);
-          tooltip.css('left', (required_left_offset > 0 ? required_left_offset : 0));
 
-          var tooltip_offset = tooltip.offset();
-          var tooltip_outer_width = tooltip.outerWidth();
-          if (tooltip_offset && (tooltip_offset.left + tooltip_outer_width) > (window_width = $(window).width())) {
-            tooltip.css('left', window_width - tooltip_outer_width);
-          }
-
-          tooltip.css({
-            'top': $(this).offset().top - tooltip.outerHeight() - 10
-          });
 
           nib.css({
             'opacity': 0

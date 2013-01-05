@@ -3,10 +3,15 @@ module Refinery
 
     # Returns <img class='help' tooltip='Your Input' src='refinery/icons/information.png' />
     # Remember to wrap your block with <span class='label_with_help'></span> if you're using a label next to the help tag.
-    def refinery_help_tag(title='')
+    def refinery_help_tag(title='', id=nil)
       title = h(title) unless title.html_safe?
 
-      refinery_icon_tag('information', :class => 'help', :tooltip => title)
+      content_tag :a, :class => 'tooltip-holder' do
+        refinery_icon_tag('information', :class => 'help', :alt => '') +
+        content_tag(:div, content_tag(:span,
+          image_tag('refinery/tooltip-nib.gif', :class => 'tooltip-nib', :alt => '') + title),
+          :class=> 'tooltip', :id => id, :role => 'tooltip', :'aria-hidden' => true)
+      end
     end
 
     # This is just a quick wrapper to render an image tag that lives inside refinery/icons.

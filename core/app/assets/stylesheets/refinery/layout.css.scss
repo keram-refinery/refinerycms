@@ -1279,25 +1279,6 @@ ul.checkboxes li {
   display:inline-block;
   width:auto;
 }
-/**** Tooltip Icons *****/
-.tooltip {
-  background: #22a7f2;
-  border: 1px solid #1b82bd;
-  word-wrap:break-word;
-  position: relative;
-  span {
-    display: block;
-    padding: 10px;
-    border: 1px solid #62c1f6;
-  }
-}
-.tooltip-nib {
-  position: absolute;
-  z-index: 10001;
-}
-.tooltip, .tooltip * {
-  color: white;
-}
 .wym_dialog_paste .field textarea {
   width: 98%;
 }
@@ -1538,9 +1519,6 @@ a.information:hover {
 }
 .ui-tabs .ui-state-default a {
   @include top-rounded(5px);
-}
-.tooltip, .tooltip span {
-  @include rounded(6px);
 }
 .label {
   padding: 1px 3px 2px;
