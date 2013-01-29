@@ -4,7 +4,8 @@ var initialLoad = true;
 init_refinery_admin = function(){
   init_interface();
   init_sortable_menu();
-  init_submit_continue();
+  // init_submit_continue();
+  $('#submit_continue_button').click(submit_and_continue);
   init_modal_dialogs();
   init_tooltips();
   init_ajaxy_pagination();
