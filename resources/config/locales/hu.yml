@@ -1,7 +1,7 @@
 hu:
   refinery:
     plugins:
-      refinery_files:
+      refinery_resources:
         title: Fájlok
         description: Fájlok feltöltésének kezelése
     admin:

@@ -41,13 +41,12 @@ module Refinery
         end
 
         ##
-        # Injects Dragonfly::Middleware for Refinery::Images into the stack
+        # Injects Dragonfly::Middleware for Refinery::Resources into the stack
+        #
+        # todo:
+        # can't modify frozen Array
         def attach!(app)
-          if ::Rails.application.config.action_controller.perform_caching
-            app.config.middleware.insert_after 'Rack::Cache', 'Dragonfly::Middleware', :refinery_resources
-          else
-            app.config.middleware.use 'Dragonfly::Middleware', :refinery_resources
-          end
+          # app.config.middleware.use 'Dragonfly::Middleware', :refinery_resources
         end
       end
 

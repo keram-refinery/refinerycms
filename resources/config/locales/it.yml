@@ -1,7 +1,7 @@
 it:
   refinery:
     plugins:
-      refinery_files:
+      refinery_resources:
         title: Risorse
     admin:
       resources:

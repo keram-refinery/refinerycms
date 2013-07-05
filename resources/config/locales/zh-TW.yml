@@ -1,7 +1,7 @@
 zh-TW:
   refinery:
     plugins:
-      refinery_files:
+      refinery_resources:
         title: 檔案
         description: 上傳與連結檔案
     admin:
@@ -12,7 +12,7 @@ zh-TW:
           download_current: 下載目前檔案
           or: 或
           replace: " 用這個來取代..."
-          maximum_file_size: 檔案大小限制為 %{bytes} 
+          maximum_file_size: 檔案大小限制為 %{bytes}
         resource:
           download: 下載這個檔案 (%{size})
         actions:

@@ -1,7 +1,7 @@
 nb:
   refinery:
     plugins:
-      refinery_files:
+      refinery_resources:
         title: Filer
         description: Last opp og link til filer
     admin:

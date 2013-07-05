@@ -1,22 +1,32 @@
-<li class="clearfix record <%= cycle('on', 'on-hover') %>">
-  <span class="title <%= resource.ext.try(:downcase) %>">
+<li class="record" id="<%= refinery_dom_id resource %>" <%= %Q{ data-url="#{resource.url}"} if dialog? %>>
+  <span class="title <%= resource.ext.to_s.downcase %>">
     <%= resource.title %><%= ".#{resource.ext}" if resource.ext %>
-    <span class="preview">- <%= number_to_human_size(resource.size) %></span>
+    <span class="size">- <%= number_to_human_size(resource.size) %></span>
   </span>
+  <% unless dialog? %>
   <span class="actions">
-    <%= link_to refinery_icon_tag('page_white_put.png'),
-                resource.url,
-                :title => t('.download', :size => number_to_human_size(resource.size)) %>
-    <%= link_to refinery_icon_tag('application_edit.png'),
-                refinery.edit_admin_resource_path(resource),
-                :title => t('edit', :scope => 'refinery.admin.resources') %>
-    <%= link_to refinery_icon_tag('delete.png'),
+
+    <%= link_to t('delete', :scope => 'refinery.admin.record'),
                 refinery.admin_resource_path(resource),
-                :class => "cancel confirm-delete",
+                :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
                 :title => t('delete', :scope => 'refinery.admin.resources'),
                 :data => {
+                  :remote => true,
                   :confirm => t('message', :scope => 'refinery.admin.delete', :title => resource.title)
                 },
                 :method => :delete %>
+
+    <%= link_to t('edit', :scope => 'refinery.admin.record'),
+                refinery.edit_admin_resource_path(resource),
+                :class => 'icon-small edit-icon',
+                :title => t('edit', :scope => 'refinery.admin.resources') %>
+
+    <%= link_to t('download', :scope => 'refinery.admin.record'),
+                resource.url,
+                :class => 'icon-small doc-icon',
+                :target => '_blank',
+                :title => t('.download', :size => number_to_human_size(resource.size)) %>
+
   </span>
+  <% end %>
 </li>

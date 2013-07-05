@@ -1,7 +1,7 @@
 ko:
   refinery:
     plugins:
-      refinery_files:
+      refinery_resources:
         title: 파일
         description: 새 파일을 업로드하거나 업로드된 파일을 링크합니다.
     admin:

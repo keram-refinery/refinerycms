@@ -1,7 +1,7 @@
 fr:
   refinery:
     plugins:
-      refinery_files:
+      refinery_resources:
         title: Fichiers
         description: Gestion des fichiers
     admin:

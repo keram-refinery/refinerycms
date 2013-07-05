@@ -1,0 +1,26 @@
+<% any_resources = @resources.any? %>
+<div class="dialog-content-wrapper clearfix ui-tabs ui-tabs-vertical">
+  <ul class="ui-tabs-nav">
+      <li class="ui-tabs-active">
+        <a href="#existing-resource-area" >
+          <%= t('existing', :scope => 'refinery.admin.resources.insert') %>
+        </a>
+      </li>
+  </ul>
+    <div id="existing-resource-area" class="ui-tabs-panel" >
+    <% if any_resources %>
+      <%= render 'existing_resource' %>
+    <% else %>
+      <div class="flash flash-notice" >
+        <%= t('no_files', :scope => 'refinery.admin.resources.insert') %>
+      </div>
+      <%= render '/refinery/admin/form_actions', :f => nil,
+               :cancel_url => '',
+               :hide_cancel => false,
+               :hide_delete => true,
+               :hide_submit => true,
+               :cancel_button_text => t('close', :scope => 'refinery.admin.form_actions'),
+               :cancel_title => nil %>
+      <% end %>
+    </div>
+</div>

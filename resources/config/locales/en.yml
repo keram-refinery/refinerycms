@@ -1,9 +1,12 @@
 en:
   refinery:
+    resource: File
     plugins:
-      refinery_files:
+      refinery_resources:
         title: Files
         description: Upload and link to files
+    crudify:
+      resource: File
     admin:
       resources:
         delete: Remove this file forever
@@ -26,6 +29,7 @@ en:
         existing_resource:
           link_to_file: Link to this file
           button_text: Insert
+        problem_create_resources: 'These files we was unable create: %{resources}.'
   activerecord:
     models:
       refinery/resource: file
@@ -34,3 +38,5 @@ en:
         refinery/resource:
           blank: You must specify file for upload
           too_big: File should be smaller than %{size} bytes in size
+          file_exists: 'File with name %{name} already exists'
+          different_file_name: New file can't have different file name

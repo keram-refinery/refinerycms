@@ -3,7 +3,7 @@ module Refinery
     include ActiveSupport::Configurable
 
     config_accessor :dragonfly_insert_before, :dragonfly_secret, :dragonfly_url_format, :dragonfly_url_host,
-                    :max_file_size, :pages_per_dialog, :pages_per_admin_index,
+                    :max_file_size, :per_admin_page, :per_dialog_page,
                     :s3_backend, :s3_bucket_name, :s3_region,
                     :s3_access_key_id, :s3_secret_access_key,
                     :datastore_root_path, :content_disposition,
@@ -16,8 +16,8 @@ module Refinery
 
     self.content_disposition = :attachment
     self.max_file_size = 52428800
-    self.pages_per_dialog = 12
-    self.pages_per_admin_index = 20
+    self.per_admin_page = 20
+    self.per_dialog_page = 12
 
     # We have to configure these settings after Rails is available.
     # But a non-nil custom option can still be provided
