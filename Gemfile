@@ -3,10 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 # Add i18n support.
-gem 'refinerycms-i18n', '~> 2.1.0.dev', :git => 'git://github.com/refinery/refinerycms-i18n.git'
-
-# Add support for refinerycms-acts-as-indexed
-gem 'refinerycms-acts-as-indexed', :git => 'git://github.com/refinery/refinerycms-acts-as-indexed.git'
+gem 'refinerycms-i18n', '~> 2.1.0.dev', :git => 'git://github.com/refinery/refinerycms-i18n.git', :branch => 'refinery_light'
 
 gem 'quiet_assets', :group => :development
 
@@ -30,8 +27,10 @@ end
 gem 'jruby-openssl', :platform => :jruby
 
 group :test do
-  gem 'refinerycms-testing', '~> 2.1.0.dev'
-  gem 'generator_spec', '~> 0.8.7'
+  gem 'refinerycms-testing', :path => './testing'
+  gem 'generator_spec', '~> 0.9.0'
+  gem 'guard-rspec', '~> 3.0.2'
+  gem 'capybara-email', '~> 2.1.3'
 
   platforms :mswin, :mingw do
     gem 'win32console', '~> 1.3.0'
@@ -47,9 +46,9 @@ group :test do
         gem 'ruby_gntp', '~> 0.3.4'
       end
       if /linux/i === RbConfig::CONFIG['target_os']
-        gem 'rb-inotify', '~> 0.8.8'
-        gem 'libnotify',  '~> 0.7.2'
-        gem 'therubyracer', '~> 0.10.0'
+        gem 'rb-inotify', '~> 0.9.0'
+        gem 'libnotify',  '~> 0.8.1'
+        gem 'therubyracer', '~> 0.11.4'
       end
     end
   end
@@ -61,8 +60,8 @@ group :test do
         gem 'ruby_gntp', '~> 0.3.4'
       end
       if /linux/i === RbConfig::CONFIG['target_os']
-        gem 'rb-inotify', '~> 0.8.8'
-        gem 'libnotify',  '~> 0.7.2'
+        gem 'rb-inotify', '~> 0.9.0'
+        gem 'libnotify',  '~> 0.8.1'
       end
     end
   end
@@ -70,13 +69,16 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'sass-rails', '~> 4.0.0'
+gem 'uglifier'
 
-gem 'jquery-rails', '~> 2.0.0'
+# for dummy
+gem 'turbolinks', :path => '../turbolinks'
+
+gem 'jquery-rails', '~> 3.0.1'
+gem 'jquery-ui-rails', '~> 4.0.2'
+
+gem 'will_paginate'
 
 # To use debugger
 # gem 'ruby-debug', :platform => :mri_18
