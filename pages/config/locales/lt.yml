@@ -36,7 +36,7 @@ lt:
         delete: Visiškai pašalinti puslapį
         edit: Redaguoti puslapį
         page:
-          view_live_html: Peržiūrėti puslapį gyvai <br /><em>(atsidarys naujame lange)</em>
+          view_live: Peržiūrėti puslapį gyvai <br /><em>(atsidarys naujame lange)
           hidden: nematomas
           draft: juodraštis
         form_new_page_parts:

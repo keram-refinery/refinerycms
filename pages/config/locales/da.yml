@@ -37,7 +37,7 @@ da:
         new: Tilføj en ny underside
         expand_collapse: Udvid eller sammenfold undersider
         page:
-          view_live_html: Vis siden live <br/><em>(åbner i et nyt vindue)</em>
+          view_live: Vis siden live (åbner i et nyt vindue)
           hidden: skjult
           draft: kladde
         form:

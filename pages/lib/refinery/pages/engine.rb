@@ -1,7 +1,7 @@
 module Refinery
   module Pages
     class Engine < ::Rails::Engine
-      extend Refinery::Engine
+      include Refinery::Engine
 
       isolate_namespace Refinery
       engine_name :refinery_pages
@@ -18,25 +18,23 @@ module Refinery
         Refinery.include_once(Refinery::AdminController, Refinery::Pages::Admin::InstanceMethods)
       end
 
-      initializer "refinery.pages register plugin" do
+      initializer 'refinery.pages register plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
           plugin.name = 'refinery_pages'
-          plugin.menu_match = %r{refinery/page(_part|s_dialog)?s(/preview)?$}
+          plugin.position = 10 # put after dashboard
           plugin.activity = {
-            :class_name => :'refinery/page',
-            :nested_with => [:nested_url],
-            :use_record_in_nesting => false
+            :class_name => :'refinery/page'
           }
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_pages_path }
         end
       end
 
-      initializer "refinery.pages append marketable routes", :after => :set_routes_reloader_hook do
+      initializer 'refinery.pages append marketable routes', :after => :set_routes_reloader_hook do
         append_marketable_routes if Refinery::Pages.marketable_urls
       end
 
-      initializer "add marketable route parts to reserved words", :after => :set_routes_reloader_hook do
+      initializer 'add marketable route parts to reserved words', :after => :set_routes_reloader_hook do
         add_route_parts_as_reserved_words if Refinery::Pages.marketable_urls
       end
 
@@ -50,6 +48,7 @@ module Refinery
         Refinery::Core::Engine.routes.append do
           get '*path', :to => 'pages#show', :as => :marketable_page
         end
+
         Rails.application.routes_reloader.reload!
       end
 
@@ -57,7 +56,7 @@ module Refinery
       def add_route_parts_as_reserved_words
         ActiveSupport.on_load(:active_record) do
           route_paths = Rails.application.routes.named_routes.routes.map { |name, route| route.path.spec }
-          route_paths.reject! {|path| path.to_s =~ %r{^/(rails|refinery)}}
+          route_paths.reject! {|path| path.to_s =~ %r{^/(?:rails|refinery)}}
           Refinery::Page.friendly_id_config.reserved_words |= route_paths.map { |path|
             path.to_s.gsub(%r{^/}, '').to_s.split('(').first.to_s.split(':').first.to_s.split('/')
           }.flatten.reject { |w| w =~ %r{_|\.} }.uniq
@@ -66,3 +65,4 @@ module Refinery
     end
   end
 end
+

@@ -35,7 +35,7 @@ nb:
         delete: Fjern denne siden permanent
         edit: Rediger denne siden
         page:
-          view_live_html: Se hvordan denne siden ser ut fra utsiden <br/><em>(Åpner i et nytt vindu)</em>
+          view_live: Se hvordan denne siden ser ut fra utsiden (Åpner i et nytt vindu)
           hidden: gjemt
           draft: utkast
         form_new_page_parts:
@@ -69,4 +69,3 @@ nb:
     attributes:
       refinery/page:
         title: Tittel
-        

@@ -26,7 +26,7 @@ it:
             body_optional: Testo del messaggio (facoltativo)
             not_sure: Se non sei sicuro di cosa sia corretto inserire...
             step1_html: "Inserisci l'indirizzo e-mail da linkare nella casella di testo '<strong>Indirizzo e-mail</strong>'."
-            step2_html: "Utilizzare la casella '<strong>Oggetto del messaggio</strong>' se si desidera che il messaggio abbia un <strong>oggetto predefinito</ strong>."
+            step2_html: "Utilizzare la casella '<strong>Oggetto del messaggio</strong>' se si desidera che il messaggio abbia un <strong>oggetto predefinito</strong>."
             step3_html: "Utilizzare la casella <strong>Testo del messaggio</strong> se si desidera che il messaggio sia composto con un <strong>messaggio predefinito </strong>."
           your_resource:
             tab_name: File
@@ -36,7 +36,7 @@ it:
         edit: Modificare questa pagina
         new: Aggiungi una nuova sotto-pagina
         page:
-          view_live_html: Visualizza questa pagina<br/><em>(apre una nuova finestra del browser)</em>
+          view_live: Visualizza questa pagina\n(apre una nuova finestra del browser)
           hidden: nascosto
           draft: bozza
         form_new_page_parts:

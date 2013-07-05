@@ -33,7 +33,7 @@ ja:
         delete: ページを削除
         edit: ページを編集
         page:
-          view_live_html: "このページを表示する<br/><em>（新しいウィンドウが開きます）</em>"
+          view_live: "このページを表示する\n（新しいウィンドウが開きます）"
           hidden: 非表示
           draft: 準備稿
         form_new_page_parts:

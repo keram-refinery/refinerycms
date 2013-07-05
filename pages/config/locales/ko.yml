@@ -35,7 +35,7 @@ ko:
         delete: 이 페이지 삭제
         edit: 이 페이지 수정
         page:
-          view_live_html: 실제 페이지 보기 <br/><em>(새 창에서 열림)</em>
+          view_live: 실제 페이지 보기 (새 창에서 열림)
           hidden: 숨김
           draft: 초안
         form_new_page_parts:

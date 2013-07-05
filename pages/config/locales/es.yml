@@ -36,7 +36,7 @@ es:
         delete: Borrar esta página para siempre
         edit: Editar esta página
         page:
-          view_live_html: Ver esta página como abierta al público<br/><em>(la abre en ventana nueva)</em>
+          view_live: Ver esta página como abierta al público\n(la abre en ventana nueva)
           hidden: oculta
           draft: borrador
         form:

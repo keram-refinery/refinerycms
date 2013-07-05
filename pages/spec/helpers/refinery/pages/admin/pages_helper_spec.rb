@@ -4,37 +4,23 @@ module Refinery
   module Admin
     describe PagesHelper do
       describe "#template_options" do
-        context "when page layout/view template is set" do
-          it "returns empty hash" do
+        context "when page layout/view templte is set" do
+          it 'returns empty hash' do
             page = FactoryGirl.create(:page)
 
-            page.view_template = "rspec_template"
+            page.view_template = 'rspec_template'
             helper.template_options(:view_template, page).should eq({})
 
-            page.layout_template = "rspec_layout"
+            page.layout_template = 'rspec_layout'
             helper.template_options(:layout_template, page).should eq({})
           end
         end
 
-        context "when page layout/view template is set using symbols" do
-          before do
-            Pages.config.stub(:view_template_whitelist).and_return [:one, :two, :three]
-            Pages.config.stub(:layout_template_whitelist).and_return [:three, :one, :two]
-          end
-
-          it "works as expected" do
-            page = FactoryGirl.create(:page)
-
-            helper.template_options(:view_template, page).should eq(:selected => 'one' )
-            helper.template_options(:layout_template, page).should eq(:selected => 'three')
-          end
-        end
-
         context "when page layout/view template isn't set" do
-          context "when page has parent" do
-            it "returns option hash based on parent page" do
-              parent = FactoryGirl.create(:page, :view_template => "rspec_view",
-                                                 :layout_template => "rspec_layout")
+          context 'when page has parent' do
+            it 'returns option hash based on parent page' do
+              parent = FactoryGirl.create(:page, :view_template => 'rspec_view',
+                                                 :layout_template => 'rspec_layout')
               page = FactoryGirl.create(:page, :parent_id => parent.id)
 
               expected_view = { :selected => parent.view_template }
@@ -47,17 +33,17 @@ module Refinery
 
           context "when page doesn't have parent page" do
             before do
-              Pages.config.stub(:view_template_whitelist).and_return %w(one two)
-              Pages.config.stub(:layout_template_whitelist).and_return %w(two one)
+              Refinery::Pages.stub(:view_template_whitelist).and_return(%w(one two))
+              Refinery::Pages.stub(:layout_template_whitelist).and_return(%w(two one))
             end
 
-            it "returns option hash with first item from configured whitelist" do
+            it 'returns option hash with first item from configured whitelist' do
               page = FactoryGirl.create(:page)
 
-              expected_view = { :selected => "one" }
+              expected_view = { :selected => 'one' }
               helper.template_options(:view_template, page).should eq(expected_view)
 
-              expected_layout = { :selected => "two" }
+              expected_layout = { :selected => 'two' }
               helper.template_options(:layout_template, page).should eq(expected_layout)
             end
           end
@@ -67,7 +53,7 @@ module Refinery
       describe "#page_meta_information" do
         let(:page) { FactoryGirl.build(:page) }
 
-        context "when show_in_menu is false" do
+        context 'when show_in_menu is false' do
           it "adds 'hidden' label" do
             page.show_in_menu = false
 
@@ -75,7 +61,7 @@ module Refinery
           end
         end
 
-        context "when draft is true" do
+        context 'when draft is true' do
           it "adds 'draft' label" do
             page.draft = true
 
@@ -84,31 +70,31 @@ module Refinery
         end
       end
 
-      describe "#page_title_with_translations" do
+      describe "#any_page_title" do
         let(:page) { FactoryGirl.build(:page) }
 
         before do
           Globalize.with_locale(:en) do
-            page.title = "draft"
+            page.title = 'draft'
             page.save!
           end
 
           Globalize.with_locale(:lv) do
-            page.title = "melnraksts"
+            page.title = 'melnraksts'
             page.save!
           end
         end
 
-        context "when title is present" do
-          it "returns it" do
-            helper.page_title_with_translations(page).should eq("draft")
+        context 'when title is present' do
+          it 'returns it' do
+            helper.any_page_title(page).should eq('draft')
           end
         end
 
         context "when title for current locale isn't available" do
-          it "returns existing title from translations" do
-            Page.translation_class.where(:locale => :en).first.destroy
-            helper.page_title_with_translations(page).should eq("melnraksts")
+          it 'returns existing title from translations' do
+            Page.translation_class.where(:locale => :en).map(&:destroy)
+            helper.any_page_title(page).should eq('melnraksts')
           end
         end
       end

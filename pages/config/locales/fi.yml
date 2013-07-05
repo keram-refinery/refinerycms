@@ -35,7 +35,7 @@ fi:
         delete: Poista tämä sivu ikuisesti
         edit: Muokkaa tätä sivua
         page:
-          view_live_html: Katsele tätä sivua <br/><em>(avautuu uudessa ikkunassa)</em>
+          view_live: Katsele tätä sivua (avautuu uudessa ikkunassa)
           hidden: piilotettu
           draft: luonnos
         form_new_page_parts:

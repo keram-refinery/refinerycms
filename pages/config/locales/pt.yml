@@ -37,7 +37,7 @@ pt:
         new: Adicionar nova página
         expand_collapse: Expandir ou recolher sub-páginas
         page:
-          view_live_html: Ver esta página <br/><em>(abre uma nova janela)</em>
+          view_live: Ver esta página (abre uma nova janela)
           hidden: escondido
           draft: rascunho
         form:

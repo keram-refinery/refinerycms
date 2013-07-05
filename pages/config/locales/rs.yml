@@ -35,7 +35,7 @@ rs:
         delete: Ukloni ovu stranu zauvek
         edit: Izmeni stranu
         page:
-          view_live_html: Otvori stranu <br/><em>(otvara se u novom prozoru)</em>
+          view_live: Otvori stranu (otvara se u novom prozoru)
           hidden: skrivena
           draft: skica
         form_new_page_parts:

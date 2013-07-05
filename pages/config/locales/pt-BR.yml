@@ -36,7 +36,7 @@ pt-BR:
         delete: Remover esta página para sempre
         edit: Editar esta página
         page:
-          view_live_html: Vizualizar essa página agora <br/><em>(irá abrir uma nova janela)</em>
+          view_live: Vizualizar essa página agora (irá abrir uma nova janela)
           hidden: escondida
           draft: Rascunho
         form_new_page_parts:

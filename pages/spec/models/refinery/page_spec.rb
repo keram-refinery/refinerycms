@@ -3,6 +3,15 @@ require 'spec_helper'
 
 module Refinery
   describe Page do
+
+    before do
+      Refinery::Page.delete_all
+    end
+
+    after do
+      Refinery::Page.delete_all
+    end
+
     let(:page_title) { 'RSpec is great for testing too' }
     let(:child_title) { 'The child page' }
 
@@ -27,27 +36,9 @@ module Refinery
       Pages.stub(:marketable_urls).and_return(true)
     end
 
-    def turn_off_slug_scoping
-      Pages.stub(:scope_slug_by_parent).and_return(false)
-    end
-
-    def turn_on_slug_scoping
-      Pages.stub(:scope_slug_by_parent).and_return(true)
-    end
-
     context 'cannot be deleted under certain rules' do
-      it 'if link_url is present' do
-        page.link_url = '/plugin-name'
-        page_cannot_be_destroyed
-      end
-
       it 'if refinery team deems it so' do
         page.deletable = false
-        page_cannot_be_destroyed
-      end
-
-      it 'if menu_match is present' do
-        page.menu_match = "^/#{page_title}*$"
         page_cannot_be_destroyed
       end
 
@@ -70,7 +61,7 @@ module Refinery
       end
 
       it 'or normally ;-)' do
-        created_child.path(:reversed => false).should == [child_title, page_title].join(' - ')
+        created_child.path(:reversed => true).should == [child_title, page_title].join(' - ')
       end
 
       it 'returns its url' do
@@ -116,8 +107,7 @@ module Refinery
       before do
         Refinery::I18n.stub(:default_frontend_locale).and_return(:en)
         Refinery::I18n.stub(:frontend_locales).and_return([I18n.default_frontend_locale, :ru])
-        Refinery::I18n.stub(:current_frontend_locale).and_return(I18n.default_frontend_locale)
-
+        # Globalize.stub(:locale).and_return(I18n.default_frontend_locale)
         page.save
       end
       let(:page_title)  { 'team' }
@@ -177,43 +167,21 @@ module Refinery
     context 'custom slugs' do
       let(:custom_page_slug) { 'custom-page-slug' }
       let(:custom_child_slug) { 'custom-child-slug' }
-      let(:custom_route) { '/products/my-product' }
       let(:page_with_custom_slug) {
         subject.class.new(:title => page_title, :custom_slug => custom_page_slug)
       }
       let(:child_with_custom_slug) {
         page.children.new(:title => child_title, :custom_slug => custom_child_slug)
       }
-      let(:page_with_custom_route) {
-        subject.class.new(:title => page_title, :custom_slug => custom_route)
-      }
 
       after(:each) do
-        Refinery::I18n.stub(:current_frontend_locale).and_return(I18n.default_frontend_locale)
-        Refinery::I18n.stub(:current_locale).and_return(I18n.default_locale)
+        Globalize.stub(:locale).and_return(I18n.default_frontend_locale)
       end
 
       it 'returns its path with custom slug' do
         page_with_custom_slug.save
         page_with_custom_slug.url[:id].should be_nil
         page_with_custom_slug.url[:path].should == [custom_page_slug]
-      end
-
-      it 'allows a custom route when slug scoping is off' do
-        turn_off_slug_scoping
-        page_with_custom_route.save
-        page_with_custom_route.url[:id].should be_nil
-        page_with_custom_route.url[:path].should == [custom_route]
-        turn_on_slug_scoping
-      end
-
-      it 'allows slashes in custom routes but slugs everything in between' do
-        turn_off_slug_scoping
-        page_needing_a_slugging = subject.class.new(:title => page_title, :custom_slug => 'products/category/sub category/my product is cool!')
-        page_needing_a_slugging.save
-        page_needing_a_slugging.url[:id].should be_nil
-        page_needing_a_slugging.url[:path].should == ['products/category/sub-category/my-product-is-cool']
-        turn_on_slug_scoping
       end
 
       it 'returns its path underneath its parent with custom urls' do
@@ -224,41 +192,8 @@ module Refinery
         child_with_custom_slug.url[:path].should == [page.url[:path].first, custom_child_slug]
       end
 
-      it 'does not return a path underneath its parent when scoping is off' do
-        turn_off_slug_scoping
-        child_with_custom_slug.save
-        page.save
-
-        child_with_custom_slug.url[:id].should be_nil
-        child_with_custom_slug.url[:path].should == [custom_child_slug]
-        turn_on_slug_scoping
-      end
-
-      it "doesn't allow slashes in slug" do
-        page_with_slashes_in_slug = subject.class.new(:title => page_title, :custom_slug => '/products/category')
-        page_with_slashes_in_slug.save
-        page_with_slashes_in_slug.url[:path].should == ['productscategory']
-      end
-
-      it "allow slashes in slug when slug scoping is off" do
-        turn_off_slug_scoping
-        page_with_slashes_in_slug = subject.class.new(:title => page_title, :custom_slug => 'products/category/subcategory')
-        page_with_slashes_in_slug.save
-        page_with_slashes_in_slug.url[:path].should == ['products/category/subcategory']
-        turn_on_slug_scoping
-      end
-
-      it "strips leading and trailing slashes in slug when slug scoping is off" do
-        turn_off_slug_scoping
-        page_with_slashes_in_slug = subject.class.new(:title => page_title, :custom_slug => '/products/category/subcategory/')
-        page_with_slashes_in_slug.save
-        page_with_slashes_in_slug.url[:path].should == ['products/category/subcategory']
-        turn_on_slug_scoping
-      end
-
       it 'returns its path with custom slug when using different locale' do
-        Refinery::I18n.stub(:current_frontend_locale).and_return(:ru)
-        Refinery::I18n.stub(:current_locale).and_return(:ru)
+        Globalize.stub(:locale).and_return(:ru)
         page_with_custom_slug.custom_slug = "#{custom_page_slug}-ru"
         page_with_custom_slug.save
         page_with_custom_slug.reload
@@ -268,8 +203,7 @@ module Refinery
       end
 
       it 'returns path underneath its parent with custom urls when using different locale' do
-        Refinery::I18n.stub(:current_frontend_locale).and_return(:ru)
-        Refinery::I18n.stub(:current_locale).and_return(:ru)
+        Globalize.stub(:locale).and_return(:ru)
         child_with_custom_slug.custom_slug = "#{custom_child_slug}-ru"
         child_with_custom_slug.save
         child_with_custom_slug.reload
@@ -278,12 +212,12 @@ module Refinery
         child_with_custom_slug.url[:path].should == [page.url[:path].first, "#{custom_child_slug}-ru"]
       end
 
-      context "given a page with a custom_slug exists" do
+      context 'given a page with a custom_slug exists' do
         before do
           FactoryGirl.create(:page, :custom_slug => custom_page_slug)
         end
 
-        it "fails validation when a new record uses that custom_slug" do
+        it 'fails validation when a new record uses that custom_slug' do
           new_page = Page.new :custom_slug => custom_page_slug
           new_page.valid?
 
@@ -299,24 +233,10 @@ module Refinery
       end
 
       it 'return the content when using content_for' do
-        page.content_for(:body).should == "<p>I'm the first page part for this page.</p>"
-        page.content_for('BoDY').should == "<p>I'm the first page part for this page.</p>"
+        page.content_for(:body).should == "I'm the first page part for this page."
+        page.content_for('BoDY').should == "I'm the first page part for this page."
       end
 
-      it 'requires a unique title' do
-        page.save
-        page.parts.create(:title => 'body')
-        duplicate_title_part = page.parts.create(:title => 'body')
-
-        duplicate_title_part.errors[:title].should be_present
-      end
-
-      it 'only requires a unique title on the same page' do
-        part_one = Page.create(:title => 'first page').parts.create(:title => 'body')
-        part_two = Page.create(:title => 'second page').parts.create(:title => 'body')
-
-        part_two.errors[:title].should be_empty
-      end
 
       context 'when using content_for?' do
 
@@ -339,16 +259,22 @@ module Refinery
       it 'reposition correctly' do
         page.save
 
-        page.parts.first.update_attributes :position => 6
-        page.parts.last.update_attributes :position => 4
+        part_first = page.parts.first
+        part_last = page.parts.last
 
-        page.parts.first.position.should == 6
-        page.parts.last.position.should == 4
+        part_first.update_attributes :position => 6
+        part_last.update_attributes :position => 4
+
+        part_first.position.should == 6
+        part_last.position.should == 4
 
         page.reposition_parts!
 
         page.parts.first.position.should == 0
         page.parts.last.position.should == 1
+
+        part_first.reload.position.should == 1
+        part_last.reload.position.should == 0
       end
     end
 
@@ -364,7 +290,7 @@ module Refinery
       end
     end
 
-    context "should add url suffix" do
+    context 'should add url suffix' do
       let(:reserved_word) { subject.class.friendly_id_config.reserved_words.last }
       let(:page_with_reserved_title) {
         subject.class.create!(:title => reserved_word, :deletable => true)
@@ -379,7 +305,7 @@ module Refinery
         page_with_reserved_title.url[:path].should == ["#{reserved_word}-page"]
       end
 
-      it "when parent page title is set to a reserved word" do
+      it 'when parent page title is set to a reserved word' do
         child_with_reserved_title_parent.url[:path].should == ["#{reserved_word}-page", 'reserved-title-child-page']
       end
     end
@@ -427,12 +353,11 @@ module Refinery
 
     end
 
-    describe "#to_refinery_menu_item" do
+    describe '#to_refinery_menu_item' do
       let(:page) do
         Page.new(
           :id => 5,
-          :parent_id => 8,
-          :menu_match => "^/foo$"
+          :parent_id => 8
 
         # Page does not allow setting lft and rgt, so stub them.
         ).tap do |p|
@@ -443,52 +368,54 @@ module Refinery
 
       subject { page.to_refinery_menu_item }
 
-      shared_examples_for("Refinery menu item hash") do
+      shared_examples_for('Refinery menu item hash') do
         [ [:id, 5],
           [:lft, 6],
           [:rgt, 7],
-          [:parent_id, 8],
-          [:menu_match, "^/foo$"]
+          [:parent_id, 8]
         ].each do |attr, value|
           it "returns the correct :#{attr}" do
             subject[attr].should eq(value)
           end
         end
 
-        it "returns the correct :url" do
-          subject[:url].should be_a(Hash) # guard against nil
-          subject[:url].should eq(page.url)
+        # todo rewrite return correct slug instead url
+        #it 'returns the correct :url' do
+        ##  subject[:url].should be_a(Hash) # guard against nil
+        ##  subject[:url].should eq(page.url)
+        #end
+      end
+
+      context 'with #menu_title' do
+        let(:menu) { Refinery::Menu.new [page] }
+
+        before do
+          page[:menu_title] = 'Menu Title'
+        end
+
+        it_should_behave_like 'Refinery menu item hash'
+
+        it 'returns the menu_title for :title' do
+          subject[:title].should eq('Menu Title')
         end
       end
 
-      context "with #menu_title" do
+      context 'with #title' do
         before do
-          page[:menu_title] = "Menu Title"
+          page[:title] = 'Title'
         end
 
-        it_should_behave_like "Refinery menu item hash"
+        it_should_behave_like 'Refinery menu item hash'
 
-        it "returns the menu_title for :title" do
-          subject[:title].should eq("Menu Title")
-        end
-      end
-
-      context "with #title" do
-        before do
-          page[:title] = "Title"
-        end
-
-        it_should_behave_like "Refinery menu item hash"
-
-        it "returns the title for :title" do
-          subject[:title].should eq("Title")
+        it 'returns the title for :title' do
+          subject[:title].should eq('Title')
         end
       end
     end
 
-    describe "#in_menu?" do
-      context "when live? and show_in_menu? returns true" do
-        it "returns true" do
+    describe '#in_menu?' do
+      context 'when live? and show_in_menu? returns true' do
+        it 'returns true' do
           page.stub(:live?).and_return(true)
           page.stub(:show_in_menu?).and_return(true)
           page.in_menu?.should be_true
@@ -496,7 +423,7 @@ module Refinery
       end
 
       context "when live? or show_in_menu? doesn't return true" do
-        it "returns false" do
+        it 'returns false' do
           page.stub(:live?).and_return(true)
           page.stub(:show_in_menu?).and_return(false)
           page.in_menu?.should be_false
@@ -508,16 +435,16 @@ module Refinery
       end
     end
 
-    describe "#not_in_menu?" do
-      context "when in_menu? returns true" do
-        it "returns false" do
+    describe '#not_in_menu?' do
+      context 'when in_menu? returns true' do
+        it 'returns false' do
           page.stub(:in_menu?).and_return(true)
           page.not_in_menu?.should be_false
         end
       end
 
-      context "when in_menu? returns false" do
-        it "returns true" do
+      context 'when in_menu? returns false' do
+        it 'returns true' do
           page.stub(:in_menu?).and_return(false)
           page.not_in_menu?.should be_true
         end
@@ -531,6 +458,7 @@ module Refinery
 
       before do
         # Ensure pages are created.
+        Page.delete_all
         created_child
         created_root_about
       end
@@ -544,75 +472,69 @@ module Refinery
       end
     end
 
-    describe ".find_by_path_or_id" do
-      let!(:market) { FactoryGirl.create(:page, :title => "market") }
-      let(:path) { "market" }
+    describe '.find_by_path_or_id' do
+      let!(:market) { FactoryGirl.create(:page, :title => 'market') }
+      let(:path) { 'market' }
       let(:id) { market.id }
 
-      context "when path param is present" do
-        context "when path is friendly_id" do
-          it "finds page using path" do
-            Page.find_by_path_or_id(path, "").should eq(market)
+      context 'when marketable urls are true and path is present' do
+        before do
+          Page.stub(:marketable_urls).and_return(true)
+        end
+
+        context 'when path is friendly_id' do
+          it 'finds page using path' do
+            Page.find_by_path_or_id(path, '').should eq(market)
           end
         end
 
-        context "when path is not friendly_id" do
-          it "finds page using id" do
-            Page.find_by_path_or_id(id, "").should eq(market)
+        context 'when path is not friendly_id' do
+          it 'finds page using id' do
+            Page.find_by_path_or_id(id, '').should eq(market)
           end
         end
       end
 
-      context "when id param is present" do
-        it "finds page using id" do
-          Page.find_by_path_or_id("", id).should eq(market)
+      context 'when id is present' do
+        before do
+          Page.stub(:marketable_urls).and_return(false)
+        end
+
+        it 'finds page using id' do
+          Page.find_by_path_or_id('', id).should eq(market)
         end
       end
     end
 
-    describe "#deletable?" do
+    describe '#deletable?' do
       let(:deletable_page) do
         page.deletable  = true
-        page.link_url   = ""
-        page.menu_match = ""
+        page.link_url   = ''
         page.stub(:puts_destroy_help).and_return('')
         page
       end
 
-      context "when deletable is true and link_url, and menu_match is blank" do
-        it "returns true" do
+      context 'when deletable is true' do
+        it 'returns true' do
           deletable_page.deletable?.should be_true
         end
       end
 
-      context "when deletable is false and link_url, and menu_match is blank" do
-        it "returns false" do
+      context 'when deletable is false' do
+        it 'returns false' do
           deletable_page.deletable = false
-          deletable_page.deletable?.should be_false
-        end
-      end
-
-      context "when deletable is false and link_url or menu_match isn't blank" do
-        it "returns false" do
-          deletable_page.deletable  = false
-          deletable_page.link_url   = "text"
-          deletable_page.deletable?.should be_false
-
-          deletable_page.menu_match = "text"
           deletable_page.deletable?.should be_false
         end
       end
     end
 
-    describe "#destroy" do
+    describe '#destroy' do
       before do
         page.deletable  = false
-        page.link_url   = "link_url"
-        page.menu_match = "menu_match"
         page.save!
       end
 
-      it "shows message" do
+      it 'shows message' do
         page.should_receive(:puts_destroy_help)
 
         page.destroy

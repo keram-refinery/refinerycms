@@ -36,7 +36,7 @@ lv:
         delete: Dzēst šo lapu
         edit: Labot šo lapu
         page:
-          view_live_html: Apskatīt šo lapu <br/><em>(tiks atvērta jaunā logā)</em>
+          view_live: Apskatīt šo lapu (tiks atvērta jaunā logā)
           hidden: paslēpta
           draft: melnraksts
         form_new_page_parts:

@@ -36,7 +36,7 @@ zh-CN:
         edit: 编辑此页面
         new: 新建子页面
         page:
-          view_live_html: 浏览这个页面 <br/><em>(在新窗口打开)</em>
+          view_live: 浏览这个页面 (在新窗口打开)
           hidden: 隐藏
           draft: 草稿
         form_new_page_parts:

@@ -14,17 +14,11 @@ Refinery::Pages.configure do |config|
   # Configure whether to enable marketable_urls
   # config.marketable_urls = <%= Refinery::Pages.marketable_urls.inspect %>
 
-  # Configure how many pages per page should be displayed when a dialog is presented that contains a links to pages
-  # config.pages_per_dialog = <%= Refinery::Pages.pages_per_dialog.inspect %>
-
   # Configure how many pages per page should be displayed in the list of pages in the admin area
-  # config.pages_per_admin_index = <%= Refinery::Pages.pages_per_admin_index.inspect %>
+  # config.per_admin_page = <%= Refinery::Pages.per_admin_page.inspect %>
 
-  # Configure whether to strip diacritics from Western characters
-  # config.approximate_ascii = <%= Refinery::Pages.approximate_ascii.inspect %>
-
-  # Configure whether to strip non-ASCII characters from the friendly_id string
-  # config.strip_non_ascii = <%= Refinery::Pages.strip_non_ascii.inspect %>
+  # Configure how many pages per page should be displayed in link dialog
+  # config.per_dialog_page = <%= Refinery::Pages.per_dialog_page.inspect %>
 
   # Set this to true if you want to override slug which automatically gets generated
   # when you create a page
@@ -35,12 +29,6 @@ Refinery::Pages.configure do |config|
   # By default, these routes will be flattened to the root, using the slugged page title,
   # and will no longer be nested as children.
   # config.scope_slug_by_parent = <%= Refinery::Pages.scope_slug_by_parent.inspect %>
-
-  # Set this to true if you want backend pages to be cached
-  # config.cache_pages_backend = <%= Refinery::Pages.cache_pages_backend.inspect %>
-
-  # Set this to true to activate full-page-cache
-  # config.cache_pages_full = <%= Refinery::Pages.cache_pages_full.inspect %>
 
   # Set this to true to fully expand the page hierarchy in the admin
   # config.auto_expand_admin_tree = <%= Refinery::Pages.auto_expand_admin_tree.inspect %>
@@ -54,8 +42,6 @@ Refinery::Pages.configure do |config|
   # config.use_view_templates = <%= Refinery::Pages.use_view_templates.inspect %>
 
   # config.page_title = <%= Refinery::Pages.page_title.inspect %>
-
-  # config.absolute_page_links = <%= Refinery::Pages.absolute_page_links.inspect %>
 
   # config.show_title_in_body = <%= Refinery::Pages.show_title_in_body.inspect %>
 end

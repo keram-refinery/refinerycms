@@ -37,7 +37,7 @@ hu:
         new: 'Új aloldal hozzáadása'
         expand_collapse: 'Aloldalak kinyitása/bezárása'
         page:
-          view_live_html: 'Nézd meg ezt az oldalt élőben <br/><em>(új ablakban nyílik meg)</em>'
+          view_live: 'Nézd meg ezt az oldalt élőben (új ablakban nyílik meg)'
           hidden: rejtett
           draft: piszkozat
         form:

@@ -1,52 +1,74 @@
-<li class='clearfix record icons' id="<%= dom_id(page) -%>">
-  <div class='clearfix'>
-    <% if page.children.present? %>
-      <span class="icon toggle <%= 'expanded' if Refinery::Pages.auto_expand_admin_tree %>" title="<%= t('expand_collapse', :scope => 'refinery.admin.pages') %>"></span>
-    <% else %>
-      <span class="icon"></span>
-    <% end %>
+<%
+  expand_tree = Refinery::Pages.auto_expand_admin_tree
+  has_childrens = (page.rgt - page.lft > 1)
+  cache_key = [page, current_refinery_user.id]
+  title_cls = ''
 
-    <span class='title <%= 'toggle' if page.children.present? %>'>
-      <%= page_title_with_translations page %>
-      <%= page_meta_information page %>
-    </span>
-    <% if Refinery::I18n.frontend_locales.many? %>
-      <span class='locales'>
-        <% page.translations.sort_by{|t| Refinery::I18n.frontend_locales.index(t.locale)}.each do |translation| %>
-          <%= link_to refinery_icon_tag("flags/#{translation.locale}.png", :size => '16x11'),
-                      refinery.edit_admin_page_path(page.nested_url, :switch_locale => translation.locale),
-                      :class => 'locale' if translation.title.present? %>
-        <% end %>
+  if has_childrens
+    cache_key << page.descendants.order(updated_at: :desc).limit(1).pluck(:updated_at).first.to_s.parameterize
+
+    title_cls += ' toggle' + (expand_tree ? ' expanded' : '')
+    ul_cls = 'nested data-cache' + (expand_tree ? ' data-loaded' : '')
+  end
+
+%>
+<li id="<%= dom_id(page) %>">
+<% cache cache_key, skip_digest: true do -%>
+  <div class="row">
+
+    <div class="detail">
+      <span class="title icon-small icon-with-text<%= title_cls %>">
+        <%= page.any_title -%>
       </span>
-    <% end %>
+      <%= page_meta_information page %>
 
-    <span class='actions'>
-      <%= link_to refinery_icon_tag('application_go.png'),
-                  page.url,
-                  :target => "_blank",
-                  :title => t('.view_live_html') %>
-      <%= link_to refinery_icon_tag('page_add.png'),
-                  refinery.new_admin_page_path(:parent_id => page.id),
-                  :title => t('new', :scope => 'refinery.admin.pages') %>
+      <% if Refinery::I18n.frontend_locales.many? %>
+        <%= render 'record_translations', :record => page, :link => 'edit_admin_page' %>
+      <% end %>
+    </div>
 
-      <%= link_to refinery_icon_tag('application_edit.png'),
-                  refinery.edit_admin_page_path(page.nested_url, :switch_locale => (page.translations.first.locale unless page.translated_to_default_locale?)),
-                  :title => t('edit', :scope => 'refinery.admin.pages') %>
+    <span class="actions">
 
-      <%= link_to refinery_icon_tag('delete.png'),
-                  refinery.admin_page_path(page.nested_url),
-                  :class => "cancel confirm-delete",
+      <%= content_tag :a, t('move', :scope => 'refinery.admin.record'),
+                  :class => 'move nojs-hide icon-small move-icon',
+                  :title => t('move', :scope => 'refinery.admin.record') if page.plugin_page_id.blank? %>
+
+      <%= link_to t('delete', :scope => 'refinery.admin.record'),
+                  refinery.admin_page_path(page.id),
+                  :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
                   :title => t('delete', :scope => 'refinery.admin.pages'),
                   :data => {
+                    :remote => true,
                     :confirm => t('message',
                       :scope => 'refinery.admin.delete',
-                      :title => page_title_with_translations(page)
+                      :title => any_page_title(page)
                     )
                   },
                   :method => :delete if page.deletable? %>
+
+      <%= link_to t('edit', :scope => 'refinery.admin.record'),
+                  refinery.edit_admin_page_path(page.id),
+                  :class => 'icon-small edit-icon',
+                  :title => t('edit', :scope => 'refinery.admin.pages') %>
+
+      <%= link_to t('add_child', :scope => 'refinery.admin.record'),
+                  refinery.new_admin_page_path(:parent_id => page.id),
+                  :class => 'icon-small page-add-icon',
+                  :title => t('new', :scope => 'refinery.admin.pages') %>
+
+      <%= link_to t('live', :scope => 'refinery.admin.record'),
+                  page.url,
+                  :target => '_blank',
+                  :class => 'icon-small live-icon',
+                  :title => t('.view_live').html_safe %>
+
     </span>
   </div>
-  <ul class='nested' data-ajax-content="<%= refinery.admin_children_pages_path(page.nested_url) %>">
-    <%= render(:partial => 'page', :collection => page.children) if Refinery::Pages.auto_expand_admin_tree %>
+  <% if has_childrens %>
+
+  <ul class="<%= ul_cls %>" data-ajax-content="<%= refinery.children_admin_page_path(page.id) %>"  >
+    <%= render(:partial => 'page', :collection => page.children.order(:lft)) if expand_tree %>
   </ul>
+  <% end %>
 </li>
+<% end %>

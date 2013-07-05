@@ -36,7 +36,7 @@ cs:
         edit: Upravit tuto stránku
         new: Přidat podstránku
         page:
-          view_live_html: Zobrazit tuto stránku <br/><em>(otevře se v novém okně)</em>
+          view_live: Zobrazit tuto stránku (otevře se v novém okně)
           hidden: skrytá
           draft: pracovní verze
         form_new_page_parts:

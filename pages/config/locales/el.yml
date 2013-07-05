@@ -35,7 +35,7 @@ el:
         delete: Διαγραφή σελίδας
         edit: Επεξεργασία σελίδας
         page:
-          view_live_html: Δείτε αυτή τη σελίδα live <br/><em>(ανοίγει σε νέο παράθυρο)</em>
+          view_live: Δείτε αυτή τη σελίδα live (ανοίγει σε νέο παράθυρο)
           hidden: κρυφό
           draft: πρόχειρο
         form_new_page_parts:

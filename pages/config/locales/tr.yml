@@ -37,7 +37,7 @@ tr:
         new: Yeni Alt Sayfa ekle
         expand_collapse: Alt Sayfalari daralt veya genislet
         page:
-          view_live_html: Bu sayfayi canli olarak gor <br/><em>(yeni bir pencerede ac)</em>
+          view_live: Bu sayfayi canli olarak gor (yeni bir pencerede ac)
           hidden: gizli
           draft: Taslak
         form:

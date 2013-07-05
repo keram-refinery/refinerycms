@@ -26,7 +26,7 @@ sk:
             body_optional: Voliteľný obsah správy
             not_sure: Nie ste si istí čo zadať do týchto polí?
             step1_html: Napíšte, alebo skopírujte a vložte (napr. z vášho zoznamu kontaktov) emailovú adresu do poľa '<strong>Emailová adresa</strong>'.
-            step2_html: Použite '<strong>Voliteľný predmet</ strong>' ak chcete aby emailová správa obsahovala <strong>preddefinovaný predmet</strong>.
+            step2_html: Použite '<strong>Voliteľný predmet</strong>' ak chcete aby emailová správa obsahovala <strong>preddefinovaný predmet</strong>.
             step3_html: Použite '<strong>Voliteľný obsah správy</strong>' ak chcete aby mailová správa obsahovala <strong>preddefinovaný obsah správy</strong>.
           your_resource:
             tab_name: Váš súbor
@@ -37,7 +37,7 @@ sk:
         new: Pridať novú podstránku
         expand_collapse: Rozbaliť alebo zbaliť podstránky
         page:
-          view_live_html: Zobraziť stránku <br/><em>(otvorí sa v novom okne)</em>
+          view_live: Zobraziť stránku (otvorí sa v novom okne)
           hidden: skrytá
           draft: pracovná verzia
         form:

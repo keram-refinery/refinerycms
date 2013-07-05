@@ -37,7 +37,7 @@ nl:
         new: Een nieuwe subpagina toevoegen
         expand_collapse: "Subpagina's inklappen of uitvouwen"
         page:
-          view_live_html: Deze pagina op de website bekijken<br/><em>(opent in een nieuw venster)</em>
+          view_live: Deze pagina op de website bekijken\n(opent in een nieuw venster)
           hidden: verborgen
           draft: concept
         form:

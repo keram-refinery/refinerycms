@@ -1,41 +1,38 @@
 class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
   def up
     create_table :refinery_page_parts do |t|
-      t.integer  :refinery_page_id
-      t.string   :title
-      t.text     :body
-      t.integer  :position
+      t.references :page, :null => false
+      t.string   :title, :null => false
+      t.integer  :position, :null => false, :default => 0
 
       t.timestamps
     end
 
-    add_index :refinery_page_parts, :id
-    add_index :refinery_page_parts, :refinery_page_id
+    add_index :refinery_page_parts, [:page_id, :title], :unique => true
 
     create_table :refinery_pages do |t|
-      t.integer   :parent_id
-      t.string    :path
-      t.string    :slug
-      t.boolean   :show_in_menu,        :default => true
-      t.string    :link_url
-      t.string    :menu_match
-      t.boolean   :deletable,           :default => true
-      t.boolean   :draft,               :default => false
-      t.boolean   :skip_to_first_child, :default => false
-      t.integer   :lft
-      t.integer   :rgt
-      t.integer   :depth
-      t.string    :view_template
-      t.string    :layout_template
+      t.integer :parent_id
+      t.string  :slug
+      t.boolean :show_in_menu, :default => true
+      t.string  :link_url
+      t.boolean :deletable, :null => false, :default => true
+      t.boolean :draft, :null => false, :default => false
+      t.boolean :skip_to_first_child, :null => false, :default => false
+      t.integer :lft, :null => false
+      t.integer :rgt, :null => false
+      t.integer :depth, :null => false, :default => 0
+      t.string  :view_template
+      t.string  :layout_template
+      t.string  :plugin_page_id
 
       t.timestamps
     end
 
-    add_index :refinery_pages, :depth
-    add_index :refinery_pages, :id
-    add_index :refinery_pages, :lft
+    add_index :refinery_pages, [:lft, :rgt]
+    add_index :refinery_pages, [:rgt]
+    add_index :refinery_pages, [:draft, :show_in_menu, :lft, :rgt]
     add_index :refinery_pages, :parent_id
-    add_index :refinery_pages, :rgt
+    add_index :refinery_pages, :updated_at
 
     Refinery::PagePart.create_translation_table!({
       :body => :text
@@ -47,6 +44,8 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       :menu_title => :string,
       :slug => :string
     })
+
+    add_index :refinery_page_translations, :slug
   end
 
   def down

@@ -35,7 +35,7 @@ zh-TW:
         delete: 永遠地移除這個頁面
         edit: 編輯頁面
         page:
-          view_live_html: 瀏覽這個頁面 <br/><em>(在新視窗中開啟)</em>
+          view_live: 瀏覽這個頁面 (在新視窗中開啟)
           hidden: 隱藏
           draft: 草稿
         form_new_page_parts:

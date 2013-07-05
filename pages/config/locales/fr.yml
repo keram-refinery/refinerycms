@@ -37,7 +37,7 @@ fr:
         new: Ajouter une nouvelle sous-page
         expand_collapse: Développer ou réduire les sous-pages
         page:
-          view_live_html: Voir cette page<br/><em>(Ouvre une nouvelle fenêtre)</em>
+          view_live: Voir cette page\n(Ouvre une nouvelle fenêtre)
           hidden: caché
           draft: brouillon
         form:

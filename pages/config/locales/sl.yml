@@ -34,7 +34,7 @@ sl:
         delete: Odstrani stran
         edit: Uredi stran
         page:
-          view_live_html: Poglej si to stran v živo <br/><em>(odpre se v novem oknu)</em>
+          view_live: Poglej si to stran v živo (odpre se v novem oknu)
           hidden: skrito
           draft: osnutek
         form_new_page_parts:

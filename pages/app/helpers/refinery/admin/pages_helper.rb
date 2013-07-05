@@ -1,14 +1,21 @@
 module Refinery
   module Admin
     module PagesHelper
+
+      # select only pages where don't belongs under current page, her including
       def parent_id_nested_set_options(current_page)
-        pages = []
-        nested_set_options(::Refinery::Page, current_page) {|page| pages << page}
-        # page.title needs the :translations association, doing something like
-        # nested_set_options(::Refinery::Page.includes(:translations), page) doesn't work, yet.
-        # See https://github.com/collectiveidea/awesome_nested_set/pull/123
-        ActiveRecord::Associations::Preloader.new(pages, :translations).run
-        pages.map {|page| ["#{'-' * page.level} #{page.title}", page.id]}
+        [].tap do |pages|
+          query = ::Refinery::Page.with_globalize
+          if current_page.persisted?
+            query = query.where.not('lft >= ? AND rgt <= ?',
+                        current_page.lft, current_page.rgt)
+          end
+
+          query.includes(:translations).
+                      order(:lft).each do |page|
+            pages << ["#{'-' * page.depth} #{page.title}", page.id]
+          end
+        end
       end
 
       def template_options(template_type, current_page)
@@ -40,7 +47,7 @@ module Refinery
 
       # We show the title from the next available locale
       # if there is no title for the current locale
-      def page_title_with_translations(page)
+      def any_page_title(page)
         page.title.presence || page.translations.detect {|t| t.title.present?}.title
       end
     end

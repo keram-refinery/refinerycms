@@ -35,7 +35,7 @@ vi:
         delete: Xóa trang này vĩnh viễn
         edit: Sửa trang
         page:
-          view_live_html: Xem trực tiếp trang này <br/><em>(sẽ mở trong cửa sổ mới)</em>
+          view_live: Xem trực tiếp trang này (sẽ mở trong cửa sổ mới)
           hidden: ẩn
           draft: phác thảo
         form_new_page_parts:

@@ -1,0 +1,4 @@
+<% ul_cls = 'nested data-cache' + (Refinery::Pages.auto_expand_admin_tree ? ' data-loaded' : '') %>
+<ul class="<%= ul_cls %>" data-ajax-content="<%= refinery.children_admin_page_path(page.id) %>"  >
+  <%#= render(:partial => 'page', :collection => page.children) if Refinery::Pages.auto_expand_admin_tree %>
+</ul>
