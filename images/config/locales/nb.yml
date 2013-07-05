@@ -24,10 +24,10 @@ nb:
             switch_to: "Endre til %{view_name} visning"
             list: liste
             grid: rutenett
-        view_live_html: Vis dette bildet <br/><em>Åpner i et nytt vindu</em>
+        view_live: Vis dette bildet (Åpner i et nytt vindu)
         existing_image:
           button_text: Sett inn
-          resize_image: "Endre størrelsen på bildet? <em>(Anbefales)</em>"
+          resize_image: "Endre størrelsen på bildet? <em>(Anbefales)"
           size: Størrelse
         insert:
           existing_image: Eksisterende bilde

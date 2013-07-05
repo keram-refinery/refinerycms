@@ -1,0 +1,6 @@
+<% if @images.any? %>
+  <%= render 'refinery/admin/images/grid_view' %>
+  <div id="<%= refinery_dom_id @images %>-pagination">
+    <%= will_paginate @images %>
+  </div>
+<% end %>

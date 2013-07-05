@@ -24,7 +24,7 @@ nl:
             switch_to: De %{view_name}versie bekijken
             list: lijst
             grid: raster
-        view_live_html: Deze afbeelding bekijken <br/><em>Opent in een nieuw venster</em>
+        view_live: Deze afbeelding bekijken (Opent in een nieuw venster)
         existing_image:
           button_text: Invoegen
           resize_image: De afbeelding schalen?

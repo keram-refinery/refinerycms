@@ -24,7 +24,7 @@ fr:
             switch_to: Afficher sous forme de %{view_name}
             list: liste
             grid: grille
-        view_live_html: "Voir cette image<br/><em>Ouvre une nouvelle fenêtre</em>"
+        view_live: "Voir cette image\nOuvre une nouvelle fenêtre"
         existing_image:
           button_text: Insérer
           resize_image: Redimensionner l'image ?

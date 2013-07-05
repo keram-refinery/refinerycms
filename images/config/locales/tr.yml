@@ -24,7 +24,7 @@ tr:
             switch_to: "%{view_name} gorunumu ac"
             list: Liste
             grid: Izgara
-        view_live_html: Bu Resmi goruntule <br/><em>yeni bir pencerede acar</em>
+        view_live: Bu Resmi goruntule (yeni bir pencerede acar)
         existing_image:
           button_text: Cikart
           resize_image: Resimi yeniden boyutlandir?

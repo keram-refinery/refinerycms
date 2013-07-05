@@ -24,7 +24,7 @@ pt:
             switch_to: Mudar a disposição para %{view_name}
             list: lista
             grid: grelha
-        view_live_html: Ver esta imagem <br/><em>Abre uma nova janela</em>
+        view_live: Ver esta imagem (Abre uma nova janela)
         existing_image:
           button_text: Inserir
           resize_image: Redimensionar esta imagem?

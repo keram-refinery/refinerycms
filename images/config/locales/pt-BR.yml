@@ -25,7 +25,7 @@ pt-BR:
             switch_to: Trocar para visão em %{view_name}
             list: lista
             grid: grade
-        view_live_html: "Ver esta imagem<br/><em>Abre em uma nova janela</em>"
+        view_live: "Ver esta imagem\nAbre em uma nova janela"
         existing_image:
           button_text: Inserir
           resize_image: "Redimencionar a imagem?"

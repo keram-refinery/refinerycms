@@ -1,0 +1,11 @@
+<%
+  # @todo get rid of this smell
+  if paginate_page > 1
+    json_response :html => {
+      "#{refinery_dom_id @images}" => render_html_to_json_string(:partial => 'grid_view_image', :collection => @images),
+      "#{refinery_dom_id @images}-pagination" => will_paginate(@images, :params => params.dup.merge(:action => '#insert', :dialog => 1))
+    }
+  else
+    json_response :html => render_html_to_json_string('dialog')
+  end
+ %>

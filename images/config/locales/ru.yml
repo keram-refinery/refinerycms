@@ -24,7 +24,7 @@ ru:
             switch_to: Показать %{view_name}
             list: списком
             grid: сеткой
-        view_live_html: Показать это изображение <br/><em>Откроется в новом окне</em>
+        view_live: Показать это изображение (Откроется в новом окне)
         existing_image:
           button_text: Вставить
           resize_image: Изменить размер изображения?

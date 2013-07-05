@@ -24,7 +24,7 @@ rs:
             switch_to: Prebaci na %{view_name}
             list: listu
             grid: mrežni prikaz
-        view_live_html: Pogledaj ovu sliku <br/><em>Otvara se u novom prozoru</em>
+        view_live: Pogledaj ovu sliku (Otvara se u novom prozoru)
         existing_image:
           button_text: Unesi
           resize_image: Promeni veličinu slike?

@@ -1,15 +1,12 @@
 <ul>
   <li>
-    <%= render '/refinery/admin/search', :url => refinery.admin_images_path %>
-  </li>
-  <li>
-    <%= link_to t('.create_new_image'), refinery.new_admin_image_path(:dialog => true), :class => 'add_icon' %>
+    <%= link_to t('.create_new_image'), refinery.new_admin_image_path, :class => 'add-icon icon-small icon-with-text' %>
   </li>
   <% other_image_views.each do |image_view| %>
     <li>
       <%= link_to t('switch_to', :scope => 'refinery.admin.images.index.view', :view_name => t("#{image_view}", :scope => 'refinery.admin.images.index.view')),
-                  refinery.admin_images_path(:view => image_view, :page => params[:page]),
-                  :class => 'reorder_icon'  %>
+                  refinery.admin_images_path(:view => image_view, :page => paginate_page),
+                  :class => 'reorder-icon icon-small icon-with-text'  %>
     </li>
   <% end %>
 </ul>

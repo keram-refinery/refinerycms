@@ -27,7 +27,7 @@ module Refinery
       end
 
       def s3_backend
-        config.s3_backend.nil? ? Core.s3_backend : config.s3_backend
+        config.s3_backend.presence || Core.s3_backend
       end
 
       def s3_bucket_name

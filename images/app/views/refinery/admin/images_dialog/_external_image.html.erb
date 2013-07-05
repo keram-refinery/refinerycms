@@ -1,0 +1,13 @@
+<div class="field">
+  <input type="url" class="widest larger text" >
+</div>
+
+<%= render '/refinery/admin/form_actions', :f => nil,
+           :cancel_url => '',
+           :submit_button_text => t('insert', :scope => 'refinery.admin.form_actions'),
+           :submit_button_class => 'insert-button',
+           :hide_submit => false,
+           :hide_cancel => false,
+           :hide_delete => true,
+           :cancel_title => nil %>
+

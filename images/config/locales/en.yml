@@ -4,6 +4,8 @@ en:
       refinery_images:
         title: Images
         description: Manage images
+    crudify:
+      resource: Image
     admin:
       images:
         delete: Remove this image forever
@@ -24,13 +26,16 @@ en:
             switch_to: Switch to %{view_name} view
             list: list
             grid: grid
-        view_live_html: View this image <br/><em>Opens in a new window</em>
+        view_live: View this image (Opens in a new window)
         existing_image:
           button_text: Insert
           resize_image: Resize the image?
           size: Size
-        insert:
+        problem_create_images: 'These images we was unable create: %{images}.'
+      images_dialog:
+        index:
           existing_image: Library
+          external_image: Url
           new_image: Upload
   activerecord:
     models:
@@ -42,3 +47,4 @@ en:
           too_big: Image should be smaller than %{size} bytes in size
           incorrect_format: 'Your image must be either a JPG, PNG or GIF'
           different_file_name: New image can't have different file name
+          image_exists: 'Image with name %{name} already exists'

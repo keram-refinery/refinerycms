@@ -1,16 +1,14 @@
-<%= render 'refinery/admin/search_header', :url => refinery.admin_images_path %>
-<div class="pagination_container">
-  <% if @images.any? %>
-    <%= render 'images' %>
+<% view_partial = "#{Refinery::Images.preferred_image_view}_view" %>
+<% cache refinery_records_cache_key @images, view_partial do -%>
+  <div>
+   <% if @images.any? %>
+    <%= render 'images', locals: { view_partial: view_partial } %>
   <% else %>
     <p>
-      <% if searching? %>
-        <%= t('no_results', :scope => 'refinery.admin.search') %>
-      <% else %>
-        <strong>
-          <%= t('.no_images_yet') %>
-        </strong>
-      <% end %>
+      <strong>
+        <%= t('.no_images_yet') %>
+      </strong>
     </p>
   <% end %>
 </div>
+<% end %>

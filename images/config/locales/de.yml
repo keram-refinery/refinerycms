@@ -24,7 +24,7 @@ de:
             switch_to: Zur %{view_name}-Ansicht wechseln
             list: Listen
             grid: Gitter
-        view_live_html: Dieses Bild betrachten <br/><em>Öffnet sich in einem neuen Fenster</em>
+        view_live: Dieses Bild betrachten (Öffnet sich in einem neuen Fenster)
         existing_image:
           button_text: Einfügen
           resize_image: Bild in der Größe ändern?

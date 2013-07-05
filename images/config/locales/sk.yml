@@ -23,8 +23,8 @@ sk:
           view:
             switch_to: Prepnúť pohľad na %{view_name}
             list: zoznam
-            grid: tabuľka
-        view_live_html: Zobraziť obrázok. <br/><em>Otvorí sa v novom okne.</em>
+            grid: tabuľku
+        view_live: Zobraziť obrázok. (Otvorí sa v novom okne.)
         existing_image:
           button_text: Vložiť
           resize_image: Upraviť veľkosť?

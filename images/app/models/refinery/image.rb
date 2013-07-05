@@ -8,7 +8,8 @@ module Refinery
 
     image_accessor :image
 
-    validates :image, :presence  => true
+    validates :image, :presence => true
+    validates_with ImageNameValidator, :on => :create
     validates_with ImageSizeValidator
     validates_with ImageUpdateValidator, :on => :update
     validates_property :mime_type,
@@ -16,35 +17,10 @@ module Refinery
                        :in => ::Refinery::Images.whitelisted_mime_types,
                        :message => :incorrect_format
 
-    # allows Mass-Assignment
-    attr_accessible :id, :image, :image_size
-
-    delegate :size, :mime_type, :url, :width, :height, :to => :image
-
-    class << self
-      # How many images per page should be displayed?
-      def per_page(dialog = false, has_size_options = false)
-        if dialog
-          unless has_size_options
-            Images.pages_per_dialog
-          else
-            Images.pages_per_dialog_that_have_size_options
-          end
-        else
-          Images.pages_per_admin_index
-        end
-      end
-    end
+    delegate :size, :mime_type, :url, :width, :height, :name, :to => :image
 
     # Get a thumbnail job object given a geometry and whether to strip image profiles and comments.
     def thumbnail(options = {})
-      if options.is_a?(String) || options.is_a?(Symbol)
-        Refinery.deprecate 'Refinery::Image#thumbnail(geometry)',
-                           :when => '2.2',
-                           :replacement => 'Refinery::Image#thumbnail(:geometry => value)'
-        options = { :geometry => options }
-      end
-
       options = { :geometry => :no_geometry, :strip => true }.merge(options)
       geometry = convert_to_geometry(options[:geometry])
       thumbnail = image

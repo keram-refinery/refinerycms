@@ -24,7 +24,7 @@ cs:
             switch_to: "Přepnout pohled na: %{view_name}"
             list: seznam
             grid: tabulka
-        view_live_html: Zobrazit tento obrázek <br/><em>Otevře se novém okně</em>
+        view_live: Zobrazit tento obrázek (Otevře se novém okně)
         existing_image:
           button_text: Vložit
           resize_image: Změnít velikost?

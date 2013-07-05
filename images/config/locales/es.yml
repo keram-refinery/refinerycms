@@ -25,7 +25,7 @@ es:
             switch_to: Cambiar a vista %{view_name}
             list: lista
             grid: cuadrícula
-        view_live_html: Ver imagen <br/><em>Abre en ventana nueva</em>
+        view_live: Ver imagen (Abre en ventana nueva)
         existing_image:
           button_text: Insertar
           resize_image: ¿Redimensionar la imagen?

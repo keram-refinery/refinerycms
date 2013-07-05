@@ -21,12 +21,6 @@ module Refinery
 
         @recent_activity = @recent_activity.sort_by(&:updated_at).reverse.
                            first(Refinery::Dashboard.activity_show_limit)
-
-        @recent_inquiries = if Refinery::Plugins.active.find_by_name("refinerycms_inquiries")
-          Refinery::Inquiries::Inquiry.latest(Refinery::Dashboard.activity_show_limit)
-        else
-          []
-        end
       end
 
     end

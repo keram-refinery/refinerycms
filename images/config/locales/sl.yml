@@ -23,7 +23,7 @@ sl:
             switch_to: Preklopi pogled v %{view_name}
             list: seznam
             grid: mrežo
-        view_live_html: Poglej sliko <br/><em>Odpre se v novem oknu</em>
+        view_live: Poglej sliko (Odpre se v novem oknu)
         existing_image:
           button_text: Vstavi
           resize_image: Spremeni velikost slike?
