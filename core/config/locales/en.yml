@@ -13,9 +13,10 @@ en:
     welcome:
       there_are_no_users: "There are no users yet, so we'll set you up first."
     crudify:
-      created: '%{what} was successfully added.'
-      updated: '%{what} was successfully updated.'
-      destroyed: '%{what} was successfully removed.'
+      created: "%{kind} '%{what}' was successfully added."
+      updated: "%{kind} '%{what}' was successfully updated."
+      destroyed: "%{kind} '%{what}' was successfully removed."
+      error: "Oops...an error occurred."
     site_bar:
       log_out: Log out
       switch_to_your_website: Switch to your website
@@ -32,12 +33,18 @@ en:
         save_and_continue_editing: 'Save & continue editing'
       form_actions:
         save: Save
+        insert: Insert
         cancel: Cancel
+        processing: Processing
         cancel_lose_changes: If you cancel you will lose any changes you have made here
         delete: Remove
         close: Close
+        state:
+          error_html: <b class="error">Error!</b>
+          saved_html: <b class="saved">Saved!</b>
+          unsaved_html: <b class="unsaved">Unsaved!</b>
       image_picker:
-        none_selected: There is currently no image selected, please click here to add one.
+        none_selected: 'There is currently no image selected, please click here to add one.'
         remove_current: Remove current image
         change: Click here to pick an image
         show: Show
@@ -63,6 +70,16 @@ en:
         advanced_options: Advanced options
         toggle_advanced_options: Toggle advanced options
         save_as_draft: Save as Draft
+      select_all: Select all
+      disable_all: Disable all
+      record:
+        edit: Edit
+        move: Move
+        delete: Delete
+        live: Live
+        add_child: Add Child
+        archive: Archive
+        download: Download
     message:
       close: Close
       close_this_message: Close this message

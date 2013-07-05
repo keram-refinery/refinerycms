@@ -6,10 +6,10 @@
   <p>
     <%%= t('.below_edit_email_sent') %>
   </p>
-  <table id='<%= singular_name %>'>
+  <table id="<%= singular_name %>">
     <tr>
       <td>
-        <label class='stripped'><%%= t('.to') %></label>
+        <label class="stripped"><%%= t('.to') %></label>
       </td>
       <td>
         <%%= t('.the_customer_making_<%= singular_name %>') %>
@@ -17,7 +17,7 @@
     </tr>
     <tr>
       <td>
-        <label class='stripped'><%%= t('.from') %></label>
+        <label class="stripped"><%%= t('.from') %></label>
       </td>
       <td>
         <%%= "#{Refinery::Core.site_name} &lt;no-reply@#{request.domain}&gt;".html_safe %>
@@ -25,7 +25,7 @@
     </tr>
     <tr>
       <td>
-        <label class='stripped'><%%= t('.subject') %></label>
+        <label class="stripped"><%%= t('.subject') %></label>
       </td>
       <td>
         <%%= text_field_tag 'subject', Refinery::<%= namespacing %>::Setting.confirmation_subject,
@@ -33,19 +33,18 @@
       </td>
     </tr>
     <tr>
-      <td valign='top'>
+      <td valign="top">
         <%%= f.label :value, t('.message'), :class => 'stripped' %>
       </td>
       <td>
-        <%%= f.text_area :value, :value => @setting.value, :rows => "7", :class => 'widest' %>
+        <%%= f.text_area :value, :value => @setting.value, :rows => '7', :class => 'widest' %>
         <br/>
-        <em><%%= t('.note') %></em>
+        <em><%%= t('.note') %>
       </td>
     </tr>
   </table>
 
   <%%= render '/refinery/admin/form_actions', :f => f,
-             :continue_editing => false,
              :cancel_url => refinery.<%= namespacing.underscore %>_admin_<%= plural_name %>_url,
              :hide_delete => true %>
 <%% end %>

@@ -21,8 +21,8 @@ module Refinery
       ::I18n.backend.store_translations :en, :refinery => {
         :plugins => {
           :refinery_rspec => {
-            :title => "Refinery CMS RSpec",
-            :description => "RSpec tests for plugin.rb"
+            :title => 'Refinery CMS RSpec',
+            :description => 'RSpec tests for plugin.rb'
           }
         }
       }
@@ -97,21 +97,10 @@ module Refinery
       end
     end
 
-    describe '#menu_match' do
-      it 'returns regexp based on plugin name' do
-        plugin.menu_match.should == %r{refinery/refinery_rspec(/.+?)?$}
-      end
-    end
-
-    describe '#highlighted?' do
-      it 'returns true if params[:controller] match menu_match regexp' do
-        plugin.highlighted?({:controller => '/refinery/admin/refinery_rspec'}).should be
-        plugin.highlighted?({:controller => '/refinery/refinery_rspec'}).should be
-      end
-
-      it 'returns true if dashboard is true and params[:action] == error_404' do
-        plugin.stub(:dashboard).and_return(true)
-        plugin.highlighted?({:action => 'error_404'}).should be
+    describe '#selected?' do
+      it 'returns true if params[:controller] match plugin name' do
+        Refinery::Plugins.registered.selected('refinery/admin/rspec').should == plugin
+        Refinery::Plugins.registered.selected('refinery/rspec').should == plugin
       end
     end
 
@@ -154,7 +143,7 @@ module Refinery
     end
 
     describe '#activity_by_class_name' do
-      before { plugin.activity = [ { :class_name => "X::Y::Z" }, { :class_name => "X::Y::ZZ" }] }
+      before { plugin.activity = [ { :class_name => 'X::Y::Z' }, { :class_name => 'X::Y::ZZ' }] }
 
       context 'when the plugin have diferents activities' do
         it 'returns the correct activity' do

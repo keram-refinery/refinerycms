@@ -5,7 +5,8 @@ module Refinery
     config_accessor :rescue_not_found, :s3_backend, :base_cache_key, :site_name,
                     :google_analytics_page_code, :authenticity_token_on_frontend,
                     :dragonfly_secret,
-                    :wymeditor_whitelist_tags, :javascripts, :stylesheets,
+                    :javascripts, :stylesheets,
+                    :admin_javascripts, :admin_stylesheets,
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
                     :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts
@@ -13,38 +14,40 @@ module Refinery
     self.rescue_not_found = false
     self.s3_backend = false
     self.base_cache_key = :refinery
-    self.site_name = "Company Name"
-    self.google_analytics_page_code = "UA-xxxxxx-x"
+    self.site_name = 'Site Name'
+    self.google_analytics_page_code = 'UA-xxxxxx-x'
     self.authenticity_token_on_frontend = false
     self.dragonfly_secret = Array.new(24) { rand(256) }.pack('C*').unpack('H*').first
-    self.wymeditor_whitelist_tags = {}
     self.javascripts = []
     self.stylesheets = []
+    self.admin_javascripts = []
+    self.admin_stylesheets = []
     self.s3_bucket_name = ENV['S3_BUCKET']
     self.s3_region = ENV['S3_REGION']
     self.s3_access_key_id = ENV['S3_KEY']
     self.s3_secret_access_key = ENV['S3_SECRET']
     self.force_ssl = false
-    self.backend_route = "refinery"
+    self.backend_route = 'refinery'
     self.dragonfly_custom_backend_class = ''
     self.dragonfly_custom_backend_opts = {}
 
     def config.register_javascript(name)
-      self.javascripts << name
+      self.javascripts |= Array(name)
     end
 
     def config.register_stylesheet(*args)
-      self.stylesheets << Stylesheet.new(*args)
+      self.stylesheets |= Array(Stylesheet.new(*args))
+    end
+
+    def config.register_admin_javascript(name)
+      self.admin_javascripts |= Array(name)
+    end
+
+    def config.register_admin_stylesheet(*args)
+      self.admin_stylesheets |= Array(Stylesheet.new(*args))
     end
 
     class << self
-      def clear_javascripts!
-        self.javascripts = []
-      end
-
-      def clear_stylesheets!
-        self.stylesheets = []
-      end
 
       def dragonfly_custom_backend?
         config.dragonfly_custom_backend_class.present?

@@ -1,0 +1,233 @@
+$selected-bg: #E0F5E0;
+$selected-border-color: #00A017;
+
+#records {
+    float: left;
+    width: 67%;
+    max-width: 640px;
+    margin-right: 20px;
+}
+
+.records {
+    background-color: #fcfcfc;
+}
+
+.records li {
+    padding: 2px 6px;
+    padding-left: 10px;
+    line-height: 26px;
+}
+
+.records:not(.tree) li:nth-child(2n - 1) {
+    background-color: #EAEAEA;
+}
+
+.records .detail,
+.records .title {
+    display: inline-block;
+    max-width: 80%;
+    white-space: nowrap;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.records .actions {
+    float: right;
+    position: relative;
+}
+
+.locales img {
+    vertical-align: middle;
+}
+
+.actions a {
+    padding: 4px;
+}
+
+.actions a:hover,
+.actions a:focus {
+    background-color: #65C3F7;
+}
+
+.actions a:active {
+    background-color: #22A7F2;
+}
+
+.actions .move {
+
+}
+
+a.move:active {
+    cursor: move;
+    background: none;
+}
+
+.actions img {
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+}
+
+.tree li ul {
+    margin-left: 15px;
+}
+
+.tree li {
+    background: url('/assets/refinery/branch.gif') no-repeat scroll 0 0 transparent;
+    padding: 0 0 0 15px;
+}
+
+.tree > li:first-child {
+    background-image: url('/assets/refinery/branch-start.gif');
+}
+
+.tree li:last-child {
+    background-image: url('/assets/refinery/branch-end.gif');
+}
+
+.tree > li:first-child:last-child {
+    background-image: none;
+}
+
+.tree .row {
+    padding: 1px 4px 1px 8px;
+}
+
+.tree .row:hover {
+    background-color: #C9DAE2;
+}
+
+.title.icon-small {
+    background-image: url('/assets/refinery/icons/page.png');
+    background-position: 0px 50%;
+    text-indent: 20px;
+
+    &.toggle {
+        cursor: pointer;
+        background-image: url('/assets/refinery/icons/folder.png');
+    }
+
+    &.toggle.expanded {
+        background-image: url('/assets/refinery/icons/folder_open.png');
+    }
+}
+
+.image-grid {
+    margin: 0px;
+}
+
+.image-grid li {
+    float: left;
+    padding: 0px;
+    margin: 0 8px 10px 0;
+    max-height: 165px;
+    /* max-width: 124px; */
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    background: #f7f7f7
+}
+
+.image-grid .actions {
+    padding-bottom: 3px;
+}
+
+#records .image-grid li {
+    margin: 0 12px 12px 0;
+}
+
+#records .image-grid .image img {
+    width: 114px;
+}
+
+.image-grid li:nth-child(5n),
+#records .image-grid li:nth-child(5n) {
+    margin-right: 0px;
+}
+
+.image-grid .image,
+.image img {
+    display: block;
+    margin: auto;
+    border: none;
+    padding: 0;
+}
+
+.image-grid .image {
+    border: solid 2px #EAEAEA;
+}
+
+.image-grid .image:hover,
+.image-grid .image:focus {
+    border-color: #22A7F2;
+}
+
+.dialog .image-grid li:active .image {
+    border-color: #004a8f;
+}
+
+.image-grid .ui-selected,
+.image-grid .ui-selected:hover {
+    outline: solid 2px #22A7F2;
+}
+
+.image-grid .ui-selected .image {
+    border-color: #22A7F2;
+}
+
+.records:not(.tree) li:hover {
+    background-color: #C9DAE2;
+}
+
+.records:not(.image-grid) .ui-selected,
+.records:not(.image-grid) .ui-selected:hover,
+.records:not(.tree) .ui-selected:nth-child(2n-1) {
+    background: $selected-bg;
+    outline: solid 1px $selected-border-color;
+    color: $selected-border-color;
+}
+
+#actions {
+    float: left;
+    width: 30%;
+    max-width: 300px;
+}
+
+#actions li {
+    margin-bottom: 10px;
+}
+
+#actions li a {
+    background-color: #DBEDFF;
+    background-position: 12px center;
+    border: 1px solid #65C3F7;
+    display: block;
+    height: 100%;
+    padding: 9px 12px 9px 12px;
+}
+
+#actions li a:hover {
+    background-color: #cae7fb;
+}
+
+#actions li a:active {
+    background-color: #22A7F2;
+    color: #fff;
+}
+
+li.child-1 {
+    padding-left: 27px;
+}
+
+li.child-2 {
+    padding-left: 47px;
+}
+
+li.child-3 {
+    padding-left: 67px;
+}
+
+li.child-4 {
+    padding-left: 87px;
+}

@@ -5,17 +5,17 @@ module Refinery
     source_root Pathname.new(File.expand_path('../templates', __FILE__))
 
     class_option :update,  :type => :boolean, :aliases => nil, :group => :runtime,
-                           :desc => "Update an existing Refinery CMS based application"
+                           :desc => 'Update an existing Refinery CMS based application'
     class_option :fresh_installation, :type => :boolean, :aliases => nil, :group => :runtime, :default => false,
-                           :desc => "Allow Refinery to remove default Rails files in a fresh installation"
+                           :desc => 'Allow Refinery to remove default Rails files in a fresh installation'
     class_option :heroku,  :type => :string, :default => nil, :group => :runtime, :banner => 'APP_NAME',
-                           :desc => "Deploy to Heroku after the generator has run."
+                           :desc => 'Deploy to Heroku after the generator has run.'
     class_option :stack,   :type => :string, :default => 'cedar', :group => :runtime,
-                           :desc => "Specify which Heroku stack you want to use. Requires --heroku option to function."
+                           :desc => 'Specify which Heroku stack you want to use. Requires --heroku option to function.'
     class_option :skip_db, :type => :boolean, :default => false, :aliases => nil, :group => :runtime,
-                           :desc => "Skip over any database creation, migration or seeding."
+                           :desc => 'Skip over any database creation, migration or seeding.'
     class_option :skip_migrations, :type => :boolean, :default => false, :aliases => nil, :group => :runtime,
-                           :desc => "Skip over installing or running migrations."
+                           :desc => 'Skip over installing or running migrations.'
 
     def generate
       start_pretending?
@@ -54,9 +54,7 @@ module Refinery
     def append_asset_pipeline!
       application_css = 'app/assets/stylesheets/application.css'
       if destination_path.join(application_css).file?
-        insert_into_file application_css, %q{*= require refinery/formatting
- *= require refinery/theme
- },      :before => "*= require_self"
+        insert_into_file application_css, %Q{ *= require refinery/theme\n}, :before => ' *= require_self'
       end
     end
 
@@ -193,7 +191,7 @@ gem 'pg'
     end
 
     def manage_roadblocks!
-      %w(public/index.html app/views/layouts/application.html.erb).each do |roadblock|
+      %w(app/views/layouts/application.html.erb).each do |roadblock|
         if (roadblock_path = destination_path.join(roadblock)).file?
           if self.options[:fresh_installation]
             remove_file roadblock_path, :verbose => true
@@ -270,7 +268,7 @@ gem 'pg'
       # Only pretend to do the next actions if this is Refinery to stay DRY
       if destination_path == Refinery.root
         say_status :'-- pretending to make changes that happen in an actual installation --', nil, :yellow
-        old_pretend = self.options[:pretend]
+        @old_pretend = self.options[:pretend]
         new_options = self.options.dup
         new_options[:pretend] = true
         self.options = new_options
@@ -282,7 +280,7 @@ gem 'pg'
       if destination_path == Refinery.root
         say_status :'-- finished pretending --', nil, :yellow
         new_options = self.options.dup
-        new_options[:pretend] = old_pretend
+        new_options[:pretend] = @old_pretend
         self.options = new_options
       end
     end

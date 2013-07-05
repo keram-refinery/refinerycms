@@ -1,7 +1,9 @@
 <% flash.each do |key, value| %>
-<div id='flash' class="flash flash_<%= key %>" style='visibility: hidden;' >
-  <%= value %>
-  <%= link_to t(".close#{'_this_message' if key.to_s == "message"}"), "",
-              :id => "flash_close" %>
-</div>
+  <% unless value.empty? %>
+  <div class="flash flash-<%= key %>" >
+    <%= value %>
+    <%= link_to t(".close#{'_this_message' if key.to_s == 'message'}"), ('javascript:back(-1);' if key == :error),
+                :class => 'flash-close nojs-hide' %>
+  </div>
+  <% end %>
 <% end %>

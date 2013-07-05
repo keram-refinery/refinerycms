@@ -3,9 +3,8 @@
 module Refinery
   class AdminController < ::ActionController::Base
     include ::Refinery::ApplicationController
+    include Refinery::Admin::BaseController
     helper ApplicationHelper
     helper Refinery::Core::Engine.helpers
-    include Refinery::Admin::BaseController
-
   end
 end

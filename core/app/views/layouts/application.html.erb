@@ -1,22 +1,28 @@
+<% site_bar = render '/refinery/site_bar' if refinery_user? %>
+<% cache refinery_record_cache_key(@page, 'head') do -%>
 <!DOCTYPE html>
-<%= render "/refinery/html_tag" %>
-  <% site_bar = render('/refinery/site_bar', :head => true) -%>
+<%= render '/refinery/html_tag' %>
   <head>
-    <%= render "/refinery/head" %>
+    <%= render 'refinery/head' %>
   </head>
+<% end %>
   <body id="<%= canonical_id @page %>">
-    <%= site_bar -%>
-    <div id="page_container">
+    <%= site_bar %>
+    <div id="page-container">
       <header id="header">
-        <%= render "/refinery/header" -%>
+        <% cache refinery_record_cache_key(@page, 'header') do -%>
+          <%= render '/refinery/header' %>
+        <% end %>
       </header>
       <section id="page">
         <%= yield %>
       </section>
-      <footer>
-        <%= render "/refinery/footer" -%>
+<% cache refinery_record_cache_key(@page, 'footer') do -%>
+      <footer id="footer">
+        <%= render '/refinery/footer' %>
       </footer>
     </div>
-    <%= render "/refinery/javascripts" %>
+    <%= render '/refinery/javascripts' %>
   </body>
 </html>
+<% end %>

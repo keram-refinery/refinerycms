@@ -15,7 +15,7 @@ en:
             sorry_no_results: Sorry! There are no results found.
             no_items_yet: There are no <%= singular_name.titleize.pluralize %> yet. Click "Add New <%= singular_name.titleize %>" to add your first <%= singular_name.titleize.downcase %>.
           <%= singular_name %>:
-            view_live_html: View this <%= singular_name.titleize.downcase %> live <br/><em>(opens in a new window)</em>
+            view_live: View this <%= singular_name.titleize.downcase %> live (opens in a new window)
             edit: Edit this <%= singular_name.titleize.downcase %>
             delete: Remove this <%= singular_name.titleize.downcase %> forever
       <%= plural_name %>:
@@ -24,5 +24,5 @@ en:
   activerecord:
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
-        <%= a.name %>: <%= a.name.titleize -%>
-<% end -%>
+        <%= a.name %>: <%= a.name.titleize %>
+<% end %>

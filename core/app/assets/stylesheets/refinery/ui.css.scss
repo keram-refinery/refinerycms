@@ -1,103 +1,213 @@
-.ui-widget-overlay {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  width: auto !important;
-  opacity: .75;
-  filter:Alpha(Opacity=75);
-  background: #000;
+.ui-datepicker,
+.ui-dialog,
+.ui-tabs,
+.ui-tabs .ui-tabs-nav {
+    padding: 0px;
 }
-.ui-dialog {
-  position: absolute;
-  background-color: #fff;
-  color: #000;
-  border: 4px solid #22A7F2;
-  width: auto;
-  #dialog_loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 208px;
-    height: 13px;
-    margin: -6px 0 0 -104px;
-  }
-  .ui-dialog-titlebar {
-    position: relative;
-    width: 100%;
-    height: 33px;
-    background-color: #22A7F2;
-  }
-  .ui-dialog-title {
-    float: left;
-    height: 33px;
-    line-height: 33px;
-    font-size: 16px;
-    padding-left: 10px;
-    color: white;
-  }
-  .ui-dialog-titlebar-close {
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    width: 19px;
+
+.ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-widget-content .ui-state-default {
+    background: auto;
     border: none;
-    span {
-      display: block;
-      margin: 1px;
-      background: transparent image_url('refinery/cross.png') top left no-repeat;
-      text-indent:-10000px;
-    }
-  }
-  .ui-dialog-titlebar-close:hover, .ui-dialog-titlebar-close:focus {
-    padding: 0;
-  }
-  iframe {
-    clear:both;
-    border: 0px none;
-    margin-bottom:-1px;
-    margin-top:1px;
-    width: 100% !important;
-  }
 }
-/** Hide the tab without using display:none; This is required to hide flash embeds etc.**/
-.ui-tabs-hide {
-  display: block !important;
-  height: 0 !important;
-  width: 0 !important;
-  border: 0px none !important;
-  visibility: hidden !important;
-  position: absolute;
-  left: -10000px;
-  top: -10000px;
-  object,
-  embed {
-    height: 0px !important;
-    width: 0px !important;
-  }
+
+.ui-widget-header .ui-state-default {
+    background: none;
 }
-.ie7 .ui-tabs-hide {
-  display: none !important !important;
-  height: auto !important !important;
-  width: auto !important !important;
-  position: static;
+
+.ui-widget {
+    font-family: Arial,sans-serif;
+    font-size: 1em;
 }
-.ui-tabs li.ui-state-default {
-  float: left;
-  list-style: none;
-  margin-right: 2px;
+
+.ui-widget-content {
+    color: inherit;
+    border: none;
 }
-.ui-tabs .ui-state-default a {
-  background-color: #bcbcbc;
-  color: white;
-  padding: 8px 13px;
-  border-bottom: none;
-  display: block;
-  margin-top: 6px;
+
+.ui-widget-header {
+    background: #22A7F2;
+    border: none;
+    color: #fff;
 }
-.ui-tabs .ui-state-active a {
-  background-color: #808080;
-  padding: 11px 13px;
-  margin-top: 0px;
+
+.ui-tabs .ui-widget-header {
+    background: none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    float: left;
+    margin: 0 2px 0 0;
+    line-height: 1.3em;
+    border: none;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+    border-radius: 5px 5px 0 0;
+    background-color: #bcbcbc;
+    color: #fff;
+    padding: 8px 13px;
+    display: block;
+    margin-top: 6px;
+    max-width: 10em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.ui-tabs-nav li a:hover,
+.ui-tabs-nav li a:focus {
+    background: #ccc;
+    color: #fff;
+}
+
+.ui-tabs-nav li a:active {
+    background: #aaa;
+    color: #fff;
+}
+
+.ui-tabs .ui-tabs-nav .ui-state-active  a {
+    background-color: #808080;
+    padding: 11px 13px;
+    margin-top: 0px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0px;
+}
+
+.ui-tabs-vertical .ui-tabs-nav {
+    float: left;
+    width: 18%;
+    max-width: 12em;
+    min-width: 8em;
+    margin-bottom: 1em;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li {
+    clear: left;
+    width: 100%;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li a {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    border-radius: 5px 0 0 5px;
+    float: none;
+}
+
+.ui-tabs-vertical .ui-tabs-nav .ui-state-active a {
+    padding: 8px 13px;
+    background-color: #22A7F2;
+}
+
+.ui-tabs-vertical .ui-tabs-panel {
+    float: left;
+    min-width: 340px;
+    /*min-width: 450px; */
+    width: 80%;
+    padding: 0px;
+    padding-left: 10px;
+    /* margin-bottom: 35px; */
+}
+
+.ui-dialog {
+    background-color: #fff;
+    border: 4px solid #22A7F2;
+    border-radius: 6px;
+    min-width: 475px;
+    box-shadow: 0 0 5px 1px #555;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    border: none;
+    border-radius: 0px;
+    padding: 0.5em 10px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+    background: none;
+}
+
+.ui-dialog-titlebar-close .ui-icon {
+    background: url('/assets/refinery/cross.png') no-repeat;
+}
+
+.ui-widget-overlay {
+    background: #000;
+    opacity: 0.75;
+}
+
+.ui-dialog .form-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+}
+
+.dialog-menu {
+    min-width: 130px;
+    width: 20%;
+    padding: 10px 0;
+    float: left;
+}
+
+.dialog-main {
+    float: left;
+    width: 50%;
+    padding: 10px 0;
+}
+
+.dialog-sidebar {
+    width: 30%;
+    float: left;
+    padding: 10px 0;
+}
+
+.dialog-content.loading {
+    background: url('/assets/refinery/dialogLoadingAnimation.gif') no-repeat 50% 50%;
+    min-height: 5em;
+}
+
+.loading .dialog-content-wrapper {
+    visibility: hidden;
+}
+
+.dialog-content-wrapper.no-sidebar .dialog-main {
+    width: 80%;
+}
+
+.dialog-content-wrapper.no-menu .dialog-main {
+    width: 70%;
+}
+
+.dialog-content-wrapper.no-sidebar.no-menu .dialog-main {
+    width: 100%;
+}
+
+.ui-dialog-content {
+    height: auto !important;
+    background: #fff;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 10px;
+    padding-bottom: 40px;
+}
+
+.ui-button {
+    background: #BCBCBC;
+}
+
+.ui-button .ui-button-text {
+    line-height: 1em;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 0.5em 0;
 }

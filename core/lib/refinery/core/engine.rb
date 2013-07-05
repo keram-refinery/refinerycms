@@ -1,7 +1,9 @@
+require 'decorators'
+
 module Refinery
   module Core
     class Engine < ::Rails::Engine
-      extend Refinery::Engine
+      include Refinery::Engine
 
       isolate_namespace Refinery
       engine_name :refinery
@@ -33,45 +35,27 @@ module Refinery
 
       after_inclusion &method(:register_decorators!).to_proc
 
-      # Wrap errors in spans
-      config.to_prepare do
-        ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-          "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe
-        end
-      end
-
-      initializer "refinery.will_paginate" do
+      initializer 'refinery.will_paginate' do
         WillPaginate.per_page = 20
       end
 
-      initializer "register refinery_core plugin" do
+      initializer 'register refinery_core plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
           plugin.name = 'refinery_core'
           plugin.class_name = 'RefineryEngine'
           plugin.hide_from_menu = true
           plugin.always_allow_access = true
-          plugin.menu_match = /refinery\/(refinery_)?core$/
         end
       end
 
-      initializer "register refinery_dialogs plugin" do
-        Refinery::Plugin.register do |plugin|
-          plugin.pathname = root
-          plugin.name = 'refinery_dialogs'
-          plugin.hide_from_menu = true
-          plugin.always_allow_access = true
-          plugin.menu_match = /refinery\/(refinery_)?dialogs/
-        end
-      end
-
-      initializer "refinery.routes", :after => :set_routes_reloader_hook do |app|
+      initializer 'refinery.routes', :after => :set_routes_reloader_hook do |app|
         Refinery::Core::Engine.routes.append do
-          get "#{Refinery::Core.backend_route}/*path" => 'admin#error_404'
+          get '/refinery/*path' => 'admin#error_404'
         end
       end
 
-      initializer "refinery.autoload_paths" do |app|
+      initializer 'refinery.autoload_paths' do |app|
         app.config.autoload_paths += [
           Rails.root.join('app', 'presenters'),
           Rails.root.join('vendor', '**', '**', 'app', 'presenters'),
@@ -80,28 +64,24 @@ module Refinery
       end
 
       # set the manifests and assets to be precompiled
-      initializer "refinery.assets.precompile" do |app|
+      initializer 'refinery.assets.precompile' do |app|
         app.config.assets.precompile += [
-          "refinery/*",
-          "refinery/icons/*",
-          "wymeditor/lang/*",
-          "wymeditor/skins/refinery/*",
-          "wymeditor/skins/refinery/**/*",
-          "modernizr-min.js",
-          "admin.js"
+          'refinery/*',
+          'refinery/icons/*',
+          'modernizr-min.js'
         ]
       end
 
       # active model fields which may contain sensitive data to filter
-      initializer "refinery.params.filter" do |app|
+      initializer 'refinery.params.filter' do |app|
         app.config.filter_parameters += [:password, :password_confirmation]
       end
 
-      initializer "refinery.encoding" do |app|
+      initializer 'refinery.encoding' do |app|
         app.config.encoding = 'utf-8'
       end
 
-      initializer "refinery.memory_store" do |app|
+      initializer 'refinery.memory_store' do |app|
         app.config.cache_store = :memory_store
       end
 

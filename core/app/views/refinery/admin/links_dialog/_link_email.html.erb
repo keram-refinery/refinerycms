@@ -1,0 +1,17 @@
+<div>
+  <div class="field">
+    <%= label_tag "email_address_text", t('tab_name', :scope => 'refinery.admin.pages_dialogs.link_to.email_address') %>
+    <%= email_field :email_address, :text %>
+    <p class="note"><%= t('step1_html', :scope => 'refinery.admin.pages_dialogs.link_to.email_address') %></p>
+  </div>
+  <div class="field">
+    <%= label_tag "email_default_subject_text", t('subject_line_optional', :scope => 'refinery.admin.pages_dialogs.link_to.email_address') %>
+    <%= text_field :email_default_subject, :text %>
+    <p class="note"><%= t('step2_html', :scope => 'refinery.admin.pages_dialogs.link_to.email_address') %></p>
+  </div>
+  <div class="field">
+    <%= label_tag "email_default_body_text", t('body_optional', :scope => 'refinery.admin.pages_dialogs.link_to.email_address') %>
+    <%= text_area :email_default_body, :text, :rows => 3 %>
+    <p class="note"><%= t('step3_html', :scope => 'refinery.admin.pages_dialogs.link_to.email_address') %></p>
+  </div>
+</div>

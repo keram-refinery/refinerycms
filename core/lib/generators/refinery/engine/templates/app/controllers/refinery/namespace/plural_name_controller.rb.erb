@@ -2,8 +2,8 @@ module Refinery
   module <%= namespacing %>
     class <%= class_name.pluralize %>Controller < ::ApplicationController
 
-      before_filter :find_all_<%= plural_name %>
-      before_filter :find_page
+      before_action :find_all_<%= plural_name %>
+      before_action :find_page
 
       def index
         # you can use meta fields from your model instead (e.g. browser_title)
@@ -12,7 +12,7 @@ module Refinery
       end
 
       def show
-        @<%= singular_name %> = <%= class_name %>.find(params[:id])
+        @<%= singular_name %> = <%= class_name %>.find(params[:id].to_s)
 
         # you can use meta fields from your model instead (e.g. browser_title)
         # by swapping @page for @<%= singular_name %> in the line below:
@@ -22,11 +22,11 @@ module Refinery
     protected
 
       def find_all_<%= plural_name %>
-        @<%= "all_" if plural_name == singular_name %><%= plural_name %> = <%= class_name %>.order('position ASC')
+        @<%= 'all_' if plural_name == singular_name %><%= plural_name %> = <%= class_name %>.order('position ASC')
       end
 
       def find_page
-        @page = ::Refinery::Page.where(:link_url => "/<%= plural_name %>").first
+        @page = ::Refinery::Page.where(:plugin_page_id => '<%= plural_name %>').first
       end
 
     end

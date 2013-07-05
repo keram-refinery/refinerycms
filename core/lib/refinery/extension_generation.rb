@@ -3,11 +3,11 @@ module Refinery
 
     def self.included(base)
       base.class_eval do
-        argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
+        argument :attributes, :type => :array, :default => [], :banner => 'field:type field:type'
 
         class_option :namespace, :type => :string, :default => nil, :banner => 'NAMESPACE', :required => false
         class_option :extension, :type => :string, :default => nil, :banner => 'ENGINE', :required => false
-        class_option :i18n, :type => :array, :default => [], :required => false, :banner => "field field", :desc => 'Indicates generated fields'
+        class_option :i18n, :type => :array, :default => [], :required => false, :banner => 'field field', :desc => 'Indicates generated fields'
         class_option :install, :type => :boolean, :default => false, :required => false, :banner => nil, :desc => 'Bundles and runs the generated generator, rake db:migrate, rake db:seed for you'
 
         remove_class_option :skip_namespace
@@ -77,17 +77,6 @@ module Refinery
 
     def resource_attributes
       @resource_attributes ||= attributes.select { |a| a.type == :resource }.uniq
-    end
-
-    def names_for_attr_accessible
-      @attributes_for_attr_accessible ||= attributes.map do |a|
-        case a.type
-        when :image, :resource
-          "#{a.name}_id" unless a.name[-3..-1] == "_id"
-        else
-          a.name
-        end
-      end
     end
 
   protected
@@ -163,7 +152,7 @@ module Refinery
              %r{/#{gem_name}\.rb\.erb$} === path
             # put new translations into a tmp directory
             if apply_tmp
-              path = path.split(File::SEPARATOR).insert(-2, "tmp").
+              path = path.split(File::SEPARATOR).insert(-2, 'tmp').
                           join(File::SEPARATOR)
             end
           elsif %r{/readme.md$} === path || %r{/#{plural_name}.rb$} === path

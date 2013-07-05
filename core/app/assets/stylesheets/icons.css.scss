@@ -1,0 +1,57 @@
+/* icons */
+.add-icon { background-image: url('/assets/refinery/icons/add.png'); }
+.add-child-icon { background-image: url('/assets/refinery/icons/application_add.png'); }
+.delete-icon { background-image: url('/assets/refinery/icons/delete.png'); }
+.edit-icon { background-image: url('/assets/refinery/icons/application_edit.png'); }
+.live-icon { background-image: url('/assets/refinery/icons/application_go.png'); }
+.user-comment-icon { background-image: url('/assets/refinery/icons/user_comment.png'); }
+.edit-email-icon { background-image: url('/assets/refinery/icons/email_edit.png'); }
+.spam-icon { background-image: url('/assets/refinery/icons/bin.png'); }
+.spam-empty-icon { background-image: url('/assets/refinery/icons/bin_closed.png'); }
+.is-spam-icon { background-image: url('/assets/refinery/icons/bin_closed.png'); }
+.email-icon { background-image: url('/assets/refinery/icons/email.png'); }
+.email-go-icon { background-image: url('/assets/refinery/icons/email_go.png'); }
+.back-icon { background-image: url('/assets/refinery/icons/arrow_left.png'); }
+.go-icon { background-image: url('/assets/refinery/icons/application_go.png'); }
+.success-icon { background-image: url('/assets/refinery/icons/tick.png'); }
+.failure-icon { background-image: url('/assets/refinery/icons/cross.png'); }
+.reorder-icon { background-image: url('/assets/refinery/icons/arrow_switch.png'); cursor: pointer; }
+.move-icon { background-image: url('/assets/refinery/icons/arrow_nsew.png'); cursor: pointer; }
+.page-add-icon { background-image: url('/assets/refinery/icons/page_add.png'); }
+.page-options-icon { background-image: url('/assets/refinery/icons/page_white_gear.png'); }
+.setting-edit-icon { background-image: url('/assets/refinery/icons/cog_edit.png'); }
+.settings-icon { background-image: url('/assets/refinery/icons/cog.png'); }
+.doc-icon { background-image: url('/assets/refinery/icons/page_white_put.png'); }
+.detail-icon { background-image: url('/assets/refinery/icons/zoom.png'); }
+.comments-icon { background-image: url('/assets/refinery/icons/comments.png'); }
+.comment-icon { background-image: url('/assets/refinery/icons/comment.png'); }
+.comment-cross-icon { background-image: url('/assets/refinery/icons/comment_cross.png'); }
+.comment-tick-icon { background-image: url('/assets/refinery/icons/comment_tick.png'); }
+.folder-icon { background-image: url('/assets/refinery/icons/folder.png'); }
+.folder-add-icon { background-image: url('/assets/refinery/icons/folder_add.png'); }
+.folder-edit-icon { background-image: url('/assets/refinery/icons/folder_edit.png'); }
+.page-icon { background-image: url('/assets/refinery/icons/page.png'); }
+.page-copy-icon { background-image: url('/assets/refinery/icons/page_copy.png'); }
+.page-add-icon { background-image: url('/assets/refinery/icons/page_add.png'); }
+
+.icon-small {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: 200%;
+    vertical-align: middle;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.icon-with-text {
+    text-indent: 0%;
+    width: auto;
+    height: auto;
+    text-indent: 26px;
+    background-position: 6px center;
+    display: inline-block;
+    vertical-align: middle;
+}

@@ -4,36 +4,38 @@ module Refinery
   module Admin
     module BaseController
 
-      def self.included(base)
-        base.layout :layout?
+      include ActionView::RecordIdentifier
+      extend ActiveSupport::Concern
 
-        base.before_filter :require_refinery_users!, :force_ssl!,
-                           :authenticate_refinery_user!, :restrict_plugins,
-                           :restrict_controller
-        base.after_filter :store_location?, :only => [:index] # for redirect_back_or_default
+      included do
+        send :before_action, :require_refinery_users!
+        send :before_action, :force_ssl!
 
-        base.helper_method :searching?, :group_by_date
+        before_action :authenticate_refinery_user!, :activate_plugins, :restrict_controller
+        after_action :store_location?, :only => [:index] # for redirect_back_or_default
+
+        helper_method :iframe?, :app_dialog?, :group_by_date
       end
 
       def admin?
         true # we're in the admin base controller, so always true.
       end
 
-      def searching?
-        params[:search].present?
+      def app_dialog?
+        dialog? && params[:app_dialog].present?
       end
 
-      protected
+    protected
 
       def force_ssl!
         redirect_to :protocol => 'https' if Refinery::Core.force_ssl && !request.ssl?
       end
 
-      def group_by_date(records)
+      def group_by_date(records, date=:created_at)
         new_records = []
 
         records.each do |record|
-          key = record.created_at.strftime("%Y-%m-%d")
+          key = record[date].strftime("%Y-%m-%d")
           record_group = new_records.collect{|records| records.last if records.first == key }.flatten.compact << record
           (new_records.delete_if {|i| i.first == key}) << [key, record_group]
         end
@@ -42,52 +44,59 @@ module Refinery
       end
 
       def require_refinery_users!
-        redirect_to refinery.signup_path if just_installed? && controller_name != 'users'
+        redirect_to refinery.refinery_users_register_path if just_installed? && controller_name != 'users'
       end
 
-      def restrict_plugins
-        current_length = (plugins = current_refinery_user.authorized_plugins).length
+      def activate_plugins
+        authorized_plugins = current_refinery_user.authorized_plugins
+        ::Refinery::Plugins.set_active(authorized_plugins)
 
-        # Superusers get granted access if they don't already have access.
-        if current_refinery_user.has_role?(:superuser)
-          if (plugins = plugins | ::Refinery::Plugins.registered.names).length > current_length
-            current_refinery_user.plugins = plugins
-          end
+        # we don't have always active plugin, for example Links Dialog,
+        # so this is obsolete
+        unless refinery_plugin
+          logger.warn "Plugin accessed via '#{params[:controller]}' was not found."
+          return error_404
         end
 
-        ::Refinery::Plugins.set_active(plugins)
+        unless authorized_plugins.include?(refinery_plugin.name)
+          logger.warn "User '#{current_refinery_user.username}' tried to access plugin '#{refinery_plugin.name}' via '#{params[:controller]}' but was rejected."
+          return error_403
+        end
       end
+
+    private
 
       def restrict_controller
-        unless allow_controller? params[:controller].gsub 'admin/', ''
-          logger.warn "'#{current_refinery_user.username}' tried to access '#{params[:controller]}' but was rejected."
-          error_404
+        unless allow_controller? ''
+          logger.warn "User '#{current_refinery_user.username}' tried to access controller '#{params[:controller]}' but was rejected."
+          return error_403
         end
       end
 
-      private
-
       def allow_controller?(controller_path)
-        ::Refinery::Plugins.active.any? {|plugin|
-          Regexp.new(plugin.menu_match) === controller_path
-        }
+        controller_permission
+      end
+
+      def controller_permission
+        true
       end
 
       def layout?
-        "refinery/admin#{'_dialog' if from_dialog?}"
+        "refinery/admin#{'.json' if json_layout?}"
       end
 
       # Check whether it makes sense to return the user to the last page they
       # were at instead of the default e.g. refinery_admin_pages_path
       # right now we just want to snap back to index actions and definitely not to dialogues.
       def store_location?
-        store_location unless request.xhr? || from_dialog?
+        store_location unless request.xhr?
       end
 
       # Override authorized? so that only users with the Refinery role can admin the website.
       def authorized?
         refinery_user?
       end
+
     end
   end
 end

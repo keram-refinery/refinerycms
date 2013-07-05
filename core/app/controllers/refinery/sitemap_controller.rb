@@ -1,5 +1,5 @@
 module ::Refinery
-  class SitemapController < ::Refinery::FastController
+  class SitemapController < ActionController::Base
     layout nil
 
     def index

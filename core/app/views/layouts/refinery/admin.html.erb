@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<%= render '/refinery/html_tag' %>
-  <% content_for :meta, "<meta refinerycms='#{Refinery.version}' />".html_safe %>
-  <%= render 'refinery/admin/head' %>
-  <body class="<%= action_name %> <%= I18n.locale %>">
+<html lang="<%= ::I18n.locale %>" class="no-js">
+  <head>
+    <%= render 'refinery/admin/head' %>
+  </head>
+  <body>
     <%= render '/refinery/site_bar' %>
-    <div id='tooltip_container'></div>
-    <header id="header">
-      <%= render 'refinery/admin/menu' %>
-    </header>
-    <div id="page_container">
-      <div id="page">
-        <div id="content" class="clearfix">
-          <div id="flash_container">
-            <%= render '/refinery/no_script' %>
-            <%= render '/refinery/message' %>
+    <div id="wrapper">
+      <header id="header">
+        <%= render 'refinery/admin/menu' %>
+      </header>
+      <div id="page-container">
+        <div id="page">
+          <div id="content" class="clearfix" role="main">
+            <div id="flash-container">
+              <%= render '/refinery/no_script' %>
+              <%= render '/refinery/message' %>
+            </div>
+            <div id="<%= "#{controller_name}-#{action_name}" %>">
+              <%= yield %>
+            </div>
           </div>
-          <%= yield %>
         </div>
       </div>
     </div>

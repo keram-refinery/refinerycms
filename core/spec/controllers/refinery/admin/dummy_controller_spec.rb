@@ -19,7 +19,7 @@ module Refinery
         context "with permission" do
           let(:controller_permission) { true }
           it "allows access" do
-            controller.should_not_receive :error_404
+            controller.should_not_receive :error_403
             get :index
           end
         end
@@ -27,7 +27,7 @@ module Refinery
         context "without permission" do
           let(:controller_permission) { false }
           it "denies access" do
-            controller.should_receive :error_404
+            controller.should_receive :error_403
             get :index
           end
         end

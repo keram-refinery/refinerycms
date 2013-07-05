@@ -5,12 +5,12 @@ module Refinery
     refinery_login_with :refinery_user
 
     let(:home_page) do
-      FactoryGirl.create :page, :title => 'Home', :link_url => '/'
+      FactoryGirl.create :page, :title => 'Home', :plugin_page_id => 'refinery_pages'
     end
 
     describe 'body' do
       it "id is the page's canonical id" do
-        visit home_page.url
+        visit refinery.url_for(home_page.url)
 
         page.should have_css 'body#home-page'
       end

@@ -2,8 +2,9 @@ module Refinery
   class Plugin
 
     attr_accessor :name, :class_name, :controller, :directory, :url,
-                  :dashboard, :always_allow_access, :menu_match,
-                  :hide_from_menu, :pathname, :plugin_activity
+                  :dashboard, :always_allow_access,
+                  :hide_from_menu, :pathname, :plugin_activity, :position,
+                  :javascript, :stylesheet, :admin_javascript, :admin_stylesheet
 
     def self.register(&block)
       yield(plugin = self.new)
@@ -11,10 +12,11 @@ module Refinery
       raise "A plugin MUST have a name!: #{plugin.inspect}" if plugin.name.blank?
 
       # Set defaults.
-      plugin.menu_match ||= %r{refinery/#{plugin.name}(/.+?)?$}
       plugin.always_allow_access ||= false
       plugin.dashboard ||= false
       plugin.class_name ||= plugin.name.camelize
+
+      plugin.position ||= 100
 
       # add the new plugin to the collection of registered plugins
       ::Refinery::Plugins.registered << plugin
@@ -45,11 +47,6 @@ module Refinery
       self.activity.select{ |a| a.class_name == class_name.to_s.camelize }
     end
 
-    # Used to highlight the current tab in the admin interface
-    def highlighted?(params)
-      !!(params[:controller].try(:gsub, "admin/", "") =~ menu_match) || (dashboard && params[:action] == 'error_404')
-    end
-
     def pathname=(value)
       value = Pathname.new(value) if value.is_a? String
       @pathname = value
@@ -74,15 +71,30 @@ module Refinery
       end
     end
 
-    def version
-      Refinery.deprecate "Refinery::Plugin#version", :when => '2.2',
-                         :caller => caller.detect{|c| /#{pathname}/ === c }
+    PAGE_METHOD_RE = /(^page$|(^[a-z_]+)_page$)/
+
+    def method_missing(method_name, *args, &block)
+      if method_name.match(PAGE_METHOD_RE)
+        if Refinery::Page.table_exists?
+          self.class.send(:define_method, method_name) do
+            instance_variable_get("@#{method_name}") ||
+            instance_variable_set("@#{method_name}",
+              Refinery::Page.find_by(plugin_page_id: "#{self.name}#{'_' << $2 if $2}"))
+          end
+
+          return send method_name
+        else
+          return nil
+        end
+      end
+
+      super
     end
 
-    def version=(*args)
-      Refinery.deprecate "Refinery::Plugin#version=", :when => '2.2',
-                         :caller => caller.detect{|c| /#{pathname}/ === c }
-    end
+   def respond_to?(method_name, include_private = false)
+     !!(method_name =~ PAGE_METHOD_RE) || super
+   end
+
 
   # Make this protected, so that only Plugin.register can use it.
   protected
@@ -93,7 +105,7 @@ module Refinery
 
     def initialize
       # provide a default pathname to where this plugin is using its lib directory.
-      depth = RUBY_VERSION >= "1.9.2" ? 4 : 3
+      depth = 4
       self.pathname ||= Pathname.new(caller(depth).first.match("(.*)#{File::SEPARATOR}lib")[1])
     end
   end

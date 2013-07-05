@@ -1,0 +1,17 @@
+//= require jquery.min
+//= require jquery_ujs
+//= require vendor/i18n
+//= require refinery/i18n/refinery-en
+//= require refinery/refinery.all
+<% ::Refinery::Core.javascripts.each do |js| %>
+<%= require_asset js %>
+<% end %>
+$(function () {
+  $(document).on('ajax:success', function (event, response, status, xhr) {
+    if (typeof response === 'object') {
+      event.preventDefault();
+      refinery.xhr.success(response, status, xhr, $('#page'));
+    }
+  });
+
+});

@@ -1,0 +1,38 @@
+@import 'main';
+@import 'forms';
+@import 'icons';
+
+.login {
+
+    #header,
+    #page-container {
+        max-width: 520px;
+        min-width: 320px;
+        margin: auto;
+    }
+
+    #page-container {
+        border-radius: 0 0 5px 5px;
+    }
+
+    #header {
+        background: #EAEAEA;
+    }
+
+    #header h1 {
+        padding-top: 20px;
+        font-size: 130%;
+    }
+
+    .larger {
+        background: url('/assets/refinery/text_field_background.png') repeat-x #fff;
+    }
+
+    .larger:focus {
+        background-position: 0px -42px;
+    }
+
+    .forgot-password {
+        text-align: right;
+    }
+}

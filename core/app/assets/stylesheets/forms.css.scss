@@ -1,0 +1,188 @@
+
+table.form {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.form tbody th {
+    width: 20%;
+}
+
+form {
+    max-width: 940px;
+}
+
+.form-actions {
+    position: relative;
+    background-color: #F2F2F2;
+    border: 1px solid #ccc;
+    max-height: 45px;
+    padding: 10px 0;
+    border-radius: 5px;
+}
+
+.form-actions-left {
+    margin-left: 10px;
+    float: left;
+}
+
+#content .fly.form-actions-left {
+    position: fixed;
+    bottom: 10px;
+    opacity: 0.85;
+}
+
+.form-actions-right {
+    margin-right: 10px;
+    float: right;
+}
+
+.form-actions .button {
+    margin-left: 6px;
+}
+
+.form-actions .button:first-child {
+    margin-left: 0px;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.field-with-errors input.larger {
+    background-position: 0px -82px;
+    border: 1px solid #f00;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.label_with_help {
+    margin-bottom: 5px;
+}
+
+.label_with_help label {
+    display: inline;
+}
+
+.stripped {
+    display: inline;
+    float: none;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.checkboxes ul {
+    width: 20em;
+    margin: 5px;
+}
+
+.checkboxes.ui-sortable li {
+    background: url('/assets/refinery/icons/arrow_nsew.png') no-repeat 98% 50%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+textarea {
+    border: 1px solid #7F9DB9;
+    line-height: 20px;
+    margin: 0px;
+    padding: 0.4% 0.5%;
+}
+
+
+
+.widest, textarea {
+    width: 99%;
+}
+
+input.larger {
+    font-size: 150%;
+    height: 31px;
+}
+
+input.button,
+a.button,
+.ui-widget-content button,
+.ui-widget-content .button {
+    cursor:pointer;
+    background: #22a7f2;
+    color: #fff;
+    padding: 0px 14px 0px 14px;
+    font-size: 14px;
+    line-height: 25px;
+    height: 25px;
+    display: inline-block;
+    border: none;
+    text-decoration: none;
+    margin: 0px;
+    border-radius: 6px;
+}
+
+input.button {
+    padding-bottom: 3px;
+}
+
+input.button:hover,
+a.button:hover,
+input.button:focus,
+a.button:focus {
+    background: #62bef2;
+}
+
+input.button:active,
+a.button:active {
+    background: #004a8f;
+}
+
+input.secondary-button,
+a.secondary-button,
+.ui-widget-content .secondary-button {
+    background: #bcbcbc;
+}
+
+input.secondary-button:hover,
+a.secondary-button:hover,
+input.secondary-button:focus,
+a.secondary-button:focus {
+    background: #cdcdcd;
+}
+
+input.secondary-button:active,
+a.secondary-button:active {
+    background: #aaa;
+}
+
+input.danger-button,
+a.danger-button {
+    background: #ee1100;
+}
+
+input.danger-button:hover,
+a.danger-button:hover
+input.danger-button:focus,
+a.danger-button:focus {
+    background: #f32;
+}
+
+input.danger-button:active,
+a.danger-button:active {
+    background: #b00;
+}
+
+#more-options-field {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#draft-field {
+    float: right;
+}

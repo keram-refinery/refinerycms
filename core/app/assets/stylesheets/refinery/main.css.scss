@@ -1,0 +1,271 @@
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* semantic classes */
+.label {
+    background-color: #BFBFBF;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    font-size: 9.75px;
+    font-weight: bold;
+    padding: 1px 3px 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.hide,
+.js .js-hide,
+.no-js .nojs-hide {
+    display: none !important;
+}
+
+.js .initialise {
+    visibility: hidden;
+}
+
+.hide-overflow {
+    overflow: hidden;
+}
+
+.less-important {
+    color: #727272;
+}
+
+.preview {
+    color: #A3A093;
+}
+
+.note {
+    color: #777;
+    font-size: small;
+}
+
+/* flash messages */
+.flash {
+    padding: 8px 8px 8px 30px;
+    margin-bottom: 20px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 7px 10px;
+    background-color: #C7E9FC;
+    border: 1px solid #738F9C;
+    background-image: url('/assets/refinery/icons/information.png');
+}
+
+.flash-success,
+.flash-message {
+    border-color: #00A017;
+    color: #00A017;
+    background-color: #E0F5E0;
+    background-image: url('/assets/refinery/icons/accept.png') ;
+}
+
+.error-explanation {
+    background: 7px 12px no-repeat url('/assets/refinery/icons/cancel.png') #FFB1B1;
+    padding: 10px 5px 5px 30px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    border: 1px solid #f00;
+    border-top-width: 3px;
+    margin-bottom: 20px;
+}
+
+.error-explanation p {
+    font-weight: normal;
+}
+
+.flash-error,
+.flash-alert {
+    border-color: #A00027;
+    color: #A00027;
+    background-image: url('/assets/refinery/icons/cancel.png');
+    background-color: #FFBEBE;
+}
+
+.flash-close {
+    text-transform: lowercase;
+    position: absolute;
+    right: 9px;
+    top: 7px;
+}
+
+.hemisquare {
+    width: 48%;
+    float: left;
+}
+
+.right-side {
+    float: right;
+}
+
+/* content formatting and layout */
+article, nav, header, footer, aside, section {
+    display: block;
+}
+
+body, h1, h2, h3, h4, ul, ol, li, p {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul {
+    list-style: none;
+}
+
+ol {
+    padding-left: 2em;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 150%;
+    color: #41403C;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACpJREFUeNpiFBFlY0ACv3//RuaysrLikWVioACMah7VPKp5VDPlmgECDADXyAZIrAp8FwAAAABJRU5ErkJggg==);
+    background-color: #303030;
+}
+
+p, ol, ul {
+    margin-bottom: 20px;
+}
+
+li ul {
+    margin-bottom: 0px;
+}
+
+acronym {
+    cursor: help;
+}
+
+h2 {
+    font-size: 128.6%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 114.3%;
+    margin-bottom: 10px;
+}
+
+li a {
+    color: #41403C;
+    text-decoration: none;
+}
+
+li a:hover {
+    color: #000;
+}
+
+th {
+    text-align: left;
+}
+
+/* basic layout */
+#header {
+    padding: 0px 20px;
+    padding-top: 15px;
+    position: relative;
+}
+
+#page-container {
+    padding: 30px 20px;
+    background: #fff;
+}
+
+a.help,
+span.help {
+    width: 16px;
+    height: 16px;
+    background: url('/assets/refinery/icons/help.png') no-repeat;
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.help .text {
+    display: none;
+    padding: 6px 8px;
+    position: absolute;
+    bottom: 16px;
+    left: 0px;
+    width: 260px;
+    min-height: 20px;
+    text-indent: 0px;
+    background: #22a7f2;
+    border: solid 1px #1b82bd;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #ccc;
+}
+
+.help:hover .text {
+  display: block;
+  z-index: 1001;
+}
+
+.image-holder img {
+    border: solid 4px #ccc;
+}
+
+#page-parts-controls {
+    position: relative;
+    z-index: 1;
+    float: right;
+    margin: 0px;
+}
+
+#page-parts-controls li {
+    float: right;
+    margin: 15px 5px 0px;
+}
+
+.spinner {
+    background-image: url('/assets/refinery/icons/ajax-loader.gif');
+    visibility: hidden;
+}
+
+.loading {
+
+    #wrapper {
+        opacity: 0.9;
+    }
+
+    .spinner {
+        visibility: visible;
+        background-color: #fafafa;
+        background-position: 50% center;
+        background-repeat: no-repeat;
+        border: 1px solid #FAFAFA;
+        border-radius: 3px 3px 3px 3px;
+        box-shadow: 0 0 5px #CCCCCC;
+        height: 42px;
+        left: 40%;
+        position: fixed;
+        top: 40%;
+        width: 90px;
+        z-index: 100;
+    }
+
+
+    a {
+        cursor: progress;
+    }
+}
+

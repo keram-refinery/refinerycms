@@ -3,24 +3,20 @@ module Refinery
     module Admin
       class SettingsController < Refinery::AdminController
 
-        before_filter :check_setting, :only => [:edit, :update]
-        after_filter :save_subject_for_confirmation, :save_message_for_confirmation, :only => :update
+        before_action :check_setting, :only => [:edit, :update]
+        after_action :save_subject_for_confirmation, :save_message_for_confirmation, :only => :update
 
         def edit
-          @setting = Refinery::Setting.find(params[:id])
+          @setting = Refinery::Setting.find(params[:id].to_s)
         end
 
         def update
-          @setting = Refinery::Setting.find(params[:id])
+          @setting = Refinery::Setting.find(params[:id].to_s)
 
           if @setting.update_attributes(params[:setting])
-            flash[:notice] = t('refinery.crudify.updated', :what => @setting.name.gsub("<%= singular_name %>_", "").titleize)
+            flash[:notice] = t('refinery.crudify.updated', :kind => 'Setting', :what => @setting.name.gsub("<%= singular_name %>_", "").titleize)
 
-            unless request.xhr? or from_dialog?
-              redirect_back_or_default(refinery.<%= namespacing.underscore %>_admin_<%= plural_name %>_path)
-            else
-              render :text => "<script type='text/javascript'>parent.window.location = '#{refinery.<%= namespacing.underscore %>_admin_<%= plural_name %>_path}';</script>"
-            end
+            redirect_back_or_default(refinery.<%= namespacing.underscore %>_admin_<%= plural_name %>_path)
           end
         end
 

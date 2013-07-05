@@ -32,7 +32,7 @@ describe Refinery::Activity do
 
   describe '#url' do
     it 'returns the url' do
-      activity.url.should == 'refinery.edit_x_y_admin_z_path'
+      activity.url.should == 'refinery.edit_admin_x_y_z_path'
     end
   end
 
@@ -40,7 +40,7 @@ describe Refinery::Activity do
     before { module Refinery; module Y; class Z; end; end; end }
     let(:activity) { Refinery::Activity.new(:class_name => 'Refinery::Y::Z') }
     it 'returns the url' do
-      activity.url.should == 'refinery.edit_y_admin_z_path'
+      activity.url.should == 'refinery.edit_admin_y_z_path'
     end
   end
 end

@@ -1,0 +1,27 @@
+.locales {
+	vertical-align: middle;
+	border: 0;
+	font: 0/0 a;
+	text-shadow: none;
+	color: transparent;
+	background-color: transparent;
+}
+
+.locales .locale {
+	margin: 0px 2px;
+	width: 16px;
+	height: 11px;
+	display: inline-block;
+	line-height: 1em;
+	overflow: hidden;
+	text-indent: 100%;
+	vertical-align: middle;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+
+<% Refinery::I18n.frontend_locales.each do |flag| %>
+.flag-<%= flag %> {
+	background-image: image-url('refinery/icons/flags/<%= flag %>.png');
+}
+<% end %>

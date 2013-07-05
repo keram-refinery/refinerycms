@@ -1,33 +1,37 @@
-<% title_attribute = (title = attributes.detect { |a| a.type.to_s == "string" }).present? ? title.name : 'title' -%>
-<li class='clearfix record <%%= cycle("on", "on-hover") %>' id="<%%= dom_id(<%= singular_name %>) -%>">
-  <span class='title'>
+<% title_attribute = (title = attributes.detect { |a| a.type.to_s == 'string' }).present? ? title.name : 'title' %>
+<li class="record" id="<%%= dom_id(<%= singular_name %>) %>">
+  <span class="title">
     <%%= <%= singular_name %>.<%= title_attribute %> %>
-<% if localized? %>
-    <%% if Refinery::I18n.frontend_locales.many? %>
-      <span class='preview'>
-        <%% <%= singular_name %>.translations.each do |translation| %>
-          <%% if translation.<%= title_attribute %>.present? %>
-            <%%= link_to refinery_icon_tag("flags/#{translation.locale}.png", :size => '16x11'),
-                         refinery.edit_<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>, :switch_locale => translation.locale),
-                         :class => 'locale' %>
-          <%% end %>
-        <%% end %>
-      </span>
-    <%% end %>
-<% end %>
   </span>
-  <span class='actions'>
-    <% unless skip_frontend? %>
-    <%%= link_to refinery_icon_tag("application_go.png"), refinery.<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-        :title => t('.view_live_html'),
-        :target => "_blank" %>
-    <% end %>
-    <%%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>),
-         :title => t('.edit') %>
-    <%%= link_to refinery_icon_tag("delete.png"), refinery.<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>),
-        :class => "cancel confirm-delete",
-        :title => t('.delete'),
-        :confirm => t('message', :scope => 'refinery.admin.delete', :title => <%= singular_name %>.<%= title_attribute %>),
-        :method => :delete %>
+
+<% if localized? %>
+  <%% if Refinery::I18n.frontend_locales.many? %>
+    <%%= render 'record_translations',
+                :record => <%= singular_name %>,
+                :link => 'edit_<%= namespacing.underscore %>_admin_<%= singular_name %>' %>
+  <%% end %>
+<% end %>
+
+  <span class="actions">
+    <%%= link_to t('delete', :scope => 'refinery.admin.record'),
+                refinery.<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>),
+                :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
+                :title => t('.delete'),
+                :remote => true,
+                :confirm => t('message', :scope => 'refinery.admin.delete', :title => <%= singular_name %>.<%= title_attribute %>),
+                :method => :delete %>
+
+    <%%= link_to t('edit', :scope => 'refinery.admin.record'),
+                refinery.edit_<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>),
+                :class => 'icon-small edit-icon',
+                :title => t('.edit') %>
+
+  <% unless skip_frontend? %>
+    <%%= link_to t('live', :scope => 'refinery.admin.record'),
+                refinery.<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                :class => 'icon-small live-icon',
+                :title => t('.view_live'),
+                :target => '_blank' %>
+  <% end %>
   </span>
 </li>

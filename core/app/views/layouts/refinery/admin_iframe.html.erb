@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<%= render '/refinery/html_tag' %>
+  <head>
+    <%= render 'refinery/admin/head' %>
+  </head>
+  <body>
+    <div id="flash-container">
+      <%= render '/refinery/message' %>
+    </div>
+    <div id="content" class="clearfix">
+      <%= yield %>
+    </div>
+  </body>
+</html>

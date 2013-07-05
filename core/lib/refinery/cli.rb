@@ -61,7 +61,7 @@ module Refinery
       puts "You didn't specify anything valid to override. Here are some examples:"
       {
         :view => ['pages/home', 'refinery/pages/home', '**/*menu', '_menu_branch'],
-        :javascript => %w(admin refinery/site_bar wymeditor**/{**/}*),
+        :javascript => %w(admin refinery/site_bar **/{**/}*),
         :stylesheet => %w(home refinery/site_bar),
         :controller => %w(pages),
         :model => %w(page refinery/page),
@@ -97,7 +97,7 @@ module Refinery
         indent = method_lines.second.index %r{[^ ]}
         crud_method = method_lines.join("\n").gsub /^#{" " * indent}/, "  "
 
-        crud_options = controller_class.try(:crudify_options) || {}
+        crud_options = controller_class.fetch(:crudify_options){{}}
         crud_method.gsub! '#{options[:redirect_to_url]}', crud_options[:redirect_to_url].to_s
         crud_method.gsub! '#{options[:conditions].inspect}', crud_options[:conditions].inspect
         crud_method.gsub! '#{options[:title_attribute]}', crud_options[:title_attribute]

@@ -5,7 +5,7 @@ en:
         title: Images
         description: Manage images
     crudify:
-      resource: Image
+      image: Image
     admin:
       images:
         delete: Remove this image forever

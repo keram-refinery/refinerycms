@@ -1,5 +1,7 @@
 # Encoding: UTF-8
 
+version = Refinery::Version.to_s
+
 Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.name              = 'refinerycms-<%= plural_name %>'
@@ -11,6 +13,6 @@ Gem::Specification.new do |s|
   s.files             = Dir["{app,config,db,lib}/**/*"] + ["readme.md"]
 
   # Runtime dependencies
-  s.add_dependency    'refinerycms-core',     '~> <%= Refinery::Version %>'
-  s.add_dependency    'refinerycms-settings', '~> <%= Refinery::Version %>'
+  s.add_dependency    'refinerycms-core',     '~> <%%= version %>'
+  s.add_dependency    'refinerycms-settings', '~> <%%= version %>'
 end

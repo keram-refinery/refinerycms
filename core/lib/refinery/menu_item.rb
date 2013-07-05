@@ -1,7 +1,9 @@
+require 'refinery/menu_item_url'
+
 module Refinery
   class MenuItem
 
-    attr_accessor :menu, :title, :parent_id, :lft, :rgt, :depth, :url, :menu_match,
+    attr_accessor :menu, :title, :parent_id, :lft, :rgt, :depth, :url, :link_url, :path,
                   :original_type, :original_id
 
     def initialize(menu, options = {})
@@ -16,6 +18,23 @@ module Refinery
       options[:original_id] = options.delete(:id)
       options[:original_type] = options.delete(:type)
       options
+    end
+
+    def parents
+      @parents ||= [].tap do |a|
+        if parent_id
+          parent = ancestors.detect { |item| item.original_id == parent_id }
+          if parent
+            a << parent.parents
+            a << parent
+            a.flatten!
+          end
+        end
+      end
+    end
+
+    def url
+      MenuItems::Url.build(self)
     end
 
     def ancestors

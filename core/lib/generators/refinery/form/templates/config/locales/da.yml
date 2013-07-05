@@ -61,6 +61,6 @@ da:
       <%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
-<% attributes.each do |a| -%>
+<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.humanize %>
-<% end -%>
+<% end %>

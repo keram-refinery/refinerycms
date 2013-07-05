@@ -41,7 +41,12 @@ module Refinery
       map(&:title)
     end
 
+    def selected controller
+      find_by_name(controller.sub('/admin/', '_').sub('refinery/', 'refinery_').gsub(/_dialog$/, '').split('/').first)
+    end
+
     class << self
+
       def active
         @active_plugins ||= new
       end
@@ -52,6 +57,10 @@ module Refinery
 
       def registered
         @registered_plugins ||= new
+      end
+
+      def [](name)
+        registered.find_by_name(name)
       end
 
       def activate(name)

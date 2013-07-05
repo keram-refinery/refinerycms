@@ -14,32 +14,32 @@ module Refinery
 
     specify do
       destination_root.should have_structure {
-        directory "vendor" do
-          directory "extensions" do
-            directory "rspec_product_tests" do
-              directory "app" do
-                directory "controllers" do
-                  directory "refinery" do
-                    directory "rspec_product_tests" do
-                      directory "admin" do
+        directory 'vendor' do
+          directory 'extensions' do
+            directory 'rspec_product_tests' do
+              directory 'app' do
+                directory 'controllers' do
+                  directory 'refinery' do
+                    directory 'rspec_product_tests' do
+                      directory 'admin' do
                         file "rspec_product_tests_controller.rb"
                       end
                       file "rspec_product_tests_controller.rb"
                     end
                   end
                 end
-                directory "models" do
-                  directory "refinery" do
-                    directory "rspec_product_tests" do
+                directory 'models' do
+                  directory 'refinery' do
+                    directory 'rspec_product_tests' do
                       file "rspec_product_test.rb"
                     end
                   end
                 end
-                directory "views" do
-                  directory "refinery" do
-                    directory "rspec_product_tests" do
-                      directory "admin" do
-                        directory "rspec_product_tests" do
+                directory 'views' do
+                  directory 'refinery' do
+                    directory 'rspec_product_tests' do
+                      directory 'admin' do
+                        directory 'rspec_product_tests' do
                           file "_form.html.erb"
                           file "_sortable_list.html.erb"
                           file "edit.html.erb"
@@ -48,7 +48,7 @@ module Refinery
                           file "_rspec_product_test.html.erb"
                         end
                       end
-                      directory "rspec_product_tests" do
+                      directory 'rspec_product_tests' do
                         file "index.html.erb"
                         file "show.html.erb"
                       end
@@ -56,18 +56,18 @@ module Refinery
                   end
                 end
               end
-              directory "lib" do
+              directory 'lib' do
                 file "refinerycms-rspec_product_tests.rb"
               end
-              directory "spec" do
+              directory 'spec' do
                 file "spec_helper.rb"
               end
-              directory "tasks" do
+              directory 'tasks' do
                 file "testing.rake"
                 file "rspec.rake"
               end
-              directory "config" do
-                directory "locales" do
+              directory 'config' do
+                directory 'locales' do
                   file "en.yml"
                 end
                 file "routes.rb"
@@ -79,14 +79,6 @@ module Refinery
           end
         end
       }
-    end
-
-    describe "attr_accessible" do
-      it "adds attributes to the list" do
-        File.open("#{destination_root}/vendor/extensions/rspec_product_tests/app/models/refinery/rspec_product_tests/rspec_product_test.rb") do |file|
-          file.grep(%r{attr_accessible :title, :description, :image_id, :brochure_id, :position}).count.should eq(1)
-        end
-      end
     end
   end
 end

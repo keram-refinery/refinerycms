@@ -1,5 +1,3 @@
-<ul id='sortable_list'>
+<ul id="<%%= refinery_dom_id(@<%= plural_name %>) %>" class="sortable-list">
   <%%= render :partial => '<%= singular_name %>', :collection => @<%= plural_name %> %>
 </ul>
-<%%= render '/refinery/admin/sortable_list',
-            :continue_reordering => (local_assigns.keys.include?(:continue_reordering)) ? continue_reordering : true %>

@@ -4,6 +4,8 @@ en:
       refinery_users:
         title: Users
         description: Manage users
+    crudify:
+      user: User
     admin:
       users:
         delete: Remove this user forever

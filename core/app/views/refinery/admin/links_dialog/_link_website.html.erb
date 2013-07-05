@@ -1,0 +1,20 @@
+<div>
+  <div class="field">
+    <%= label_tag 'web_address_text', t('location', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %>
+    <%= text_field :web_address, :text, :value => 'http://', :class => 'widest' %>
+  </div>
+  <div class="field">
+    <%= label_tag '', t('new_window', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %>
+    <input type="checkbox" name="web_address_target_blank" id="web_address_target_blank" />
+    <%= label_tag 'web_address_target_blank',
+                          t('new_window_label', :scope => 'refinery.admin.pages_dialogs.link_to.web_address'),
+                          :class => 'stripped' %>
+  </div>
+  <p>
+    <strong><%= t('not_sure', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %></strong>
+  </p>
+  <ol>
+    <li><%= t('step1', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %></li>
+    <li><%= t('step2', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %></li>
+  </ol>
+</div>
