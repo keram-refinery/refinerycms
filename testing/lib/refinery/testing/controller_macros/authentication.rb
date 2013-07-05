@@ -14,11 +14,12 @@ module Refinery
           factory_user factory
         end
 
-        def mock_user(roles)
+        def mock_user(roles, plugins=nil)
           let(:controller_permission) { true }
           roles = handle_deprecated_roles! roles
+          plugins ||= Refinery::Plugins.registered.in_menu.names
           let(:logged_in_user) do
-            user = mock 'Refinery::User', :username => 'Joe Fake'
+            user = mock 'Refinery::User', :username => 'Joe Fake', :locale => :en, :plugins => plugins
 
             roles.each do |role|
               user.should_receive(:has_role?).
@@ -35,7 +36,7 @@ module Refinery
           before do
             controller.should_receive(:require_refinery_users!).and_return false
             controller.should_receive(:authenticate_refinery_user!).and_return true
-            controller.should_receive(:restrict_plugins).and_return true
+            controller.should_receive(:activate_plugins).and_return true
             controller.should_receive(:allow_controller?).and_return controller_permission
             controller.stub(:refinery_user?).and_return true
             controller.stub(:current_refinery_user).and_return logged_in_user
@@ -48,26 +49,6 @@ module Refinery
             @request.env["devise.mapping"] = Devise.mappings[:admin]
             sign_in logged_in_user
           end
-        end
-
-        def login_user
-          Refinery.deprecate :login_user, :when => '2.2', :replacement => 'refinery_login_with :user'
-          refinery_login_with :user
-        end
-
-        def login_refinery_user
-          Refinery.deprecate :login_refinery_user, :when => '2.2', :replacement => 'refinery_login_with :refinery_user'
-          refinery_login_with :refinery_user
-        end
-
-        def login_refinery_superuser
-          Refinery.deprecate :login_refinery_superuser, :when => '2.2', :replacement => 'refinery_login_with :refinery_superuser'
-          refinery_login_with :refinery_superuser
-        end
-
-        def login_refinery_translator
-          Refinery.deprecate :login_refinery_translator, :when => '2.2', :replacement => 'refinery_login_with :refinery_translator'
-          refinery_login_with :refinery_translator
         end
 
         private

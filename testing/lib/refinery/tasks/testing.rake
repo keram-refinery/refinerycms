@@ -52,8 +52,13 @@ namespace :refinery do
       Rake::Task['app:db:drop'].invoke
     end
 
+    desc "Reload the dummy app's database."
+    task :reload_dummy_app_database do
+      system 'RAILS_ENV=test bundle exec rake db:migrate:reset'
+    end
+
     task :init_test_database do
-      system "bundle exec rake -f #{dummy_app_path.join('Rakefile')} db:test:prepare"
+      system 'RAILS_ENV=test bundle exec rake db:drop db:create db:migrate:reset'
     end
 
     def dummy_app_path

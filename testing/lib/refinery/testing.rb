@@ -14,12 +14,10 @@ module Refinery
       # Load the factories of all currently loaded extensions
       def load_factories
         Refinery.extensions.each do |extension_const|
-          if extension_const.respond_to?(:factory_paths)
-            extension_const.send(:factory_paths).each do |path|
-              FactoryGirl.definition_file_paths << path
-            end
-          end
+          path = "#{extension_const.root}/spec/factories"
+          FactoryGirl.definition_file_paths << path if File.exists?(path)
         end
+
         FactoryGirl.find_definitions
       end
     end
