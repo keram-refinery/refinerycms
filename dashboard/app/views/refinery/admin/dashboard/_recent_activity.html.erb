@@ -1,11 +1,11 @@
-<div id='recent_activity'>
+<div id="recent-activity">
   <h2><%= t('.latest_activity') %></h2>
   <% if (activity = @recent_activity.collect { |a|
           activity_message_for(a)
         }.reject(&:blank?)).present? %>
-    <ul class='clickable'>
+    <ul class="records">
     <% activity.each do |message| %>
-       <li class='<%= cycle("on", "on-hover", :name => 'recent_activity_cycle') %>'>
+       <li>
          <%= message.html_safe %>
        </li>
     <% end %>
