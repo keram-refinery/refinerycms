@@ -1,83 +1,89 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Refinery::Admin::UsersController do
   refinery_login_with_factory :refinery_superuser
 
-  shared_examples_for "new, create, update, edit and update actions" do
-    it "loads roles" do
-      Refinery::Role.should_receive(:all).once{ [] }
-      get :new
-    end
+  shared_examples_for 'new, create, update, edit and update actions' do
+    #it 'loads roles' do
+    #  Refinery::Role.should_receive(:all).once{ [] }
+    #  get :new
+    #end
 
-    it "loads plugins" do
-      user_plugin = Refinery::Plugins.registered.detect { |plugin| plugin.name == "refinery_users" }
+    it 'loads plugins' do
+      user_plugin = Refinery::Plugins['refinery_users']
+
       plugins = Refinery::Plugins.new
       plugins << user_plugin
-      plugins.should_receive(:in_menu).once{ [user_plugin] }
 
+      #Refinery::Plugins.should_receive(:in_menu).once{ [user_plugin] }
       Refinery::Plugins.should_receive(:registered).at_least(1).times{ plugins }
       get :new
     end
   end
 
-  describe "#new" do
-    it "renders the new template" do
+  describe '#new' do
+    it 'renders the new template' do
       get :new
       response.should be_success
-      response.should render_template("refinery/admin/users/new")
+      response.should render_template('refinery/admin/users/new')
     end
 
-    it_should_behave_like "new, create, update, edit and update actions"
+    it_should_behave_like 'new, create, update, edit and update actions'
   end
 
-  describe "#create" do
-    it "creates a new user with valid params" do
-      user = Refinery::User.new :username => "bob"
+  describe '#create' do
+    let(:user_params) { {:username => 'bob', :email => 'bob@bob.com', :password => 'password', :password_confirmation => 'password'}}
+    let(:user) { Refinery::User.new(user_params)}
+
+    it 'redirect when new user is created' do
       user.should_receive(:save).once{ true }
-      Refinery::User.should_receive(:new).once.with(instance_of(HashWithIndifferentAccess)){ user }
-      post :create, :user => {}
+      Refinery::User.should_receive(:new).twice{ user }
+      post :create, :user => user_params
       response.should be_redirect
     end
 
-    it_should_behave_like "new, create, update, edit and update actions"
+    it_should_behave_like 'new, create, update, edit and update actions'
 
-    it "re-renders #new if there are errors" do
-      user = Refinery::User.new :username => "bob"
+    it 're-renders #new if there are errors' do
       user.should_receive(:save).once{ false }
-      Refinery::User.should_receive(:new).once.with(instance_of(HashWithIndifferentAccess)){ user }
-      post :create, :user => {}
+      Refinery::User.should_receive(:new).twice{ user }
+      post :create, :user => user_params
       response.should be_success
-      response.should render_template("refinery/admin/users/new")
+      response.should render_template('refinery/admin/users/new')
     end
   end
 
-  describe "#edit" do
-    it "renders the edit template" do
+  describe '#edit' do
+    it 'renders the edit template' do
       get :edit, :id => logged_in_user.id
       response.should be_success
-      response.should render_template("refinery/admin/users/edit")
+      response.should render_template('refinery/admin/users/edit')
     end
 
-    it_should_behave_like "new, create, update, edit and update actions"
+    it_should_behave_like 'new, create, update, edit and update actions'
   end
 
-  describe "#update" do
+  describe '#update' do
+    before do
+      ::Refinery::Admin::UsersController.any_instance.stub(:authenticated_current_user_with_password?).and_return(true)
+    end
+
     let(:additional_user) { FactoryGirl.create :refinery_user }
-    it "updates a user" do
-      Refinery::User.should_receive(:find).at_least(1).times{ additional_user }
-      put "update", :id => additional_user.id.to_s, :user => {}
+    it 'updates a user' do
+      Refinery::User.should_receive(:find_by).at_least(1).times{ additional_user }
+      put 'update', :id => additional_user.id.to_s, :user => { username: additional_user.username, email: additional_user.email }
       response.should be_redirect
     end
 
-    context "when specifying plugins" do
+    context 'when specifying plugins' do
       it "won't allow to remove 'Users' plugin from self" do
-        Refinery::User.should_receive(:find).at_least(1).times{ logged_in_user }
-        put "update", :id => logged_in_user.id.to_s, :user => {:plugins => ["some plugin"]}
+        Refinery::User.should_receive(:find_by).at_least(1).times{ logged_in_user }
+        put 'update', :id => logged_in_user.id.to_s, :user => { username: additional_user.username, email: additional_user.email, plugins: ['refinery_dashboard']}
 
-        flash[:error].should eq("You cannot remove the 'Users' plugin from the currently logged in account.")
+        logged_in_user.plugins.collect(&:name).should include('refinery_users', 'refinery_dashboard')
       end
     end
 
-    it_should_behave_like "new, create, update, edit and update actions"
+    it_should_behave_like 'new, create, update, edit and update actions'
   end
 end

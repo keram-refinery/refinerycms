@@ -4,14 +4,13 @@
                        :url => refinery.refinery_user_password_path,
                        :html => { :method => :post } do |f| %>
 
-  <div class='field'>
-    <%= f.text_field :email, :class => "larger widest",
+  <div class="field">
+    <%= f.text_field :email, :class => 'larger widest', :required => true,
                      :placeholder => t('email_address', :scope => 'refinery.users.forgot') %>
   </div>
 
   <%= render '/refinery/admin/form_actions', :f => f,
-             :continue_editing => false,
              :submit_button_text => t('reset_password', :scope => 'refinery.users.forgot'),
              :cancel_url => refinery.refinery_user_session_path,
-             :cancel_title => nil -%>
-<% end -%>
+             :cancel_title => nil %>
+<% end %>

@@ -44,6 +44,8 @@ module Refinery
         else
           t('email_not_associated_with_account_html', :email => ERB::Util.html_escape(email), :scope => 'refinery.users.forgot').html_safe
         end
+
+        self.new
         render :new
       end
     end

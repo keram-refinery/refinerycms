@@ -1,65 +1,77 @@
-<%= form_for [refinery, :admin, @user] do |f| %>
+<% is_current_user_superuser = current_refinery_user.has_role?(:superuser) -%>
+<% new_or_current_superuser = @user.new_record? || (is_current_user_superuser && !@user.has_role?(:superuser))  %>
+<%= form_for [refinery, :admin, @user], :url => (refinery.admin_user_path(@user) if @user.persisted?) do |f| %>
 
-  <%= render '/refinery/admin/error_messages',
-             :object => @user,
-             :include_object_name => true %>
+  <%= render '/refinery/admin/error_messages', :object => @user, :include_object_name => true %>
 
-  <div class='field'>
+  <div class="field">
     <%= f.label :username %>
-    <%= f.text_field :username %>
+    <%= f.text_field :username, :required => true, :size => 20, :maxlength => Refinery::User::USERNAME_MAX_LENGTH %>
   </div>
-  <div class='field'>
+
+  <div class="field">
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.email_field :email, :required => true %>
   </div>
-  <div class='field'>
+
+  <div class="field">
     <%= f.label :password %>
     <%= f.password_field :password, :autocomplete => 'off' %>
     <% if @user.persisted? %>
-      <br>
-      <%= content_tag(:span, t('.blank_password_keeps_current')) %>
+      <%= content_tag(:p, t('.blank_password_keeps_current'), :class => 'note') %>
     <% end %>
   </div>
-  <div class='field'>
+
+  <div class="field">
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, :autocomplete => 'off' %>
   </div>
-  <div class='field plugin_access'>
-    <span class='label_with_help'>
-      <%= f.label :plugin_access, t('.plugin_access'), :class => "title_label" %>
-      <%= link_to "(#{t('.enable_all')})", "", :id => "user_plugins_enable_all" %>
-    </span>
-    <ul id='plugins' class='checkboxes'>
-      <% @available_plugins.each do |plugin| -%>
-        <% if Refinery::Plugins.always_allowed.names.include?(plugin[:name]) or
-              (plugin[:name] == 'refinery_users' && @user.id == current_refinery_user.id) %>
-          <%= hidden_field_tag 'user[plugins][]', plugin[:name],
-                               :id => "plugins_#{plugin[:name]}" %>
-        <% else %>
-          <li>
-            <%= check_box_tag 'user[plugins][]', plugin[:name],
-                              @selected_plugin_names.include?(plugin[:name]),
-                              :id => "plugins_#{plugin[:name]}" %>
-            <%= f.label 'user[plugins][]',
-                        t('title', :scope => "refinery.plugins.#{plugin[:name].downcase}", :default => plugin[:title]),
-                        :class => "stripped",
-                        :for => "plugins_#{plugin[:name]}" %>
-          </li>
+
+  <div class="field">
+    <%= f.label :locale %>
+    <%= f.select :locale, sorted_locales %>
+  </div>
+
+  <div class="field">
+  <%= checkboxes do -%>
+    <div class="label_with_help">
+      <%= f.label :plugin_access, t('.plugin_access') %>
+    </div>
+    <ul id="plugins" class="checkboxes sortable-list">
+      <% if @available_plugins.any? %>
+        <% @available_plugins.each do |plugin| %>
+            <li>
+              <% if new_or_current_superuser %>
+                <%= check_box_tag 'user[plugins][]', plugin[:name],
+                                @selected_plugin_names.include?(plugin[:name]) || @always_allowed_menu_plugins.include?(plugin[:name]) ,
+                                :readonly => @always_allowed_menu_plugins.include?(plugin[:name]) || !is_current_user_superuser,
+                                :id => "plugins_#{plugin[:name]}" %>
+              <% else %>
+                <%= hidden_field_tag 'user[plugins][]', plugin[:name], :readonly => true, :id => "plugins_#{plugin[:name]}" %>
+              <% end %>
+              <%= f.label 'user[plugins][]',
+                          t('title', :scope => "refinery.plugins.#{plugin[:name].downcase}", :default => plugin[:title]),
+                          :class => 'stripped',
+                          :for => "plugins_#{plugin[:name]}" %>
+            </li>
         <% end %>
       <% end %>
     </ul>
+  <% end %>
   </div>
 
-  <% if current_refinery_user.has_role?(:superuser) && Refinery::Authentication.superuser_can_assign_roles %>
-    <div class='field role_access'>
-      <span class='label_with_help'>
-        <%= f.label :role_access, t('.role_access'), :class => "title_label" %>
-      </span>
-      <ul id='roles' class='checkboxes'>
+  <% if is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles %>
+    <div class="field">
+    <%= checkboxes do -%>
+      <%= f.label :role_access, t('.role_access'), :class => 'title-label' %>
+      <ul id="roles" class="checkboxes">
         <% @available_roles.each do |role|
-          downcased_title = (title = role[:title]).downcase -%>
+          downcased_title = (title = role[:title]).downcase %>
           <li>
             <%= check_box_tag 'user[roles][]', downcased_title, @user.has_role?(title),
+                              :readonly => current_refinery_user == @user &&
+                                          downcased_title.in?(['refinery', 'superuser']) &&
+                                          @user.has_role?(title),
                               :id => "roles_#{downcased_title}" %>
             <%= f.label 'user[roles][]',
                         t(downcased_title, :scope => 'refinery.roles', :default => title),
@@ -68,23 +80,21 @@
           </li>
         <% end %>
       </ul>
+    <% end %>
+    </div>
+  <% end %>
+
+  <%# Protect against csrf by xss or by direct access to superuser browser by attacker -%>
+  <% if !@user.new_record? || (is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles) %>
+    <div class="field">
+      <%= f.label :current_user_password, t('your_current_password',
+            :scope => 'refinery.admin.users.update') %>
+      <%= f.password_field :current_user_password, :autocomplete => 'off', :required => true %>
     </div>
   <% end %>
 
   <%= render '/refinery/admin/form_actions', :f => f,
-             :continue_editing => false,
              :hide_delete => !current_refinery_user.can_delete?(@user),
              :delete_title => t('delete', :scope => 'refinery.admin.users'),
              :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @user.username) %>
-<% end %>
-
-<% content_for :javascripts do %>
-  <script>
-    $(document).ready(function() {
-      $('#user_plugins_enable_all').click(function(e, a) {
-        $('div.field.plugin_access ul#plugins li input:checkbox').attr('checked', true);
-        e.preventDefault();
-      });
-    });
-  </script>
 <% end %>

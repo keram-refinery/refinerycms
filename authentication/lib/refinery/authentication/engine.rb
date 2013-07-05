@@ -1,18 +1,18 @@
 module Refinery
   module Authentication
     class Engine < ::Rails::Engine
-      extend Refinery::Engine
+      include Refinery::Engine
 
       isolate_namespace Refinery
       engine_name :refinery_authentication
 
       config.autoload_paths += %W( #{config.root}/lib )
 
-      initializer "register refinery_user plugin" do
+      initializer 'register refinery_user plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
           plugin.name = 'refinery_users'
-          plugin.menu_match = %r{refinery/users$}
+          plugin.position = 1000 # put plugin at end but before settings
           plugin.activity = {
             :class_name => :'refinery/user',
             :title => 'username'

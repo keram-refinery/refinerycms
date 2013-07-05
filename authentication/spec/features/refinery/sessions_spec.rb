@@ -1,39 +1,39 @@
 require "spec_helper"
 
 module Refinery
-  describe "sign in" do
+  describe 'sign in' do
     let(:login_path) { refinery.new_refinery_user_session_path }
     let(:login_retry_path) { refinery.refinery_user_session_path }
     let(:admin_path) { refinery.admin_root_path }
 
     before do
-      FactoryGirl.create(:refinery_user, :username => "ugisozols",
-                                         :password => "123456",
-                                         :password_confirmation => "123456")
+      FactoryGirl.create(:refinery_user, :username => 'ugisozols',
+                                         :password => '123456',
+                                         :password_confirmation => '123456')
 
       visit refinery.login_path
     end
 
-    it "shows login form" do
+    it 'shows login form' do
       page.should have_content("Hello! Please sign in.")
       page.should have_content("I forgot my password")
       page.should have_selector("a[href*='/refinery/users/password/new']")
     end
 
-    context "when supplied data is valid" do
-      it "logs in user" do
-        fill_in "Username or email", :with => "ugisozols"
-        fill_in "Password", :with => "123456"
+    context 'when supplied data is valid' do
+      it 'logs in user' do
+        fill_in "Username or email", :with => 'ugisozols'
+        fill_in "Password", :with => '123456'
         click_button "Sign in"
-        page.should have_content("Signed in successfully.")
+        page.should have_content("Log out")
         current_path.should == admin_path
       end
     end
 
-    context "when supplied data is not valid" do
-      it "shows flash error" do
-        fill_in "Username or email", :with => "Hmmm"
-        fill_in "Password", :with => "Hmmm"
+    context 'when supplied data is not valid' do
+      it 'shows flash error' do
+        fill_in "Username or email", :with => 'Hmmm'
+        fill_in "Password", :with => 'Hmmm'
         click_button "Sign in"
         page.should have_content("Sorry, your login or password was incorrect.")
         current_path.should == login_retry_path
@@ -53,10 +53,10 @@ module Refinery
         page.should have_content("There are no users yet, so we'll set you up first")
 
         # Fill in user details.
-        fill_in 'user[username]', :with => 'rspec'
-        fill_in 'user[email]', :with => 'rspec@example.com'
-        fill_in 'user[password]', :with => 'spectacular'
-        fill_in 'user[password_confirmation]', :with => 'spectacular'
+        fill_in 'Username', :with => 'rspec'
+        fill_in 'Email', :with => 'rspec@example.com'
+        fill_in 'user_password', :with => 'spectacular'
+        fill_in 'Password confirmation', :with => 'spectacular'
 
         # Sign up and verify!
         click_button "Sign up"
@@ -73,28 +73,28 @@ module Refinery
 
     before do
       FactoryGirl.create(:refinery_user,
-        :username => "ugisozols",
-        :password => "123456",
-        :password_confirmation => "123456"
+        :username => 'ugisozols',
+        :password => '123456',
+        :password_confirmation => '123456'
       )
     end
 
-    context "when visiting a protected path" do
+    context 'when visiting a protected path' do
       before { visit protected_path }
 
-      it "redirects to the login" do
+      it 'redirects to the login' do
         current_path.should == login_path
       end
 
-      it "shows login form" do
+      it 'shows login form' do
         page.should have_content("Hello! Please sign in.")
         page.should have_content("I forgot my password")
         page.should have_selector("a[href*='/refinery/users/password/new']")
       end
 
-      it "redirects to the protected path on login" do
-        fill_in "Username or email", :with => "ugisozols"
-        fill_in "Password", :with => "123456"
+      it 'redirects to the protected path on login' do
+        fill_in "Username or email", :with => 'ugisozols'
+        fill_in "Password", :with => '123456'
         page.click_button "Sign in"
         current_path.should == protected_path
       end
