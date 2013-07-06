@@ -3,20 +3,10 @@ module Refinery
     helper Refinery::Core::Engine.helpers
     layout 'refinery/layouts/login'
 
-    before_filter :store_password_reset_return_to, :only => [:update]
-    def store_password_reset_return_to
-      session[:'refinery_user_return_to'] = refinery.admin_root_path
-    end
-    protected :store_password_reset_return_to
+    before_action :store_password_reset_return_to, :only => [:update]
 
     # Rather than overriding devise, it seems better to just apply the notice here.
-    after_filter :give_notice, :only => [:update]
-    def give_notice
-      if %w(notice error alert).exclude?(flash.keys.map(&:to_s)) or @refinery_user.errors.any?
-        flash[:notice] = t('successful', :scope => 'refinery.users.reset', :email => @refinery_user.email)
-      end
-    end
-    protected :give_notice
+    after_action :give_notice, :only => [:update]
 
     # GET /registrations/password/edit?reset_password_token=abcdef
     def edit
@@ -49,5 +39,18 @@ module Refinery
         render :new
       end
     end
+
+    protected
+
+    def store_password_reset_return_to
+      session[:refinery_user_return_to] = refinery.admin_root_path
+    end
+
+    def give_notice
+      if %w(notice error alert).exclude?(flash.keys.map(&:to_s)) or @refinery_user.errors.any?
+        flash[:notice] = t('successful', :scope => 'refinery.users.reset', :email => @refinery_user.email)
+      end
+    end
+
   end
 end

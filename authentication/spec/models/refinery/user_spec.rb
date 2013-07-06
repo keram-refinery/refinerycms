@@ -99,13 +99,23 @@ module Refinery
           refinery_user.can_delete?(super_user).should be_false
         end
 
-        it 'if user count with refinery role < 1' do
-          ::Refinery::Role[:refinery].users.delete([ refinery_user, super_user ])
-          super_user.can_delete?(refinery_user).should be_false
-        end
-
         it 'user himself' do
           refinery_user.can_delete?(refinery_user).should be_false
+        end
+
+        context 'none user with role refinery' do
+
+          before do
+            super_user.roles = [::Refinery::Role[:superuser]]
+            refinery_user.roles = []
+          end
+
+          # for some reason delete users here not affect application counts
+          # todo
+          it 'if user count with refinery role < 1' do
+            super_user.can_delete?(refinery_user).should be_false
+          end
+
         end
       end
 
@@ -189,6 +199,11 @@ module Refinery
     end
 
     describe '#create_first' do
+
+      before do
+        ::Refinery::User.delete_all
+      end
+
       let(:first_user) do
         first = FactoryGirl.build(:user)
         first.create_first

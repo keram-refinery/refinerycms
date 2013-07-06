@@ -3,7 +3,6 @@
 @import 'icons';
 
 .login {
-
     #header,
     #page-container {
         max-width: 520px;
@@ -25,7 +24,7 @@
     }
 
     .larger {
-        background: url('/assets/refinery/text_field_background.png') repeat-x #fff;
+        background: asset-url('refinery/text_field_background.png') repeat-x #fff;
     }
 
     .larger:focus {

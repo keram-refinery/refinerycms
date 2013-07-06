@@ -131,7 +131,7 @@
 }
 
 .ui-dialog-titlebar-close .ui-icon {
-    background: url('/assets/refinery/cross.png') no-repeat;
+    background: asset-url('refinery/cross.png') no-repeat;
 }
 
 .ui-widget-overlay {
@@ -168,7 +168,7 @@
 }
 
 .dialog-content.loading {
-    background: url('/assets/refinery/dialogLoadingAnimation.gif') no-repeat 50% 50%;
+    background: asset-url('refinery/dialogLoadingAnimation.gif') no-repeat 50% 50%;
     min-height: 5em;
 }
 

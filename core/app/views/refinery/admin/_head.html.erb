@@ -7,12 +7,13 @@
 
 <%= stylesheet_link_tag 'refinery/application' %>
 <%= stylesheet_link_tag 'refinery/flags' if Refinery::I18n.frontend_locales.many? %>
-<% ::Refinery::Core.stylesheets.each do |css| %>
+<% ::Refinery::Core.admin_stylesheets.each do |css| %>
   <%= stylesheet_link_tag css.path, css.options %>
 <% end %>
 
 <%= javascript_include_tag 'modernizr-min', data: { :'turbolinks-eval' => false } %>
-<%= javascript_include_tag 'refinery/admin/application',
-            defer: true,
-            async: true,
+<%= javascript_include_tag 'refinery/i18n', data: { :'turbolinks-eval' => false } %>
+<%= javascript_include_tag 'refinery/application',
+            defer: !Rails.configuration.assets.debug,
+            async: !Rails.configuration.assets.debug,
             data: { :'turbolinks-eval' => false } %>

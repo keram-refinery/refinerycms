@@ -27,7 +27,7 @@ module Refinery
       elsif respond_to?(:admin_root_path)
         refinery.admin_root_path
       else
-        "/"
+        '/'
       end
     end
 
@@ -39,7 +39,7 @@ module Refinery
       # `stored_location_for` is the devise method that pops the
       # scoped `return_to` key
       location = stored_location_for(resource_or_scope)
-      location.sub!("//", "/") if location.respond_to?(:sub!)
+      location.sub!('//', '/') if location.respond_to?(:sub!)
       location
     end
 

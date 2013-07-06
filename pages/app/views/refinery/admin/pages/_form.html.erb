@@ -16,7 +16,9 @@
   <div class="field">
     <%= render 'form_page_parts', :f => f %>
   </div>
+
   <%= render 'form_advanced_options', :f => f %>
+
   <%= render '/refinery/admin/form_actions', :f => f,
              :delete_title => t('delete', :scope => 'refinery.admin.pages'),
              :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @page.title),

@@ -3,18 +3,18 @@ require 'rbconfig'
 append_file 'Gemfile' do
 "
 
-gem 'refinerycms', :git => 'git://github.com/refinery/refinerycms.git'
-gem 'refinerycms-i18n', :git => 'git://github.com/refinery/refinerycms-i18n.git'
+gem 'refinerycms', :git => 'git://github.com/keram-refinery/refinerycms.git', :branch => 'refinery_light'
+gem 'refinerycms-i18n', :git => 'git://github.com/keram-refinery/refinerycms-i18n.git', :branch => 'refinery_light'
 
 # USER DEFINED
 
 # Specify additional Refinery CMS Engines here (all optional):
-#  gem 'refinerycms-acts-as-indexed', :git => 'git://github.com/refinery/refinerycms-acts-as-indexed.git'
-#  gem 'refinerycms-blog', :git => 'git://github.com/refinery/refinerycms-blog.git'
-#  gem 'refinerycms-inquiries', :git => 'git://github.com/refinery/refinerycms-inquiries.git'
-#  gem 'refinerycms-calendar', :git => 'git://github.com/refinery/refinerycms-calendar.git'
-#  gem 'refinerycms-search', :git => 'git://github.com/refinery/refinerycms-search.git'
-#  gem 'refinerycms-page-images', :git => 'git://github.com/refinery/refinerycms-page-images.git'
+#  gem 'refinerycms-acts-as-indexed', :git => 'git://github.com/keram-refinery/refinerycms-acts-as-indexed.git', :branch => 'refinery_light'
+#  gem 'refinerycms-blog', :git => 'git://github.com/keram-refinery/refinerycms-blog.git', :branch => 'refinery_light'
+#  gem 'refinerycms-inquiries', :git => 'git://github.com/keram-refinery/refinerycms-inquiries.git', :branch => 'refinery_light'
+#  gem 'refinerycms-calendar', :git => 'git://github.com/keram-refinery/refinerycms-calendar.git', :branch => 'refinery_light'
+#  gem 'refinerycms-search', :git => 'git://github.com/keram-refinery/refinerycms-search.git', :branch => 'refinery_light'
+#  gem 'refinerycms-page-images', :git => 'git://github.com/keram-refinery/refinerycms-page-images.git', :branch => 'refinery_light'
 
 # END USER DEFINED
 "

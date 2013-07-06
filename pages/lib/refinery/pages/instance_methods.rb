@@ -8,14 +8,14 @@ module Refinery
       end
 
       def error_404(exception=nil)
-        @page = ::Refinery::Page.with_globalize.find_by(:plugin_page_id => 'refinery_pages_not_found')
+        @page = ::Refinery::Page.with_globalize.find_by(plugin_page_id: 'refinery_pages_not_found')
 
         if @page.present?
           # render the application's custom 404 page with layout and meta.
-          if self.respond_to? :render_with_templates?
-            render_with_templates? @page, :status => 404
+          if self.respond_to? :render_with_templates?, true
+            render_with_templates? @page, status: 404
           else
-            render :template => '/refinery/pages/show', :formats => [:html], :status => 404
+            render template: '/refinery/pages/show', formats: [:html], status: 404
           end
           return false
         else

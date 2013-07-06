@@ -8,7 +8,7 @@ module Refinery
         yield_title,
         @meta.browser_title.presence || @meta.path,
         Refinery::Core.site_name
-      ].reject(&:blank?).join(" - ")
+      ].reject(&:blank?).join(' - ')
     end
 
     # you can override the object used for the title by supplying options[:object]
@@ -33,17 +33,17 @@ module Refinery
 
       final_title = title.pop
       if (options[:page_title][:wrap_if_not_chained] and title.empty?) and options[:page_title][:tag].present?
-        css = " class='#{options[:page_title][:class]}'" if options[:page_title][:class].present?
-        final_title = "<#{options[:page_title][:tag]}#{css}>#{final_title}</#{options[:page_title][:tag]}>"
+        css = %Q( class="#{options[:page_title][:class]}") if options[:page_title][:class].present?
+        final_title = %Q(<#{options[:page_title][:tag]}#{css}>#{final_title}</#{options[:page_title][:tag]}>)
       end
 
       if title.empty?
         final_title.to_s.html_safe
       else
-        tag = "<#{options[:ancestors][:tag]} class='#{options[:ancestors][:class]}'>"
+        tag = %Q(<#{options[:ancestors][:tag]} class="#{options[:ancestors][:class]}">)
         tag << title.join(options[:ancestors][:separator])
         tag << options[:ancestors][:separator]
-        tag << "</#{options[:ancestors][:tag]}>#{final_title}"
+        tag << %Q(</#{options[:ancestors][:tag]}>#{final_title})
         tag.html_safe
       end
     end

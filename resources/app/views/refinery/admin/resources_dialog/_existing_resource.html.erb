@@ -1,17 +1,17 @@
 <div id="existing-resource-area-content" >
-    <ul id="<%= refinery_dom_id @resources %>" class="records ui-selectable">
-      <%= render :partial => 'refinery/admin/resources/resource', :collection => @resources %>
-    </ul>
+  <ul id="<%= refinery_dom_id @resources %>" class="records ui-selectable">
+    <%= render :partial => 'refinery/admin/resources/resource', :collection => @resources %>
+  </ul>
 </div>
 
-<div id="<%= refinery_dom_id @resources %>-pagination">
-  <%= will_paginate @resources %>
-</div>
+<%= will_paginate @resources %>
 
 <%= render '/refinery/admin/form_actions', :f => nil,
-           :cancel_url =>'',
-           :submit_button_text => t('.button_text'),
-           :submit_button_class => 'insert-button',
-           :hide_submit => false,
-           :hide_cancel => false,
-           :hide_delete => true %>
+            :cancel_url => '',
+            :submit_button_text => t('insert', :scope => 'refinery.admin.form_actions'),
+            :submit_button_class => 'insert-button',
+            :hide_cancel => false,
+            :hide_delete => true,
+            :hide_submit => @resources.empty?,
+            :cancel_button_text => t('close', :scope => 'refinery.admin.form_actions'),
+            :cancel_title => nil %>

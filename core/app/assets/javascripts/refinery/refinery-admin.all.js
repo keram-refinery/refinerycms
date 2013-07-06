@@ -1,7 +1,7 @@
-/*! Generated: 2013-07-05 14:58:57 */
+
 (function (window, $) {
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/admin.js
+// Source: ~/refinery/scripts/admin/admin.js
 /**
  * Refinery Admin namespace
  *
@@ -12,7 +12,7 @@ refinery.admin = {
     ui: {}
 };
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/form.js
+// Source: ~/refinery/scripts/admin/form.js
     /**
      * @constructor
      * @class  refinery.admin.Form
@@ -88,12 +88,12 @@ refinery.admin = {
                 form = that.holder;
 
             form.find('.image-picker').each(function () {
-                var picker = refinery.n('admin.ImagePicker');
+                var picker = refinery('admin.ImagePicker');
                 picker.init($(this));
             });
 
             form.find('.resource-picker').each(function () {
-                var picker = refinery.n('admin.ResourcePicker');
+                var picker = refinery('admin.ResourcePicker');
                 picker.init($(this));
             });
 
@@ -159,40 +159,30 @@ refinery.admin = {
             }
         },
 
-        destroy: function () {
-            this.page_parts = null;
-            refinery.Object.prototype.destroy.call(this);
-        },
-
         /**
          * initialisation
          *
          * @param {!jQuery} holder
          *
-         * @return {Object}
+         * @return {Object} self
          */
         init: function (holder) {
-            var that = this,
-                page_parts_elm;
+            var that = this;
 
-            if (this.is('initialisable')) {
+            if (that.is('initialisable')) {
                 that.is('initialising', true);
+                refinery.Object.attach(that.uid, holder);
                 that.holder = holder;
                 that.init_pickers();
                 that.init_inputs();
                 that.initial_values = holder.serialize();
                 that.init_fly_form_actions();
-                page_parts_elm = holder.find('#page-parts');
 
-                if (page_parts_elm.length > 0) {
-                    this.page_parts = refinery.n('admin.FormPageParts').init(page_parts_elm.parent());
-                }
-
-                this.is({'initialised': true, 'initialising': false});
-                this.trigger('init');
+                that.is({'initialised': true, 'initialising': false});
+                that.trigger('init');
             }
 
-            return this;
+            return that;
         }
     });
 
@@ -205,11 +195,11 @@ refinery.admin = {
      */
     refinery.admin.ui.form = function (holder) {
         holder.find('form').each(function () {
-            refinery.n('admin.Form').init($(this));
+            refinery('admin.Form').init($(this));
         });
     };
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/form_page_parts.js
+// Source: ~/refinery/scripts/admin/form_page_parts.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -237,14 +227,18 @@ refinery.admin = {
          */
         delete_part: function (delete_url) {
             var that = this,
-                tabId = this.holder.tabs('option', 'active'),
+                holder = that.holder,
+                tab_id = holder.tabs('option', 'active'),
                 part_title = that.page_parts.find('.ui-state-active a').text(),
-                input_page_parts_attributes_id = $('#page_parts_attributes_' + tabId + '_id');
+                input_page_parts_attributes_id = $('#page_parts_attributes_' + tab_id + '_id');
 
             if (confirm(t('refinery.admin.form_page_parts_remove', { 'title': part_title }))) {
-                that.holder.find('.ui-tabs-nav li:eq(' + tabId + ')').remove();
-                that.holder.find('.ui-tabs-panel:eq(' + tabId + ')').remove();
-                that.holder.tabs('refresh');
+                holder.find('.ui-tabs-nav li:eq(' + tab_id + ')').remove();
+                holder.find('.ui-tabs-panel:eq(' + tab_id + ')').remove();
+                holder.find('.ui-tabs-nav li a').each(function (i) {
+                    holder.find($(this).attr('href') + ' .part-position').val(i);
+                });
+                holder.tabs('refresh');
 
                 if (input_page_parts_attributes_id.length > 0) {
                     $.ajax({
@@ -253,6 +247,7 @@ refinery.admin = {
                         dataType: 'JSON',
                         success: function () {
                             input_page_parts_attributes_id.remove();
+                            that.trigger('part:delete');
                         }
                     });
                 }
@@ -271,31 +266,36 @@ refinery.admin = {
             var that = this,
                 part_title = $.trim(/** @type {string} */(input_title.val())),
                 page_part_editors = $('#page-part-editors'),
-                part_index = $('#new-page-part-index').val(),
+                part_index = that.holder.find('.ui-tabs-nav li').length,
                 tab_title = '#page_part_' + part_title.toLowerCase().replace(/\s/g, '_'),
-                tab_tpl;
+                tab_tpl,
+                process_response;
+
+            process_response = function (response) {
+                if (response.html) {
+                    tab_tpl = '<li><a href="' + tab_title + '">' + part_title + '</a></li>';
+
+                    page_part_editors.append(response.html);
+                    that.page_parts.append(tab_tpl);
+                    that.holder.tabs('refresh');
+                    that.holder.tabs('option', 'active', part_index);
+                    that.dialog_holder.dialog('close');
+                    input_title.val('');
+                    that.trigger('part:add');
+                } else {
+                    refinery.flash('error', t('refinery.xhr_error'));
+                }
+            };
 
             if (part_title.length > 0) {
                 if ($(tab_title).length === 0) {
-                    tab_tpl = '<li><a href="' + tab_title + '">' + part_title + '</a></li>';
-
-                    $.get(add_url, { title: part_title, part_index: part_index }, 'JSON')
+                    $.getJSON(add_url, { 'title': part_title, 'part_index': part_index })
                         .fail(function () {
                             refinery.flash('error', t('refinery.xhr_error'));
                         })
                         .done(function (response) {
-                            if (response.html) {
-                                page_part_editors.append(response.html);
-                                that.page_parts.append(tab_tpl);
-                                that.holder.tabs('refresh');
-                                that.holder.tabs('option', 'active', part_index);
-                                that.dialog_holder.dialog('close');
-                                input_title.val('');
-                            } else {
-                                alert(t('refinery.xhr_error'));
-                            }
+                            process_response(response);
                         });
-
                 } else {
                     alert(t('refinery.admin.form_page_parts_part_exist'));
                 }
@@ -314,13 +314,13 @@ refinery.admin = {
          */
         bind_add_delete_part_events_to_buttons: function (add_page_part_btn, delete_page_part_btn) {
             var that = this,
-                dialog_holder = this.dialog_holder,
-                input_title = $('#new-page-part-title');
+                dialog_holder = that.dialog_holder,
+                input_title = dialog_holder.find('#new-page-part-title');
 
-            add_page_part_btn.click(function (e) {
+            add_page_part_btn.on('click', function (e) {
                 e.preventDefault();
 
-                that.dialog_holder.dialog({
+                dialog_holder.dialog({
                     title: t('refinery.admin.form_page_parts_add_part_dialog_title'),
                     modal: true,
                     resizable: false,
@@ -332,7 +332,7 @@ refinery.admin = {
                 dialog_holder.removeClass('hide');
             });
 
-            delete_page_part_btn.click(function (e) {
+            delete_page_part_btn.on('click', function (e) {
                 e.preventDefault();
                 that.delete_part(delete_page_part_btn.attr('href'));
             });
@@ -368,7 +368,21 @@ refinery.admin = {
                 delete_page_part_btn = $('#delete-page-part');
 
             if (add_page_part_btn.length > 0 && delete_page_part_btn.length > 0) {
-                that.dialog_holder = $('#new-page-part-dialog');
+                that.dialog_holder = $('<div/>', {
+                    html: '<div class="field">' +
+                          '  <input class="larger widest" placeholder="' +
+                            t('refinery.admin.label_title') +
+                          '" id="new-page-part-title">' +
+                          '  <input type="hidden" id="new-page-part-index">' +
+                          '</div>' +
+                          '<div class="form-actions clearfix">' +
+                          '  <div class="form-actions-left">' +
+                          '    <input type="submit" value="' +
+                            t('refinery.admin.button_create') +
+                          '" class="button submit-button">' +
+                          '  </div>' +
+                          '</div>'
+                });
 
                 that.bind_add_delete_part_events_to_buttons(add_page_part_btn,
                     delete_page_part_btn);
@@ -381,6 +395,7 @@ refinery.admin = {
          * @return {undefined}
          */
         start_reordering_page_parts: function () {
+            this.holder.tabs('disable');
             this.page_parts.addClass('reordering');
             this.reorder_page_part_btn.addClass('hide');
             this.reorder_page_part_done_btn.removeClass('hide');
@@ -399,6 +414,7 @@ refinery.admin = {
             this.reorder_page_part_btn.removeClass('hide');
             this.page_parts.sortable('disable');
             this.fade_elements.fadeTo(500, 1);
+            this.holder.tabs('enable');
         },
 
         /**
@@ -413,8 +429,8 @@ refinery.admin = {
                 items: 'li',
                 enabled: false,
                 stop: function () {
-                    that.page_parts.find('li[data-index]').each(function (i) {
-                        $('#page_parts_attributes_' + $(this).data('index') + '_position').val(i + 1);
+                    that.holder.find('.ui-tabs-nav li a').each(function (i) {
+                        that.holder.find($(this).attr('href') + ' .part-position').val(i);
                     });
                 }
             }).sortable('disable');
@@ -436,18 +452,35 @@ refinery.admin = {
 
         /**
          *
-         * @expose
+         * @param {boolean=} removeGlobalReference if is true instance will be removed
+         *                   from refinery.Object.instances
          *
-         * @return {undefined}
+         * @return {Object} self
          */
-        destroy: function () {
-            this.page_parts.unbind();
-            this.page_parts = null;
-            this.reorder_page_part_done_btn = null;
-            this.reorder_page_part_btn = null;
-            this.dialog_holder = null;
-            this.fade_elements = null;
-            refinery.Object.prototype.destroy.call(this);
+        destroy: function (removeGlobalReference) {
+            if (this.is('initialised')) {
+                this.page_parts = null;
+                this.holder.parent()
+                    .find('#reorder-page-part, #reorder-page-part-done, #add-page-part, #delete-page-part')
+                    .off();
+                this.reorder_page_part_done_btn = null;
+                this.reorder_page_part_btn = null;
+
+                if (this.dialog_holder) {
+                    if (this.dialog_holder.hasClass('ui-dialog')) {
+                        this.dialog_holder.dialog('destroy');
+                    }
+
+                    this.dialog_holder.off();
+                    this.dialog_holder.remove();
+                    this.dialog_holder = null;
+                }
+
+                this.fade_elements = null;
+            }
+            refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+
+            return this;
         },
 
         /**
@@ -464,6 +497,8 @@ refinery.admin = {
                 this.page_parts = holder.find('#page-parts');
                 this.init_add_remove_part();
                 this.init_reorder_parts();
+
+                refinery.Object.attach(this.uid, holder);
                 this.is({'initialised': true, 'initialising': false});
                 this.trigger('init');
             }
@@ -472,7 +507,28 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/sortable_list.js
+    /**
+     * Form initialization
+     *
+     * @expose
+     * @param  {jQuery} holder
+     * @param  {Object} ui
+     * @return {undefined}
+     */
+    refinery.admin.ui.formPageParts = function (holder, ui) {
+        holder.find('#page-tabs').each(function () {
+            var page_parts = refinery('admin.FormPageParts').init($(this));
+
+            page_parts.on('part:add', function () {
+                ui.reload(holder);
+            });
+            page_parts.on('part:delete', function () {
+                ui.reload(holder);
+            });
+        });
+    };
+
+// Source: ~/refinery/scripts/admin/sortable_list.js
     /**
      * Sortable List
      *
@@ -580,7 +636,7 @@ refinery.admin = {
          *
          * @param {jQuery} item
          *
-         * @return {undefined}
+         * @return {Object} self
          */
         update: function (item) {
             var that = this,
@@ -622,12 +678,32 @@ refinery.admin = {
                         list.nestedSortable('enable');
                     });
             }
+
+            return that;
+        },
+
+        /**
+         *
+         * @expose
+         * @param {boolean=} removeGlobalReference if is true instance will be removed
+         *                   from refinery.Object.instances
+         *
+         * @return {Object} self
+         */
+        destroy: function (removeGlobalReference) {
+            this.holder.nestedSortable('destroy');
+            this.set = null;
+
+            refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+
+            return this;
         },
 
         init: function (holder) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
                 holder.nestedSortable(this.options.nested_sortable);
+                refinery.Object.attach(this.uid, holder);
                 this.set = holder.nestedSortable('toArray');
                 this.html = holder.html();
                 this.holder = holder;
@@ -675,7 +751,7 @@ refinery.admin = {
             }
         },
 
-        objectPrototype: refinery.n('admin.SortableList', {
+        objectPrototype: refinery('admin.SortableList', {
 
             /**
              * @expose
@@ -717,7 +793,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/user_interface.js
+// Source: ~/refinery/scripts/admin/user_interface.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -756,9 +832,9 @@ refinery.admin = {
 
                 if (list.hasClass('records')) {
                     if (list.hasClass('tree')) {
-                        refinery.n('admin.SortableTree', options).init(list);
+                        refinery('admin.SortableTree', options).init(list);
                     } else {
-                        refinery.n('admin.SortableList', options).init(list);
+                        refinery('admin.SortableList', options).init(list);
                     }
                 } else {
                     list.sortable(options);
@@ -887,6 +963,14 @@ refinery.admin = {
             });
         },
 
+        init_toggle_hide: function () {
+            this.holder.on('click', '.toggle-hide', function () {
+                var elm = $(this);
+                $(elm.attr('href')).toggleClass('js-hide');
+                elm.toggleClass('toggle-on');
+            });
+        },
+
         initialize_elements: function () {
             var that = this,
                 holder = that.holder,
@@ -897,11 +981,13 @@ refinery.admin = {
             that.init_tabs();
             that.init_checkboxes();
             that.init_collapsible_lists();
+            that.init_toggle_hide();
+
             that.init_deletable_records();
 
             for (fnc in ui) {
                 if (ui.hasOwnProperty(fnc) && typeof ui[fnc] === 'function') {
-                    ui[fnc](holder);
+                    ui[fnc](holder, that);
                 }
             }
         },
@@ -918,15 +1004,19 @@ refinery.admin = {
         reload: function (holder) {
             var holders = this.holder.find('.refinery-instance');
 
-            holders.each(function () {
-                var instances = holder.data('refinery-instances'),
-                    uid, instance;
+            try {
+                holders.each(function () {
+                    var instances = $(this).data('refinery-instances'),
+                        instance;
 
-                for (uid in instances) {
-                    instance = instances[uid];
-                    instance.destroy(true);
-                }
-            });
+                    for (var i = instances.length - 1; i >= 0; i--) {
+                        instance = refinery.Object.instances.get(instances[i]);
+                        instance.destroy(true);
+                    }
+                });
+            } catch (e) {
+                console.log(e);
+            }
 
             this.holder.off();
             this.state = new this.State();
@@ -938,6 +1028,7 @@ refinery.admin = {
 
             if (that.is('initialisable')) {
                 that.is('initialising', true);
+                refinery.Object.attach(that.uid, holder);
                 that.holder = holder;
                 that.bind_events();
                 that.initialize_elements();
@@ -949,7 +1040,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/dialog.js
+// Source: ~/refinery/scripts/admin/dialogs/dialog.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1036,28 +1127,49 @@ refinery.admin = {
                 return DialogState;
             }()),
 
-            /** @expose */
+            /**
+             *
+             * @expose
+             *
+             * @return {Object} self
+             */
             close: function () {
                 if (this.is('closable')) {
                     this.holder.dialog('close');
                 }
+
+                return this;
             },
 
-            /** @expose */
+            /**
+             *
+             * @expose
+             *
+             * @return {Object} self
+             */
             open: function () {
                 if (this.is('openable')) {
                     this.is('opening', true);
                     this.holder.dialog('open');
                 }
+
+                return this;
             },
 
-            /** @expose */
+            /**
+             *
+             * @expose
+             *
+             * @return {Object} self
+             */
             submit: function () {
                 var form = this.holder.find('form');
 
                 if (form.length > 0) {
                     this.submit_form(form);
                 }
+
+                return this;
             },
 
 
@@ -1111,13 +1223,15 @@ refinery.admin = {
              *
              * @expose
              *
-             * @return {undefined}
+             * @return {Object} self
              */
             insert: function () {
                 var li = this.holder.find('.ui-selected');
                 if (li.length > 0) {
                     this.trigger('insert', li.data());
                 }
+
+                return this;
             },
 
             /**
@@ -1214,9 +1328,9 @@ refinery.admin = {
              * Load dialog content
              *
              * @expose
-             * @todo this is ugly, refactor!
+             * @todo this is (still) ugly, refactor!
              *
-             * @return {undefined}
+             * @return {Object} self
              */
             load: function () {
                 var that = this,
@@ -1272,6 +1386,8 @@ refinery.admin = {
 
                     }
                 }
+
+                return this;
             },
 
             bind_events: function () {
@@ -1298,13 +1414,20 @@ refinery.admin = {
             /**
              *
              * @expose
+             * @param {boolean=} removeGlobalReference if is true instance will be removed
+             *                   from refinery.Object.instances
              *
-             * @return {undefined}
+             * @return {Object} self
              */
-            destroy: function () {
-                this.ui.destroy();
-                this.ui = null;
-                refinery.Object.prototype.destroy.call(this);
+            destroy: function (removeGlobalReference) {
+                if (this.ui) {
+                    this.ui.destroy();
+                    this.ui = null;
+                }
+
+                refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+
+                return this;
             },
 
             /**
@@ -1323,7 +1446,9 @@ refinery.admin = {
                         'class': 'loading'
                     });
 
-                    this.ui = refinery.n('admin.UserInterface');
+                    refinery.Object.attach(this.uid, this.holder);
+
+                    this.ui = refinery('admin.UserInterface');
                     this.holder.dialog(this.options);
 
                     this.bind_events();
@@ -1337,7 +1462,7 @@ refinery.admin = {
             }
         });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/pickers/picker.js
+// Source: ~/refinery/scripts/admin/pickers/picker.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1386,10 +1511,11 @@ refinery.admin = {
          *
          * @expose
          *
-         * @return {undefined}
+         * @return {Object} self
          */
         open: function () {
             this.dialog.open();
+            return this;
         },
 
         /**
@@ -1397,10 +1523,11 @@ refinery.admin = {
          *
          * @expose
          *
-         * @return {undefined}
+         * @return {Object} self
          */
         close: function () {
             this.dialog.close();
+            return this;
         },
 
         /**
@@ -1409,10 +1536,11 @@ refinery.admin = {
          * @param {{id: (string|number)}} record
          * @expose
          *
-         * @return {undefined}
+         * @return {Object} self
          */
         insert: function (record) {
             console.log(record);
+            return this;
         },
 
         /**
@@ -1425,7 +1553,7 @@ refinery.admin = {
          */
         bind_events: function () {
             var that = this,
-                holder = this.holder;
+                holder = that.holder;
 
             that.dialog.on('insert', function (record) {
                 that.insert(record);
@@ -1452,11 +1580,12 @@ refinery.admin = {
          * @param {!jQuery} holder
          * @param {!refinery.Object} dialog
          *
-         * @return {refinery.Object}
+         * @return {refinery.Object} self
          */
         init: function (holder, dialog) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
+                refinery.Object.attach(this.uid, holder);
                 this.holder = holder;
                 this.elm_current_record_id = holder.find('.current-record-id');
                 this.elm_record_holder = holder.find('.record-holder');
@@ -1473,7 +1602,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/images_dialog.js
+// Source: ~/refinery/scripts/admin/dialogs/images_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1481,7 +1610,7 @@ refinery.admin = {
      */
     refinery.Object.create({
 
-            objectPrototype: refinery.n('admin.Dialog', {
+            objectPrototype: refinery('admin.Dialog', {
                 title: t('refinery.admin.images_dialog_title'),
                 url: '/refinery/dialogs/images'
             }, true),
@@ -1502,7 +1631,7 @@ refinery.admin = {
             /**
              * Handle image linked from library
              *
-             * @return {Object}
+             * @return {?{title: string, size: string, geometry: string, type: string}}
              */
             library_tab: function (tab) {
                 var img = tab.find('.ui-selected .image img'),
@@ -1526,7 +1655,7 @@ refinery.admin = {
             /**
              * Handle image linked by url
              *
-             * @return {Object}
+             * @return {?{original: string, type: string}}
              */
             url_tab: function (tab) {
                 var url_input = tab.find('input.text:valid'),
@@ -1555,9 +1684,7 @@ refinery.admin = {
             /**
              * Propagate selected image wth attributes to dialog observers
              *
-             * @expose
-             *
-             * @return {undefined}
+             * @return {Object} self
              */
             insert: function () {
                 var tab = this.holder.find('div[aria-expanded="true"]'),
@@ -1579,17 +1706,19 @@ refinery.admin = {
                 if (obj) {
                     this.trigger('insert', obj);
                 }
+
+                return this;
             }
         });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/links_dialog.js
+// Source: ~/refinery/scripts/admin/dialogs/links_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
      * @param {Object=} options
      */
     refinery.Object.create({
-            objectPrototype: refinery.n('admin.Dialog', {
+            objectPrototype: refinery('admin.Dialog', {
                 title: t('refinery.admin.links_dialog_title'),
                 url: '/refinery/dialogs/links'
             }, true),
@@ -1605,20 +1734,22 @@ refinery.admin = {
              *
              * @param {!jQuery} tab
              *
-             * @return {?{title: ?, url: string}}
+             * @return {?{title: string, url: string}}
              */
             email_tab: function (tab) {
                 var email_input = tab.find('#email_address_text:valid'),
                     subject_input = tab.find('#email_default_subject_text'),
                     body_input = tab.find('#email_default_body_text'),
-                    recipient = email_input.val(),
-                    subject = subject_input.val(),
-                    body = body_input.val(),
-                    hex_recipient = '',
+                    recipient = /** @type {string} */(email_input.val()),
+                    subject = /** @type {string} */(subject_input.val()),
+                    body = /** @type {string} */(body_input.val()),
                     modifier = '?',
                     additional = '',
                     result = null,
                     i;
+
+                subject = encodeURIComponent(subject);
+                body = encodeURIComponent(body);
 
                 if (recipient) {
                     if (subject.length > 0) {
@@ -1631,11 +1762,12 @@ refinery.admin = {
                         modifier = '&';
                     }
 
-                    for (i = 0; i < recipient.length; i++) {
-                        hex_recipient += '%' + recipient.charCodeAt(i).toString(16);
-                    }
+                    result = {
+                        type: 'email',
+                        title: recipient,
+                        url: 'mailto:' + encodeURIComponent(recipient) + additional
+                    };
 
-                    result = { title: recipient, url: 'mailto:' + hex_recipient + additional };
                     email_input.val('');
                     subject_input.val('');
                     body_input.val('');
@@ -1660,6 +1792,7 @@ refinery.admin = {
 
                 if (url) {
                     result = {
+                        type: 'website',
                         title: url.replace(/^https?:\/\//, ''),
                         url: url,
                         blank: blank
@@ -1675,7 +1808,7 @@ refinery.admin = {
             /**
              * Process insert action by tab type
              *
-             * @return {undefined}
+             * @return {Object} self
              */
             insert: function () {
                 var holder = this.holder,
@@ -1685,6 +1818,7 @@ refinery.admin = {
                 switch (tab.attr('id')) {
                 case 'links-dialog-pages':
                     obj = tab.find('.ui-selected').data('link');
+                    obj.type = 'page';
 
                     break;
                 case 'links-dialog-website':
@@ -1702,18 +1836,20 @@ refinery.admin = {
                 if (obj) {
                     this.trigger('insert', obj);
                 }
+
+                return this;
             }
 
         });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/resources_dialog.js
+// Source: ~/refinery/scripts/admin/dialogs/resources_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
      * @param {Object=} options
      */
     refinery.Object.create({
-        objectPrototype: refinery.n('admin.Dialog', {
+        objectPrototype: refinery('admin.Dialog', {
             title: t('refinery.admin.resources_dialog_title'),
             url: '/refinery/dialogs/resources'
         }, true),
@@ -1725,11 +1861,9 @@ refinery.admin = {
         },
 
         /**
-         * Propagate selected image wth attributes to dialog observers
+         * Propagate selected file wth attributes to dialog observers
          *
-         * @expose
-         *
-         * @return {undefined}
+         * @return {Object} self
          */
         insert: function () {
             var li = this.holder.find('.ui-selected'),
@@ -1739,19 +1873,22 @@ refinery.admin = {
                 obj.id = li.attr('id').replace('dialog-resource-', '');
                 obj.url = li.data('url');
                 obj.html = li.html();
+                obj.type = 'library';
                 this.trigger('insert', obj);
             }
+
+            return this;
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/pickers/image_picker.js
+// Source: ~/refinery/scripts/admin/pickers/image_picker.js
     /**
      * @constructor
      * @extends {refinery.admin.Picker}
      * @param {Object=} options
      */
     refinery.Object.create({
-        objectPrototype: refinery.n('admin.Picker', null, true),
+        objectPrototype: refinery('admin.Picker', null, true),
 
         name: 'ImagePicker',
 
@@ -1760,7 +1897,7 @@ refinery.admin = {
          *
          * @param {{id: string, size: string, medium: string}} img
          *
-         * @return {undefined}
+         * @return {Object} self
          */
         insert: function (img) {
             if (img) {
@@ -1777,17 +1914,19 @@ refinery.admin = {
                 this.dialog.close();
                 this.trigger('insert');
             }
+
+            return this;
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/pickers/resource_picker.js
+// Source: ~/refinery/scripts/admin/pickers/resource_picker.js
     /**
      * @constructor
      * @extends {refinery.admin.Picker}
      * @param {Object=} options
      */
     refinery.Object.create({
-        objectPrototype: refinery.n('admin.Picker', null, true),
+        objectPrototype: refinery('admin.Picker', null, true),
 
         name: 'ResourcePicker',
 
@@ -1796,11 +1935,10 @@ refinery.admin = {
          *
          * @param {{id: string, url: string, html: string}} resource
          *
-         * @return {undefined}
+         * @return {Object} self
          */
         insert: function (resource) {
             if (resource) {
-
                 this.elm_current_record_id.val(resource.id);
 
                 this.elm_record_holder.html($('<a/>', {
@@ -1813,6 +1951,8 @@ refinery.admin = {
                 this.dialog.close();
                 this.trigger('insert');
             }
+
+            return this;
         }
 
     });

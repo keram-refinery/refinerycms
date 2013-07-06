@@ -1,23 +1,23 @@
 <ul id="page-parts-controls" class="nojs-hide">
   <li>
-    <%= link_to t('.reorder_page_parts'), '#',
+    <%= link_to t('.reorder'), '#',
                 :id => 'reorder-page-part',
                 :class => 'icon-small reorder-icon',
                 :title => t('.reorder_content_section') %>
-    <%= link_to t('.reorder_page_parts_done'), '#',
+    <%= link_to t('.reorder_done'), '#',
                 :id => 'reorder-page-part-done',
                 :class => 'hide icon-small success-icon',
                 :title => t('.reorder_content_section_done') %>
   </li>
   <% if ::Refinery::Pages.new_page_parts %>
     <li>
-      <%= link_to t('.add_page_part'), refinery.new_admin_page_part_path,
+      <%= link_to t('.add'), refinery.new_admin_page_part_path,
                   :id => 'add-page-part',
                   :class => 'icon-small add-icon',
                   :title => t('.create_content_section') %>
     </li>
     <li>
-      <%= link_to t('.delete_page_part'), refinery.admin_page_parts_path,
+      <%= link_to t('.delete'), refinery.admin_page_parts_path,
                   :id => 'delete-page-part',
                   :class => 'icon-small delete-icon',
                   :title => t('.delete_content_section') %>
@@ -28,7 +28,7 @@
 <div id="page-tabs" class="clearfix ui-tabs">
   <ul id="page-parts" class="nojs-hide ui-tabs-nav">
     <% @page.parts.each_with_index do |part, part_index| %>
-      <li data-index="<%= part_index %>" class="<%= 'ui-state-active' if part.title.to_s.downcase == ::Refinery::Pages.main_part.to_s.downcase %>">
+      <li class="<%= 'ui-state-active' if part.title.to_s.downcase == ::Refinery::Pages.main_part.to_s.downcase %>">
         <%= link_to part.title, "##{part.to_param}" %>
       </li>
     <% end %>

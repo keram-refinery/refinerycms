@@ -4,17 +4,18 @@ module Refinery
   module Admin
     module BaseController
 
-      include ActionView::RecordIdentifier
-      extend ActiveSupport::Concern
 
-      included do
-        send :before_action, :require_refinery_users!
-        send :before_action, :force_ssl!
+      def self.included(base)
+        base.layout :layout?
 
-        before_action :authenticate_refinery_user!, :activate_plugins, :restrict_controller
-        after_action :store_location?, :only => [:index] # for redirect_back_or_default
+        base.before_action :force_ssl!,
+                           :authenticate_refinery_user!,
+                           :activate_plugins,
+                           :restrict_controller
 
-        helper_method :iframe?, :app_dialog?, :group_by_date
+        base.after_action :store_location?, only: [:index] # for redirect_back_or_default
+
+        base.helper_method :iframe?, :app_dialog?, :group_by_date
       end
 
       def admin?
@@ -28,7 +29,7 @@ module Refinery
     protected
 
       def force_ssl!
-        redirect_to :protocol => 'https' if Refinery::Core.force_ssl && !request.ssl?
+        redirect_to protocol: 'https' if Refinery::Core.force_ssl && !request.ssl?
       end
 
       def group_by_date(records, date=:created_at)
@@ -41,10 +42,6 @@ module Refinery
         end
 
         new_records
-      end
-
-      def require_refinery_users!
-        redirect_to refinery.refinery_users_register_path if just_installed? && controller_name != 'users'
       end
 
       def activate_plugins

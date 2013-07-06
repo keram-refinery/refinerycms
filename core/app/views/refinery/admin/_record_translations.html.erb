@@ -1,10 +1,10 @@
 <span class="locales">(
-  <span><%= t('language', :scope => 'refinery') -%>:</span>
+  <span><%= t('language', scope:'refinery') -%>:</span>
   <% record.translations.sort_by{|t| Refinery::I18n.frontend_locales.index(t.locale)}.each do |translation| %>
-
-    <%= link_to t("lang_#{translation.locale}", :scope => 'refinery'),
-                refinery.send(:"#{link}_path", {id: record.id, frontend_locale: :en}),
-                :class => "locale flag-#{translation.locale}" if translation.title.present? %>
+    <%= link_to t("lang_#{translation.locale}", scope:'refinery'),
+                refinery.send(:"#{link}_path", {id: record.id, frontend_locale: translation.locale}),
+                title: t("lang_#{translation.locale}", scope:'refinery'),
+                class:"locale flag-#{translation.locale}" if translation.title.present? %>
   <% end %>
   )
 </span>

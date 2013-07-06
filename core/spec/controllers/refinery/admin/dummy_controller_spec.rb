@@ -34,7 +34,6 @@ module Refinery
 
         describe "force_ssl!" do
           before do
-            controller.stub(:require_refinery_users!).and_return(false)
           end
 
           it "is false so standard HTTP is used" do

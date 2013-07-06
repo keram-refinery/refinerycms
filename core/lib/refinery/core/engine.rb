@@ -3,7 +3,7 @@ require 'decorators'
 module Refinery
   module Core
     class Engine < ::Rails::Engine
-      include Refinery::Engine
+      extend Refinery::Engine
 
       isolate_namespace Refinery
       engine_name :refinery
@@ -46,6 +46,30 @@ module Refinery
           plugin.class_name = 'RefineryEngine'
           plugin.hide_from_menu = true
           plugin.always_allow_access = true
+        end
+      end
+
+      initializer 'register javascripts' do
+        ['refinery'].each do |modul|
+          Refinery::Core.config.register_javascript "refinery/#{modul}.all.js"
+
+          ::Refinery::I18n.frontend_locales.each do |locale|
+            file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/#{modul}-#{locale}.js"
+            if File.exists?(file_path)
+              Refinery::Core.config.register_I18n_javascript locale, "refinery/i18n/#{modul}-#{locale}.js"
+            end
+          end
+        end
+
+        ['refinery', 'refinery-admin'].each do |modul|
+          Refinery::Core.config.register_admin_javascript "refinery/#{modul}.min.js"
+
+          ::Refinery::I18n.locales.keys.each do |locale|
+            file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/#{modul}-#{locale}.js"
+            if File.exists?(file_path)
+              Refinery::Core.config.register_admin_I18n_javascript locale, "refinery/i18n/#{modul}-#{locale}.js"
+            end
+          end
         end
       end
 

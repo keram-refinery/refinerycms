@@ -48,6 +48,10 @@ en:
         form_new_page_parts:
           title: Title
         form_page_parts:
+          reorder: Reorder
+          reorder_done: Reorder Done
+          add: Add
+          delete: Delete
           create_content_section: Add content section
           delete_content_section: Delete content section
           reorder_content_section: Reorder content sections

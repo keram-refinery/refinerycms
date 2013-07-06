@@ -1,8 +1,6 @@
 <div id="more-options-field" class="clearfix">
     <%= link_to t('.advanced_options'), '#more-options',
-                :id => 'toggle-advanced-options',
-                :class => 'nojs-hide icon-small icon-with-text page-options-icon',
-                :onclick => "$('#more-options').toggleClass('js-hide');",
+                :class => 'nojs-hide icon-small icon-with-text page-options-icon toggle-hide',
                 :title => t('.toggle_advanced_options') %>
   <span id="draft-field">
     <%= f.check_box :draft %>

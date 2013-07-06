@@ -22,6 +22,11 @@
 
 <% Refinery::I18n.frontend_locales.each do |flag| %>
 .flag-<%= flag %> {
-	background-image: image-url('refinery/icons/flags/<%= flag %>.png');
+	<% if flag.in?(Refinery::I18n.locales.keys) %>
+	background-image: image-url('<%= "refinery/icons/flags/#{flag}.png" %>');
+	<% else %>
+	background-image: image-url('refinery/icons/flags/missing.png');
+	<% end %>
 }
 <% end %>
+

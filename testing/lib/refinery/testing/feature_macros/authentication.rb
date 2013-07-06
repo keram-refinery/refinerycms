@@ -4,12 +4,10 @@ module Refinery
       module Authentication
 
         def refinery_login_with(factory)
+          Refinery::User.delete_all
+
           let!(:logged_in_user) do
-            if Refinery::User.any?
-              Refinery::User.first
-            else
-              FactoryGirl.create(factory)
-            end
+            FactoryGirl.create(factory)
           end
 
           before do

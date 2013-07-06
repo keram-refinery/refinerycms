@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 # Add i18n support.
-gem 'refinerycms-i18n', '~> 2.1.0.dev', :git => 'git://github.com/refinery/refinerycms-i18n.git', :branch => 'refinery_light'
+gem 'refinerycms-i18n', '~> 3.0.0.dev', :git => 'git://github.com/keram-refinery/refinerycms-i18n.git', :branch => 'refinery_light'
 
 gem 'quiet_assets', :group => :development
 
@@ -27,7 +27,7 @@ end
 gem 'jruby-openssl', :platform => :jruby
 
 group :test do
-  gem 'refinerycms-testing', :path => './testing'
+  gem 'refinerycms-testing'
   gem 'generator_spec', '~> 0.9.0'
   gem 'guard-rspec', '~> 3.0.2'
   gem 'capybara-email', '~> 2.1.3'
@@ -72,13 +72,12 @@ end
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier'
 
-# for dummy
-gem 'turbolinks', :path => '../turbolinks'
+gem 'turbolinks', '~> 1.2.0'
 
 gem 'jquery-rails', '~> 3.0.1'
 gem 'jquery-ui-rails', '~> 4.0.2'
 
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.0.4'
 
 # To use debugger
 # gem 'ruby-debug', :platform => :mri_18

@@ -3,26 +3,21 @@
 //= require vendor/jquery-ui.min.js
 //= require turbolinks
 //= require vendor/nestedsortables
-//= require vendor/i18n
-//= require refinery/i18n/refinery-en
-//= require refinery/i18n/refinery-admin-en
-//= require refinery/refinery.min
-//= require refinery/admin/admin.min
+
 <% ::Refinery::Core.admin_javascripts.each do |js| %>
 <%= require_asset js %>
 <% end %>
 
 $(function () {
-
     var doc = $(document),
         ui = new refinery.admin.UserInterface().init($('body'));
+        // =t=
+    $.ajaxSettings.dataType = 'JSON';
 
     function reload () {
         ui.reload($('body', false));
         refinery.spinner.off();
     }
-
-    $.ajaxSettings.dataType = 'JSON';
 
     doc.on('page:fetch', function () {
         $('.ui-dialog').remove();
@@ -31,13 +26,5 @@ $(function () {
 
     doc.on('page:load', reload);
     doc.on('page:restore', reload);
-
-    window.addEventListener('popstate', function(event) {
-      var state = event.state;
-      if (state && state.refinery && state.url) {
-        refinery.request.get(state.url);
-      }
-    }, false);
-
-   // new refinery.admin.SettingsDialog().init().open();
+    //new refinery.admin.ResourcesDialog().init().open();
 });

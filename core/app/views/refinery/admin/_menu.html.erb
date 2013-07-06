@@ -1,7 +1,7 @@
 <nav id="menu" class="clearfix" role="navigation">
-  <% ::Refinery::Plugins.active.in_menu.each_with_index do |plugin, index| %>
-    <% options = { :id => "id-#{index}"} -%>
-    <% options.merge!({ :'aria-selected' => true, :class => 'selected' }) if plugin === refinery_plugin -%>
-    <%= link_to plugin.title, refinery.url_for(plugin.url), options %>
+  <% ::Refinery::Plugins.active.in_menu.each do |plugin| %>
+    <%= link_to plugin.title,
+                refinery.url_for(plugin.url),
+                ({ :'aria-selected' => true, :class => 'selected' } if plugin === refinery_plugin) %>
   <% end %>
 </nav>

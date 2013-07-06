@@ -60,7 +60,7 @@
     background-position: 7px 10px;
     background-color: #C7E9FC;
     border: 1px solid #738F9C;
-    background-image: url('/assets/refinery/icons/information.png');
+    background-image: asset-url('refinery/icons/information.png');
 }
 
 .flash-success,
@@ -68,11 +68,11 @@
     border-color: #00A017;
     color: #00A017;
     background-color: #E0F5E0;
-    background-image: url('/assets/refinery/icons/accept.png') ;
+    background-image: asset-url('refinery/icons/accept.png') ;
 }
 
 .error-explanation {
-    background: 7px 12px no-repeat url('/assets/refinery/icons/cancel.png') #FFB1B1;
+    background: 7px 12px no-repeat asset-url('refinery/icons/cancel.png') #FFB1B1;
     padding: 10px 5px 5px 30px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -89,7 +89,7 @@
 .flash-alert {
     border-color: #A00027;
     color: #A00027;
-    background-image: url('/assets/refinery/icons/cancel.png');
+    background-image: asset-url('refinery/icons/cancel.png');
     background-color: #FFBEBE;
 }
 
@@ -193,7 +193,7 @@ a.help,
 span.help {
     width: 16px;
     height: 16px;
-    background: url('/assets/refinery/icons/help.png') no-repeat;
+    background: asset-url('refinery/icons/help.png') no-repeat;
     position: relative;
     text-decoration: none;
     display: inline-block;
@@ -220,29 +220,12 @@ span.help {
   z-index: 1001;
 }
 
-.image-holder img {
-    border: solid 4px #ccc;
-}
-
-#page-parts-controls {
-    position: relative;
-    z-index: 1;
-    float: right;
-    margin: 0px;
-}
-
-#page-parts-controls li {
-    float: right;
-    margin: 15px 5px 0px;
-}
-
 .spinner {
-    background-image: url('/assets/refinery/icons/ajax-loader.gif');
+    background-image: asset-url('refinery/icons/ajax-loader.gif');
     visibility: hidden;
 }
 
 .loading {
-
     #wrapper {
         opacity: 0.9;
     }
@@ -262,7 +245,6 @@ span.help {
         width: 90px;
         z-index: 100;
     }
-
 
     a {
         cursor: progress;

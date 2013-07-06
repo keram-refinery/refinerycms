@@ -1,33 +1,29 @@
 module Refinery
   module ApplicationController
 
-    extend ActiveSupport::Concern
+    include ActionView::RecordIdentifier
 
-    included do # Extend controller
-      layout :layout?
+    def self.included(base) # Extend controller
+      base.helper_method :xhr_json_response?,
+                          :render_html_to_json_string,
+                          :refinery_plugin,
+                          :local_request?,
+                          :admin?,
+                          :paginate_page,
+                          :json_response,
+                          :dialog?,
+                          :refinery_dom_id
 
-      helper_method :xhr_json_response?,
-                    :render_html_to_json_string,
-                    :refinery_plugin,
-                    :local_request?,
-                    :just_installed?,
-                    :admin?,
-                    :paginate_page,
-                    :json_response,
-                    :dialog?,
-                    :refinery_dom_id
+      base.protect_from_forgery # See ActionController::RequestForgeryProtection
 
-      protect_from_forgery # See ActionController::RequestForgeryProtection
-
-      send :include, Refinery::Crud # basic create, read, update and delete methods
+      base.send :include, Refinery::Crud # basic create, read, update and delete methods
 
       if Refinery::Core.rescue_not_found
-        send :rescue_from, ActiveRecord::RecordNotFound,
-                           ::AbstractController::ActionNotFound,
-                           ActionView::MissingTemplate,
-                           :with => :error_404
+        base.rescue_from ActiveRecord::RecordNotFound,
+                         ::AbstractController::ActionNotFound,
+                         ActionView::MissingTemplate,
+                         with: :error_404
       end
-
     end
 
     def admin?
@@ -49,10 +45,6 @@ module Refinery
       render :file => file.cleanpath.to_s.gsub(%r{#{file.extname}$}, ''),
              :layout => false, :status => 403, :formats => [:html]
       return false
-    end
-
-    def just_installed?
-      !Refinery::Role.where(:title => 'Refinery').joins(:users).exists?
     end
 
     def local_request?

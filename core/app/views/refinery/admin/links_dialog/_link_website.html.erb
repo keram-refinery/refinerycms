@@ -1,7 +1,7 @@
 <div>
   <div class="field">
     <%= label_tag 'web_address_text', t('location', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %>
-    <%= text_field :web_address, :text, :value => 'http://', :class => 'widest' %>
+    <%= url_field :web_address, :text, :value => 'http://', :class => 'widest' %>
   </div>
   <div class="field">
     <%= label_tag '', t('new_window', :scope => 'refinery.admin.pages_dialogs.link_to.web_address') %>

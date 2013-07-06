@@ -1,5 +1,0 @@
-<%= javascript_include_tag 'refinery/admin/application', async: true, deferred: true, data: {:'turbolinks-eval' => false} %>
-<% custom_javascripts.each do |js| %>
-  <%= javascript_include_tag js, async: true, deferred: true, data: {:'turbolinks-eval' => false} %>
-<% end %>
-<%= yield :javascripts %>

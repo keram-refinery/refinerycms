@@ -33,7 +33,7 @@ module Refinery
     #
     # Example:
     #   To override the limit and title of the activity:
-    #   Activity.new(:limit => 10, :title => "Newest Activity!")
+    #   Activity.new(:limit => 10, :title => 'Newest Activity!')
     #
     # Warning:
     #  for the nested_with option, pass in the reverse order of ancestry
@@ -42,14 +42,14 @@ module Refinery
       {
         :class_name => nil,
         :conditions => nil,
-        :created_image => "add.png",
+        :created_image => 'add.png',
         :limit => 7,
         :nested_with => [],
-        :order => "updated_at DESC",
-        :title => "title",
-        :updated_image => "edit.png",
+        :order => 'updated_at DESC',
+        :title => 'title',
+        :updated_image => 'edit.png',
         :url => nil,
-        :url_prefix => "edit",
+        :url_prefix => 'edit',
         :use_record_in_nesting => true
       }.merge(options).each { |key, value| self.send(:"#{key}=", value) }
     end
@@ -71,9 +71,9 @@ module Refinery
     # of the Class this instance is recording
     #
     # Example:
-    #   Given: Activity.new(:class_name => "Refinery::Image")
+    #   Given: Activity.new(:class_name => 'Refinery::Image')
     #
-    #   activity.base_class_name => "Image"
+    #   activity.base_class_name => 'Image'
     def base_class_name
       self.klass.name.demodulize
     end
@@ -88,7 +88,7 @@ module Refinery
 
     # to use in a URL like edit_refinery_admin_group_individuals_path(record.group, record)
     # which will help you if you're using nested routes.
-    def nesting(record_string = "record")
+    def nesting(record_string = 'record')
       @nesting ||= begin
         chain = self.nested_with.inject([]) { |nest_chain, nesting|
           nest_chain << "#{record_string}.#{nesting}"

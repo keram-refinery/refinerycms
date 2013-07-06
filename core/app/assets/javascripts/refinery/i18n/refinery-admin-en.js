@@ -14,5 +14,8 @@ i18n.register({
     'links_dialog_title': 'Link',
     'resources_dialog_title': 'File',
     'settings_dialog_title' : 'New Setting',
-    'dialog_content_load_fail': 'Dialog content load fail'
+    'dialog_content_load_fail': 'Dialog content load fail',
+    'label_title': 'Title',
+    'button_create': 'Create',
+    'button_cancel': 'Cancel'
 }, 'refinery.admin');

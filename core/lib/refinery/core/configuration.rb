@@ -5,8 +5,8 @@ module Refinery
     config_accessor :rescue_not_found, :s3_backend, :base_cache_key, :site_name,
                     :google_analytics_page_code, :authenticity_token_on_frontend,
                     :dragonfly_secret,
-                    :javascripts, :stylesheets,
-                    :admin_javascripts, :admin_stylesheets,
+                    :javascripts, :I18n_javascripts, :stylesheets,
+                    :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
                     :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts
@@ -19,8 +19,10 @@ module Refinery
     self.authenticity_token_on_frontend = false
     self.dragonfly_secret = Array.new(24) { rand(256) }.pack('C*').unpack('H*').first
     self.javascripts = []
+    self.I18n_javascripts = {}
     self.stylesheets = []
     self.admin_javascripts = []
+    self.admin_I18n_javascripts = {}
     self.admin_stylesheets = []
     self.s3_bucket_name = ENV['S3_BUCKET']
     self.s3_region = ENV['S3_REGION']
@@ -35,12 +37,22 @@ module Refinery
       self.javascripts |= Array(name)
     end
 
+    def config.register_I18n_javascript(locale, name)
+      self.I18n_javascripts[locale] ||= []
+      self.I18n_javascripts[locale] |= Array(name)
+    end
+
     def config.register_stylesheet(*args)
       self.stylesheets |= Array(Stylesheet.new(*args))
     end
 
     def config.register_admin_javascript(name)
       self.admin_javascripts |= Array(name)
+    end
+
+    def config.register_admin_I18n_javascript(locale, name)
+      self.admin_I18n_javascripts[locale] ||= []
+      self.admin_I18n_javascripts[locale] |= Array(name)
     end
 
     def config.register_admin_stylesheet(*args)

@@ -8,8 +8,8 @@ require Refinery.roots(:'refinery/authentication').join("app/models/refinery/rol
 
 FactoryGirl.define do
   factory :user, :class => Refinery::User do
-    sequence(:username) { |n| "refinery#{n}" }
-    sequence(:email) { |n| "refinery#{n}@refinerycms.com" }
+    sequence(:username) { |n| "refinery#{n}#{rand(10000000)}" }
+    sequence(:email) { |n| "refinery#{n}#{rand(10000000)}@refinerycms.com" }
     locale :en
     password  "refinerycms"
     password_confirmation "refinerycms"

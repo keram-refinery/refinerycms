@@ -13,4 +13,5 @@
 
 <%= render '/refinery/google_analytics' unless local_request? || refinery_user? %>
 
-<%= javascript_include_tag 'modernizr-min' %>
+<%= javascript_include_tag 'modernizr-min', data: { :'turbolinks-eval' => false } %>
+<%= javascript_include_tag 'i18n', data: { :'turbolinks-eval' => false } %>
