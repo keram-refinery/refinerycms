@@ -8,7 +8,7 @@
   <%% if Refinery::I18n.frontend_locales.many? %>
     <%%= render 'record_translations',
                 :record => <%= singular_name %>,
-                :link => 'edit_<%= namespacing.underscore %>_admin_<%= singular_name %>' %>
+                :link => 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>' %>
   <%% end %>
 <% end %>
 
@@ -22,7 +22,7 @@
                 :method => :delete %>
 
     <%%= link_to t('edit', :scope => 'refinery.admin.record'),
-                refinery.edit_<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>),
+                refinery.edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
                 :class => 'icon-small edit-icon',
                 :title => t('.edit') %>
 

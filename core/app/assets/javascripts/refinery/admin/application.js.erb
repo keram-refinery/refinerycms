@@ -13,16 +13,15 @@
 <% end %>
 
 $(function () {
-
     var doc = $(document),
         ui = new refinery.admin.UserInterface().init($('body'));
+
+    $.ajaxSettings.dataType = 'JSON';
 
     function reload () {
         ui.reload($('body', false));
         refinery.spinner.off();
     }
-
-    $.ajaxSettings.dataType = 'JSON';
 
     doc.on('page:fetch', function () {
         $('.ui-dialog').remove();
@@ -31,13 +30,4 @@ $(function () {
 
     doc.on('page:load', reload);
     doc.on('page:restore', reload);
-
-    window.addEventListener('popstate', function(event) {
-      var state = event.state;
-      if (state && state.refinery && state.url) {
-        refinery.request.get(state.url);
-      }
-    }, false);
-
-   // new refinery.admin.SettingsDialog().init().open();
 });

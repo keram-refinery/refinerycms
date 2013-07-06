@@ -60,7 +60,8 @@
   <% end %>
   </div>
 
-  <% if is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles %>
+  <%= is_current_user_superuser %>-t-
+  <%# if is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles %>
     <div class="field">
     <%= checkboxes do -%>
       <%= f.label :role_access, t('.role_access'), :class => 'title-label' %>
@@ -82,7 +83,7 @@
       </ul>
     <% end %>
     </div>
-  <% end %>
+  <%# end %>
 
   <%# Protect against csrf by xss or by direct access to superuser browser by attacker -%>
   <% if !@user.new_record? || (is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles) %>

@@ -1,7 +1,7 @@
-/*! Generated: 2013-07-05 14:58:57 */
+/*! Generated: 2013-07-06 19:38:10 */
 (function (window, $) {
 
-// Source: refinerycms-clientside/src/refinery/scripts/refinery.js
+// Source: ~./refinery/scripts/refinery.js
 /**
  * Main Refinery Object and namespace
  *
@@ -413,7 +413,7 @@ var refinery = {
 
 refinery.provide('refinery', refinery);
 
-// Source: refinerycms-clientside/src/refinery/scripts/object_state.js
+// Source: ~./refinery/scripts/object_state.js
 /**
  * refinery Object State
  *
@@ -507,7 +507,7 @@ refinery.ObjectState.prototype = {
     }
 };
 
-// Source: refinerycms-clientside/src/refinery/scripts/object.js
+// Source: ~./refinery/scripts/object.js
 /**
  * Refinery Object
  *

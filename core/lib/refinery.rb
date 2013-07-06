@@ -144,22 +144,10 @@ module Refinery
       klass = klass.constantize if klass.respond_to?(:constantize)
       active_name = ActiveModel::Name.new klass, (Refinery if klass.parents.include?(Refinery))
 
-      if options[:admin]
-        # Most of the time this gets rid of 'refinery'
-        parts = active_name.underscore.split('/').reject{|name|
-          active_name.singular_route_key.exclude?(name)
-        }
+      path = options[:plural] ? active_name.route_key : active_name.singular_route_key
+      path.prepend 'admin_' if options[:admin]
 
-        # Get the singular resource_name from the url parts
-        resource_name = parts.pop
-        resource_name = resource_name.pluralize if options[:plural]
-
-        [parts.join("_"), "admin", resource_name, "path"].reject(&:blank?).join "_"
-      else
-        path = options[:plural] ? active_name.route_key : active_name.singular_route_key
-
-        [path, 'path'].join '_'
-      end
+      path << '_path'
     end
 
     def include_once(base, extension_module)

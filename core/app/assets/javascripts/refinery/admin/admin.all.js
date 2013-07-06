@@ -1,7 +1,7 @@
-/*! Generated: 2013-07-05 14:58:57 */
+/*! Generated: 2013-07-06 19:38:10 */
 (function (window, $) {
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/admin.js
+// Source: ~./refinery/scripts/admin/admin.js
 /**
  * Refinery Admin namespace
  *
@@ -12,7 +12,7 @@ refinery.admin = {
     ui: {}
 };
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/form.js
+// Source: ~./refinery/scripts/admin/form.js
     /**
      * @constructor
      * @class  refinery.admin.Form
@@ -209,7 +209,7 @@ refinery.admin = {
         });
     };
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/form_page_parts.js
+// Source: ~./refinery/scripts/admin/form_page_parts.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -472,7 +472,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/sortable_list.js
+// Source: ~./refinery/scripts/admin/sortable_list.js
     /**
      * Sortable List
      *
@@ -717,7 +717,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/user_interface.js
+// Source: ~./refinery/scripts/admin/user_interface.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -949,7 +949,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/dialog.js
+// Source: ~./refinery/scripts/admin/dialogs/dialog.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1337,7 +1337,7 @@ refinery.admin = {
             }
         });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/pickers/picker.js
+// Source: ~./refinery/scripts/admin/pickers/picker.js
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1473,7 +1473,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/images_dialog.js
+// Source: ~./refinery/scripts/admin/dialogs/images_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1582,7 +1582,7 @@ refinery.admin = {
             }
         });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/links_dialog.js
+// Source: ~./refinery/scripts/admin/dialogs/links_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1706,7 +1706,7 @@ refinery.admin = {
 
         });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/dialogs/resources_dialog.js
+// Source: ~./refinery/scripts/admin/dialogs/resources_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1744,7 +1744,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/pickers/image_picker.js
+// Source: ~./refinery/scripts/admin/pickers/image_picker.js
     /**
      * @constructor
      * @extends {refinery.admin.Picker}
@@ -1780,7 +1780,7 @@ refinery.admin = {
         }
     });
 
-// Source: refinerycms-clientside/src/refinery/scripts/admin/pickers/resource_picker.js
+// Source: ~./refinery/scripts/admin/pickers/resource_picker.js
     /**
      * @constructor
      * @extends {refinery.admin.Picker}
