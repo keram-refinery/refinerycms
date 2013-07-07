@@ -78,14 +78,17 @@ gem 'jquery-rails', '~> 3.0.1'
 gem 'jquery-ui-rails', '~> 4.0.2'
 
 gem 'will_paginate', '~> 3.0.4'
+gem 'protected_attributes'
 
-# To use debugger
-# gem 'ruby-debug', :platform => :mri_18
-# or in 1.9.x:
-# gem 'debugger', :platform => :mri_19
+gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
+gem 'paper_trail', github: 'airblade/paper_trail', :branch => 'rails4'
+gem 'database_cleaner', github: 'tommeier/database_cleaner', branch: 'fix-superclass'
+gem 'globalize3', github: 'svenfuchs/globalize3', branch: 'rails4'
+gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set', branch: 'rails4'
+gem 'routing-filter', github: "svenfuchs/routing-filter"
+gem 'refinerycms-acts-as-indexed', github: 'refinery/refinerycms-acts-as-indexed'
 
-# For Heroku/s3:
-# gem 'fog'
+gem 'friendly_id', github: 'FriendlyId/friendly_id', branch: 'master'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
