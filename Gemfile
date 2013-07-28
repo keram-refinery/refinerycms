@@ -27,55 +27,21 @@ end
 gem 'jruby-openssl', :platform => :jruby
 
 group :test do
-  gem 'refinerycms-testing'
+  gem 'refinerycms-testing', '~> 3.0.0.dev'
   gem 'generator_spec', '~> 0.9.0'
-  gem 'guard-rspec', '~> 3.0.2'
-  gem 'capybara-email', '~> 2.1.3'
-
-  platforms :mswin, :mingw do
-    gem 'win32console', '~> 1.3.0'
-    gem 'rb-fchange', '~> 0.0.5'
-    gem 'rb-notifu', '~> 0.0.4'
-  end
-
-  platforms :ruby do
-    unless ENV['TRAVIS']
-      require 'rbconfig'
-      if /darwin/i === RbConfig::CONFIG['target_os']
-        gem 'rb-fsevent', '~> 0.9.0'
-        gem 'ruby_gntp', '~> 0.3.4'
-      end
-      if /linux/i === RbConfig::CONFIG['target_os']
-        gem 'rb-inotify', '~> 0.9.0'
-        gem 'libnotify',  '~> 0.8.1'
-        gem 'therubyracer', '~> 0.11.4'
-      end
-    end
-  end
-
-  platforms :jruby do
-    unless ENV['TRAVIS']
-      require 'rbconfig'
-      if /darwin/i === RbConfig::CONFIG['target_os']
-        gem 'ruby_gntp', '~> 0.3.4'
-      end
-      if /linux/i === RbConfig::CONFIG['target_os']
-        gem 'rb-inotify', '~> 0.9.0'
-        gem 'libnotify',  '~> 0.8.1'
-      end
-    end
-  end
 end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
 gem 'sass-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 1.2.0'
+gem 'turbolinks', '~> 1.3.0'
 
-gem 'jquery-rails', '~> 3.0.1'
-gem 'jquery-ui-rails', '~> 4.0.2'
+gem 'jquery-rails', '~> 3.0.4'
+gem 'jquery-ui-rails', '~> 4.0.4'
 
 gem 'will_paginate', '~> 3.0.4'
 
@@ -83,9 +49,6 @@ gem 'will_paginate', '~> 3.0.4'
 # gem 'ruby-debug', :platform => :mri_18
 # or in 1.9.x:
 # gem 'debugger', :platform => :mri_19
-
-# For Heroku/s3:
-# gem 'fog'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)

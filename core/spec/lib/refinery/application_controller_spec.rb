@@ -21,6 +21,36 @@ module Refinery
       end
     end
 
+    describe ".home_page?" do
+      it "matches root url" do
+        controller.stub(:root_path).and_return("/")
+        request.stub(:path).and_return("/")
+        controller.home_page?.should be_true
+      end
+
+      it "matches localised root url" do
+        controller.refinery.stub(:root_path).and_return("/en/")
+        request.stub(:path).and_return("/en")
+        controller.home_page?.should be_true
+      end
+
+      it "matches localised root url with trailing slash" do
+        controller.refinery.stub(:root_path).and_return("/en/")
+        request.stub(:path).and_return("/en/")
+        controller.home_page?.should be_true
+      end
+
+      it "escapes regexp" do
+        request.stub(:path).and_return("\/huh)")
+        expect { controller.home_page? }.to_not raise_error
+      end
+
+      it "returns false for non root url" do
+        request.stub(:path).and_return("/foo/")
+        controller.should_not be_home_page
+      end
+    end
+
     describe "#presenter_for" do
       it 'returns BasePresenter for nil' do
         controller.send(:presenter_for, nil).should eq(BasePresenter)

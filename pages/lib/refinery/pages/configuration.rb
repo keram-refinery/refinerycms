@@ -32,7 +32,6 @@ module Refinery
     end
 
     self.use_layout_templates = false
-    self.use_view_templates = false
     self.page_title = {
       :chain_page_title => false,
       :ancestors => {

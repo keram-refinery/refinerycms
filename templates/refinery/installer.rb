@@ -4,6 +4,22 @@ require "#{ROOT_PATH}/core/lib/refinery/version.rb"
 
 VERSION_BAND = Refinery::Version.to_s
 
+# We want to ensure that you have an ExecJS runtime available!
+begin
+  run 'bundle install'
+  require 'execjs'
+  raise if ::ExecJS::Runtimes.autodetect.name =~ /therubyracer/
+rescue
+  require 'pathname'
+  if Pathname.new(destination_root.to_s).join('Gemfile').read =~ /therubyracer/
+    gsub_file 'Gemfile', "# gem 'therubyracer'", "gem 'therubyracer'"
+  else
+    append_file 'Gemfile', <<-GEMFILE
+gem 'therubyracer'
+GEMFILE
+  end
+end
+
 append_file 'Gemfile', <<-GEMFILE
 
 # Refinery CMS

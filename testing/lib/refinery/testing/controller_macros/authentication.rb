@@ -22,14 +22,10 @@ module Refinery
             user = mock 'Refinery::User', :username => 'Joe Fake', :locale => :en, :plugins => plugins
 
             roles.each do |role|
-              user.should_receive(:has_role?).
-                   any_number_of_times.with(role).and_return true
-            end
-            if roles.exclude? :superuser
-              user.should_receive(:has_role?).
-                   any_number_of_times.with(:superuser).and_return false
+              user.stub(:has_role?).with(role).and_return true
             end
 
+            user.stub(:has_role?).with(:superuser).and_return false if roles.exclude? :superuser
             user
           end
 

@@ -57,9 +57,7 @@ module Refinery
       def load_valid_templates
         @valid_layout_templates = Pages.layout_template_whitelist.map(&:to_s) &
                                   Pages.valid_templates('app', 'views', '{layouts,refinery/layouts}', '*html*')
-
-        @valid_view_templates = Pages.view_template_whitelist.map(&:to_s) &
-                                Pages.valid_templates('app', 'views', '{pages,refinery/pages}', '*html*')
+        @valid_view_templates = Pages.valid_templates('app', 'views', '{pages,refinery/pages}', '*html*')
       end
 
     private
