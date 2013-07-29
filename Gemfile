@@ -38,7 +38,7 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 1.3.0'
+gem 'turbolinks', '~> 2.0.0'
 
 gem 'jquery-rails', '~> 3.0.4'
 gem 'jquery-ui-rails', '~> 4.0.4'
