@@ -31,6 +31,7 @@
                     :label => true,
                     :help => true }) %>
     </div>
+    <% end %>
 
     <div class="field">
       <%= refinery_form_field f, :text_field, :menu_title, :label => true, :help => true %>
@@ -57,6 +58,7 @@
       <%= refinery_form_field f, :check_box, :show_in_menu, :label => t('.show_in_menu_title'), :help => true  -%>
       <%= f.label :show_in_menu, t('.show_in_menu_description'), :class => 'stripped' %>
     </div>
+
   </div>
 
   <%= render 'form_advanced_options_seo', :f => f %>
