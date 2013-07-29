@@ -5,13 +5,3 @@
 </div>
 
 <%= will_paginate @resources %>
-
-<%= render '/refinery/admin/form_actions', :f => nil,
-            :cancel_url => '',
-            :submit_button_text => t('insert', :scope => 'refinery.admin.form_actions'),
-            :submit_button_class => 'insert-button',
-            :hide_cancel => false,
-            :hide_delete => true,
-            :hide_submit => @resources.empty?,
-            :cancel_button_text => t('close', :scope => 'refinery.admin.form_actions'),
-            :cancel_title => nil %>

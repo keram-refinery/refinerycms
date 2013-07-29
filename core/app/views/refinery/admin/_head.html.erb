@@ -6,7 +6,6 @@
 <%= csrf_meta_tags %>
 
 <%= stylesheet_link_tag 'refinery/application' %>
-<%= stylesheet_link_tag 'refinery/flags' if Refinery::I18n.frontend_locales.many? %>
 <% ::Refinery::Core.admin_stylesheets.each do |css| %>
   <%= stylesheet_link_tag css.path, css.options %>
 <% end %>

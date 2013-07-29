@@ -1635,17 +1635,18 @@ refinery.admin = {
              */
             library_tab: function (tab) {
                 var img = tab.find('.ui-selected .image img'),
-                    size_elm = tab.find('.image-dialog-size.selected a'),
+                    size_elm = tab.find('.image-dialog-size.ui-selected a'),
                     resize = tab.find('input:checkbox').is(':checked'),
                     obj = null;
 
                 if (img.length > 0) {
                     obj = img.data();
                     obj.type = 'library';
+                    obj.size = 'original';
 
-                    if (size_elm.length > 0) {
-                        obj.size = resize ? size_elm.data('size') : 'original';
-                        obj.geometry = size_elm.data('geometry');
+                    if (size_elm.length > 0 && resize) {
+                        obj['size'] = size_elm.data('size');
+                        obj['geometry'] = size_elm.data('geometry');
                     }
                 }
 
@@ -1664,6 +1665,7 @@ refinery.admin = {
 
                 if (url) {
                     obj = {
+                        'size': 'original',
                         'original': url,
                         'type': 'external'
                     };

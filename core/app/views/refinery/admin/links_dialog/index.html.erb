@@ -10,14 +10,16 @@
   <% tabs.each do |tab| %>
     <div id="links-dialog-<%= tab %>" class="ui-tabs-panel">
       <%= render "link_#{tab}" %>
-
-      <%= render '/refinery/admin/form_actions', :f => nil,
-                 :cancel_url => '',
-                 :submit_button_text => t('insert', :scope => 'refinery.admin.pages_dialogs.link_to'),
-                 :submit_button_class => 'insert-button',
-                 :hide_cancel => false,
-                 :cancel_title => nil,
-                 :hide_delete => true %>
     </div>
   <% end %>
+</div>
+<div class="dialog-actions">
+  <%= render '/refinery/admin/form_actions', :f => nil,
+             :cancel_url => '',
+             :submit_button_text => t('insert', :scope => 'refinery.admin.form_actions'),
+             :submit_button_class => 'insert-button',
+             :hide_submit => false,
+             :hide_cancel => false,
+             :hide_delete => true,
+             :cancel_title => nil %>
 </div>
