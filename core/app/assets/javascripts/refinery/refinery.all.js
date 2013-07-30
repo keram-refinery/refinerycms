@@ -628,6 +628,10 @@ refinery.Object.prototype = {
      * @return {boolean|undefined}
      */
     is: function (action, state) {
+        if (!this.state) {
+            return;
+        }
+
         if (typeof state === 'undefined' && typeof action !== 'object') {
             return this.state.is(action);
         }
@@ -755,10 +759,9 @@ refinery.Object.prototype = {
     destroy: function (removeGlobalReference) {
         if (this.holder) {
             this.holder.unbind();
-            refinery.Object.unbind(this.holder);
+            this.detach_holder();
         }
 
-        this.holder = null;
         this.state = null;
 
         if (removeGlobalReference) {
@@ -769,6 +772,60 @@ refinery.Object.prototype = {
         this.events = {};
 
         return this;
+    },
+
+    /**
+     * Call refinery Object destroy method on prototype.
+     * This is required especialy when we rewrite destroy method on
+     * inherited object from refinery.Object
+     *
+     * @expose
+     * @param {boolean=} removeGlobalReference if is true instance will be removed
+     *                   from refinery.Object.instances
+     *
+     * @return {Object} self
+     */
+    _destroy: function (removeGlobalReference) {
+        return refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+    },
+
+     /**
+     * Attach refinery.Object to DOM object (this.holder)
+     *
+     * @expose
+     * @param {!jQuery} holder jQuery wrapper around DOM object
+     *
+     * @return {undefined}
+     */
+    attach_holder: function (holder) {
+        var data = /** @type {Array} */(holder.data('refinery-instances') || []);
+        holder.data('refinery-instances', data.concat(this.uid));
+        holder.addClass('refinery-instance');
+        this.holder = holder;
+    },
+
+    /**
+     * Remove refinery.Object Instance from DOM object (this.holder)
+     *
+     * @expose
+     *
+     * @return {undefined}
+     */
+    detach_holder: function () {
+        var holder = this.holder,
+            data = holder.data('refinery-instances') || [],
+            uid = this.uid;
+
+        holder.data('refinery-instances',
+            data.filter(function (elm) {
+                return (elm !== uid);
+            }));
+
+        if (holder.data('refinery-instances').length === 0) {
+            holder.removeClass('refinery-instance');
+        }
+
+        this.holder = null;
     },
 
     /**
@@ -870,42 +927,6 @@ refinery.Object.create = function (options) {
     return MyObject;
 };
 
- /**
- * Attach refinery.Object to DOM object (this.holder)
- *
- * @expose
- * @param {string} ouid Object Unique Id
- * @param {!jQuery} holder jQuery wrapper around DOM object
- *
- * @return {undefined}
- */
-refinery.Object.attach = function (ouid, holder) {
-    var data = /** @type {Array} */(holder.data('refinery-instances') || []);
-    holder.data('refinery-instances', data.concat(ouid));
-    holder.addClass('refinery-instance');
-};
-
-/**
- * Remove refinery.Object Instance from DOM object (this.holder)
- *
- * @expose
- * @param {string} ouid Object Unique Id
- * @param {!jQuery} holder jQuery wrapper around DOM object
- *
- * @return {undefined}
- */
-refinery.Object.detach = function (ouid, holder) {
-    var data = holder.data('refinery-instances') || [];
-    holder.data('refinery-instances',
-        data.filter(function (elm) {
-            return (elm !== ouid);
-        }));
-
-    if (holder.data('refinery-instances').length === 0) {
-        holder.removeClass('refinery-instance');
-    }
-};
-
 /**
  * Remove refinery.Object Instance from DOM object (this.holder)
  *
@@ -915,7 +936,16 @@ refinery.Object.detach = function (ouid, holder) {
  * @return {undefined}
  */
 refinery.Object.unbind = function (holder) {
-    holder.data('refinery-instances', []);
+    var instances = holder.data('refinery-instances', []),
+        instance;
+
+    for (var i = instances.length - 1; i >= 0; i--) {
+        instance = refinery.Object.instances.get(instances[i]);
+        if (instance) {
+            instance.destroy(true);
+        }
+    }
+
     holder.removeClass('refinery-instance');
 };
 

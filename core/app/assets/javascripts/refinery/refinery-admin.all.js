@@ -171,8 +171,7 @@ refinery.admin = {
 
             if (that.is('initialisable')) {
                 that.is('initialising', true);
-                refinery.Object.attach(that.uid, holder);
-                that.holder = holder;
+                that.attach_holder(holder);
                 that.init_pickers();
                 that.init_inputs();
                 that.initial_values = holder.serialize();
@@ -493,12 +492,10 @@ refinery.admin = {
         init: function (holder) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
-                this.holder = holder;
+                this.attach_holder(holder);
                 this.page_parts = holder.find('#page-parts');
                 this.init_add_remove_part();
                 this.init_reorder_parts();
-
-                refinery.Object.attach(this.uid, holder);
                 this.is({'initialised': true, 'initialising': false});
                 this.trigger('init');
             }
@@ -694,7 +691,7 @@ refinery.admin = {
             this.holder.nestedSortable('destroy');
             this.set = null;
 
-            refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+            this._destroy(removeGlobalReference);
 
             return this;
         },
@@ -703,10 +700,9 @@ refinery.admin = {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
                 holder.nestedSortable(this.options.nested_sortable);
-                refinery.Object.attach(this.uid, holder);
+                this.attach_holder(holder);
                 this.set = holder.nestedSortable('toArray');
                 this.html = holder.html();
-                this.holder = holder;
                 this.is({'initialised': true, 'initialising': false});
                 this.trigger('init');
             }
@@ -1028,8 +1024,7 @@ refinery.admin = {
 
             if (that.is('initialisable')) {
                 that.is('initialising', true);
-                refinery.Object.attach(that.uid, holder);
-                that.holder = holder;
+                that.attach_holder(holder);
                 that.bind_events();
                 that.initialize_elements();
                 that.is({'initialised': true, 'initialising': false});
@@ -1421,11 +1416,11 @@ refinery.admin = {
              */
             destroy: function (removeGlobalReference) {
                 if (this.ui) {
-                    this.ui.destroy();
+                    this.ui.destroy(true);
                     this.ui = null;
                 }
 
-                refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+                this._destroy(removeGlobalReference);;
 
                 return this;
             },
@@ -1446,7 +1441,7 @@ refinery.admin = {
                         'class': 'loading'
                     });
 
-                    refinery.Object.attach(this.uid, this.holder);
+                    this.attach_holder(this.holder);
 
                     this.ui = refinery('admin.UserInterface');
                     this.holder.dialog(this.options);
@@ -1585,8 +1580,7 @@ refinery.admin = {
         init: function (holder, dialog) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
-                refinery.Object.attach(this.uid, holder);
-                this.holder = holder;
+                this.attach_holder(holder);
                 this.elm_current_record_id = holder.find('.current-record-id');
                 this.elm_record_holder = holder.find('.record-holder');
                 this.elm_no_picked_record = holder.find('.no-picked-record-selected');
@@ -1631,12 +1625,13 @@ refinery.admin = {
             /**
              * Handle image linked from library
              *
-             * @return {?{title: string, size: string, geometry: string, type: string}}
+             * @return {?images_dialog_object}
              */
             library_tab: function (tab) {
                 var img = tab.find('.ui-selected .image img'),
                     size_elm = tab.find('.image-dialog-size.ui-selected a'),
                     resize = tab.find('input:checkbox').is(':checked'),
+                    /** @type {?images_dialog_object} */
                     obj = null;
 
                 if (img.length > 0) {
@@ -1645,8 +1640,8 @@ refinery.admin = {
                     obj.size = 'original';
 
                     if (size_elm.length > 0 && resize) {
-                        obj['size'] = size_elm.data('size');
-                        obj['geometry'] = size_elm.data('geometry');
+                        obj.size = size_elm.data('size');
+                        obj.geometry = size_elm.data('geometry');
                     }
                 }
 
@@ -1656,11 +1651,12 @@ refinery.admin = {
             /**
              * Handle image linked by url
              *
-             * @return {?{original: string, type: string}}
+             * @return {?images_dialog_object}
              */
             url_tab: function (tab) {
                 var url_input = tab.find('input.text:valid'),
                     url = url_input.val(),
+                    /** @type {?images_dialog_object} */
                     obj = null;
 
                 if (url) {
@@ -1736,7 +1732,7 @@ refinery.admin = {
              *
              * @param {!jQuery} tab
              *
-             * @return {?{title: string, url: string}}
+             * @return {?link_dialog_object}
              */
             email_tab: function (tab) {
                 var email_input = tab.find('#email_address_text:valid'),
@@ -1747,6 +1743,7 @@ refinery.admin = {
                     body = /** @type {string} */(body_input.val()),
                     modifier = '?',
                     additional = '',
+                    /** @type {?link_dialog_object} */
                     result = null,
                     i;
 
@@ -1783,13 +1780,14 @@ refinery.admin = {
              *
              * @param {!jQuery} tab
              *
-             * @return {?{title: string, url: string, blank: boolean}}
+             * @return {?link_dialog_object}
              */
             website_tab: function (tab) {
                 var url_input = tab.find('#web_address_text:valid'),
                     blank_input = tab.find('#web_address_target_blank'),
                     url = /** @type {string} */(url_input.val()),
                     blank = /** @type {boolean} */(blank_input.prop('checked')),
+                    /** @type {?link_dialog_object} */
                     result = null;
 
                 if (url) {
@@ -1815,6 +1813,7 @@ refinery.admin = {
             insert: function () {
                 var holder = this.holder,
                     tab = holder.find('div[aria-expanded="true"]'),
+                    /** @type {?link_dialog_object} */
                     obj = null;
 
                 switch (tab.attr('id')) {
@@ -1869,13 +1868,17 @@ refinery.admin = {
          */
         insert: function () {
             var li = this.holder.find('.ui-selected'),
-                obj = {};
+                /** @type {?file_dialog_object} */
+                obj = null;
 
             if (li.length > 0) {
-                obj.id = li.attr('id').replace('dialog-resource-', '');
-                obj.url = li.data('url');
-                obj.html = li.html();
-                obj.type = 'library';
+                obj = {
+                    id: li.attr('id').replace('dialog-resource-', ''),
+                    url: li.data('url'),
+                    html: li.html(),
+                    type: 'library'
+                };
+
                 this.trigger('insert', obj);
             }
 
