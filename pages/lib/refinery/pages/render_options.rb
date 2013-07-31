@@ -3,12 +3,10 @@ module Refinery
     module RenderOptions
 
       def render_options_for_template(page)
-        render_options = {}
-
-        render_options[:layout] = page.layout_template.presence || 'application'
-        render_options[:template] = "refinery/pages/#{page.view_template.presence || 'show'}"
-
-        render_options
+        render_options = {
+          layout: page.layout_template,
+          template: "refinery/pages/#{page.view_template.presence}"
+        }
       end
 
       def render_with_templates?(page = @page, render_options = {})

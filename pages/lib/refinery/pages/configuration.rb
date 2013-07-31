@@ -6,8 +6,8 @@ module Refinery
                     :marketable_urls, :default_parts, :main_part,
                     :use_custom_slugs, :scope_slug_by_parent,
                     :layout_template_whitelist,
-                    :view_template_whitelist, :use_layout_templates,
-                    :use_view_templates, :page_title, :types,
+                    :use_layout_templates,
+                    :page_title, :types,
                     :auto_expand_admin_tree, :show_title_in_body
 
     self.per_dialog_page = 20
@@ -19,15 +19,10 @@ module Refinery
     self.use_custom_slugs = false
     self.scope_slug_by_parent = true
     self.layout_template_whitelist = ['application']
-    self.view_template_whitelist = ['home', 'show']
 
     class << self
       def layout_template_whitelist
         Array(config.layout_template_whitelist).map(&:to_s)
-      end
-
-      def view_template_whitelist
-        Array(config.view_template_whitelist).map(&:to_s)
       end
     end
 

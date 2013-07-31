@@ -18,27 +18,6 @@ module Refinery
         end
       end
 
-      def template_options(template_type, current_page)
-        html_options = { :selected => send("default_#{template_type}", current_page) }
-
-        if (template = current_page.send(template_type).presence)
-          html_options.update :selected => template
-        elsif current_page.parent_id? && !current_page.send(template_type).presence
-          template = current_page.parent.send(template_type).presence
-          html_options.update :selected => template if template
-        end
-
-        html_options
-      end
-
-      def default_view_template(current_page)
-        current_page.link_url == "/" ? "home" : "show"
-      end
-
-      def default_layout_template(current_page)
-        "application"
-      end
-
       # In the admin area we use a slightly different title
       # to inform the which pages are draft or hidden pages
       def page_meta_information(page)

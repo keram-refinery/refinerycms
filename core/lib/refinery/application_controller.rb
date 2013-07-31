@@ -7,6 +7,7 @@ module Refinery
       base.helper_method :xhr_json_response?,
                           :render_html_to_json_string,
                           :refinery_plugin,
+                          :home_page?,
                           :local_request?,
                           :admin?,
                           :paginate_page,
@@ -45,6 +46,10 @@ module Refinery
       render :file => file.cleanpath.to_s.gsub(%r{#{file.extname}$}, ''),
              :layout => false, :status => 403, :formats => [:html]
       return false
+    end
+
+    def home_page?
+      %r{^#{Regexp.escape(request.path)}} === refinery.root_path
     end
 
     def local_request?

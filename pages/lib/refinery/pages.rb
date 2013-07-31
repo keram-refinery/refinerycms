@@ -38,9 +38,8 @@ module Refinery
       end
 
       def default_parts_for(page)
-        return default_parts unless page.view_template.present?
-
-        types.find_by_name(page.view_template).parts.map &:titleize
+        page_types = types.find_by_name(page.view_template)
+        page_types ? page_types.parts.map(&:titleize) : default_parts
       end
     end
 

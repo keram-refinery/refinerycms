@@ -184,9 +184,9 @@ module Refinery
           visit refinery.new_admin_page_path
           click_link 'add-page-part'
 
-          within '#new-page-part-dialog' do
+          within '.ui-dialog' do
             fill_in 'new-page-part-title', :with => 'testy'
-            click_button 'Save'
+            click_button 'Create'
           end
 
           within '#page-parts' do
@@ -197,35 +197,6 @@ module Refinery
 
       describe 'advanced options' do
         describe 'view and layout templates' do
-          context 'when parent page has templates set' do
-            before do
-              Refinery::Pages.stub(:use_layout_templates).and_return(true)
-              Refinery::Pages.stub(:use_view_templates).and_return(true)
-              Refinery::Pages.stub(:layout_template_whitelist).and_return(['abc', 'refinery'])
-              Refinery::Pages.stub(:view_template_whitelist).and_return(['abc', 'refinery'])
-              Refinery::Pages.stub(:valid_templates).and_return(['abc', 'refinery'])
-              parent_page = Page.create :title => 'Parent Page',
-                                        :view_template => 'refinery',
-                                        :layout_template => 'refinery'
-              parent_page.children.create :title => 'Child Page'
-            end
-
-            specify 'sub page should inherit them' do
-              visit refinery.admin_pages_path
-
-              within '.nested' do
-                click_link 'Edit this page'
-              end
-
-              within '#page_layout_template' do
-                page.find('option[value=refinery]').selected?.should eq('selected')
-              end
-
-              within '#page_view_template' do
-                page.find('option[value=refinery]').selected?.should eq('selected')
-              end
-            end
-          end
         end
       end
 
@@ -627,13 +598,13 @@ module Refinery
           Refinery::Pages.stub(:new_page_parts).and_return(true)
         end
 
-        it 'adds new page part' do
+        it 'adds new page part', :js do
           visit refinery.new_admin_page_path
           click_link 'add-page-part'
 
-          within '#new-page-part-dialog' do
+          within '.ui-dialog' do
             fill_in 'new-page-part-title', :with => 'testy'
-            click_button 'Save'
+            click_button 'Create'
           end
 
           within '#page-parts' do
@@ -643,37 +614,6 @@ module Refinery
       end
 
       describe 'advanced options' do
-        describe 'view and layout templates' do
-          context 'when parent page has templates set' do
-            before do
-              Refinery::Pages.stub(:use_layout_templates).and_return(true)
-              Refinery::Pages.stub(:use_view_templates).and_return(true)
-              Refinery::Pages.stub(:layout_template_whitelist).and_return(['abc', 'refinery'])
-              Refinery::Pages.stub(:view_template_whitelist).and_return(['abc', 'refinery'])
-              Refinery::Pages.stub(:valid_templates).and_return(['abc', 'refinery'])
-              parent_page = Page.create :title => 'Parent Page',
-                                        :view_template => 'refinery',
-                                        :layout_template => 'refinery'
-              parent_page.children.create :title => 'Child Page'
-            end
-
-            specify 'sub page should inherit them' do
-              visit refinery.admin_pages_path
-
-              within '.nested' do
-                click_link 'Edit this page'
-              end
-
-              within '#page_layout_template' do
-                page.find('option[value=refinery]').selected?.should eq('selected')
-              end
-
-              within '#page_view_template' do
-                page.find('option[value=refinery]').selected?.should eq('selected')
-              end
-            end
-          end
-        end
       end
 
       # regression spec for https://github.com/refinery/refinerycms/issues/1891

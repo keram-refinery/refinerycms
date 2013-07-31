@@ -15,23 +15,21 @@
 
     <% if Refinery::Pages.use_layout_templates %>
     <div class="field">
-      <%= refinery_form_field f, :select, :layout_template,
-                  template_options(:layout_template, @page).merge!({
+      <%= refinery_form_field f, :select, :layout_template, {
                     :options => @valid_layout_templates,
+                    :selected => @page.layout_template,
                     :label => true,
-                    :help => true }) %>
+                    :help => true } %>
     </div>
     <% end %>
 
-    <% if Refinery::Pages.use_view_templates %>
     <div class="field">
-      <%= refinery_form_field f, :select, :view_template,
-                  template_options(:view_template, @page).merge!({
+      <%= refinery_form_field f, :select, :view_template, {
                     :options => @valid_view_templates.map { |t| [t.titleize, t] },
+                    :selected => @page.view_template,
                     :label => true,
-                    :help => true }) %>
+                    :help => true } %>
     </div>
-    <% end %>
 
     <div class="field">
       <%= refinery_form_field f, :text_field, :menu_title, :label => true, :help => true %>

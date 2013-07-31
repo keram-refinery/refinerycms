@@ -66,6 +66,7 @@ module Refinery
         params.require(:page).permit(
           :title, :draft, :parent_id, :menu_title, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description,
+          :view_template, :layout_template,
           :parts_attributes => [:id, :title, :body, :position]
         )
       end

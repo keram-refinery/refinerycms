@@ -3,52 +3,6 @@ require "spec_helper"
 module Refinery
   module Admin
     describe PagesHelper do
-      describe "#template_options" do
-        context "when page layout/view template is set" do
-          it "returns those templates as selected" do
-            page = FactoryGirl.create(:page)
-
-            page.view_template = "rspec_template"
-            helper.template_options(:view_template, page).should eq(:selected => "rspec_template")
-
-            page.layout_template = "rspec_layout"
-            helper.template_options(:layout_template, page).should eq(:selected => "rspec_layout")
-          end
-        end
-
-        context "when page layout template is set using symbols" do
-          before do
-            Pages.config.stub(:layout_template_whitelist).and_return [:three, :one, :two]
-          end
-
-          it "works as expected" do
-            page = FactoryGirl.create(:page, :layout_template => "three")
-
-            helper.template_options(:layout_template, page).should eq(:selected => 'three')
-          end
-        end
-
-        context "when page layout template isn't set" do
-          context "when page has parent and parent has layout_template set" do
-            it "returns parent layout_template as selected" do
-              parent = FactoryGirl.create(:page, :layout_template => "rspec_layout")
-              page = FactoryGirl.create(:page, :parent_id => parent.id)
-
-              expected_layout = { :selected => parent.layout_template }
-              helper.template_options(:layout_template, page).should eq(expected_layout)
-            end
-          end
-
-          context "when page doesn't have parent page" do
-            it "returns default application template" do
-              page = FactoryGirl.create(:page)
-
-              expected_layout = { :selected => "application" }
-              helper.template_options(:layout_template, page).should eq(expected_layout)
-            end
-          end
-        end
-      end
 
       describe "#page_meta_information" do
         let(:page) { FactoryGirl.build(:page) }

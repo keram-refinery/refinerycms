@@ -3,6 +3,7 @@ if plugin && plugin.page.blank?
   home_page = Refinery::Page.create({:title => 'Home',
               :deletable => false,
               :link_url => '/',
+              :view_template => 'home',
               :plugin_page_id => plugin.name
   })
   home_page.parts.create({
