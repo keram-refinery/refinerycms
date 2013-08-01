@@ -27,7 +27,9 @@
     background-color: #aaa;
 }
 
-.locale-picker .selected {
+.locale-picker .selected,
+.locale-picker .selected a:hover,
+.locale-picker .selected a:active {
     background-color: #fff;
 }
 

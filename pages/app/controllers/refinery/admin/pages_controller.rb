@@ -9,7 +9,7 @@ module Refinery
 
       before_action :redirect_unless_path_match, :only => [:edit] if Refinery::Pages.marketable_urls
 
-      before_action :load_valid_templates, :only => [:edit, :new]
+      before_action :load_valid_templates, :only => [:edit, :new, :update, :create]
 
       def new
         @page = Page.new(:parent_id => params[:parent_id])

@@ -8,6 +8,8 @@ module Refinery
     extend FriendlyId
 
     PATH_SEPARATOR = ' - '
+    MAX_TITLE_LENGTH = 250
+    MAX_SLUG_LENGTH = 250
 
     translates :title, :menu_title, :custom_slug, :slug, include: :seo_meta
 
@@ -21,9 +23,9 @@ module Refinery
 
     attr_readonly :plugin_page_id
 
-    validates :title, presence: true
+    validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
 
-    validates :custom_slug, uniqueness: true, allow_blank: true
+    validates :custom_slug, uniqueness: true, allow_blank: true, length: { maximum: MAX_SLUG_LENGTH }
 
     # Docs for acts_as_nested_set https://github.com/collectiveidea/awesome_nested_set
     # rather than :delete_all we want :destroy
@@ -121,9 +123,9 @@ module Refinery
 
       # controls if parent is also displayed in live localized menu
       def with_live_localized_parents
-        where("parent_id IS NULL OR ((SELECT count(*) FROM #{self.table_name} AS t3 INNER JOIN #{self.translation_class.table_name} AS t4 ON t3.id = t4.refinery_page_id" +
+        where("parent_id IS NULL OR ((SELECT COUNT(*) FROM #{self.table_name} AS t3 INNER JOIN #{self.translation_class.table_name} AS t4 ON t3.id = t4.refinery_page_id" +
               " WHERE t3.lft < #{self.table_name}.lft AND t3.rgt > #{self.table_name}.rgt AND t3.draft = ? AND t3.show_in_menu = ? AND t4.locale = ?)" +
-              " = (SELECT count(*) FROM #{self.table_name} AS t5 WHERE t5.lft < #{self.table_name}.lft AND t5.rgt > #{self.table_name}.rgt))",
+              " = (SELECT COUNT(*) FROM #{self.table_name} AS t5 WHERE t5.lft < #{self.table_name}.lft AND t5.rgt > #{self.table_name}.rgt))",
               false, true, ::Globalize.locale)
       end
 
