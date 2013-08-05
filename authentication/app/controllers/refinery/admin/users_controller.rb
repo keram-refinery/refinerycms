@@ -61,6 +61,7 @@ module Refinery
         @selected_plugin_names = (user_data.delete(:plugins) || []) | @always_allowed_menu_plugins
         @previously_selected_roles = @user.roles
         @selected_role_names = user_data.delete(:roles) || []
+        @selected_role_names = @user.roles.select(:title).map(&:title) unless user_can_assign_roles?
         current_user_password = user_data.delete(:current_user_password)
 
         if superuser_and_can_assign_roles

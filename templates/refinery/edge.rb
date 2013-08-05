@@ -1,12 +1,18 @@
 require 'rbconfig'
 
 # We want to ensure that you have an ExecJS runtime available!
+
 begin
-  run 'bundle install'
   require 'execjs'
   ::ExecJS::Runtimes.autodetect
+rescue LoadError
+  abort "ExecJS is not installed. Please re-start the installer after running:\ngem install execjs"
 rescue
   gsub_file 'Gemfile', "# gem 'therubyracer'", "gem 'therubyracer'"
+end
+
+if File.read("#{destination_root}/Gemfile") !~ /assets.+coffee-rails/m
+  gem "coffee-rails", :group => :assets
 end
 
 append_file 'Gemfile' do
@@ -30,11 +36,12 @@ gem 'refinerycms-i18n', :git => 'git://github.com/keram-refinery/refinerycms-i18
 end
 
 run 'bundle install'
+
 rake 'db:create'
 generate "refinery:cms --fresh-installation #{ARGV.join(' ')}"
 
-say <<-eos
+say <<-SAY
   ============================================================================
     Your new Refinery CMS application is now running on edge and mounted to /.
   ============================================================================
-eos
+SAY

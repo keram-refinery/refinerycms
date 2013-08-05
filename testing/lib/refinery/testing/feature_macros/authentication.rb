@@ -14,7 +14,6 @@ module Refinery
             login_as logged_in_user, :scope => :refinery_user
           end
         end
-
       end
     end
   end

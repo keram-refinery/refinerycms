@@ -95,7 +95,6 @@ module Refinery
      !!(method_name =~ PAGE_METHOD_RE) || super
    end
 
-
   # Make this protected, so that only Plugin.register can use it.
   protected
 

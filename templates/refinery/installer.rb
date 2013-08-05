@@ -1,4 +1,5 @@
 require 'rbconfig'
+
 ROOT_PATH = File.expand_path('../../../', __FILE__)
 require "#{ROOT_PATH}/core/lib/refinery/version.rb"
 
@@ -6,9 +7,10 @@ VERSION_BAND = Refinery::Version.to_s
 
 # We want to ensure that you have an ExecJS runtime available!
 begin
-  run 'bundle install'
   require 'execjs'
   raise if ::ExecJS::Runtimes.autodetect.name =~ /therubyracer/
+rescue LoadError
+  abort "ExecJS is not installed. Please re-start the installer after running:\ngem install execjs"
 rescue
   require 'pathname'
   if Pathname.new(destination_root.to_s).join('Gemfile').read =~ /therubyracer/
@@ -18,7 +20,6 @@ rescue
 gem 'therubyracer'
 GEMFILE
   end
-end
 
 append_file 'Gemfile', <<-GEMFILE
 
@@ -32,9 +33,11 @@ gem 'refinerycms-i18n', '~> #{VERSION_BAND}' # :git => 'git://github.com/keram-r
 #  gem 'refinerycms-calendar', '~> #{VERSION_BAND}' # :git => 'git://github.com/keram-refinery/refinerycms-calendar.git', :branch => 'refinery_light'
 #  gem 'refinerycms-search', '~> #{VERSION_BAND}' # :git => 'git://github.com/keram-refinery/refinerycms-search.git', :branch => 'refinery_light'
 #  gem 'refinerycms-page-images', '~> #{VERSION_BAND}' # :git => 'git://github.com/keram-refinery/refinerycms-page-images.git', :branch => 'refinery_light'
+
 GEMFILE
 
 run 'bundle install'
+
 rake 'db:create'
 generate "refinery:cms --fresh-installation #{ARGV.join(' ')}"
 

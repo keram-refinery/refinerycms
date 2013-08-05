@@ -45,11 +45,6 @@ gem 'jquery-ui-rails', '~> 4.0.4'
 
 gem 'will_paginate', '~> 3.0.4'
 
-# To use debugger
-# gem 'ruby-debug', :platform => :mri_18
-# or in 1.9.x:
-# gem 'debugger', :platform => :mri_19
-
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
   eval File.read(local_gemfile)

@@ -2,8 +2,15 @@ source "http://rubygems.org"
 
 gemspec
 
-gem 'refinerycms', :git => 'git://github.com/keram-refinery/refinerycms.git', :branch => 'refinery_light'
 gem 'refinerycms-i18n', :git => 'git://github.com/keram-refinery/refinerycms-i18n.git', :branch => 'refinery_light'
+
+git 'git://github.com/keram-refinery/refinerycms.git', :branch => 'refinery_light' do
+  gem 'refinerycms'
+
+  group :development, :test do
+    gem 'refinerycms-testing'
+  end
+end
 
 # Database Configuration
 platforms :jruby do
@@ -20,8 +27,6 @@ platforms :ruby do
 end
 
 group :development, :test do
-  gem 'refinerycms-testing'#, :git => 'git://github.com/refinery/refinerycms.git'
-
   platforms :ruby do
     require 'rbconfig'
     if RbConfig::CONFIG['target_os'] =~ /linux/i
