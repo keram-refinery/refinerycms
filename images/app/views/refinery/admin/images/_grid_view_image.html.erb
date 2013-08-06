@@ -1,11 +1,9 @@
 <li id="image-<%= grid_view_image.id %>" >
   <%= link_to grid_view_image.url, :class => 'image' do %>
-      <%= image_fu(grid_view_image, '100x100#c', {
+      <%= image_fu grid_view_image, '100x100#c', {
                :alt => grid_view_image.title,
-               :data => { id: grid_view_image.id }
-             }.merge(thumbnail_urls(grid_view_image))) %>
+             } %>
   <% end %>
-  <% unless dialog? %>
   <span class="actions">
 
     <%= link_to t('delete', :scope => 'refinery.admin.record'),
@@ -29,5 +27,4 @@
                 :title => t('view_live', :scope => 'refinery.admin.images') %>
 
   </span>
-  <% end %>
 </li>
