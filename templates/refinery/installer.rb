@@ -5,21 +5,7 @@ require "#{ROOT_PATH}/core/lib/refinery/version.rb"
 
 VERSION_BAND = Refinery::Version.to_s
 
-# We want to ensure that you have an ExecJS runtime available!
-begin
-  require 'execjs'
-  raise if ::ExecJS::Runtimes.autodetect.name =~ /therubyracer/
-rescue LoadError
-  abort "ExecJS is not installed. Please re-start the installer after running:\ngem install execjs"
-rescue
-  require 'pathname'
-  if Pathname.new(destination_root.to_s).join('Gemfile').read =~ /therubyracer/
-    gsub_file 'Gemfile', "# gem 'therubyracer'", "gem 'therubyracer'"
-  else
-    append_file 'Gemfile', <<-GEMFILE
-gem 'therubyracer'
-GEMFILE
-  end
+check_dependencies
 
 append_file 'Gemfile', <<-GEMFILE
 

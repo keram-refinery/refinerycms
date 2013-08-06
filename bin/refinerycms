@@ -24,6 +24,34 @@ def show_help_message
   end
 end
 
+def check_dependencies
+  require 'execjs'
+  ::ExecJS::Runtimes.autodetect.name =~ /therubyracer/
+
+  raise 'error'
+rescue LoadError
+  abort "ExecJS is not installed. Please re-start the installer after running:\ngem install execjs"
+rescue
+  if ARGV.include?('--therubyracer')
+    require 'pathname'
+    gemfile = Pathname.new(destination_root.to_s).join('Gemfile')
+
+    if gemfile.read =~ /therubyracer/
+      gsub_file gemfile, "# gem 'therubyracer'", "gem 'therubyracer'"
+    else
+      append_file gemfile, <<-GEMFILE
+gem 'therubyracer'
+GEMFILE
+    end
+  else
+    note = "Javascript runtime interpreter was not found.\n"
+    note << "You can run installer with option --therubyracer and we will install and use therubyracer gem.\n"
+    note << "See https://github.com/sstephenson/execjs#readme for more supported runtimes."
+
+    abort note
+  end
+end
+
 if ARGV.empty?
   show_help_message
   exit 0

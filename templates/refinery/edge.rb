@@ -1,19 +1,6 @@
 require 'rbconfig'
 
-# We want to ensure that you have an ExecJS runtime available!
-
-begin
-  require 'execjs'
-  ::ExecJS::Runtimes.autodetect
-rescue LoadError
-  abort "ExecJS is not installed. Please re-start the installer after running:\ngem install execjs"
-rescue
-  gsub_file 'Gemfile', "# gem 'therubyracer'", "gem 'therubyracer'"
-end
-
-if File.read("#{destination_root}/Gemfile") !~ /assets.+coffee-rails/m
-  gem "coffee-rails", :group => :assets
-end
+check_dependencies
 
 append_file 'Gemfile' do
 "
