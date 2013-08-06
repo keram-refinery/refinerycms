@@ -1,6 +1,6 @@
 <div id="existing-resource-area-content" >
-  <ul id="<%= refinery_dom_id @resources %>" class="records ui-selectable">
-    <%= render :partial => 'refinery/admin/resources/resource', :collection => @resources %>
+  <ul id="refinery-resources" class="records ui-selectable">
+    <%= render :partial => 'resource', :collection => @resources %>
   </ul>
 </div>
 

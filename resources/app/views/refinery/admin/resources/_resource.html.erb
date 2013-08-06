@@ -1,9 +1,10 @@
-<li class="record" id="<%= refinery_dom_id resource %>" <%= %Q{ data-url="#{resource.url}"}.html_safe if dialog? %>>
-  <span class="title <%= resource.ext.to_s.downcase %>">
-    <%= resource.title %><%= ".#{resource.ext}" if resource.ext %>
+<li class="record" id="<%= refinery_dom_id resource %>" >
+  <div class="detail">
+    <span class="title <%= resource.ext.to_s.downcase %>">
+      <%= resource.title %><%= ".#{resource.ext}" if resource.ext %>
+    </span>
     <span class="size">- <%= number_to_human_size(resource.size) %></span>
-  </span>
-  <% unless dialog? %>
+  </div>
   <span class="actions">
 
     <%= link_to t('delete', :scope => 'refinery.admin.record'),
@@ -28,5 +29,4 @@
                 :title => t('.download', :size => number_to_human_size(resource.size)) %>
 
   </span>
-  <% end %>
 </li>

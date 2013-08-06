@@ -1,0 +1,8 @@
+<li class="record" id="<%= refinery_dom_id resource %>" data-url="<%= resource.url %>" >
+  <div class="detail">
+    <span class="title <%= resource.ext.to_s.downcase %>">
+      <%= resource.title %><%= ".#{resource.ext}" if resource.ext %>
+    </span>
+    <span class="size">- <%= number_to_human_size(resource.size) %></span>
+  </div>
+</li>
