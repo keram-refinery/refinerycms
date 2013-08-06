@@ -3,6 +3,6 @@
     :update_url => refinery.url_for(:action => 'update_positions')
   }
 %>
-<ul id="<%= refinery_dom_id @pages %>" class="records sortable-list tree" data-sortable-options="<%= config.to_json %>">
+<ul id="refinery-pages" class="records sortable-list tree" data-sortable-options="<%= config.to_json %>">
   <%= render :partial => 'page', :collection => @pages.roots %>
 </ul>
