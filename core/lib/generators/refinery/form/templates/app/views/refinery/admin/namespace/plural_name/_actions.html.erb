@@ -1,0 +1,24 @@
+<aside id="actions">
+  <ul>
+    <li <%%= 'class="selected"'.html_safe if params[:action] == 'index' %>>
+      <%%= link_to t('.inbox'), refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path, :class => 'email_icon' %>
+    </li><% if @includes_spam %>
+    <li <%%= 'class="selected"'.html_safe if params[:action] == 'spam' %>>
+      <%% if @spam_count.any?  %>
+        <%%= link_to "#{t('.spam')} (#{@spam_count})", refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path, :class => 'spam_icon' %>
+      <%% else %>
+        <%%= link_to t('.spam'), refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path, :class => 'spam_empty_icon' %>
+      <%% end %>
+    </li><% end %>
+    <li>
+      <%%= link_to t('.update_notified'),
+                    refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:<%= singular_name %>_notification_recipients),
+                    :class => 'user_comment_icon' %>
+    </li>
+    <li>
+      <%%= link_to t('.edit_confirmation_email'),
+                  refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:<%= singular_name %>_confirmation_body),
+                  :class => 'edit_email_icon' %>
+    </li>
+  </ul>
+</aside>

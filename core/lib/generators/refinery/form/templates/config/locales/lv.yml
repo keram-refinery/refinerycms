@@ -8,7 +8,8 @@ lv:
         new:
           send: Sūtīt ziņu
           privacy_policy: Mēs cienam Jūsu privātumu
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Dzēst šo pieprasījumu
           <%= singular_name %>:
@@ -16,7 +17,7 @@ lv:
             said: sacīja
             mark_as_spam: Atzīmēt kā spamu
             mark_as_ham: Pārvietot uz ienākošajiem
-          submenu:
+          actions:
             inbox: Ienākošie
             spam: Spams
             update_notified: Atjaunot paziņojumu saņēmēju

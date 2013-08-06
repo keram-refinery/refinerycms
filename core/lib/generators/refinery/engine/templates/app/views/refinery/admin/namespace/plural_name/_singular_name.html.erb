@@ -1,20 +1,22 @@
 <% title_attribute = (title = attributes.detect { |a| a.type.to_s == 'string' }).present? ? title.name : 'title' %>
 <li class="record" id="<%%= dom_id(<%= singular_name %>) %>">
-  <span class="title">
-    <%%= <%= singular_name %>.<%= title_attribute %> %>
-  </span>
+  <div class="detail">
+    <span class="title">
+      <%%= <%= singular_name %>.<%= title_attribute %> %>
+    </span>
 
-<% if localized? %>
-  <%% if Refinery::I18n.frontend_locales.many? %>
-    <%%= render 'record_translations',
-                :record => <%= singular_name %>,
-                :link => 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>' %>
-  <%% end %>
-<% end %>
+  <% if localized? %>
+    <%% if Refinery::I18n.frontend_locales.many? %>
+      <%%= render 'record_translations',
+                  :record => <%= singular_name %>,
+                  :link => 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>' %>
+    <%% end %>
+  <% end %>
+  </div>
 
   <span class="actions">
     <%%= link_to t('delete', :scope => 'refinery.admin.record'),
-                refinery.<%= namespacing.underscore %>_admin_<%= singular_name %>_path(<%= singular_name %>),
+                refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
                 :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
                 :title => t('.delete'),
                 :remote => true,

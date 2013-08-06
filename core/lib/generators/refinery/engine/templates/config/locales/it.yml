@@ -3,8 +3,8 @@ it:
     plugins:
       <%= plural_name %>:
         title: <%= plural_name.titleize %>
-    <%= namespacing.underscore %>:
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           actions:
             create_new: Aggiungi Nuovo <%= singular_name.titleize %>

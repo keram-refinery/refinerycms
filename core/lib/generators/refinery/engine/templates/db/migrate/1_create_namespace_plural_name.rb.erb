@@ -9,16 +9,16 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
       attribute.type = 'integer'
       attribute.name = "#{attribute.name}_id".gsub("_id_id", "_id")
     end
-%>
+-%>
       t.<%= attribute.type %> :<%= attribute.name %>
-<% end %>
+<% end -%>
       t.integer :position
 
       t.timestamps
     end
 <% if localized? %>
     Refinery::<%= namespacing %>::<%= class_name %>.create_translation_table! <%= attributes_for_translation_table %>
-<% end %>
+<% end -%>
   end
 
   def down
@@ -33,7 +33,7 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
     drop_table :refinery_<%= "#{namespacing.underscore}_" if table_name != namespacing.underscore.pluralize %><%= table_name %>
 <% if localized? %>
     Refinery::<%= namespacing %>::<%= class_name %>.drop_translation_table!
-<% end %>
+<% end -%>
   end
 
 end

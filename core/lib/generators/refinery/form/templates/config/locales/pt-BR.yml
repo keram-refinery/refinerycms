@@ -9,7 +9,8 @@ pt-BR:
         new:
           send: Enviar mensagem
           privacy_policy: "Nós valorizamos sua privacidade"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Remover esta mensagem para sempre
           <%= singular_name %>:
@@ -17,7 +18,7 @@ pt-BR:
             said: disse
             mark_as_spam: Marcar como spam
             mark_as_ham: Marcar como segura
-          submenu:
+          actions:
             inbox: Caixa de Entrada
             spam: Spam
             update_notified: Atualizar quem recebe a notificação

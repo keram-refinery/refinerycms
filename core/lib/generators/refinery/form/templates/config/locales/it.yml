@@ -10,12 +10,13 @@ it:
           message: "I seguenti problemi devono essere corretti:"
           send: Invia messaggio
           privacy_policy: "Noi diamo valore alla tua privacy"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
             move_<%= singular_name %>_to_closed: Spostare questa inchiesta chiusa
             move_<%= singular_name %>_to_open: Spostare questa indagine per aprire
-            read_<%= singular_name %>: Leggi l'inchiesta
+            read_<%= singular_name %>: "Leggi l'inchiesta"
             remove_<%= singular_name %>: "Sei sicuro di voler cancellare la richiesta di '%{name}'?"
             title: <%= plural_name.titleize %>
           toggle_status:
@@ -33,7 +34,7 @@ it:
             actions: Azioni
             back_to_all_<%= plural_name %>: Torna a tutte le richieste
             <%= singular_name %>: <%= class_name.underscore.titleize %>
-          submenu:
+          actions:
             update_notified: Aggiornamento chi viene notificata
             edit_confirmation_email: Modifica email di conferma
         settings:
@@ -51,7 +52,7 @@ it:
             click_to_edit_subject: Clicca qui per modificare l'oggetto
             explanation: "Ogni volta che qualcuno ti contatti sul suo sito web, Refinery invia una e-mail per confermare la richiesta con la persona che ha reso."
             below_edit_email_sent: Qui di seguito è possibile modificare l'e-mail che viene inviata.
-            the_customer_making_<%= singular_name %>: Il cliente rendendo l'indagine
+            the_customer_making_<%= singular_name %>: "Il cliente rendendo l'indagine"
             message: Messaggio
             note: "Nota: inserire il testo %name% dove desideri che il nome del cliente a comparire nella e-mail"
           subject_form:

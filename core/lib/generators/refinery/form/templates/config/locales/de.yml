@@ -9,7 +9,8 @@ de:
         new:
           send: Nachricht senden
           privacy_policy: Ihre Privatsphäre ist uns wichtig
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Diese Kontaktanfrage für immer löschen
           <%= singular_name %>:
@@ -17,7 +18,7 @@ de:
             said: schrieb
             mark_as_spam: Als Spam markieren
             mark_as_ham: In den Posteingang verschieben
-          submenu:
+          actions:
             inbox: Posteingang
             spam: Spam
             update_notified: Wer wird benachrichtigt aktualisieren

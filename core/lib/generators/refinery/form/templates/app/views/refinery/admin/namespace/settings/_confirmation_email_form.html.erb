@@ -1,4 +1,4 @@
-<%%= form_for @setting, :url => refinery.<%= namespacing.underscore %>_admin_setting_path do |f| %>
+<%%= form_for @setting, :url => refinery.admin_<%= namespacing.underscore %>_setting_path do |f| %>
 
   <p>
     <%%= t('.explanation') %>
@@ -45,6 +45,6 @@
   </table>
 
   <%%= render '/refinery/admin/form_actions', :f => f,
-             :cancel_url => refinery.<%= namespacing.underscore %>_admin_<%= plural_name %>_url,
+             :cancel_url => refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_url,
              :hide_delete => true %>
 <%% end %>

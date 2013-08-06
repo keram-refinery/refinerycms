@@ -9,7 +9,8 @@ fr:
         new:
           send: Envoyer un message
           privacy_policy: Nous respectons votre vie privée
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Supprimer définitivement cette requête
           <%= singular_name %>:
@@ -17,7 +18,7 @@ fr:
             said: a dit
             mark_as_spam: Marquer comme spam
             mark_as_ham: Déplacer dans la boîte de réception
-          submenu:
+          actions:
             inbox: Boîte de réception
             spam: Spam
             update_notified: Choisir qui reçoit les notifications

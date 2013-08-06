@@ -1,3 +1,7 @@
+<%
+  admin_path = '#{Refinery::Core.backend_route}'
+  admin_path << "/#{namespacing.underscore}" if namespacing.underscore != plural_name
+-%>
 Refinery::Core::Engine.routes.draw do
 <% unless skip_frontend? %>
   # Frontend routes
@@ -6,12 +10,10 @@ Refinery::Core::Engine.routes.draw do
   end
 <% end %>
   # Admin routes
-  namespace :<%= namespacing.underscore %>, :path => '' do
-    namespace :admin, :path => 'refinery<%= "/#{namespacing.underscore}" if namespacing.underscore != plural_name %>' do
-      resources :<%= plural_name %>, :except => :show do
-        collection do
-          post :update_positions
-        end
+  namespace :admin, :path => "<%= admin_path %>" do
+    resources :<%= plural_name %>, :except => :show do
+      collection do
+        post :update_positions
       end
     end
   end

@@ -16,7 +16,7 @@ module Refinery
           if @setting.update_attributes(params[:setting])
             flash[:notice] = t('refinery.crudify.updated', :kind => 'Setting', :what => @setting.name.gsub("<%= singular_name %>_", "").titleize)
 
-            redirect_back_or_default(refinery.<%= namespacing.underscore %>_admin_<%= plural_name %>_path)
+            redirect_back_or_default(refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path)
           end
         end
 

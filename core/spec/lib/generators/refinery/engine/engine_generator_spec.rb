@@ -20,11 +20,14 @@ module Refinery
               directory 'app' do
                 directory 'controllers' do
                   directory 'refinery' do
-                    directory 'rspec_product_tests' do
-                      directory 'admin' do
+                    directory 'admin' do
+                      directory 'rspec_product_tests' do
                         file 'rspec_product_tests_controller.rb'
                       end
-                      file 'rspec_product_tests_controller.rb'
+
+                      directory 'rspec_product_tests' do
+                        file 'rspec_product_tests_controller.rb'
+                      end
                     end
                   end
                 end
@@ -39,8 +42,8 @@ module Refinery
 
                 directory 'views' do
                   directory 'refinery' do
-                    directory 'rspec_product_tests' do
-                      directory 'admin' do
+                    directory 'admin' do
+                      directory 'rspec_product_tests' do
                         directory 'rspec_product_tests' do
                           file '_actions.html.erb'
                           file '_form.html.erb'
@@ -53,7 +56,9 @@ module Refinery
                           file 'new.html.erb'
                         end
                       end
+                    end
 
+                    directory 'rspec_product_tests' do
                       directory 'rspec_product_tests' do
                         file 'index.html.erb'
                         file 'show.html.erb'

@@ -10,7 +10,8 @@ nb:
           message: "Følgende problemer må løses:"
           send: Send melding
           privacy_policy: "Vi respekterer ditt privatliv"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
             move_<%= singular_name %>_to_closed: Flytt denne forespørselen til lukket
@@ -24,7 +25,7 @@ nb:
           toggle_status:
             closed: "Forespørselen '%{<%= singular_name %>}' er lukket"
             reopened: "Forespørselen '%{<%= singular_name %>}' er gjenåpnet"
-          submenu:
+          actions:
             update_notified: Oppdater hvem som blir informert
             edit_confirmation_email: Rediger bekreftelses e-posten
           index:

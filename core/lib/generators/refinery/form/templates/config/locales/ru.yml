@@ -10,7 +10,8 @@ ru:
           message: "Нужно исправить следующие ошибки:"
           send: "Отправить сообщение"
           privacy_policy: "Мы относимся с уважением к вашим личным данным"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
             move_<%= singular_name %>_to_closed: "Переместить этот запрос в закрытые"
@@ -24,7 +25,7 @@ ru:
           toggle_status:
             closed: "Запрос '%{<%= singular_name %>}' закрыт"
             reopened: "Запрос '%{<%= singular_name %>}' открыт заново"
-          submenu:
+          actions:
             inbox: "Входящие"
             spam: "Спам"
             update_notified: Изменить получателей уведомлений

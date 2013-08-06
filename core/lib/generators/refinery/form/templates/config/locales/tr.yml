@@ -9,7 +9,8 @@ tr:
         new:
           send: Mesaj Gonder
           privacy_policy: Mahremiyetinize onem veriyoruz.
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Sonsuza dek <%= singular_name.humanize.downcase %> sil
           <%= singular_name %>:
@@ -17,7 +18,7 @@ tr:
             said: dedi
             mark_as_spam: Spam olarak isaretle
             mark_as_ham: Gelen kutusuna tasi
-          submenu:
+          actions:
             inbox: Gelen Kutusu
             spam: Istenmeyen E-posta
             update_notified: Uyari alanlari guncelle

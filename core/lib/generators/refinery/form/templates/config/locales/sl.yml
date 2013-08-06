@@ -10,7 +10,8 @@ sl:
           message: "Prosimo odpravite sledeče napake:"
           send: Pošlji sporočilo
           privacy_policy: "Cenimo vašo zasebnost"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
             said: pravi
@@ -24,7 +25,7 @@ sl:
             reopened: "Povpraševanje '%{<%= singular_name %>}' je ponovno odprto"
           index:
             no_<%= plural_name %>: Trenutno še ni nobenega povpraševanja.
-          submenu:
+          actions:
             update_notified: Uredi prejemnike obvestila
             edit_confirmation_email: Uredni potrditveni email
           show:

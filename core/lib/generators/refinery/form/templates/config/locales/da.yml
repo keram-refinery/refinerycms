@@ -10,7 +10,8 @@ da:
           message: "Følgende skal rettes:"
           send: Send besked
           privacy_policy: "Vi værner om dine personlige oplysninger"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
             move_<%= singular_name %>_to_closed: Flyt til lukkede henvendelser
@@ -33,7 +34,7 @@ da:
             actions: Handlinger
             back_to_all_<%= plural_name %>: Tilbage til alle henvendelser
             <%= singular_name %>: <%= class_name.underscore.titleize %>
-          submenu:
+          actions:
             update_notified: Opdatér, hvem der får besked
             edit_confirmation_email: Redigér e-mailbekræftelse
         settings:

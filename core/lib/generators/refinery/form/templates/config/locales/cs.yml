@@ -9,7 +9,8 @@ cs:
         new:
           send: Odeslat zprávu
           privacy_policy: Chráníme vaše soukromí
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Trvale odstranit <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
@@ -17,7 +18,7 @@ cs:
             said: řekl
             mark_as_spam: Označit jako spam
             mark_as_ham: Označit jako přečtené
-          submenu:
+          actions:
             inbox: Inbox
             spam: Spam
             update_notified: Upravit seznam notifikovaných

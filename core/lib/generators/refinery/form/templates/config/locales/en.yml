@@ -9,7 +9,8 @@ en:
         new:
           send: Send message
           privacy_policy: We value your privacy
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: Remove this <%= singular_name.humanize.downcase %> forever
           <%= singular_name %>:
@@ -17,7 +18,7 @@ en:
             said: said
             mark_as_spam: Mark as spam
             mark_as_ham: Move to inbox
-          submenu:
+          actions:
             inbox: Inbox
             spam: Spam
             update_notified: Update who gets notified

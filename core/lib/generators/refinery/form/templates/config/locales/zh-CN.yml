@@ -9,7 +9,8 @@ zh-CN:
         new:
           send: 发送邮件
           privacy_policy: 我们重视您的隐私
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           delete: 永久删除 <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
@@ -17,7 +18,7 @@ zh-CN:
             said: 说
             mark_as_spam: 标记为垃圾邮件
             mark_as_ham:  移动到收件箱
-          submenu:
+          actions:
             inbox: 收件箱
             spam: 垃圾邮件
             update_notified: 通知相关人员

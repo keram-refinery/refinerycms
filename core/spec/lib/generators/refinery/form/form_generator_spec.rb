@@ -28,14 +28,18 @@ module Refinery
               directory "app" do
                 directory "controllers" do
                   directory "refinery" do
-                    directory "rspec_form_tests" do
-                      directory "admin" do
+                    directory "admin" do
+                      directory "rspec_form_tests" do
                         file "rspec_form_tests_controller.rb"
                       end
+                    end
+
+                    directory "rspec_form_tests" do
                       file "rspec_form_tests_controller.rb"
                     end
                   end
                 end
+
                 directory "mailers" do
                   directory "refinery" do
                     directory "rspec_form_tests" do
@@ -43,6 +47,7 @@ module Refinery
                     end
                   end
                 end
+
                 directory "models" do
                   directory "refinery" do
                     directory "rspec_form_tests" do
@@ -51,19 +56,23 @@ module Refinery
                     end
                   end
                 end
+
                 directory "views" do
                   directory "refinery" do
-                    directory "rspec_form_tests" do
-                      directory "admin" do
+                    directory "admin" do
+                      directory "rspec_form_tests" do
                         directory "rspec_form_tests" do
                           file "_records.html.erb"
                           file "_rspec_form_test.html.erb"
-                          file "_submenu.html.erb"
+                          file "_actions.html.erb"
                           file "index.html.erb"
                           file "show.html.erb"
                           file "spam.html.erb"
                         end
                       end
+                    end
+
+                    directory "rspec_form_tests" do
                       directory "rspec_form_tests" do
                         file "new.html.erb"
                         file "thank_you.html.erb"
@@ -72,15 +81,18 @@ module Refinery
                   end
                 end
               end
+
               directory "db" do
                 file "seeds.rb"
               end
+
               directory "lib" do
                 file "refinerycms-rspec_form_tests.rb"
                 directory "refinery" do
                   directory "rspec_form_tests" do
                     file "engine.rb"
                   end
+
                   file "rspec_form_tests.rb"
                 end
               end

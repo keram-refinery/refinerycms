@@ -10,7 +10,8 @@ es:
           message: "Los siguientes problemas necesitan ser corregidos:"
           send: Enviar mensaje
           privacy_policy: "Nosotros valoramos tu privacidad"
-      admin:
+    admin:
+      <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
             move_<%= singular_name %>_to_closed: Cambiar esta consulta a cerrada
@@ -33,7 +34,7 @@ es:
             actions: Acciones
             back_to_all_<%= plural_name %>: Regresar a todas las consultas
             <%= singular_name %>: <%= class_name.underscore.titleize %>
-          submenu:
+          actions:
             update_notified: "Actualizar a quien será notificado"
             edit_confirmation_email: "Editar email de confirmación"
         settings:
