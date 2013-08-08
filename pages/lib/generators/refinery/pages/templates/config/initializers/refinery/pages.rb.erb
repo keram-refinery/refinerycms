@@ -1,15 +1,11 @@
 # encoding: utf-8
 Refinery::Pages.configure do |config|
-  # Configure specific page templates
-  # config.types.register :home do |home|
-  #   home.parts = %w[intro body]
-  # end
 
-  # Configure global page default parts
+  # Define global page parts
+  # config.parts = <%= Refinery::Pages.parts.inspect %>
+
+  # Configure global page parts where are active by default
   # config.default_parts = <%= Refinery::Pages.default_parts.inspect %>
-
-  # Configure whether to allow adding new page parts
-  # config.new_page_parts = <%= Refinery::Pages.new_page_parts.inspect %>
 
   # Configure whether to enable marketable_urls
   # config.marketable_urls = <%= Refinery::Pages.marketable_urls.inspect %>

@@ -12,10 +12,7 @@ module Refinery
       before_action :load_valid_templates, :only => [:edit, :new, :update, :create]
 
       def new
-        @page = Page.new(:parent_id => params[:parent_id])
-        Pages.default_parts_for(@page).each_with_index do |page_part, index|
-          @page.parts << PagePart.new(:title => page_part, :position => index)
-        end
+        @page = Page.new parent_id: params[:parent_id].to_i
       end
 
       def update
@@ -67,7 +64,7 @@ module Refinery
           :title, :draft, :parent_id, :menu_title, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description,
           :view_template, :layout_template,
-          :parts_attributes => [:id, :title, :body, :position]
+          :parts_attributes => [:id, :title, :body, :position, :active]
         )
       end
 

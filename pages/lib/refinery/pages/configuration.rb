@@ -2,19 +2,19 @@ module Refinery
   module Pages
     include ActiveSupport::Configurable
 
-    config_accessor :per_dialog_page, :per_admin_page, :new_page_parts,
-                    :marketable_urls, :default_parts, :main_part,
+    config_accessor :per_dialog_page, :per_admin_page,
+                    :marketable_urls, :default_parts, :parts, :main_part,
                     :use_custom_slugs, :scope_slug_by_parent,
                     :layout_template_whitelist,
                     :use_layout_templates,
-                    :page_title, :types,
+                    :page_title,
                     :auto_expand_admin_tree, :show_title_in_body
 
     self.per_dialog_page = 20
     self.per_admin_page = 20
-    self.new_page_parts = false
     self.marketable_urls = true
-    self.default_parts = ['Body', 'Side Body']
+    self.default_parts = [:body, :side_body]
+    self.parts = self.default_parts
     self.main_part = :body
     self.use_custom_slugs = false
     self.scope_slug_by_parent = true
@@ -41,7 +41,6 @@ module Refinery
       }
     }
     self.show_title_in_body = true
-    self.types = Types.registered
     self.auto_expand_admin_tree = true
   end
 end

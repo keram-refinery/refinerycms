@@ -175,31 +175,6 @@ module Refinery
 
       end
 
-      describe 'new page part', :js do
-        before do
-          Refinery::Pages.stub(:new_page_parts).and_return(true)
-        end
-
-        it 'adds new page part' do
-          visit refinery.new_admin_page_path
-          click_link 'add-page-part'
-
-          within '.ui-dialog' do
-            fill_in 'new-page-part-title', :with => 'testy'
-            click_button 'Create'
-          end
-
-          within '#page-parts' do
-            page.should have_content('testy')
-          end
-        end
-      end
-
-      describe 'advanced options' do
-        describe 'view and layout templates' do
-        end
-      end
-
       describe 'destroy' do
         context 'when page can be deleted' do
           before { Page.create :title => 'Delete me' }
@@ -243,10 +218,9 @@ module Refinery
       describe 'page part body' do
         before do
           page = Refinery::Page.create! :title => 'test'
-          Refinery::Pages.default_parts.each_with_index do |default_page_part, index|
-            page.parts.create(:title => default_page_part,
-                              :body => '<header class="regression">test</header>',
-                              :position => index)
+          page.parts.each do |part|
+            part.body = '<header class="regression">test</header>'
+            part.save
           end
         end
 
@@ -591,51 +565,6 @@ module Refinery
             end
           end
         end
-
-
-      describe 'new page part', :js do
-        before do
-          Refinery::Pages.stub(:new_page_parts).and_return(true)
-        end
-
-        it 'adds new page part', :js do
-          visit refinery.new_admin_page_path
-          click_link 'add-page-part'
-
-          within '.ui-dialog' do
-            fill_in 'new-page-part-title', :with => 'testy'
-            click_button 'Create'
-          end
-
-          within '#page-parts' do
-            page.should have_content('testy')
-          end
-        end
-      end
-
-      describe 'advanced options' do
-      end
-
-      # regression spec for https://github.com/refinery/refinerycms/issues/1891
-      describe 'page part body' do
-        before do
-          page = Refinery::Page.create! :title => 'test'
-          Refinery::Pages.default_parts.each_with_index do |default_page_part, index|
-            page.parts.create(:title => default_page_part,
-                              :body => '<header class="regression">test</header>',
-                              :position => index)
-          end
-        end
-
-        specify "html shouldn't be stripped" do
-          visit refinery.admin_pages_path
-
-          within "#page_#{Refinery::Page.last.id}" do
-            click_link 'Edit this page'
-          end
-          page.should have_content('header class="regression"')
-        end
-      end
 
       end
     end

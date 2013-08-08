@@ -298,7 +298,7 @@ module Refinery
         page.should have_content(home_page.title)
         page.should have_content(about_page.title)
         page.should have_content(hidden_page.title)
-        within 'nav' do
+        within '#menu' do
           page.should have_no_content(hidden_page.title)
         end
       end

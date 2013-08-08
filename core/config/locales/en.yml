@@ -85,8 +85,11 @@ en:
       close_this_message: Close this message
     draft_page_message:
       not_live: This page is NOT live for public viewing.
+    header:
+      skip_to_main: Skip to main content
     footer:
       copyright: "Copyright © %{year} %{site_name}"
+      top: Top
     no_script:
       enable_javascript_html: For full functionality of this page it is necessary to enable JavaScript.
       here_are: Here are the

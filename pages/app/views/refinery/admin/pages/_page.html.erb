@@ -41,7 +41,7 @@
                     :remote => true,
                     :confirm => t('message',
                       :scope => 'refinery.admin.delete',
-                      :title => any_page_title(page)
+                      :title => page.any_title
                     )
                   },
                   :method => :delete if page.deletable? %>

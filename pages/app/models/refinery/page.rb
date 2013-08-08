@@ -48,6 +48,15 @@ module Refinery
 
     accepts_nested_attributes_for :parts, allow_destroy: true
 
+    after_initialize do |page|
+      Pages.parts.each_with_index do |page_part, index|
+        page.parts << PagePart.new(
+          :title => page_part,
+          :position => index,
+          :active => page_part.in?(Pages.default_parts))
+      end if page.parts.empty?
+    end
+
     before_destroy :deletable?
 
     class << self
@@ -197,14 +206,6 @@ module Refinery
       custom_slug.presence || menu_title.presence || title.presence
     end
 
-    # Repositions the child page_parts that belong to this page.
-    # This ensures that they are in the correct 0,1,2,3,4... etc order.
-    def reposition_parts!
-      reload.parts.each_with_index do |part, index|
-        part.update_columns position: index
-      end
-    end
-
     # Before destroying a page we check to see if it's a deletable page or not
     # Refinery system pages are not deletable.
     def destroy
@@ -307,34 +308,10 @@ module Refinery
     #
     # Will return the body page part of the first page.
     def content_for(part_title)
-      part_with_title(part_title).try(:body)
+      self.parts.detect { |part| part.title == part_title }
     end
 
-    # Accessor method to test whether a page part
-    # exists and has content for this page.
-    # Example:
-    #
-    #   ::Refinery::Page.first.content_for?(:body)
-    #
-    # Will return true if the page has a body page part and it is not blank.
-    def content_for?(part_title)
-      content_for(part_title).present?
-    end
-
-    # Accessor method to get a page part object from a page.
-    # Example:
-    #
-    #    ::Refinery::Page.first.part_with_title(:body)
-    #
-    # Will return the Refinery::PagePart object with that title using the first page.
-    def part_with_title(part_title)
-      # self.parts is usually already eager loaded so we can now just grab
-      # the first element matching the title we specified.
-      self.parts.detect do |part|
-        part.title == part_title.to_s ||
-        part.title.downcase.gsub(' ', '_') == part_title.to_s.downcase.gsub(' ', '_')
-      end
-    end
+    alias :part :content_for
 
     def any_title
       title.presence || translations.detect {|t| t.title.present? }.title

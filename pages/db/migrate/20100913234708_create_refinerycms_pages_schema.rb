@@ -4,6 +4,7 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       t.references :page, :null => false
       t.string   :title, :null => false
       t.integer  :position, :null => false, :default => 0
+      t.boolean  :active, :null => false, :default => true
 
       t.timestamps
     end

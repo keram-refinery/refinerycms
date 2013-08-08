@@ -167,32 +167,27 @@ module Refinery
     context 'custom slugs' do
       let(:custom_page_slug) { 'custom-page-slug' }
       let(:custom_child_slug) { 'custom-child-slug' }
-      let(:page_with_custom_slug) {
-        subject.class.new(:title => page_title, :custom_slug => custom_page_slug)
-      }
-      let(:child_with_custom_slug) {
-        page.children.new(:title => child_title, :custom_slug => custom_child_slug)
-      }
 
       after(:each) do
         Globalize.stub(:locale).and_return(I18n.default_frontend_locale)
       end
 
       it 'returns its path with custom slug' do
-        page_with_custom_slug.save
-        page_with_custom_slug.url[:id].should be_nil
-        page_with_custom_slug.url[:path].should == [custom_page_slug]
+        page = Page.create(:title => page_title, :custom_slug => custom_page_slug)
+        page.url[:id].should be_nil
+        page.url[:path].should == [custom_page_slug]
       end
 
       it 'returns its path underneath its parent with custom urls' do
-        child_with_custom_slug.save
-        page.save
-
+        page = Page.create(:title => page_title, :custom_slug => custom_page_slug)
+        child_with_custom_slug = page.children.create(:title => child_title, :custom_slug => custom_child_slug)
         child_with_custom_slug.url[:id].should be_nil
         child_with_custom_slug.url[:path].should == [page.url[:path].first, custom_child_slug]
       end
 
       it 'returns its path with custom slug when using different locale' do
+        page_with_custom_slug = Page.create(:title => page_title, :custom_slug => custom_page_slug)
+
         Globalize.stub(:locale).and_return(:ru)
         page_with_custom_slug.custom_slug = "#{custom_page_slug}-ru"
         page_with_custom_slug.save
@@ -203,6 +198,9 @@ module Refinery
       end
 
       it 'returns path underneath its parent with custom urls when using different locale' do
+        page = Page.create(:title => page_title, :custom_slug => custom_page_slug)
+        child_with_custom_slug = page.children.create(:title => child_title, :custom_slug => custom_child_slug)
+
         Globalize.stub(:locale).and_return(:ru)
         child_with_custom_slug.custom_slug = "#{custom_child_slug}-ru"
         child_with_custom_slug.save
@@ -227,54 +225,31 @@ module Refinery
     end
 
     context 'content sections (page parts)' do
+      let(:page) { Page.create(:title => page_title) }
+
       before do
-        page.parts.new(:title => 'body', :content => "I'm the first page part for this page.", :position => 0)
-        page.parts.new(:title => 'side body', :content => 'Closely followed by the second page part.', :position => 1)
+        page.part(:body).update(body: "I'm the first page part for this page.")
+        page.part(:side_body).update(body: 'Closely followed by the second page part.')
       end
 
       it 'return the content when using content_for' do
-        page.content_for(:body).should == "I'm the first page part for this page."
-        page.content_for('BoDY').should == "I'm the first page part for this page."
-      end
-
-
-      context 'when using content_for?' do
-
-        it 'return true when page part has content' do
-          page.content_for?(:body).should be_true
-        end
-
-        it 'return false when page part does not exist' do
-          page.parts = []
-          page.content_for?(:body).should be_false
-        end
-
-        it 'return false when page part does not have any content' do
-          page.parts.first.content = ''
-          page.content_for?(:body).should be_false
-        end
-
+        page.content_for(:body).body.should == "I'm the first page part for this page."
       end
 
       it 'reposition correctly' do
-        page.save
-
         part_first = page.parts.first
         part_last = page.parts.last
 
-        part_first.update_attributes :position => 6
-        part_last.update_attributes :position => 4
+        part_first.update :position => 6
+        part_last.update :position => 4
 
         part_first.position.should == 6
         part_last.position.should == 4
 
-        page.reposition_parts!
+        page.parts.reload
 
-        page.parts.first.position.should == 0
-        page.parts.last.position.should == 1
-
-        part_first.reload.position.should == 1
-        part_last.reload.position.should == 0
+        page.parts.first.position.should == 4
+        page.parts.last.position.should == 6
       end
     end
 

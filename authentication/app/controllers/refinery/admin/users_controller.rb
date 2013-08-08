@@ -19,7 +19,7 @@ module Refinery
 
         @user = Refinery::User.new user_params
 
-        if superuser_and_can_assign_roles &&
+        if superuser_and_can_assign_roles? &&
                     !authenticated_current_user_with_password?(current_user_password)
 
           flash.now[:error] = t('your_password_is_wrong_or_missing', :scope => 'refinery.admin.users.update')
@@ -31,7 +31,7 @@ module Refinery
         if @user.save
           @user.plugins = @selected_plugin_names
 
-          if superuser_and_can_assign_roles
+          if superuser_and_can_assign_roles?
             @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
           else
             @user.add_role(:refinery)
@@ -41,7 +41,7 @@ module Refinery
                       :notice => t('created', :kind => 'User', :what => @user.username, :scope => 'refinery.crudify')
         else
 
-          if superuser_and_can_assign_roles
+          if superuser_and_can_assign_roles?
             @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
           end
 
@@ -61,10 +61,10 @@ module Refinery
         @selected_plugin_names = (user_data.delete(:plugins) || []) | @always_allowed_menu_plugins
         @previously_selected_roles = @user.roles
         @selected_role_names = user_data.delete(:roles) || []
-        @selected_role_names = @user.roles.select(:title).map(&:title) unless user_can_assign_roles?
+        @selected_role_names = @user.roles.select(:title).map(&:title) unless superuser_and_can_assign_roles?
         current_user_password = user_data.delete(:current_user_password)
 
-        if superuser_and_can_assign_roles
+        if superuser_and_can_assign_roles?
           # Prevent the current user from locking themselves out of backend
           if current_refinery_user.id == @user.id && # If editing self
                       @selected_role_names.map!(&:downcase).exclude?('refinery') # And we're removing the refinery role
@@ -144,7 +144,7 @@ module Refinery
         password && current_refinery_user.valid_password?(password)
       end
 
-      def superuser_and_can_assign_roles
+      def superuser_and_can_assign_roles?
         current_refinery_user.has_role?(:superuser) && Refinery::Authentication.superuser_can_assign_roles
       end
 

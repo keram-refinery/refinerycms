@@ -9,18 +9,26 @@
   <body id="<%= canonical_id @page %>">
     <%= site_bar %>
     <div id="page-container">
-      <header id="header">
-        <% cache refinery_record_cache_key(@page, 'header') do -%>
-          <%= render '/refinery/header' %>
-        <% end %>
-      </header>
-      <section id="page">
-        <%= yield %>
-      </section>
+      <div class="header-container">
+        <header id="header" class="wrapper clearfix">
+          <% cache refinery_record_cache_key(@page, 'header') do -%>
+            <%= render '/refinery/header' %>
+          <% end %>
+        </header>
+      </div>
+
+      <div class="main-container">
+        <div id="main" class="wrapper clearfix">
+          <%= yield %>
+        </div>
+      </div>
+
 <% cache refinery_record_cache_key(@page, 'footer') do -%>
-      <footer id="footer">
-        <%= render '/refinery/footer' %>
-      </footer>
+      <div class="footer-container">
+        <footer id="footer" class="wrapper clearfix">
+          <%= render '/refinery/footer' %>
+        </footer>
+      </div>
     </div>
     <%= render '/refinery/javascripts' %>
   </body>

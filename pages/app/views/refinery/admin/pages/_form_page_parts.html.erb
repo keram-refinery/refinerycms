@@ -1,56 +1,26 @@
-<ul id="page-parts-controls" class="nojs-hide">
-  <li>
-    <%= link_to t('.reorder'), '#',
-                :id => 'reorder-page-part',
-                :class => 'icon-small reorder-icon',
-                :title => t('.reorder_content_section') %>
-    <%= link_to t('.reorder_done'), '#',
-                :id => 'reorder-page-part-done',
-                :class => 'hide icon-small success-icon',
-                :title => t('.reorder_content_section_done') %>
-  </li>
-  <% if ::Refinery::Pages.new_page_parts %>
-    <li>
-      <%= link_to t('.add'), refinery.new_admin_page_part_path,
-                  :id => 'add-page-part',
-                  :class => 'icon-small add-icon',
-                  :title => t('.create_content_section') %>
-    </li>
-    <li>
-      <%= link_to t('.delete'), refinery.admin_page_parts_path,
-                  :id => 'delete-page-part',
-                  :class => 'icon-small delete-icon',
-                  :title => t('.delete_content_section') %>
-    </li>
-  <% end %>
-</ul>
+<div id="page-parts" class="ui-tabs clearfix" >
 
-<div id="page-tabs" class="clearfix ui-tabs">
-  <ul id="page-parts" class="nojs-hide ui-tabs-nav">
+  <div class="nojs-hide ui-tabs-settings">
+    <%= link_to t('.configure'), '#',
+                id: 'page-parts-options',
+                class: 'icon-small page-add-icon',
+                title: t('.manage_page_parts') %>
+  </div>
+
+  <ul class="nojs-hide ui-tabs-nav">
+    <% main_part = ::Refinery::Pages.main_part %>
     <% @page.parts.each_with_index do |part, part_index| %>
-      <li class="<%= 'ui-state-active' if part.title.to_s.downcase == ::Refinery::Pages.main_part.to_s.downcase %>">
-        <%= link_to part.title, "##{part.to_param}" %>
-      </li>
-    <% end %>
-    <% ::Refinery::Pages.tabs_for_template(@page.view_template).each_with_index do |tab, tab_index| %>
-      <li id="custom-<%= tab.name %>-tab">
-        <%= link_to tab.name.titleize, "#custom-tab-#{tab_index}" %>
+      <% cls = "#{'ui-state-active' if part.title == main_part}#{' js-hide' if !part.active}" %>
+      <li class="<%= cls %>">
+        <%= link_to t(part.title, scope: 'refinery.admin.pages.parts'), "##{part.to_param}" %>
       </li>
     <% end %>
   </ul>
-  <div id="page-part-editors">
-    <% part_index = -1 %>
-    <%= f.fields_for :parts do |p| %>
-      <%= render 'page_part_field',
-                 :form => f,
-                 :part => p.object,
-                 :part_index => (part_index += 1),
-                 :new_part => @page.new_record? %>
-    <% end %>
-    <% ::Refinery::Pages.tabs_for_template(@page.view_template).each_with_index do |tab, tab_index| %>
-      <div class="page-part ui-tabs-panel" id="<%= "custom-tab-#{tab_index}" %>">
-        <%= render tab.partial, :f => f %>
-      </div>
+
+  <div class="ui-tabs-panels">
+    <%= f.fields_for :parts do |ff| %>
+      <%= render 'page_part_field', ff: ff, part: ff.object %>
     <% end %>
   </div>
+
 </div>

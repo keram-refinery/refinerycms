@@ -8,7 +8,5 @@ Refinery::Core::Engine.routes.draw do
       get :children, :on => :member
       post :update_positions, :on => :collection
     end
-
-    resources :page_parts, :only => [:new, :create, :destroy]
   end
 end

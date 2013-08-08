@@ -1,3 +1,8 @@
+<nav>
+  <% colophon_page = Refinery::Plugins['refinery_pages'].colophon_page %>
+  <%= link_to colophon_page.title, refinery.url_for(colophon_page.url) if colophon_page.present? %>
+  <a href="#top"><%= t('.top') %></a>
+</nav>
 <p>
   <%= t('.copyright', :year => Time.now.year,
                       :site_name => Refinery::Core.site_name) %>

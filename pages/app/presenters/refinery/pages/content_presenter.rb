@@ -50,10 +50,6 @@ module Refinery
         @sections.map { |section| section.wrapped_html(can_use_fallback) }.compact.join("\n").html_safe
       end
 
-      def add_section_if_missing(options)
-        add_section SectionPresenter.new(options) unless has_section?(options[:id])
-      end
-
       def has_section?(id)
         @sections.detect {|section| section.id == id}
       end

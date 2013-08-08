@@ -45,17 +45,9 @@ en:
         form:
           preview: Preview
           preview_changes: Preview your changes before making them live
-        form_new_page_parts:
-          title: Title
         form_page_parts:
-          reorder: Reorder
-          reorder_done: Reorder Done
-          add: Add
-          delete: Delete
-          create_content_section: Add content section
-          delete_content_section: Delete content section
-          reorder_content_section: Reorder content sections
-          reorder_content_section_done: I'm done reordering the content sections
+          configure: Configure
+          manage_page_parts: Manage page parts
         form_advanced_options:
           page_options: Page Options
           parent_page: Parent page
@@ -83,6 +75,11 @@ en:
         records:
           no_pages_yet: There are no pages yet. Click "Add new page" to add your first page.
         translator_access: You do not have the required permission to modify pages in this language.
+        parts:
+          active: Active
+          body: Body
+          side_body: Side Body
+          perex: Perex
   activerecord:
     models:
       refinery/page: page

@@ -6,11 +6,6 @@ module Refinery
       let(:content_presenter) { double(ContentPresenter, :hide_sections => nil, :fetch_template_overrides => nil, :to_html => nil) }
 
       describe "when rendering content presenter" do
-        it "asks to content presenter to hide sections if told to" do
-          content_presenter.should_receive(:hide_sections).with(['foo', 'bar'])
-          render_content_presenter(content_presenter, :hide_sections => ['foo', 'bar'])
-        end
-
         it "attempts to fetch template overrides declared elsewhere via content_for" do
           content_presenter.should_receive(:fetch_template_overrides).and_yield(12)
           self.should_receive(:content_for).with(12)

@@ -4,7 +4,7 @@ module Refinery
 
       def index
         @pages = ::Refinery::Page.roots.with_globalize.paginate(
-                :page => paginate_page, :per_page => Pages.per_dialog_page)
+                page: paginate_page, per_page: Pages.per_dialog_page)
       end
 
       protected

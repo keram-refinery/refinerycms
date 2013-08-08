@@ -15,9 +15,6 @@ module Refinery
 
   module Pages
     require 'refinery/pages/engine'
-    require 'refinery/pages/tab'
-    require 'refinery/pages/type'
-    require 'refinery/pages/types'
 
     # Load configuration last so that everything above is available to it.
     require 'refinery/pages/configuration'
@@ -35,11 +32,6 @@ module Refinery
             File.basename(f).split('.').first
           }
         }.flatten.uniq
-      end
-
-      def default_parts_for(page)
-        page_types = types.find_by_name(page.view_template)
-        page_types ? page_types.parts.map(&:titleize) : default_parts
       end
     end
 

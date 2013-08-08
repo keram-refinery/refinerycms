@@ -77,6 +77,11 @@
     padding: 0px;
 }
 
+.ui-tabs-settings {
+    float: right;
+    line-height: 2.8em;
+}
+
 .ui-tabs-vertical .ui-tabs-nav {
     float: left;
     width: 18%;
@@ -188,12 +193,10 @@
     width: 100%;
 }
 
-.ui-dialog-content {
+.ui-dialog .ui-dialog-content {
     height: auto !important;
     background: #fff;
-}
-
-.ui-dialog .ui-dialog-content {
+    overflow-x: hidden;
     padding: 10px;
     padding-bottom: 40px;
 }

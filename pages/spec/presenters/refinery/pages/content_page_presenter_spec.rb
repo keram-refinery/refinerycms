@@ -3,39 +3,61 @@ require "spec_helper"
 module Refinery
   module Pages
     describe ContentPagePresenter do
-      let(:part)  { double(PagePart, :body => 'part_body', :title => 'A Wonderful Page Part') }
-      let(:part2) { double(PagePart, :body => 'part_body2', :title => 'Another Wonderful Page Part') }
       let(:title) { 'This Great Page' }
 
-      describe "when building for page" do
-        let(:page_with_one_part) { double(Page, :parts => [part]) }
+      describe 'when building for page' do
+        context 'withou body part' do
+          let(:page_with_one_part) { FactoryGirl.create(:page) }
 
-        it "adds page title section before page parts" do
-          content = ContentPagePresenter.new(page_with_one_part, title)
-          content.get_section(0).fallback_html.should == title
+          before do
+            body_part = page_with_one_part.part(:body)
+            body_part.update(active: false, body: 'A Wonderful Page Part')
+            side_part = page_with_one_part.part(:side_body)
+            body_part.update(body: 'Another Wonderful Page Part')
+          end
+
+          it 'adds page title section before page parts' do
+            content = ContentPagePresenter.new(page_with_one_part, title)
+            content.get_section(0).fallback_html.should == title
+          end
+
+          it 'has body part hidden' do
+            content = ContentPagePresenter.new(page_with_one_part, title)
+            content.hidden_sections.map(&:id).should == [:body]
+          end
         end
 
-        it "adds a section for each page part" do
-          page = double(Page, :parts => [part, part2])
-          content = ContentPagePresenter.new(page, title)
-          content.get_section(1).fallback_html.should == 'part_body'
-          content.get_section(2).fallback_html.should == 'part_body2'
-        end
+        context 'default parts' do
+          let(:page) { FactoryGirl.create(:page) }
 
-        it "adds body content left and right after page parts" do
-          content = ContentPagePresenter.new(page_with_one_part, title)
-          content.get_section(2).id.should == :body
-          content.get_section(3).id.should == :side_body
-        end
+          before do
+            body_part = page.part(:body)
+            body_part.update(body: 'A Wonderful Page Part')
+            side_part = page.part(:side_body)
+            side_part.update(body: 'Another Wonderful Page Part')
+          end
 
-        it "doesnt add page parts if page is nil" do
-          content = ContentPagePresenter.new(nil, title)
-          content.get_section(1).id.should == :body
-        end
+          it 'adds a section for each page part' do
+            content = ContentPagePresenter.new(page, title)
+            content.get_section(1).fallback_html.should == 'A Wonderful Page Part'
+            content.get_section(2).fallback_html.should == 'Another Wonderful Page Part'
+          end
 
-        it "doesnt add title if it is blank" do
-          content = ContentPagePresenter.new(nil, '')
-          content.get_section(0).id.should == :body
+          it 'adds body content left and right after page parts' do
+            content = ContentPagePresenter.new(page, title)
+            content.get_section(1).id.should == :body
+            content.get_section(2).id.should == :side_body
+          end
+
+          it 'has only title section if page is nil' do
+            content = ContentPagePresenter.new(nil, title)
+            content.instance_variable_get(:@sections).map(&:id).should == [:body_content_title]
+          end
+
+          it 'doesnt add title if it is blank' do
+            content = ContentPagePresenter.new(nil, '')
+            content.instance_variable_get(:@sections).should == []
+          end
         end
       end
     end
