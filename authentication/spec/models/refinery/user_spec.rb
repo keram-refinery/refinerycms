@@ -62,12 +62,12 @@ module Refinery
       end
 
       it 'requires username' do
-        User.new(attr.merge(:username => '')).should_not be_valid
+        User.new(attributes.merge(:username => '')).should_not be_valid
       end
 
       it 'rejects duplicate usernames' do
-        User.create!(attr)
-        User.new(attr.merge(:email => 'another@email.com')).should_not be_valid
+        User.create!(attributes)
+        User.new(attributes.merge(:email => 'another@email.com')).should_not be_valid
       end
 
       it "rejects duplicate usernames regardless of case" do
