@@ -8,7 +8,7 @@ module Refinery
 
     return ENV[token_name.upcase] if ENV[token_name.upcase].present?
 
-    token_file = Rails.root.join(token_name)
+    token_file = Rails.root.join('config', token_name)
     if File.exist? token_file
       # Use the existing token.
       File.read(token_file).chomp
