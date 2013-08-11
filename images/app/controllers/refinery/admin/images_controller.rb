@@ -48,7 +48,7 @@ module Refinery
         if @image.valid? && @image.save
           flash.notice = t(
             'refinery.crudify.updated',
-            :kind => 'Image',
+            :kind => t('image', scope: 'refinery.crudify'),
             :what => "#{@image.title}"
           )
 
@@ -74,7 +74,8 @@ module Refinery
 
         if @images.any?
           flash.notice = t('created', :scope => 'refinery.crudify',
-                      :kind => 'Image', :what => "#{@images.map(&:title).join(", ")}")
+                      :kind => t('image', scope: 'refinery.crudify'),
+                      :what => "#{@images.map(&:title).join(", ")}")
         end
 
         unless invalid_images.empty? ||

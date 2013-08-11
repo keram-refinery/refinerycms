@@ -36,9 +36,11 @@ describe 'dashboard' do
     it 'shows created tracked objects' do
       visit refinery.admin_root_path
 
-      page.should have_content('Latest Activity')
-      3.times { |n| page.should have_content("Ugisozols#{n} user was added") }
-      3.times { |n| page.should have_content("Refinery cms #{n} page was added") }
+      within '#content' do
+        page.should have_content('Latest Activity')
+        3.times { |n| page.should have_content("Ugisozols#{n} user was added") }
+        3.times { |n| page.should have_content("Refinery cms #{n} page was added") }
+      end
     end
 
     # see https://github.com/refinery/refinerycms/issues/1673

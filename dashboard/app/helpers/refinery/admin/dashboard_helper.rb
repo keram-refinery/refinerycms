@@ -7,7 +7,7 @@ module Refinery
 
         link_to t('.latest_activity_message',
                   :what => record.send(activity.title),
-                  :kind => record.class.model_name.human,
+                  :kind => t(record.class.model_name.i18n_key, scope: 'activerecord.models'),
                   :action => t("with_article \"#{plugin_article(plugin)}\"",
                                :scope => "refinery.#{record_action(record)}")
                  ).downcase.capitalize, eval("#{activity.url}(#{activity.nesting('record')})")

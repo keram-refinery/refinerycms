@@ -44,7 +44,7 @@ module Refinery
         if @resource.valid? && @resource.save
           flash.notice = t(
             'refinery.crudify.updated',
-            :kind => 'File',
+            :kind => t('resource', scope: 'refinery.crudify'),
             :what => "#{@resource.title}"
           )
 
@@ -61,7 +61,7 @@ module Refinery
 
         if @resources.any?
           flash.notice = t('created', :scope => 'refinery.crudify',
-                      :kind => 'Resource', :what => "#{@resources.map(&:title).join(", ")}")
+                      :kind => t('resource', scope: 'refinery.crudify'), :what => "#{@resources.map(&:title).join(", ")}")
         end
 
         unless invalid_resources.empty? ||

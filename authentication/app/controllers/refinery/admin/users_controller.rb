@@ -38,7 +38,10 @@ module Refinery
           end
 
           redirect_to refinery.admin_users_path,
-                      :notice => t('created', :kind => 'User', :what => @user.username, :scope => 'refinery.crudify')
+                      :notice => t('created',
+                        :kind => t('user', scope: 'refinery.crudify'),
+                        :what => @user.username,
+                        :scope => 'refinery.crudify')
         else
 
           if superuser_and_can_assign_roles?
@@ -91,7 +94,10 @@ module Refinery
 
         if @user.update(user_params)
           redirect_to refinery.admin_users_path,
-                      :notice => t('updated', :kind => 'User', :what => @user.username, :scope => 'refinery.crudify')
+                      :notice => t('updated',
+                        :kind => t('user', scope: 'refinery.crudify'),
+                        :what => @user.username,
+                        :scope => 'refinery.crudify')
         else
           @user.plugins = @previously_selected_plugin_names
           @user.roles = @previously_selected_roles
