@@ -30,6 +30,8 @@ module Refinery
 
       append_gitignore!
 
+      replace_default_rails_secret_token_config
+
       append_asset_pipeline!
 
       forced_overwriting?
@@ -50,6 +52,14 @@ module Refinery
     end
 
   protected
+
+    def replace_default_rails_secret_token_config
+      file_path = 'config/initializers/secret_token.rb'
+
+      if File.exists?(destination_path.join(file_path))
+        gsub_file file_path, %r{config.secret_key_base = ('|").+('|")}, 'config.secret_key_base = Refinery.find_or_set_secret_token'
+      end
+    end
 
     def append_asset_pipeline!
       application_css = 'app/assets/stylesheets/application.css'

@@ -5,6 +5,7 @@ require 'rbconfig'
 
 module Refinery
   require 'refinery/errors'
+  require 'refinery/secret_tokens'
 
   autoload :Activity, 'refinery/activity'
   autoload :ApplicationController, 'refinery/application_controller'
