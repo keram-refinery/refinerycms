@@ -16,7 +16,7 @@ module Refinery
 
         context "when current frontend locale != default frontend locale" do
           it "returns link_url prefixed with current frontend locale" do
-            Refinery::I18n.stub(:current_frontend_locale).and_return(:lv)
+            Globalize.stub(:locale).and_return(:lv)
             Refinery::I18n.stub(:default_frontend_locale).and_return(:en)
             Url::Localised.new(page).url.should eq("/lv/test")
           end
@@ -24,7 +24,7 @@ module Refinery
 
         context "when current frontend locale == default frontend locale" do
           it "returns unaltered link_url" do
-            Refinery::I18n.stub(:current_frontend_locale).and_return(:en)
+            Globalize.stub(:locale).and_return(:en)
             Refinery::I18n.stub(:default_frontend_locale).and_return(:en)
             Url::Localised.new(page).url.should eq("/test")
           end
