@@ -233,7 +233,7 @@ module Refinery
       end
 
       it 'return the content when using content_for' do
-        page.content_for(:body).body.should == "I'm the first page part for this page."
+        page.content_for(:body).should == "I'm the first page part for this page."
       end
 
       it 'reposition correctly' do

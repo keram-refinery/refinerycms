@@ -301,17 +301,20 @@ module Refinery
       }
     end
 
-    # Accessor method to get a page part from a page.
+    # Accessor method to get content of page part
     # Example:
     #
     #    ::Refinery::Page.first.content_for(:body)
     #
-    # Will return the body page part of the first page.
+    # Will return the body of body page part of the first page.
     def content_for(part_title)
-      self.parts.detect { |part| part.title == part_title }
+      part(part_title).body
     end
 
-    alias :part :content_for
+    # Accessor method to get a page part from a page.
+    def part(part_title)
+      self.parts.detect { |part| part.title == part_title }
+    end
 
     def any_title
       title.presence || translations.detect {|t| t.title.present? }.title
