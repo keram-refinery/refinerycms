@@ -6,10 +6,6 @@ Refinery::Images.configure do |config|
   # Configure how many images per page should be displayed when a dialog is presented that contains images
   # config.per_dialog_page = <%= Refinery::Images.per_dialog_page.inspect %>
 
-  # Configure how many images per page should be displayed when a dialog is presented that
-  # contains images and image resize options
-  # config.per_dialog_page_that_have_size_options = <%= Refinery::Images.per_dialog_page_that_have_size_options.inspect %>
-
   # Configure how many images per page should be displayed in the list of images in the admin area
   # config.per_admin_page = <%= Refinery::Images.per_admin_page.inspect %>
 
@@ -36,7 +32,6 @@ Refinery::Images.configure do |config|
   # Configure Dragonfly
   # This is where in the middleware stack to insert the Dragonfly middleware
   # config.dragonfly_insert_before = <%= Refinery::Images.dragonfly_insert_before.inspect %>
-  # config.dragonfly_secret = <%= Refinery::Images.dragonfly_secret.inspect %>
   # If you decide to trust file extensions replace :ext below with :format
   # config.dragonfly_url_format = <%= Refinery::Images.dragonfly_url_format.inspect %>
   # config.dragonfly_url_host = <%= Refinery::Images.dragonfly_url_host.inspect %>

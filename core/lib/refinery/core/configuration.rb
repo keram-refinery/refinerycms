@@ -17,7 +17,7 @@ module Refinery
     self.site_name = 'Site Name'
     self.google_analytics_page_code = 'UA-xxxxxx-x'
     self.authenticity_token_on_frontend = false
-    self.dragonfly_secret = Array.new(24) { rand(256) }.pack('C*').unpack('H*').first
+    self.dragonfly_secret = Refinery.find_or_set_secret_token('dragonfly')
     self.javascripts = []
     self.I18n_javascripts = {}
     self.stylesheets = []

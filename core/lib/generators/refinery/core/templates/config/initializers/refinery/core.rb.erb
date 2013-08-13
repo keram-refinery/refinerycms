@@ -30,16 +30,6 @@ Refinery::Core.configure do |config|
   # Enable/disable authenticity token on frontend
   # config.authenticity_token_on_frontend = <%= Refinery::Core.authenticity_token_on_frontend.inspect %>
 
-  # Should set this if concerned about DOS attacks. See
-  # http://markevans.github.com/dragonfly/file.Configuration.html#Configuration
-  # config.dragonfly_secret = <%= Refinery::Core.dragonfly_secret.inspect %>
-
-  # Register extra javascript for backend
-  # config.register_javascript "prototype-rails"
-
-  # Register extra stylesheet for backend (optional options)
-  # config.register_stylesheet "custom", :media => 'screen'
-
   # Specify a different backend path than the default of /refinery.
   # config.backend_route = <%= Refinery::Core.backend_route.inspect %>
 end
