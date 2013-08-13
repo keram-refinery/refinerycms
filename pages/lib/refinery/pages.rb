@@ -15,6 +15,7 @@ module Refinery
 
   module Pages
     require 'refinery/pages/engine'
+    require 'refinery/pages/seed'
 
     # Load configuration last so that everything above is available to it.
     require 'refinery/pages/configuration'
