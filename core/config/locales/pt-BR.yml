@@ -28,6 +28,7 @@ pt-BR:
       continue_editing:
         save_and_continue_editing: Salvar E continuar editando
       form_actions:
+        submit: Submit
         save: Salvar
         cancel: Cancelar
         cancel_lose_changes: "Cancelar irá fazer com que você perca as alterações que tenha feito aqui."

@@ -3,9 +3,9 @@ module Refinery
     class ImagesController < ::Refinery::AdminController
 
       crudify :'refinery/image',
-              :sortable => false
+              sortable: false
 
-      before_action :change_list_mode_if_specified, :only => [:index]
+      before_action :change_list_mode_if_specified, only: [:index]
 
       IMAGES_VIEWS_RE = %r{^(#{::Refinery::Images.image_views.join('|')})}
 
@@ -20,7 +20,7 @@ module Refinery
         if params[:image].present? && params[:image][:image].is_a?(Array)
           params[:image][:image].each do |image|
             begin
-              @image = ::Refinery::Image.create({:image => image}.merge(image_params))
+              @image = ::Refinery::Image.create({image: image})
 
               if @image.valid?
                 @images << @image
@@ -37,7 +37,11 @@ module Refinery
         if invalid_images.any?
           create_unsuccessful invalid_images
         else
-          redirect_to refinery.admin_images_path
+          if iframe?
+            json_response redirect_to: refinery.admin_images_path
+          else
+            redirect_to refinery.admin_images_path
+          end
         end
       end
 
@@ -48,14 +52,18 @@ module Refinery
         if @image.valid? && @image.save
           flash.notice = t(
             'refinery.crudify.updated',
-            :kind => t('image', scope: 'refinery.crudify'),
-            :what => "#{@image.title}"
+            kind: t('image', scope: 'refinery.crudify'),
+            what: "#{@image.title}"
           )
 
-          redirect_back_or_default refinery.admin_images_path
+          if iframe?
+            json_response redirect_to: refinery.admin_images_path
+          else
+            redirect_back_or_default refinery.admin_images_path
+          end
         else
           @thumbnail = Image.find params[:id].to_s
-          render :action => 'edit'
+          render action: 'edit'
         end
       end
 
@@ -73,26 +81,22 @@ module Refinery
         @image = invalid_images.fetch(0) { Image.new }
 
         if @images.any?
-          flash.notice = t('created', :scope => 'refinery.crudify',
-                      :kind => t('image', scope: 'refinery.crudify'),
-                      :what => "#{@images.map(&:title).join(", ")}")
+          flash.now[:notice] = t('created', scope: 'refinery.crudify',
+                      kind: t('image', scope: 'refinery.crudify'),
+                      what: "#{@images.map(&:title).join(", ")}")
         end
 
         unless invalid_images.empty? ||
                     (invalid_images.size == 1 && @image.errors.keys.first == :image_name)
-          flash.alert = t('problem_create_images',
+          flash.now[:alert] = t('problem_create_images',
                          images: invalid_images.map(&:image_name).join(', '),
                         scope: 'refinery.admin.images')
         end
 
-        render :action => 'new'
+        render action: 'new'
       end
 
     private
-
-      def image_params
-        params[:image].except(:image)
-      end
 
     end
   end

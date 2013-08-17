@@ -28,6 +28,7 @@ de:
       continue_editing:
         save_and_continue_editing: Speichern & Bearbeiten fortsetzen
       form_actions:
+        submit: Submit
         save: Speichern
         cancel: Abbrechen
         cancel_lose_changes: Durch Abbrechen gehen all ihre gemachten Änderungen verloren

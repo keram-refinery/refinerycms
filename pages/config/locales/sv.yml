@@ -5,7 +5,7 @@ sv:
         title: Sidor
         description: Hantera sidor och dess innehåll
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Länk till den här sidan
         link_to:

@@ -31,6 +31,7 @@ ko:
       continue_editing:
         save_and_continue_editing: '저장하고 계속 편집'
       form_actions:
+        submit: Submit
         save: 저장
         cancel: 취소
         cancel_lose_changes: 취소하면 모든 변경사항을 잃게 됩니다

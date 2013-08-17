@@ -5,7 +5,7 @@ bg:
         title: Страници
         description: Управление на страници
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Връзка към тази страница
         link_to:

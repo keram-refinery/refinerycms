@@ -28,6 +28,7 @@ sv:
       continue_editing:
         save_and_continue_editing: Spara & fortsätt redigera
       form_actions:
+        submit: Submit
         save: Spara
         cancel: Avbryt
         cancel_lose_changes: Om du avbryter förlorar du de ändringar du har gjort.

@@ -28,6 +28,7 @@ el:
       continue_editing:
         save_and_continue_editing: Αποθήκευση και συνέχισε
       form_actions:
+        submit: Submit
         save: Αποθήκευση
         cancel: Ακύρωση
         cancel_lose_changes: Αν ακυρώσετε θα χάσετε ότι αλλαγές έγιναν

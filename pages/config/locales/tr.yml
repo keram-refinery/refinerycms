@@ -5,7 +5,7 @@ tr:
         title: Sayfalar
         description: Icerik Sayfalarini Yonet
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Bu sayfaya baglanti ekle
         link_to:

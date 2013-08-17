@@ -9,7 +9,7 @@ uk:
       dashboard:
         recent_activity:
           empty: Порожній
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Посилання на цю сторінку
         link_to:

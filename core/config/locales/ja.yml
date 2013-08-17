@@ -30,6 +30,7 @@ ja:
       continue_editing:
         save_and_continue_editing: 保存して更に編集する
       form_actions:
+        submit: Submit
         save: 保存
         cancel: キャンセル
         cancel_lose_changes: 保存されていない変更内容が無くなってしまいますが、宜しいでしょうか?

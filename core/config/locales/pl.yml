@@ -31,6 +31,7 @@ pl:
       continue_editing:
         save_and_continue_editing: Zapisz i kontynuuj edycję
       form_actions:
+        submit: Submit
         save: Zapisz
         cancel: Zrezygnuj
         cancel_lose_changes: Jeżeli zrezygnujesz, stracisz wszelkie dokonane tu zmiany

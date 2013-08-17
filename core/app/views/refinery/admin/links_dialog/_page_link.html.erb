@@ -1,9 +1,0 @@
-<li class="<%= "child-#{child}" if child %>" id="<%= refinery_dom_id(page_link) %>"
-  data-link="<%= {id: page_link.id, url: refinery.url_for(page_link.url), title: page_link.title}.to_json %>">
-    <%= page_link.title %>
-</li>
-<%= render :partial => 'page_link',
-           :collection => page_link.children.with_globalize,
-           :locals => {
-             :child => (child ||= 0) + 1
-           } %>

@@ -6,7 +6,7 @@ es:
         description: Gestionar páginas de contenido
         article: femenino
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Enlace a esta página
         link_to:

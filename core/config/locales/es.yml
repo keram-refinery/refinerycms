@@ -21,6 +21,7 @@ es:
       continue_editing:
         save_and_continue_editing: Guardar y seguir editando
       form_actions:
+        submit: Submit
         save: Guardar
         cancel: Cancelar
         cancel_lose_changes: Al cancelar se perderán los cambios que has realizado aquí

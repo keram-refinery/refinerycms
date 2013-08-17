@@ -31,6 +31,7 @@ nl:
       continue_editing:
         save_and_continue_editing: Opslaan en verder gaan met bewerken
       form_actions:
+        submit: Submit
         save: Opslaan
         cancel: Annuleren
         cancel_lose_changes: "Als u annuleert, zal geen van de wijzingen worden opgeslagen!"

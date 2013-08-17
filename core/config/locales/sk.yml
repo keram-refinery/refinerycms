@@ -17,7 +17,7 @@ sk:
       updated: '%{what} bol úspešne aktualizovaný.'
       destroyed: '%{what} bol úspešne zmazaný.'
     site_bar:
-      log_out: Odhlásiť 
+      log_out: Odhlásiť
       switch_to_your_website: Prepnúť na verejnú časť
       switch_to_your_website_editor: Prepnúť do editačnej časti
     admin:
@@ -31,6 +31,7 @@ sk:
       continue_editing:
         save_and_continue_editing: Uložiť a pokračovať v editácii
       form_actions:
+        submit: Submit
         save: Uložiť
         cancel: Storno
         cancel_lose_changes: Ak akciu zrušíte všetky vykonané zmeny budú stratené
@@ -39,23 +40,23 @@ sk:
       image_picker:
         none_selected: Zatiaľ nie je vybraný žiadny obrázok, kliknutím jeden pridajte.
         remove_current: Zmazať vybraný obrázok
-        change: Kliknite tu pre vybranie obrázku 
+        change: Kliknite tu pre vybranie obrázku
         show: Zobraziť
       resource_picker:
         download_current: Stiahnuť vybraný súbor
-        opens_in_new_window: Otvoriť v novom okne 
+        opens_in_new_window: Otvoriť v novom okne
         remove_current: "Zmazať vybrané"
         no_resource_selected: Zatiaľ nie je vybraný žiaden súbor, kliknite tu pre pridanie.
         name: Pridať súbor
-        current: Vybraný súbor 
+        current: Vybraný súbor
       search:
-        button_text: Hľadať 
+        button_text: Hľadať
         results_for_html: "Výsledky hľadania pre &#8216;<em>%{query}</em>&#8217;"
         no_results: Žiadne záznamy sa nenašli
       delete:
         message: Naozaj chcete zmazať '%{title}'?
       error_messages:
-        problems_in_following_fields: Vyskytol sa problém s týmito údajmi 
+        problems_in_following_fields: Vyskytol sa problém s týmito údajmi
       help: Nápoveda
       form_advanced_options_menu:
         advanced_options: Rozšírené nastavenia

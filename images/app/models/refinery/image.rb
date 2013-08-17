@@ -8,6 +8,8 @@ module Refinery
 
     image_accessor :image
 
+    default_scope { order updated_at: :desc }
+
     validates :image, :presence => true
     validates_with ImageNameValidator, :on => :create
     validates_with ImageSizeValidator

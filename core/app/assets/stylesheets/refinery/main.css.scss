@@ -100,13 +100,27 @@
     top: 7px;
 }
 
-.hemisquare {
+.hemisquare,
+.golden-ratio-minor,
+.golden-ratio-main {
     width: 48%;
     float: left;
 }
 
+.golden-ratio-minor {
+    width: 38%;
+}
+
+.golden-ratio-main {
+    width: 61%;
+}
+
 .right-side {
     float: right;
+}
+
+.golden-ratio-minor.right-side {
+    width: 37%;
 }
 
 /* content formatting and layout */
@@ -243,7 +257,7 @@ span.help {
         position: fixed;
         top: 40%;
         width: 90px;
-        z-index: 100;
+        z-index: 101;
     }
 
     a {

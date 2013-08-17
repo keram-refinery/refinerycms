@@ -42,23 +42,23 @@ The output of this will look like this:
 <pre>
 Searching for missing translations for the locale: nl
 refinery.admin.pages.form_advanced_options.page_options in pages/app/views/refinery/admin/pages/_form_advanced_options.html.erb      is not in any nl locale file
-refinery.admin.pages_dialogs.link_to.insert in pages/app/views/refinery/admin/pages_dialogs/link_to.html.erb     is not in any nl locale file
+refinery.admin.pages_dialog.link_to.insert in pages/app/views/refinery/admin/pages_dialog/link_to.html.erb     is not in any nl locale file
 Number of missing translations for nl: 2
 </pre>
 
-As you can see, there are two missing keys: +refinery.admin.pages.form_advanced_options.page_options+ and +refinery.admin.pages_dialogs.link_to.insert+.
+As you can see, there are two missing keys: +refinery.admin.pages.form_advanced_options.page_options+ and +refinery.admin.pages_dialog.link_to.insert+.
 
 h3. Adding the keys
 
 Each plugin has its own locale YAML files. The one we'll have to fix is +pages/config/locales/nl.yml+. Note that it is important to put the right key in the right file.
 
-The key +refinery.admin.pages_dialogs.link_to.insert+ is represented in YAML like so:
+The key +refinery.admin.pages_dialog.link_to.insert+ is represented in YAML like so:
 
 <yaml>
 nl:
   refinery:
     admin:
-      pages_dialogs:
+      pages_dialog:
         link_to:
           insert: Voeg in
 </yaml>

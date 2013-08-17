@@ -5,7 +5,7 @@ fi:
         title: Sivut
         description: Hallitse sivuja
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Linkki tälle sivulle
         link_to:

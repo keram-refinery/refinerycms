@@ -1,6 +1,7 @@
 //= require jquery.min
 //= require jquery_ujs
-//= require vendor/jquery-ui.min.js
+//= require vendor/jquery-ui.min
+//= require vendor/jquery.iframe-transport
 //= require turbolinks
 //= require vendor/nestedsortables
 
@@ -10,12 +11,12 @@
 
 $(function () {
     var doc = $(document),
-        ui = new refinery.admin.UserInterface().init($('body'));
+        ui = new refinery.admin.UserInterface().init($('#wrapper'));
         // =t=
     $.ajaxSettings.dataType = 'JSON';
 
     function reload () {
-        ui.reload($('body', false));
+        ui.reload($('#wrapper', false));
         refinery.spinner.off();
     }
 

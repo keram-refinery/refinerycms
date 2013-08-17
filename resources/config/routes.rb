@@ -5,5 +5,6 @@ Refinery::Core::Engine.routes.draw do
     resources :resources, :except => :show
 
     get '/dialogs/resources' => 'resources_dialog#index'
+    post '/dialogs/resources' => 'resources_dialog#create'
   end
 end

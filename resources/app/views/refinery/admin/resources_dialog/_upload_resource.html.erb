@@ -1,0 +1,20 @@
+<%= form_for @resource, url: refinery.admin_dialogs_resources_path,
+            html: { multipart: true, remote: true } do |f| %>
+
+  <%= render '/refinery/admin/error_messages',
+             object: @resource,
+             include_object_name: false %>
+
+  <div class="field">
+    <%= f.file_field :file, required: true %>
+    <p class="note">
+      <%= t('maximum_file_size',
+                  scope: 'refinery.admin.resources.form',
+                  bytes: number_to_human_size(Refinery::Resources.max_file_size)) %>
+    </p>
+  </div>
+  <div class="field">
+    <%= f.submit %>
+  </div>
+
+<% end %>

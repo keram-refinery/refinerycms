@@ -3,7 +3,7 @@ module Refinery
     class ResourcesController < ::Refinery::AdminController
 
       crudify :'refinery/resource',
-              :sortable => false
+              sortable: false
 
       def new
         @resource = Resource.new
@@ -16,7 +16,7 @@ module Refinery
         if params[:resource].present? && params[:resource][:file].is_a?(Array)
           params[:resource][:file].each do |resource|
             begin
-              @resource = Resource.create({:file => resource}.merge(resource_params))
+              @resource = Resource.create({file: resource})
 
               if @resource.valid?
                 @resources << @resource
@@ -30,10 +30,14 @@ module Refinery
           end
         end
 
-        if invalid_resources.empty? and @resources.any?
-          redirect_to refinery.admin_resources_path
-        else
+        if invalid_resources.any?
           create_unsuccessful invalid_resources
+        else
+          if iframe?
+            json_response redirect_to: refinery.admin_resources_path
+          else
+            redirect_to refinery.admin_resources_path
+          end
         end
       end
 
@@ -44,13 +48,13 @@ module Refinery
         if @resource.valid? && @resource.save
           flash.notice = t(
             'refinery.crudify.updated',
-            :kind => t('resource', scope: 'refinery.crudify'),
-            :what => "#{@resource.title}"
+            kind: t('resource', scope: 'refinery.crudify'),
+            what: "#{@resource.title}"
           )
 
           redirect_back_or_default refinery.admin_resources_path
         else
-          render :action => 'edit'
+          render action: 'edit'
         end
       end
 
@@ -60,8 +64,8 @@ module Refinery
         @resource = invalid_resources.fetch(0) { Resource.new }
 
         if @resources.any?
-          flash.notice = t('created', :scope => 'refinery.crudify',
-                      :kind => t('resource', scope: 'refinery.crudify'), :what => "#{@resources.map(&:title).join(", ")}")
+          flash.notice = t('created', scope: 'refinery.crudify',
+                      kind: t('resource', scope: 'refinery.crudify'), what: "#{@resources.map(&:title).join(", ")}")
         end
 
         unless invalid_resources.empty? ||
@@ -71,7 +75,7 @@ module Refinery
                         scope: 'refinery.admin.resources')
         end
 
-        render :action => 'new'
+        render action: 'new'
       end
 
       def paginate_per_page
@@ -79,10 +83,6 @@ module Refinery
       end
 
     private
-
-      def resource_params
-        params[:resource].except(:file)
-      end
 
     end
   end

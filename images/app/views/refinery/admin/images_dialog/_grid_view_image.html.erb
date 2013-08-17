@@ -1,8 +1,7 @@
-<li id="image-<%= grid_view_image.id %>" >
-  <%= link_to grid_view_image.url, :class => 'image' do %>
-    <%= image_fu(grid_view_image, '100x100#c', {
-             :alt => grid_view_image.title,
-             :data => { id: grid_view_image.id }
-           }.merge(thumbnail_urls(grid_view_image))) %>
+<li id="<%= refinery_dom_id grid_view_image %>" >
+  <%= link_to grid_view_image.url, class: 'image' do %>
+    <%= image_fu(grid_view_image, '98x98#c', {
+             alt: grid_view_image.title
+           }) %>
   <% end %>
 </li>

@@ -3,7 +3,7 @@ module Refinery
     include Pages::RenderOptions
 
     before_action :find_page
-    before_action :redirect_unless_path_match, :only => [:show] if Refinery::Pages.marketable_urls
+    before_action :redirect_unless_path_match, :only => [:show] if Pages.marketable_urls
     before_action :redirect_if_skip_to_first_or_link_url, :only => [:show]
 
     # This action is usually accessed with the root path, normally '/'
@@ -54,9 +54,9 @@ module Refinery
 
     def refinery_page
       if current_refinery_user && current_refinery_user.authorized_plugins.include?('refinery_pages')
-        Refinery::Page
+        Page
       else
-        Refinery::Page.live
+        Page.live
       end
     end
 

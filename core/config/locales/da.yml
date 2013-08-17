@@ -28,6 +28,7 @@ da:
       continue_editing:
         save_and_continue_editing: Gem og fortsæt med redigering
       form_actions:
+        submit: Submit
         save: Gem ændringer
         cancel: Annullér
         cancel_lose_changes: Du mister alle ændringer til denne %{object_name}

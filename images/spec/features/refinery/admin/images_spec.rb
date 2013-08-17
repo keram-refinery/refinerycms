@@ -168,29 +168,6 @@ module Refinery
         end
       end
 
-      # todo rewrite for paginate_per_page
-#      describe 'per_page' do
-#        context 'dialog is true' do
-#          context 'has_size_options is true' do
-#            it 'returns image count specified by Images.per_dialog_page_that_have_size_options option' do
-#              ::Refinery::Image.per_page(true, true).should == Images.per_dialog_page_that_have_size_options
-#            end
-#          end
-#
-#          context 'has_size_options is false' do
-#            it 'returns image count specified by Images.per_dialog_page option' do
-#              ::Refinery::Image.per_page(true).should == Images.per_dialog_page
-#            end
-#          end
-#        end
-#
-#        context 'dialog is false' do
-#          it 'returns image count specified by Images.per_admin_page option' do
-#            ::Refinery::Image.per_page.should == Images.per_admin_page
-#          end
-#        end
-#      end
-
     end
   end
 end

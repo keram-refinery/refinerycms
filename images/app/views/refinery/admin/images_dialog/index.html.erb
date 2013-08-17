@@ -11,38 +11,22 @@
         </a>
       </li>
       <li>
-        <a href="#image-upload-area" >
+        <a href="#upload-image-area" >
           <%= t('.new_image') %>
         </a>
       </li>
   </ul>
-  <div id="existing-image-area" class="ui-tabs-panel" >
-    <% if @images.any? %>
-      <%= render 'existing_image' %>
-    <% else %>
-      <div class="flash flash-notice" >
-        <%= t('no_images_yet', :scope => 'refinery.admin.images.records') %>
-      </div>
-    <% end %>
 
+  <div id="existing-image-area" class="ui-tabs-panel" >
+    <%= render 'existing_image' %>
   </div>
 
   <div id="external-image-area" class="ui-tabs-panel" >
     <%= render 'external_image' %>
   </div>
 
-  <div id="image-upload-area" class="ui-tabs-panel" >
-    -t- todo
+  <div id="upload-image-area" class="ui-tabs-panel" >
+    <%= render 'upload_image' %>
   </div>
 
-</div>
-<div class="dialog-actions">
-  <%= render '/refinery/admin/form_actions', :f => nil,
-             :cancel_url => '',
-             :submit_button_text => t('insert', :scope => 'refinery.admin.form_actions'),
-             :submit_button_class => 'insert-button',
-             :hide_submit => false,
-             :hide_cancel => false,
-             :hide_delete => true,
-             :cancel_title => nil %>
 </div>

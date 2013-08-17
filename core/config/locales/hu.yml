@@ -31,6 +31,7 @@ hu:
       continue_editing:
         save_and_continue_editing: 'Mentés és a szerkesztés folytatása'
       form_actions:
+        submit: Submit
         save: Mentés
         cancel: Mégsem
         cancel_lose_changes: 'Ha megszakítod, akkor az összes változtatás elveszik'

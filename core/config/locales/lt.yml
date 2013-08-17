@@ -28,6 +28,7 @@ lt:
       continue_editing:
         save_and_continue_editing: Išsaugoti ir tęsti redagavimą
       form_actions:
+        submit: Submit
         save: Išsaugoti
         cancel: Atšaukti
         cancel_lose_changes: "Jeigu atšauksite, tai prarasite visus padarytus pakeitimus"

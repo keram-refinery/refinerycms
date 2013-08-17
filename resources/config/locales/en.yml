@@ -32,9 +32,10 @@ en:
         problem_create_resources: 'These files we was unable create: %{resources}.'
       resources_dialog:
         index:
-          existing_image: Library
-          external_image: Url
-          new_image: Upload
+          existing_resource: Library
+          external_resource: Url
+          upload_resource: Upload
+        no_resources_yet: There are no files yet.
   activerecord:
     models:
       refinery/resource: file

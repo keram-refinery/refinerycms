@@ -5,7 +5,7 @@ fr:
         title: Pages
         description: Gestion du contenu des pages
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Créer un lien vers cette page
         link_to:

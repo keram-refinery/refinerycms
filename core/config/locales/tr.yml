@@ -31,6 +31,7 @@ tr:
       continue_editing:
         save_and_continue_editing: 'Kaydet & Duzenlemeye Devam Et'
       form_actions:
+        submit: Submit
         save: Kayit Et
         cancel: Vazgec
         cancel_lose_changes: Eger vazgec'e tiklarsaniz burada yaptiginiz degisiklikler kaybolacaktir.

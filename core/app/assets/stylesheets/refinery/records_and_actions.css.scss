@@ -117,9 +117,8 @@ a.move:active {
 .image-grid li {
     float: left;
     padding: 0px;
-    margin: 0 8px 10px 0;
+    margin: 0 4px 8px;
     max-height: 165px;
-    /* max-width: 124px; */
     overflow: hidden;
     position: relative;
     text-align: center;
@@ -131,16 +130,11 @@ a.move:active {
 }
 
 #records .image-grid li {
-    margin: 0 12px 12px 0;
+    margin: 0 6px 12px 6px;
 }
 
-#records .image-grid .image img {
-    width: 114px;
-}
-
-.image-grid li:nth-child(5n),
-#records .image-grid li:nth-child(5n) {
-    margin-right: 0px;
+.image-grid .image img {
+    max-width: 100%;
 }
 
 .image-grid .image,
@@ -152,7 +146,7 @@ a.move:active {
 }
 
 .image-grid .image {
-    border: solid 2px #EAEAEA;
+    border: solid 2px transparent;
 }
 
 .image-grid .image:hover,
@@ -160,7 +154,7 @@ a.move:active {
     border-color: #22A7F2;
 }
 
-.dialog .image-grid li:active .image {
+.image-grid li:active .image {
     border-color: #004a8f;
 }
 

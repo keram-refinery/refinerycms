@@ -28,6 +28,7 @@ rs:
       continue_editing:
         save_and_continue_editing: Sačuvaj i nastavi sa izmenama
       form_actions:
+        submit: Submit
         save: Sačuvaj
         cancel: Poništi
         cancel_lose_changes: Ako poništiš, izgubićeš sve izmene

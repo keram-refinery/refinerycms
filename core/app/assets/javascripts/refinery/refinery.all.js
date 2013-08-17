@@ -382,9 +382,9 @@ refinery.spinner = {
      * @return {undefined}
      */
     on: function () {
-        var body = $('body');
-        body.addClass('loading');
-        body.prop('aria-busy', true);
+        $('body')
+        .addClass('loading')
+        .prop('aria-busy', true);
     },
 
     /**
@@ -394,9 +394,9 @@ refinery.spinner = {
      * @return {undefined}
      */
     off: function () {
-        var body = $('body');
-        body.removeClass('loading');
-        body.prop('aria-busy', false);
+        $('body')
+        .removeClass('loading')
+        .prop('aria-busy', false);
     }
 };
 
@@ -730,7 +730,7 @@ refinery.Object.prototype = {
     trigger: function (eventName, args) {
         var events = this.events, a, i;
 
-        args = (args && !(args instanceof Array)) ? [args] : args;
+        args = (typeof args !== 'undefined' && !(args instanceof Array)) ? [args] : args;
 
         if (events && events[eventName]) {
             for (a = events[eventName], i = a.length - 1; i >= 0; i--) {

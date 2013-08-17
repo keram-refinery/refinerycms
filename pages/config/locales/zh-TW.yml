@@ -5,7 +5,7 @@ zh-TW:
         title: 頁面
         description: 管理頁面
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: 此頁面連結
         link_to:

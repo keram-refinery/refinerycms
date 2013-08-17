@@ -28,6 +28,7 @@ ru:
       continue_editing:
         save_and_continue_editing: Сохранить и продолжить
       form_actions:
+        submit: Submit
         save: Сохранить
         cancel: Отмена
         cancel_lose_changes: При отмене все изменения будут потеряны

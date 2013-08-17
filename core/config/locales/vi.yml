@@ -28,6 +28,7 @@ vi:
       continue_editing:
         save_and_continue_editing: Lưu & tiếp tục soạn thảo
       form_actions:
+        submit: Submit
         save: Lưu trữ
         cancel: Bỏ qua
         cancel_lose_changes: Nếu bỏ qua, bạn sẽ mất tất cả những thông tin mà bạn vừa soạn thảo.

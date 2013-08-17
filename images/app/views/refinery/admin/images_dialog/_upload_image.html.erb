@@ -1,0 +1,19 @@
+<%= form_for @image, url: refinery.admin_dialogs_images_path,
+            html: { multipart: true, remote: true } do |f| %>
+
+  <%= render '/refinery/admin/error_messages',
+             object: @image,
+             include_object_name: false %>
+
+  <div class="field">
+    <%= f.file_field :image, required: true %>
+    <p class="note">
+      <%= t('maximum_image_size',
+                  scope: 'refinery.admin.images.form',
+                  bytes: number_to_human_size(Refinery::Images.max_image_size)) %>
+    </p>
+  </div>
+  <div class="field">
+    <%= f.submit %>
+  </div>
+<% end %>

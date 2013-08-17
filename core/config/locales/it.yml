@@ -31,6 +31,7 @@ it:
       continue_editing:
         save_and_continue_editing: "Salva e continua le modifiche"
       form_actions:
+        submit: Submit
         save: Salva
         cancel: Annulla
         cancel_lose_changes: "L'annullamento comporterà la perdita delle modifiche apportate finora"

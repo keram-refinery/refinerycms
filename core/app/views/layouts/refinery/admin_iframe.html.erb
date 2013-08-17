@@ -1,14 +1,8 @@
 <!DOCTYPE html>
-<%= render '/refinery/html_tag' %>
-  <head>
-    <%= render 'refinery/admin/head' %>
-  </head>
-  <body>
-    <div id="flash-container">
-      <%= render '/refinery/message' %>
-    </div>
-    <div id="content" class="clearfix">
-      <%= yield %>
-    </div>
-  </body>
-</html>
+<textarea data-type="application/json">
+<%
+  json_response :html => yield if json_response[:html].empty?
+  json_response :message => render_html_to_json_string('refinery/message') if flash.any?
+%>
+<%= json_response.to_json.html_safe %>
+</textarea>

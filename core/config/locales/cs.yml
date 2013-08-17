@@ -28,6 +28,7 @@ cs:
       continue_editing:
         save_and_continue_editing: Uložit a pokračovat v editaci
       form_actions:
+        submit: Submit
         save: Uložit
         cancel: Storno
         cancel_lose_changes: Pokud akci stornujete všechny provedené změny budou ztraceny

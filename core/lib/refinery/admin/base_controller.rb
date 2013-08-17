@@ -15,21 +15,21 @@ module Refinery
 
         base.after_action :store_location?, only: [:index] # for redirect_back_or_default
 
-        base.helper_method :iframe?, :app_dialog?, :group_by_date
+        base.helper_method :iframe?, :group_by_date
       end
 
       def admin?
         true # we're in the admin base controller, so always true.
       end
 
-      def app_dialog?
-        dialog? && params[:app_dialog].present?
-      end
-
     protected
 
       def force_ssl!
         redirect_to protocol: 'https' if Refinery::Core.force_ssl && !request.ssl?
+      end
+
+      def iframe?
+        params['X-Requested-With'] == 'IFrame'
       end
 
       def group_by_date(records, date=:created_at)
@@ -79,7 +79,7 @@ module Refinery
       end
 
       def layout?
-        "refinery/admin#{'.json' if json_layout?}"
+        "refinery/admin#{'_iframe' if iframe?}#{'.json' if json_layout?}"
       end
 
       # Check whether it makes sense to return the user to the last page they

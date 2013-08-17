@@ -7,7 +7,7 @@ module Refinery
               :include => [:translations, :children],
               :paging => false
 
-      before_action :redirect_unless_path_match, :only => [:edit] if Refinery::Pages.marketable_urls
+      before_action :redirect_unless_path_match, :only => [:edit] if Pages.marketable_urls
 
       before_action :load_valid_templates, :only => [:edit, :new, :update, :create]
 
@@ -26,7 +26,7 @@ module Refinery
       def redirect_url
         if @page && @page.persisted?
           options = {}
-          if Globalize.locale != Refinery::I18n.default_frontend_locale
+          if Globalize.locale != I18n.default_frontend_locale
             options[:frontend_locale] = Globalize.locale
           end
 

@@ -5,7 +5,7 @@ ko:
         title: 페이지
         description: 컨텐츠 페이지를 관리합니다.
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: 이 페이지로 링크
         link_to:

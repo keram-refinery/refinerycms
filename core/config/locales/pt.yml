@@ -31,6 +31,7 @@ pt:
       continue_editing:
         save_and_continue_editing: 'Gravar e continuar a editar'
       form_actions:
+        submit: Submit
         save: Gravar
         cancel: Cancelar
         cancel_lose_changes: Se cancelar vai perder todas as alterações realizadas
@@ -72,7 +73,7 @@ pt:
       copyright: "Copyright © %{year} %{site_name}"
     no_script:
       enable_javascript_html: É necessário que tenha o JavaScript ligado.
-      here_are: Aqui estão as 
+      here_are: Aqui estão as
       instructions_enable_javascript_html: instruções para ligar o JavaScript no seu browser.
   time:
     formats:

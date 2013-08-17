@@ -6,7 +6,7 @@ pt-BR:
         article: a
         description: Gerenciar páginas
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Link para esta página
         link_to:

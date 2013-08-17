@@ -60,7 +60,6 @@ refinery.admin = {
                         } else {
                             Turbolinks.visit(url);
                         }
-
                     }
                 });
             };
@@ -110,21 +109,56 @@ refinery.admin = {
             });
         },
 
+        init_upload: function () {
+            var that = this,
+                form = that.holder,
+                file_inputs = form.find('input[type="file"]');
+
+            if (file_inputs.length > 0) {
+                form.on('submit', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    refinery.spinner.on();
+
+                    $.ajax(this.action, {
+                            'data': form.serializeArray(),
+                            'files': file_inputs,
+                            'iframe': true,
+                            'processData': false
+                        }).done(
+                        /**
+                         * @param {json_response} response
+                         * @param {string} status
+                         * @param {jQuery.jqXHR} xhr
+                         * @return {undefined}
+                         */
+                        function (response, status, xhr) {
+                            form.trigger('ajax:success', [response, status, xhr]);
+                        }).always(function () {
+                            refinery.spinner.off();
+                        });
+                });
+            }
+        },
+
         init_inputs: function () {
             var that = this,
                 form = that.holder,
                 submit_btn = form.find('.form-actions .submit-button'),
-                submit_btn_val = submit_btn.val();
+                submit_btn_val;
 
-            form.on('change', 'input, select, textarea', function () {
-                if (that.initial_values !== form.serialize() &&
-                    submit_btn_val[submit_btn_val.length] !== '!'
-                ) {
-                    submit_btn.val(submit_btn_val + ' !');
-                } else {
-                    submit_btn.val(submit_btn_val.replace(/ !$/, ''));
-                }
-            });
+            if (submit_btn.length > 0) {
+                submit_btn_val = submit_btn.val();
+                form.on('change', 'input, select, textarea', function () {
+                    if (that.initial_values !== form.serialize() &&
+                        submit_btn_val[submit_btn_val.length] !== '!'
+                    ) {
+                        submit_btn.val(submit_btn_val + ' !');
+                    } else {
+                        submit_btn.val(submit_btn_val.replace(/ !$/, ''));
+                    }
+                });
+            }
         },
 
         fly_form_actions: function (left_buttons, holder, $window) {
@@ -174,6 +208,7 @@ refinery.admin = {
                 that.attach_holder(holder);
                 that.init_pickers();
                 that.init_inputs();
+                that.init_upload();
                 that.initial_values = holder.serialize();
                 that.init_fly_form_actions();
 
@@ -330,17 +365,19 @@ refinery.admin = {
          * @return {Object} self
          */
         destroy: function (removeGlobalReference) {
+            var dialog_holder = this.dialog_holder;
+
             if (this.is('initialised')) {
                 this.nav = null;
 
-                if (this.dialog_holder) {
-                    if (this.dialog_holder.hasClass('ui-dialog')) {
-                        this.dialog_holder.dialog('destroy');
+                if (dialog_holder) {
+                    if (dialog_holder.parent().hasClass('ui-dialog')) {
+                        dialog_holder.dialog('destroy');
                     }
 
-                    this.dialog_holder.off();
-                    this.dialog_holder.remove();
-                    this.dialog_holder = null;
+                    dialog_holder.off();
+                    dialog_holder.remove();
+                    dialog_holder = null;
                 }
             }
 
@@ -652,6 +689,7 @@ refinery.admin = {
      * @constructor
      * @extends {refinery.Object}
      * @param {Object=} options
+     * @return {refinery.admin.UserInterface}
      */
     refinery.Object.create({
 
@@ -670,6 +708,18 @@ refinery.admin = {
                     ).removeClass('hide');
                 }
             });
+
+            this.holder.on('click', '.checkboxes-cmd', function (e) {
+                e.preventDefault();
+                var a = $(this),
+                    parent = a.parent(),
+                    checkboxes = parent.find('input:checkbox'),
+                    checked = a.hasClass('all');
+
+                checkboxes.prop('checked', checked);
+                parent.find('.checkboxes-cmd').toggleClass('hide');
+            });
+
         },
 
         init_collapsible_lists: function () {
@@ -759,7 +809,7 @@ refinery.admin = {
                 elm.tabs({
                     'active': (index > -1 ? index : 0),
                     'activate': function (event, ui) {
-                        ui.newPanel.find('input.text, textarea').focus();
+                        ui.newPanel.find('input.text, textarea').first().focus();
                     }
                 });
             });
@@ -783,8 +833,13 @@ refinery.admin = {
             holder.on('ajax:success', function (event, response, status, xhr) {
                 if (response && typeof response === 'object') {
                     event.preventDefault();
-                    refinery.xhr.success(response, status, xhr, $(event.target), true);
-                    that.reload(holder);
+
+                    if (response.redirect_to) {
+                        Turbolinks.visit(response.redirect_to);
+                    } else {
+                        refinery.xhr.success(response, status, xhr, $(event.target), true);
+                        that.reload();
+                    }
                 }
             });
 
@@ -792,29 +847,7 @@ refinery.admin = {
                 refinery.xhr.error(xhr, status);
             });
 
-            holder.on('click', '.checkboxes-cmd', function (e) {
-                e.preventDefault();
-                var a = $(this),
-                    parent = a.parent(),
-                    checkboxes = parent.find('input:checkbox'),
-                    checked = a.hasClass('all');
-
-                checkboxes.prop('checked', checked);
-                parent.find('.checkboxes-cmd').toggleClass('hide');
-            });
-
-            holder.on('click', '.ui-selectable li', function (e) {
-                var elm = $(this);
-
-                e.preventDefault();
-                if (!elm.parent().hasClass('ui-selectable-multiple')) {
-                    elm.siblings().removeClass('ui-selected');
-                }
-
-                elm.toggleClass('ui-selected');
-
-                return false;
-            });
+            holder.find('.ui-selectable').selectable({ 'filter': 'li' });
         },
 
         init_toggle_hide: function () {
@@ -851,30 +884,62 @@ refinery.admin = {
          * This is important when ajax replace current content of holder so, some objects
          * may not longer exist and we need remove all references to them.
          *
-         * @param {!jQuery} holder
+         * @param {jQuery} holder
          *
          * @return {Object} self
          */
         reload: function (holder) {
-            var holders = this.holder.find('.refinery-instance');
-
-            try {
-                holders.each(function () {
-                    var instances = $(this).data('refinery-instances'),
-                        instance;
-
-                    for (var i = instances.length - 1; i >= 0; i--) {
-                        instance = refinery.Object.instances.get(instances[i]);
-                        instance.destroy(true);
-                    }
-                });
-            } catch (e) {
-                console.log(e);
-            }
-
-            this.holder.off();
+            holder = holder || this.holder;
+            this.destroy(false);
             this.state = new this.State();
             return this.init(holder);
+        },
+
+        /**
+         * Destroy self and also all refinery, jquery ui instances under holder
+         *
+         * @param {boolean=} removeGlobalReference if is true instance will be removed
+         *                   from refinery.Object.instances
+         *
+         * @return {Object} self
+         */
+        destroy: function (removeGlobalReference) {
+            var holder = this.holder,
+                holders;
+
+            if (holder) {
+                holders = holder.find('.refinery-instance');
+
+                try {
+                    holders.each(function () {
+                        var instances = $(this).data('refinery-instances'),
+                            instance;
+
+                        for (var i = instances.length - 1; i >= 0; i--) {
+                            instance = refinery.Object.instances.get(instances[i]);
+                            instance.destroy(true);
+                        }
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
+
+                // we can't do this because destroying jquery ui instances a
+                // also removes classes on objects which we use
+                //
+                // try {
+                //     holder.find('.collapsible-list').accordion('destroy');
+                //     holder.find('.ui-tabs').tabs('destroy');
+                //     holder.find('.ui-selectable').selectable('destroy');
+                //     holder.find('.sortable-list').not('.records').sortable('destroy');
+                // } catch (e) {
+                //     console.log(e);
+                // }
+            }
+
+            this._destroy(removeGlobalReference);
+
+            return this;
         },
 
         init: function (holder) {
@@ -969,7 +1034,6 @@ refinery.admin = {
                     '_submittable': function () {
                         return (this.get('initialised') && !this.get('submitting'));
                     },
-                    /** @expose */
                     '_insertable': function () {
                         return (this.get('initialised') && !this.get('inserting'));
                     }
@@ -1052,7 +1116,7 @@ refinery.admin = {
             submit_form: function (form) {
                 var that = this;
 
-                if (that.is('submittable')) {
+                if (that.is('submittable') && form.attr('action')) {
                     that.is('submitting', true);
 
                     $.ajax({
@@ -1093,15 +1157,16 @@ refinery.admin = {
              * @return {undefined}
              */
             init_buttons: function () {
-                var that = this;
+                var that = this,
+                    holder = that.holder;
 
-                that.holder.on('click', '.cancel-button, .close-button', function (e) {
+                holder.on('click', '.cancel-button, .close-button', function (e) {
                     e.preventDefault();
                     that.close();
                     return false;
                 });
 
-                that.holder.on('click', '.submit-button', function (e) {
+                holder.on('click', '.submit-button', function (e) {
                     if ($(this).closest('form').length === 0) {
                         e.preventDefault();
                         that.submit_button();
@@ -1109,13 +1174,14 @@ refinery.admin = {
                     }
                 });
 
-                that.holder.on('submit', 'form', function (e) {
+                holder.on('submit', 'form', function (e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     that.submit_form($(this));
                     return false;
                 });
 
-                that.holder.on('click', '.insert-button', function (e) {
+                holder.on('click', '.insert-button', function (e) {
                     e.preventDefault();
                     that.insert();
                     return false;
@@ -1190,7 +1256,11 @@ refinery.admin = {
                     holder = that.holder,
                     url = that.options.url,
                     locale_input = $('#frontend_locale'),
-                    params, tmp, xhr;
+                    params, xhr;
+
+                if (!url) {
+                    throw new Error('Url isn\'t defined. (' + that.uid + ')');
+                }
 
                 if (that.is('loadable')) {
                     that.is('loading', true);
@@ -1200,7 +1270,7 @@ refinery.admin = {
                             holder.html($(url).html());
                             that.is({'loaded': true, 'loading': false});
                             that.after_load();
-                            that.trigger('load');
+                            that.trigger('load', true);
                         });
                     } else {
                         params = {
@@ -1210,12 +1280,17 @@ refinery.admin = {
 
                         xhr = $.ajax(url, params);
 
-                        xhr.fail(function (xhr, status) {
+                        xhr.fail(function () {
                             // todo xhr, status
                             holder.html($('<div/>', {
                                 'class': 'flash error',
                                 'html': t('refinery.admin.dialog_content_load_fail')
                             }));
+
+                            /**
+                             * Propagate that load finished unsuccessfully
+                             */
+                            that.trigger('load', false);
                         });
 
                         xhr.always(function () {
@@ -1233,7 +1308,11 @@ refinery.admin = {
                                 that.ui.init(ui_holder);
                                 that.is('loaded', true);
                                 that.after_load();
-                                that.trigger('load');
+
+                                /**
+                                 * Propagate that load finished successfully
+                                 */
+                                that.trigger('load', true);
                             }
                         });
 
@@ -1245,7 +1324,7 @@ refinery.admin = {
 
             bind_events: function () {
                 var that = this;
-                //that.on('submit', that.close);
+
                 that.on('insert', that.close);
                 that.on('open', that.load);
 
@@ -1257,7 +1336,7 @@ refinery.admin = {
                 that.holder.on('dialogbeforeclose', function () {
                     // this is here because dialog can be closed via ESC or X button
                     // and in that case is not running through that.close
-                    // @todo maybe purge own close, open methods
+                    // @todo maybe purge own close - open methods
                     that.is('closing', true);
                     that.state.toggle('closing', 'closed', 'opened');
                     that.trigger('close');
@@ -1278,6 +1357,10 @@ refinery.admin = {
                     this.ui = null;
                 }
 
+                if (this.holder && this.holder.parent().hasClass('ui-dialog')) {
+                    this.holder.dialog('destroy');
+                }
+
                 this._destroy(removeGlobalReference);
 
                 return this;
@@ -1292,18 +1375,19 @@ refinery.admin = {
              * @return {refinery.Object} self
              */
             init: function () {
+                var holder;
+
                 if (this.is('initialisable')) {
                     this.is('initialising', true);
-                    this.holder = $('<div/>', {
+                    holder = $('<div/>', {
                         'id': 'dialog-' + this.id,
                         'class': 'loading'
                     });
 
-                    this.attach_holder(this.holder);
+                    holder.dialog(this.options);
+                    this.attach_holder(holder);
 
                     this.ui = refinery('admin.UserInterface');
-                    this.holder.dialog(this.options);
-
                     this.bind_events();
                     this.init_buttons();
                     this.init_paginate();
@@ -1454,6 +1538,49 @@ refinery.admin = {
         }
     });
 
+// Source: ~/refinery/scripts/admin/dialogs/image_dialog.js
+    /**
+     * @constructor
+     * @extends {refinery.admin.Dialog}
+     * @param {Object=} options
+     */
+    refinery.Object.create({
+
+            objectPrototype: refinery('admin.Dialog', {
+                title: t('refinery.admin.image_dialog_title')
+            }, true),
+
+            name: 'ImageDialog',
+
+            /**
+             * Propagate selected image wth attributes to dialog observers
+             *
+             * @return {Object} self
+             */
+            insert: function () {
+                var holder = this.holder,
+                    alt = holder.find('#image-alt').val(),
+                    id = holder.find('#image-id').val(),
+                    size_elm = holder.find('#image-size .ui-selected a'),
+                    size = size_elm.data('size'),
+                    geometry = size_elm.data('geometry'),
+                    sizes = holder.find('#image-preview').data(),
+                    obj;
+
+                obj = {
+                    'id': id,
+                    'alt': alt,
+                    'size': size,
+                    'geometry': geometry,
+                    'sizes': sizes
+                };
+
+                this.trigger('insert', obj);
+
+                return this;
+            }
+        });
+
 // Source: ~/refinery/scripts/admin/dialogs/images_dialog.js
     /**
      * @constructor
@@ -1476,65 +1603,90 @@ refinery.admin = {
              * @return {undefined}
              */
             after_load: function () {
-                this.holder.find('.records li').first().addClass('ui-selected');
-                this.holder.find('input.text:visible').focus();
+                var that = this,
+                    holder = that.holder;
+
+                holder.on('selectableselected', '.ui-selectable', function (event, ui) {
+                    that.library_tab($(ui.selected));
+                });
+
+                holder.on('submit', '#external-image-area form', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    that.url_tab($(this));
+                });
+
+                holder.on('ajax:success', function (xhr, response) {
+                    that.upload_tab(response.image);
+                });
             },
 
             /**
              * Handle image linked from library
              *
-             * @return {?images_dialog_object}
+             * @param {jQuery} li
+             * @return {Object} self
              */
-            library_tab: function (tab) {
-                var img = tab.find('.ui-selected .image img'),
-                    size_elm = tab.find('.image-dialog-size.ui-selected a'),
-                    resize = tab.find('input:checkbox').is(':checked'),
-                    /** @type {?images_dialog_object} */
-                    obj = null;
+            library_tab: function (li) {
+                var /** @typedef {{id: string}} */ obj;
 
-                if (img.length > 0) {
-                    obj = img.data();
-                    obj.type = 'library';
-                    obj.size = 'original';
+                if (li.length > 0) {
+                    obj = {
+                        id: li.attr('id').match(/[0-9]+$/)[0]
+                    };
 
-                    if (size_elm.length > 0 && resize) {
-                        obj.size = size_elm.data('size');
-                        obj.geometry = size_elm.data('geometry');
-                    }
+                    li.removeClass('ui-selected');
+                    this.trigger('insert', obj);
                 }
 
-                return obj;
+                return this;
             },
 
             /**
              * Handle image linked by url
              *
-             * @return {?images_dialog_object}
+             * @param {jQuery} form
+             * @return {Object} self
              */
-            url_tab: function (tab) {
-                var url_input = tab.find('input.text:valid'),
-                    url = url_input.val(),
-                    /** @type {?images_dialog_object} */
-                    obj = null;
+            url_tab: function (form) {
+                var url_input = form.find('input[type="url"]:valid'),
+                    alt_input = form.find('input[type="text"]:valid'),
+                    url = /** @type {string} */(url_input.val()),
+                    alt = /** @type {string} */(alt_input.val()),
+                    /** @typedef {{alt: string, url: string}} */
+                    obj;
 
                 if (url) {
                     obj = {
-                        'size': 'original',
-                        'original': url,
-                        'type': 'external'
+                        url: url,
+                        alt: alt
                     };
+
+                    url_input.val('');
+                    alt_input.val('');
+                    this.trigger('insert', obj);
                 }
 
-                return obj;
+                return this;
             },
 
             /**
-             * Handle upload
+             * Handle uploaded image
              *
-             * @return {undefined}
+             * @param {Object} image
+             * @return {Object} self
              */
-            upload_tab: function () {
+            upload_tab: function (image) {
+                var that = this,
+                    holder = that.holder;
 
+                if (image) {
+                    that.trigger('insert', image);
+                    holder.find('li.ui-selected').removeClass('ui-selected');
+                    holder.find('.ui-tabs').tabs({ 'active': 0 });
+                }
+
+                return that;
             },
 
             /**
@@ -1543,31 +1695,11 @@ refinery.admin = {
              * @return {Object} self
              */
             insert: function () {
-                var tab = this.holder.find('div[aria-expanded="true"]'),
-                    obj = null;
-
-                switch (tab.attr('id')) {
-                case 'existing-image-area':
-                    obj = this.library_tab(tab);
-
-                    break;
-                case 'external-image-area':
-                    obj = this.url_tab(tab);
-
-                    break;
-                default:
-                    break;
-                }
-
-                if (obj) {
-                    this.trigger('insert', obj);
-                }
-
                 return this;
             }
         });
 
-// Source: ~/refinery/scripts/admin/dialogs/links_dialog.js
+// Source: ~/refinery/scripts/admin/dialogs/pages_dialog.js
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1575,14 +1707,26 @@ refinery.admin = {
      */
     refinery.Object.create({
             objectPrototype: refinery('admin.Dialog', {
-                title: t('refinery.admin.links_dialog_title'),
-                url: '/refinery/dialogs/links'
+                title: t('refinery.admin.pages_dialog_title'),
+                url: '/refinery/dialogs/pages'
             }, true),
 
-            name: 'LinksDialog',
+            name: 'PagesDialog',
 
             after_load: function () {
-                this.holder.find('.records li').first().addClass('ui-selected');
+                var that = this,
+                    holder = that.holder,
+                    form = holder.find('form');
+
+                holder.on('selectableselected', '.ui-selectable', function () {
+                    that.insert();
+                });
+
+                form.on('submit', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    that.insert();
+                });
             },
 
             /**
@@ -1590,7 +1734,7 @@ refinery.admin = {
              *
              * @param {!jQuery} tab
              *
-             * @return {?link_dialog_object}
+             * @return {?pages_dialog_object}
              */
             email_tab: function (tab) {
                 var email_input = tab.find('#email_address_text:valid'),
@@ -1601,9 +1745,8 @@ refinery.admin = {
                     body = /** @type {string} */(body_input.val()),
                     modifier = '?',
                     additional = '',
-                    /** @type {?link_dialog_object} */
-                    result = null,
-                    i;
+                    /** @type {?pages_dialog_object} */
+                    result = null;
 
                 subject = encodeURIComponent(subject);
                 body = encodeURIComponent(body);
@@ -1638,14 +1781,14 @@ refinery.admin = {
              *
              * @param {!jQuery} tab
              *
-             * @return {?link_dialog_object}
+             * @return {?pages_dialog_object}
              */
             website_tab: function (tab) {
                 var url_input = tab.find('#web_address_text:valid'),
                     blank_input = tab.find('#web_address_target_blank'),
                     url = /** @type {string} */(url_input.val()),
                     blank = /** @type {boolean} */(blank_input.prop('checked')),
-                    /** @type {?link_dialog_object} */
+                    /** @type {?pages_dialog_object} */
                     result = null;
 
                 if (url) {
@@ -1664,6 +1807,27 @@ refinery.admin = {
             },
 
             /**
+             * Dialog Url tab action processing
+             *
+             * @param {!jQuery} tab
+             *
+             * @return {?pages_dialog_object}
+             */
+            pages_tab: function (tab) {
+                var li = tab.find('li.ui-selected'),
+                    /** @type {?pages_dialog_object} */
+                    result = null;
+
+                if (li.length > 0) {
+                    result = /** @type {?pages_dialog_object} */(li.data('link'));
+                    result.type = 'page';
+                    li.removeClass('ui-selected');
+                }
+
+                return result;
+            },
+
+            /**
              * Process insert action by tab type
              *
              * @return {Object} self
@@ -1671,20 +1835,19 @@ refinery.admin = {
             insert: function () {
                 var holder = this.holder,
                     tab = holder.find('div[aria-expanded="true"]'),
-                    /** @type {?link_dialog_object} */
+                    /** @type {?pages_dialog_object} */
                     obj = null;
 
                 switch (tab.attr('id')) {
-                case 'links-dialog-pages':
-                    obj = tab.find('.ui-selected').data('link');
-                    obj.type = 'page';
+                case 'pages-link-area':
+                    obj = this.pages_tab(tab);
 
                     break;
-                case 'links-dialog-website':
+                case 'website-link-area':
                     obj = this.website_tab(tab);
 
                     break;
-                case 'links-dialog-email':
+                case 'email-link-area':
                     obj = this.email_tab(tab);
 
                     break;
@@ -1716,29 +1879,62 @@ refinery.admin = {
         name: 'ResourcesDialog',
 
         after_load: function () {
-            this.holder.find('.records li').first().addClass('ui-selected');
+            var that = this,
+                holder = that.holder;
+
+            holder.on('selectableselected', '.ui-selectable', function () {
+                that.library_tab();
+            });
+
+            holder.on('ajax:success', function (xhr, response) {
+                that.upload_tab(response.file);
+            });
         },
 
         /**
-         * Propagate selected file wth attributes to dialog observers
+         * Handle resource linked from library
+         *
+         * @return {Object} self
+         */
+        library_tab: function () {
+            var that = this,
+                tab = that.holder.find('div[aria-expanded="true"]'),
+                li = tab.find('li.ui-selected');
+
+            if (li.length > 0) {
+                li.removeClass('ui-selected');
+                that.trigger('insert', li.data('dialog'));
+            }
+
+            return that;
+        },
+
+        /**
+         * Handle uploaded file
+         *
+         * @param {file_dialog_object} file
+         * @return {Object} self
+         */
+        upload_tab: function (file) {
+            var that = this,
+                holder = that.holder;
+
+            if (file) {
+                that.trigger('insert', file);
+
+                holder.find('li.ui-selected').removeClass('ui-selected');
+                holder.find('.ui-tabs').tabs({ 'active': 0 });
+            }
+
+            return that;
+        },
+
+        /**
+         * Propagate selected resource wth attributes to dialog observers
          *
          * @return {Object} self
          */
         insert: function () {
-            var li = this.holder.find('.ui-selected'),
-                /** @type {?file_dialog_object} */
-                obj = null;
-
-            if (li.length > 0) {
-                obj = {
-                    id: li.attr('id').replace('dialog-resource-', ''),
-                    url: li.data('url'),
-                    html: li.html(),
-                    type: 'library'
-                };
-
-                this.trigger('insert', obj);
-            }
 
             return this;
         }

@@ -5,7 +5,7 @@ vi:
         title: Trang
         description: Quản lý các trang nội dung
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Liên kết tới trang này
         link_to:

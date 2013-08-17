@@ -5,7 +5,7 @@ sk:
         title: Stránky
         description: Spravovať obsahové stránky
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Odkaz na túto stránku
         link_to:

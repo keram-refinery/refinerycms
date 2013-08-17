@@ -1,7 +1,10 @@
-<div id="existing-resource-area-content" >
-  <ul id="refinery-resources" class="records ui-selectable">
-    <%= render :partial => 'resource', :collection => @resources %>
+<% if @resources.any? %>
+  <ul class="records ui-selectable">
+    <%= render partial: 'resource', collection: @resources %>
   </ul>
-</div>
-
-<%= will_paginate @resources %>
+  <%= will_paginate @resources %>
+<% else %>
+  <div class="flash flash-notice" >
+    <%= t('no_resources_yet', scope: 'refinery.admin.resources_dialog') %>
+  </div>
+<% end %>

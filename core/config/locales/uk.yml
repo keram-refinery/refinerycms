@@ -28,6 +28,7 @@ uk:
       continue_editing:
         save_and_continue_editing: Зберегти та продовжити
       form_actions:
+        submit: Submit
         save: Зберегти
         cancel: Відміна
         cancel_lose_changes: При скасуванні всі зміни будуть втрачені

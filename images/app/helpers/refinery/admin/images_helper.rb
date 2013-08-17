@@ -16,7 +16,7 @@ module Refinery
         }
 
         Refinery::Images.user_image_sizes.sort_by{|key,geometry| geometry}.each do |size, pixels|
-          thumbnail_urls[:"data-#{size.to_s.parameterize}"] = image.thumbnail(geometry: pixels).url
+          thumbnail_urls[:data][size] = image.thumbnail(geometry: pixels).url
         end
 
         thumbnail_urls

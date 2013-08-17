@@ -5,7 +5,7 @@ el:
         title: Σελίδες
         description: Διαχείριση στατικών σελιδών
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Σύνδεσμος στη σελίδα
         link_to:

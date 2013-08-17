@@ -1,28 +1,8 @@
-<div id="existing-image-area-content">
-  <%= render 'existing_image_area_content' %>
-</div>
-<% unless @app_dialog %>
-<div id="existing-image-size-area">
-  <p>
-    <label>
-      <input type="checkbox"  value="1" checked="checked" />
-      <%= t('.resize_image') %>
-    </label>
-  </p>
-  <ul class="clearfix ui-selectable">
-    <%
-      Refinery::Images.user_image_sizes.sort_by { |key, geometry| geometry }.each_with_index do |(size, pixels), index|
-        safe_pixels = pixels.to_s.gsub(/[<>=]/, '')
-        # (parndt): ' selected' if size.to_s == 'medium' is not very generic, but I
-        # can't think of a decent way of making it so for even sets (e.g. 2,4,6,8,etc image sizes).
-    %>
-        <li id="image-dialog-size-<%= index %>" class="image-dialog-size <%= ' ui-selected' if size.to_s == 'medium' %>">
-          <%= link_to size.to_s, "##{size}",
-                      :'data-geometry' => pixels,
-                      :'data-size' => size.to_s.parameterize,
-                      :title  => "#{size} image (#{safe_pixels})" %>
-        </li>
-    <% end %>
-  </ul>
-</div>
+<% if @images.any? %>
+  <%= render 'grid_view' %>
+  <%= will_paginate @images %>
+<% else %>
+  <div class="flash flash-notice" >
+    <%= t('no_images_yet', scope: 'refinery.admin.images.records') %>
+  </div>
 <% end %>

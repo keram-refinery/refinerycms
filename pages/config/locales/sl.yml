@@ -4,7 +4,7 @@ sl:
       refinery_pages:
         title: Strani
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Naredi povezavo do te strani
         link_to:

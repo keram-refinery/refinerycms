@@ -7,7 +7,7 @@ en:
     crudify:
       page: Page
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Link to this page
         link_to:

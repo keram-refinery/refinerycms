@@ -28,6 +28,7 @@ nb:
       continue_editing:
         save_and_continue_editing: "Lagre og fortsett med redigeringen"
       form_actions:
+        submit: Submit
         save: Lagre
         cancel: Avbryt
         cancel_lose_changes: "Om du avbryter så vil alle endringene du har gjort på %{object_name} forsvinne"

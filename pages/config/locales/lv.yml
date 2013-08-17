@@ -6,7 +6,7 @@ lv:
         description: Lapu satura pārvaldīšana
         article: s
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Iesaitēt šo lapu
         link_to:

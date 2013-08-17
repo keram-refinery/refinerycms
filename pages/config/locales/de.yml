@@ -5,7 +5,7 @@ de:
         title: Seiten
         description: Verwaltet Inhaltsseiten
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Link zu dieser Seite
         link_to:

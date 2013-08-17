@@ -5,7 +5,7 @@ hu:
         title: Oldalak
         description: 'Tartalmi oldalak kezelése'
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: 'Link erre az oldalra'
         link_to:

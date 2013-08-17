@@ -23,6 +23,7 @@ sl:
       continue_editing:
         save_and_continue_editing: "Shrani & nadaljuj z urejanjem"
       form_actions:
+        submit: Submit
         save: Shrani
         cancel: Prekliči
         cancel_lose_changes: "S preklicem bodo izgubljene vse spremembe, ki ste jih naredili na %{object_name}."

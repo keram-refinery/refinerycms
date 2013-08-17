@@ -7,8 +7,9 @@ i18n.register({
 
     'form_page_parts_manage': 'Manage Page Parts',
 
-    'images_dialog_title': 'Image',
-    'links_dialog_title': 'Link',
+    'images_dialog_title': 'Images',
+    'image_dialog_title': 'Image',
+    'pages_dialog_title': 'Link',
     'resources_dialog_title': 'File',
     'settings_dialog_title' : 'New Setting',
     'dialog_content_load_fail': 'Dialog content load fail',

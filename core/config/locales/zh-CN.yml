@@ -28,6 +28,7 @@ zh-CN:
       continue_editing:
         save_and_continue_editing: 保存并且继续编辑
       form_actions:
+        submit: Submit
         save: 保存
         cancel: 取消
         cancel_lose_changes: 如果取消你将会丢失你这里所做的修改

@@ -25,7 +25,7 @@ module Refinery
             end if Dir.exists?(dir) || Dir.exists?(default_dir)
           end
 
-          p %q(Page "#{page.title}" created.)
+          p %Q(Page "#{page.title}" created.)
         else
           page_attributes[:id] = page.first.id
         end

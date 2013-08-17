@@ -5,7 +5,7 @@ da:
         title: Sider
         description: Vedligehold indhold
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Link til denne side
         link_to:

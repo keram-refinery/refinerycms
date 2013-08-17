@@ -9,7 +9,7 @@ ru:
       dashboard:
         recent_activity:
           empty: Пустой
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Ссылка на эту страницу
         link_to:

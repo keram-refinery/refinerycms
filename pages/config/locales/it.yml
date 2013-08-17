@@ -5,7 +5,7 @@ it:
         title: Pagine
         description: Gestione dei contenuti del sito
     admin:
-      pages_dialogs:
+      pages_dialog:
         page_link:
           link_to_this_page: Link a questa pagina
         link_to:

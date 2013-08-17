@@ -28,6 +28,7 @@ zh-TW:
       continue_editing:
         save_and_continue_editing: 儲存然後繼續編輯
       form_actions:
+        submit: Submit
         save: 儲存
         cancel: 取消
         cancel_lose_changes: 如果您選擇取消, 您將會遺失先前的所有設定
