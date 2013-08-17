@@ -21,7 +21,7 @@ module Refinery
             c.datastore.root_path = Refinery::Images.datastore_root_path
             c.url_format = Refinery::Images.dragonfly_url_format
             c.url_host = Refinery::Images.dragonfly_url_host
-            c.secret = Refinery::Images.dragonfly_secret
+            c.secret = Refinery.find_or_set_secret_token('dragonfly')
             c.trust_file_extensions = Refinery::Images.trust_file_extensions
           end
 

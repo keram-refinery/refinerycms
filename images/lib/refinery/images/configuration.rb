@@ -2,25 +2,22 @@ module Refinery
   module Images
     include ActiveSupport::Configurable
 
-    config_accessor :dragonfly_insert_before, :dragonfly_secret, :dragonfly_url_format, :dragonfly_url_host,
+    config_accessor :dragonfly_url_format, :dragonfly_url_host,
                     :max_image_size, :per_dialog_page, :per_admin_page,
-                    :per_dialog_page_that_have_size_options, :user_image_sizes,
+                    :user_image_sizes,
                     :image_views, :preferred_image_view, :datastore_root_path,
                     :s3_backend, :s3_bucket_name, :s3_region,
                     :s3_access_key_id, :s3_secret_access_key, :trust_file_extensions,
                     :whitelisted_mime_types,
                     :custom_backend_class, :custom_backend_opts
 
-    self.dragonfly_insert_before = 'ActionDispatch::Callbacks'
-    self.dragonfly_secret = Core.dragonfly_secret
     # If you decide to trust file extensions replace :ext below with :format
     self.dragonfly_url_format = '/system/images/:job/:basename.:ext'
     self.dragonfly_url_host = ''
     self.trust_file_extensions = false
 
     self.max_image_size = 5242880
-    self.per_dialog_page = 18
-    self.per_dialog_page_that_have_size_options = 12
+    self.per_dialog_page = 20
     self.per_admin_page = 20
     self.user_image_sizes = {
       :small => '110x110>',

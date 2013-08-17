@@ -4,7 +4,6 @@ module Refinery
 
     config_accessor :rescue_not_found, :s3_backend, :base_cache_key, :site_name,
                     :google_analytics_page_code, :authenticity_token_on_frontend,
-                    :dragonfly_secret,
                     :javascripts, :I18n_javascripts, :stylesheets,
                     :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
@@ -17,7 +16,6 @@ module Refinery
     self.site_name = 'Site Name'
     self.google_analytics_page_code = 'UA-xxxxxx-x'
     self.authenticity_token_on_frontend = false
-    self.dragonfly_secret = Refinery.find_or_set_secret_token('dragonfly')
     self.javascripts = []
     self.I18n_javascripts = {}
     self.stylesheets = []

@@ -21,7 +21,7 @@ module Refinery
             c.datastore.root_path = Refinery::Resources.datastore_root_path
             c.url_format = Refinery::Resources.dragonfly_url_format
             c.url_host = Refinery::Resources.dragonfly_url_host
-            c.secret = Refinery::Resources.dragonfly_secret
+            c.secret = Refinery.find_or_set_secret_token('dragonfly')
           end
 
           if ::Refinery::Resources.s3_backend
