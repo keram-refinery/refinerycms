@@ -46,10 +46,7 @@ module Refinery
       end
 
       def update
-        attributes_before_assignment = @image.attributes
-        @image.attributes = params.require(:image).permit(:image)
-
-        if @image.valid? && @image.save
+        if @image.update(params.require(:image).permit(:image))
           flash.notice = t(
             'refinery.crudify.updated',
             kind: t('image', scope: 'refinery.crudify'),

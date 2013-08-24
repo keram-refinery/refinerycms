@@ -26,7 +26,7 @@ module Refinery
     end
 
     context 'new/create' do
-      it 'uploads image', :js => true do
+      it 'uploads image' do
         visit refinery.admin_images_path
 
         click_link ::I18n.t('create_new_image', :scope => 'refinery.admin.images.actions')
@@ -36,6 +36,7 @@ module Refinery
         within 'form#new_image' do
           attach_file 'image_image', Refinery.roots(:'refinery/images').
                                               join('spec/fixtures/image-with-dashes.jpg')
+
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
         end
 

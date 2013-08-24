@@ -16,7 +16,7 @@ module Refinery
       end
 
       def update
-        if @page.update_attributes(page_params)
+        if @page.update(page_params)
           create_or_update_successful
         else
           create_or_update_unsuccessful 'edit'

@@ -527,18 +527,18 @@ module Refinery
         describe 'adding page link' do
           describe 'with relative urls' do
             it "shows Russian pages if we're editing the Russian locale" do
-              visit refinery.admin_dialogs_links_path :frontend_locale => :ru
+              visit refinery.admin_dialogs_pages_path :frontend_locale => :ru
 
-              within '#links-dialog-pages' do
+              within '#pages-link-area' do
                 page.should have_content('About Ru')
               end
               #page.should have_selector("a[href='/ru/about-ru']")
             end
 
             it 'shows default to the default locale if no query string is added' do
-              visit refinery.admin_dialogs_links_path
+              visit refinery.admin_dialogs_pages_path
 
-              within '#links-dialog-pages' do
+              within '#pages-link-area' do
                 page.should have_content('About')
               end
               #page.should have_selector("a[href='/about']")
@@ -547,18 +547,18 @@ module Refinery
 
           describe 'with absolute urls' do
             it "shows Russian pages if we're editing the Russian locale" do
-              visit refinery.admin_dialogs_links_path :frontend_locale => :ru
+              visit refinery.admin_dialogs_pages_path :frontend_locale => :ru
 
-              within '#links-dialog-pages' do
+              within '#pages-link-area' do
                 page.should have_content('About Ru')
               end
               #page.should have_selector("a[href='http://www.example.com/ru/about-ru']")
             end
 
             it 'shows default to the default locale if no query string is added' do
-              visit refinery.admin_dialogs_links_path
+              visit refinery.admin_dialogs_pages_path
 
-              within '#links-dialog-pages' do
+              within '#pages-link-area' do
                 page.should have_content('About')
               end
               #page.should have_selector("a[href='http://www.example.com/about']")

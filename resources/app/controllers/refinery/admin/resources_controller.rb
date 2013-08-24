@@ -42,11 +42,8 @@ module Refinery
       end
 
       def update
-        attributes_before_assignment = @resource.attributes
-        @resource.attributes = params.require(:resource).permit(:file)
-
-        if @resource.valid? && @resource.save
-          flash.notice = t(
+        if @resource.update(params.require(:resource).permit(:file))
+          flash.now[:notice] = t(
             'refinery.crudify.updated',
             kind: t('resource', scope: 'refinery.crudify'),
             what: "#{@resource.title}"
@@ -64,13 +61,13 @@ module Refinery
         @resource = invalid_resources.fetch(0) { Resource.new }
 
         if @resources.any?
-          flash.notice = t('created', scope: 'refinery.crudify',
+          flash.now[:notice] = t('created', scope: 'refinery.crudify',
                       kind: t('resource', scope: 'refinery.crudify'), what: "#{@resources.map(&:title).join(", ")}")
         end
 
         unless invalid_resources.empty? ||
                     (invalid_resources.size == 1 && @resource.errors.keys.first == :file_name)
-          flash.alert = t('problem_create_resources',
+          flash.now[:alert] = t('problem_create_resources',
                          resources: invalid_resources.map(&:file_name).join(', '),
                         scope: 'refinery.admin.resources')
         end
