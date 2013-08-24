@@ -28,7 +28,6 @@ def check_dependencies
   require 'execjs'
   ::ExecJS::Runtimes.autodetect.name =~ /therubyracer/
 
-  raise 'error'
 rescue LoadError
   abort "ExecJS is not installed. Please re-start the installer after running:\ngem install execjs"
 rescue
