@@ -3,8 +3,8 @@ require 'spec_helper'
 module Refinery
   describe PagesController do
     before do
-      FactoryGirl.create(:page, :link_url => '/', :view_template => 'home')
-      FactoryGirl.create(:page, :title => 'test', :view_template => 'show')
+      FactoryGirl.create(:page, :plugin_page_id => 'refinery_pages', :link_url => '/', :view_template => 'home')
+      FactoryGirl.create(:page, :title => 'test')
     end
 
     describe '#home' do
@@ -14,9 +14,12 @@ module Refinery
       end
     end
 
-    describe '#show' do
+    describe '#show', js: true do
       it 'renders show template' do
+        request.stub(:fullpath).and_return('/test')
         get :show, :path => 'test'
+        request.unstub(:fullpath)
+
         expect(response).to render_template('show')
       end
     end
