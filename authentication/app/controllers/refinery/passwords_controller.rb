@@ -11,7 +11,9 @@ module Refinery
 
     # GET /registrations/password/edit?reset_password_token=abcdef
     def edit
-      if params[:reset_password_token] and (@refinery_user = User.where(:reset_password_token => params[:reset_password_token]).first).present?
+      if params[:reset_password_token]
+        @refinery_user = User.new
+        @refinery_user.reset_password_token = params[:reset_password_token]
         respond_with(@refinery_user)
       else
         redirect_to refinery.new_refinery_user_password_path,
