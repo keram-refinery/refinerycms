@@ -32,11 +32,15 @@ module Refinery
 
       context "when good reset code" do
         before do
-          user.reset_password_sent_at = 5.minutes.ago
-          user.reset_password_token = "refinerycms"
-          user.save
+          visit refinery.new_refinery_user_password_path
+          fill_in "refinery_user_email", :with => user.email
+          click_button "Reset password"
+          user.reload
         end
 
+        # TODO
+        # in Devise 3.1 > isn't send reset_password_token but only digest of
+        # reset_password_token which we currently don't know how to properly test ;(
         it "allows to change password" do
           visit refinery.edit_refinery_user_password_path(:reset_password_token => user.reset_password_token)
           page.should have_content("Pick a new password for #{user.email}")
@@ -76,7 +80,7 @@ module Refinery
           fill_in "refinery_user_password_confirmation", :with => "123456"
           click_button "Reset password"
 
-          page.should have_content("Reset password token has expired, please request a new one")
+          page.should have_content("Reset password token is invalid")
         end
       end
     end

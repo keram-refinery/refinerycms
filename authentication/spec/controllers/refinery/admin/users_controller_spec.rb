@@ -70,14 +70,17 @@ describe Refinery::Admin::UsersController do
 
     let(:additional_user) { FactoryGirl.create :refinery_user }
     it 'updates a user' do
-      Refinery::User.should_receive(:find_by).at_least(1).times{ additional_user }
+      # this doesn't work with friendlyId5
+      # Refinery::User.friendly.should_receive(:find).at_least(1).times{ additional_user }
+      Refinery::Admin::UsersController.any_instance.should_receive(:find_user).at_least(1).times{ additional_user }
       put 'update', :id => additional_user.id.to_s, :user => { username: additional_user.username, email: additional_user.email }
       response.should be_redirect
     end
 
     context 'when specifying plugins' do
       it "won't allow to remove 'Users' plugin from self" do
-        Refinery::User.should_receive(:find_by).at_least(1).times{ logged_in_user }
+        # Refinery::User.should_receive(:find).at_least(1).times{ logged_in_user }
+        Refinery::Admin::UsersController.any_instance.should_receive(:find_user).at_least(1).times{ logged_in_user }
         put 'update', :id => logged_in_user.id.to_s, :user => { username: additional_user.username, email: additional_user.email, plugins: ['refinery_dashboard']}
 
         logged_in_user.plugins.collect(&:name).should include('refinery_users', 'refinery_dashboard')

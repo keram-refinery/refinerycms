@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'refinerycms-core',  version
   s.add_dependency 'actionmailer',      rails_version
-  s.add_dependency 'devise',            '~> 3.0.1'# '~> 3.1.0.rc'
+  s.add_dependency 'devise',            '~> 3.1.0.rc2'
 end

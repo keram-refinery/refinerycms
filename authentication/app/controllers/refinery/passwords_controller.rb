@@ -3,6 +3,7 @@ module Refinery
     helper Refinery::Core::Engine.helpers
     layout 'refinery/layouts/login'
 
+    before_action :mailer_default_url_options if UserMailer.default_url_options[:host].blank?
     before_action :store_password_reset_return_to, :only => [:update]
 
     # Rather than overriding devise, it seems better to just apply the notice here.
@@ -20,16 +21,22 @@ module Refinery
 
     # POST /registrations/password
     def create
-      if params[:refinery_user].present? and (email = params[:refinery_user][:email]).present? and
-         (user = User.where(:email => email).first).present?
+      email = params[:refinery_user][:email] if params[:refinery_user].present? && params[:refinery_user][:email].present?
+      user = User.where(:email => email).first if email.present?
 
-        # Call devise reset function.
-        user.send(:generate_reset_password_token!)
-        UserMailer.reset_notification(user, request).deliver
-        redirect_to refinery.login_path,
-                    :notice => t('email_reset_sent', :scope => 'refinery.users.forgot')
-      else
-        flash.now[:error] = if (email = params[:refinery_user][:email]).blank?
+      if user.present?
+        user.send_reset_password_instructions
+
+        if successfully_sent?(user)
+          redirect_to refinery.login_path,
+                      :notice => t('email_reset_sent', :scope => 'refinery.users.forgot')
+        else
+          self.new
+          render :new
+        end
+     else
+
+        flash.now[:error] = if email.blank?
           t('blank_email', :scope => 'refinery.users.forgot')
         else
           t('email_not_associated_with_account_html', :email => ERB::Util.html_escape(email), :scope => 'refinery.users.forgot').html_safe
@@ -50,6 +57,10 @@ module Refinery
       if %w(notice error alert).exclude?(flash.keys.map(&:to_s)) or @refinery_user.errors.any?
         flash[:notice] = t('successful', :scope => 'refinery.users.reset', :email => @refinery_user.email)
       end
+    end
+
+    def mailer_default_url_options
+      UserMailer.default_url_options = { host: request.host_with_port }
     end
 
   end
