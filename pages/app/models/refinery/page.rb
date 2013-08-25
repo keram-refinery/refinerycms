@@ -81,18 +81,11 @@ module Refinery
       # and if the path is unfriendly then a different finder method is required
       # than find_by_path.
       def find_by_path_or_id(path, id)
-        if path.present?
-          if path.friendly_id?
-            find_by_path(path)
-          else
-            find_by(id: path.to_i)
-          end
-        elsif id.present?
-          if id.friendly_id?
-            find(id)
-          else
-            find_by(id: id.to_i)
-          end
+        pid = path.presence || id.presence
+        if pid.friendly_id?
+          find_by_path pid
+        else
+          find pid.to_i
         end
       end
 
@@ -204,6 +197,15 @@ module Refinery
     # which attribute is first found to be present for this page.
     def custom_slug_or_title
       custom_slug.presence || menu_title.presence || title.presence
+    end
+
+    # always regenerate slug because I don't know detect change on translation table
+    # This doesn't work:
+    #   translation.custom_slug_changed? || translation.menu_title_changed? || translation.title_changed?
+    #
+    # TODO
+    def should_generate_new_friendly_id?
+      true
     end
 
     # Before destroying a page we check to see if it's a deletable page or not

@@ -4,7 +4,7 @@ module Refinery
       module InstanceMethods
 
         def error_404(exception=nil)
-          @page = ::Refinery::Page.with_globalize.find_by(:plugin_page_id => 'refinery_pages_not_found')
+          @page = ::Refinery::Page.with_globalize.find_by plugin_page_id: 'refinery_pages_not_found'
 
           if @page.present?
             params[:action] = 'error_404'
@@ -18,7 +18,7 @@ module Refinery
                                  ).gsub("home page", 'Dashboard')
 =end
 
-            render :template => '/refinery/pages/show', :layout => layout?, :status => 404
+            render template: '/refinery/pages/show', layout: layout?, status: 404
             return false
           else
             super

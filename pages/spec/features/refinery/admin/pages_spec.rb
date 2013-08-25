@@ -203,13 +203,13 @@ module Refinery
       context 'duplicate page titles' do
         before { Page.create :title => 'I was here first' }
 
-        it 'will append nr to url path' do
+        it 'will append UUID to url path' do
           visit refinery.new_admin_page_path
 
           fill_in "Title", :with => 'I was here first'
           click_button "Save"
 
-          Refinery::Page.last.url[:path].should == ["i-was-here-first--2"]
+          Refinery::Page.last.url[:path][0].should =~ /i-was-here-first-/
         end
       end
 

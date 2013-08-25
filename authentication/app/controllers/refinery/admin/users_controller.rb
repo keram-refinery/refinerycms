@@ -109,11 +109,7 @@ module Refinery
     protected
 
       def find_user
-        id = params[:id].to_s
-        if id.present?
-          @user ||= User.find_by(id.friendly_id? ? { slug: id } : { id: id })
-        end
-        @user
+        @user ||= User.friendly.find(params[:id].to_s) if params[:id].present?
       end
 
       def load_available_plugins_and_roles

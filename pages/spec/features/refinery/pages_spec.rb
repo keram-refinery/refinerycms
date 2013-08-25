@@ -315,7 +315,7 @@ module Refinery
       end
 
       it 'succeeds' do
-        visit '/about'
+        visit "/#{about_page.slug}"
 
         within '.selected * > .selected a' do
           page.should have_content(child_page.title)
