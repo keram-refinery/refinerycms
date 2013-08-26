@@ -29,10 +29,6 @@
 
     <span class="actions">
 
-      <%= content_tag :a, t('move', :scope => 'refinery.admin.record'),
-                  :class => 'move nojs-hide icon-small move-icon',
-                  :title => t('move', :scope => 'refinery.admin.record') if page.plugin_page_id.blank? %>
-
       <%= link_to t('delete', :scope => 'refinery.admin.record'),
                   refinery.admin_page_path(page.id),
                   :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
@@ -61,6 +57,10 @@
                   :target => '_blank',
                   :class => 'icon-small live-icon',
                   :title => t('.view_live').html_safe %>
+
+      <%= content_tag :a, t('move', :scope => 'refinery.admin.record'),
+                  :class => 'move nojs-hide icon-small move-icon',
+                  :title => t('move', :scope => 'refinery.admin.record') %>
 
     </span>
   </div>

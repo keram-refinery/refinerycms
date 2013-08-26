@@ -69,7 +69,7 @@ module Refinery
 
       it 'appends routes to the routes file' do
         File.open("#{destination_root}/vendor/extensions/rspec_product_tests/config/routes.rb") do |file|
-          file.grep(%r{rspec_item_tests}).count.should eq(2)
+          file.grep(%r{rspec_item_tests}).count.should eq(4)
         end
       end
     end

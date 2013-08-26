@@ -289,6 +289,8 @@ module Refinery
       let(:hidden_page) { Page.create :title => 'Hidden', :show_in_menu => false }
 
       before do
+        Pages.stub(:marketable_urls).and_return(false)
+        Rails.application.routes_reloader.reload!
         Page.stub(:menu).and_return([home_page, about_page])
       end
 

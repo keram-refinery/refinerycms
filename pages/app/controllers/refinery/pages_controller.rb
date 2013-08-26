@@ -67,7 +67,7 @@ module Refinery
         url = page.link_url
       end
 
-      redirect_to(url, :status => 301) and return if url
+      redirect_to(url, status: :moved_permanently) and return if url
     end
 
     def redirect_unless_path_match
