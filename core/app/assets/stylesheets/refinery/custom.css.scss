@@ -54,3 +54,24 @@
 #image-dialog-size-2 a { height: 70px; width: 70px; line-height: 70px; margin-top:-10px; }
 #image-dialog-size-3 a { height: 90px; width: 90px; line-height: 90px; margin-top:-20px; }
 
+#refinery-cms-logo {
+    height: 29px;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    text-indent: 100%;
+    overflow: hidden;
+    background: asset-url('refinery/logo-site-bar.png') no-repeat top center;
+    float: right;
+    opacity: 0.5;
+}
+
+#refinery-cms-logo:hover,
+#refinery-cms-logo:focus {
+    background-position: 50% -30px;
+    opacity: 0.8;
+}
+
+#refinery-cms-logo:active  {
+    background-position: 50% -29px;
+}

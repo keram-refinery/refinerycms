@@ -120,7 +120,11 @@ describe 'User admin page' do
       page.should have_content(user.username)
       click_link "Remove this user"
       Refinery::User.count.should eq(1)
-      page.should_not have_content(user.username)
+      page.should have_content("User 'ugisozols' was successfully removed.")
+
+      within "#content" do
+        page.should_not have_content(user.username)
+      end
       page.should have_content("#{logged_in_user.username} (#{logged_in_user.email})")
     end
   end

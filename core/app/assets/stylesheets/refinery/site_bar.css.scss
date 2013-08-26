@@ -1,4 +1,4 @@
-#site-bar {
+#site-bar-wrapper {
     border-bottom: none;
     color: #fff;
     font-weight: normal;
@@ -10,7 +10,7 @@
     font-size: 14px;
 }
 
-#site-bar-content {
+#site-bar {
     margin: 0 20px;
     text-align: center;
 }
@@ -38,27 +38,6 @@
     cursor: pointer;
     border-radius: 5px;
     white-space: nowrap;
-}
-
-#refinery-cms-logo {
-    height: 29px;
-    display: inline-block;
-    position: relative;
-    top: 7px;
-    width: 100px;
-    text-align: center;
-    text-indent: 100%;
-    overflow: hidden;
-    background: asset-url('refinery/logo-site-bar.png') no-repeat top center;
-}
-
-#refinery-cms-logo:hover,
-#refinery-cms-logo:focus {
-    background-position: 50% -29px;
-}
-
-#refinery-cms-logo:active  {
-    background-position: 50% -28px;
 }
 
 #site-name {

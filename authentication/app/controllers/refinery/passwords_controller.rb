@@ -16,7 +16,7 @@ module Refinery
         @refinery_user.reset_password_token = params[:reset_password_token]
         respond_with(@refinery_user)
       else
-        redirect_to refinery.new_refinery_user_password_path,
+        redirect_to refinery.new_refinery_user_password_path, :status => :see_other,
                     :flash => ({ :error => t('code_invalid', :scope => 'refinery.users.reset') })
       end
     end

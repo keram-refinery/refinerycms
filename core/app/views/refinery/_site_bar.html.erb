@@ -1,5 +1,5 @@
-<div id="site-bar" >
-  <div id="site-bar-content" class="clearfix">
+<div id="site-bar-wrapper" >
+  <div id="site-bar" class="clearfix">
     <div id="editor-switch" data-no-turbolink>
       <%= site_bar_switch_link %>
     </div>
@@ -7,10 +7,6 @@
         <%= Refinery::Core.site_name %>
     </span>
     <span class="spinner">&nbsp;</span>
-    <%= link_to 'Refinery (tm) Content Manager',
-                'http://refinerycms.com',
-                :target => '_blank',
-                :id => 'refinery-cms-logo' %>
     <div id="current-user">
       <span class="username">
         <%= link_to_if(current_refinery_user.can_edit?(current_refinery_user),

@@ -370,31 +370,20 @@
 
         /**
          *
-         * @param {boolean=} removeGlobalReference if is true instance will be removed
-         *                   from refinery.Object.instances
-         *
          * @return {Object} self
          */
-        destroy: function (removeGlobalReference) {
-            var dialog_holder = this.dialog_holder;
-
+        destroy: function () {
             if (this.is('initialised')) {
                 this.nav = null;
 
-                if (dialog_holder) {
-                    if (dialog_holder.parent().hasClass('ui-dialog')) {
-                        dialog_holder.dialog('destroy');
-                    }
-
-                    dialog_holder.off();
-                    dialog_holder.remove();
-                    dialog_holder = null;
+                if (this.dialog_holder) {
+                    this.dialog_holder.dialog('destroy');
+                    this.dialog_holder.off();
+                    this.dialog_holder = null;
                 }
             }
 
-            this._destroy(removeGlobalReference);
-
-            return this;
+            return this._destroy();
         },
 
         /**
@@ -537,6 +526,7 @@
         /**
          * Update item position on server
          *
+         * @expose
          * @param {jQuery} item
          *
          * @return {Object} self
@@ -585,21 +575,11 @@
             return that;
         },
 
-        /**
-         *
-         * @expose
-         * @param {boolean=} removeGlobalReference if is true instance will be removed
-         *                   from refinery.Object.instances
-         *
-         * @return {Object} self
-         */
-        destroy: function (removeGlobalReference) {
+        destroy: function () {
             this.holder.nestedSortable('destroy');
             this.set = null;
 
-            this._destroy(removeGlobalReference);
-
-            return this;
+            return this._destroy();
         },
 
         init: function (holder) {
@@ -708,6 +688,17 @@
 
         module: 'admin',
 
+        options: {
+            /**
+             * When Ajax request receive partial without id,
+             * content of $(main_content_selector) will be replaced.
+             *
+             * @expose
+             * @type {!string}
+             */
+            main_content_selector: '#content'
+        },
+
         init_checkboxes: function () {
             this.holder.find('div.checkboxes').each(function () {
                 var holder = $(this),
@@ -753,34 +744,6 @@
                     }
                 } else {
                     list.sortable(options);
-                }
-            });
-        },
-
-        init_deletable_records: function () {
-            var holder = this.holder;
-
-            function hideRecord (elm) {
-                var record = elm.closest('.record');
-                record = record.length > 0 ? record : holder.find('.record');
-                record = record.length > 0 ? record : elm.closest('li');
-
-                if (record.length > 0) {
-                    record.fadeOut('normal', function () {
-                        record.remove();
-                    });
-                }
-            }
-
-            holder.on('confirm:complete', '.records .delete', function (event, answer) {
-                if (answer) {
-                    hideRecord($(this));
-                }
-            });
-
-            holder.on('click', 'a.delete', function () {
-                if (!this.hasAttribute('data-confirm')) {
-                    hideRecord($(this));
                 }
             });
         },
@@ -842,15 +805,25 @@
             });
 
             holder.on('ajax:success', function (event, response, status, xhr) {
-                if (response && typeof response === 'object') {
-                    event.preventDefault();
+                var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To'),
+                    replace_target = true,
+                    target;
 
+                if (response && typeof response === 'object') {
                     if (response.redirect_to) {
                         Turbolinks.visit(response.redirect_to);
                     } else {
-                        that.destroy(false);
-                        refinery.xhr.success(response, status, xhr, $(event.target), true);
-                        that.reload(holder);
+                        if (redirected_to || event.target.tagName.toLowerCase() === 'a') {
+                            target = holder.find(that.options.main_content_selector);
+                            replace_target = false;
+                        } else {
+                            target = $(event.target);
+                        }
+
+
+                        that.destroy();
+                        refinery.xhr.success(response, status, xhr, target, replace_target);
+                        that.trigger('ui:change');
                     }
                 }
             });
@@ -882,8 +855,6 @@
             that.init_collapsible_lists();
             that.init_toggle_hide();
 
-            that.init_deletable_records();
-
             for (fnc in ui) {
                 if (ui.hasOwnProperty(fnc) && typeof ui[fnc] === 'function') {
                     ui[fnc](holder, that);
@@ -894,30 +865,11 @@
         },
 
         /**
-         * Removing all refinery instances under holder, and reloading self.
-         * This is important when ajax replace current content of holder so, some objects
-         * may not longer exist and we need remove all references to them.
-         *
-         * @param {jQuery} holder
-         *
-         * @return {Object} self
-         */
-        reload: function (holder) {
-            holder = holder || this.holder;
-            this.destroy(false);
-            this.state = new this.State();
-            return this.init(holder);
-        },
-
-        /**
          * Destroy self and also all refinery, jquery ui instances under holder
          *
-         * @param {boolean=} removeGlobalReference if is true instance will be removed
-         *                   from refinery.Object.instances
-         *
          * @return {Object} self
          */
-        destroy: function (removeGlobalReference) {
+        destroy: function () {
             var holder = this.holder,
                 holders;
 
@@ -931,12 +883,13 @@
 
                         for (var i = instances.length - 1; i >= 0; i--) {
                             instance = refinery.Object.instances.get(instances[i]);
-                            instance.destroy(true);
+                            instance.destroy();
                         }
                     });
                 } catch (e) {
                     if (typeof console === 'object' && typeof console.log === 'function') {
                         console.log(e);
+                        console.log(holders);
                     }
                 }
 
@@ -953,9 +906,7 @@
                 // }
             }
 
-            this._destroy(removeGlobalReference);
-
-            return this;
+            return this._destroy();
         },
 
         init: function (holder) {
@@ -975,6 +926,48 @@
     });
 
 // Source: ~/refinery/scripts/admin/dialogs/dialog.js
+   /**
+     * refinery Object State
+     *
+     * @constructor
+     * @extends {refinery.ObjectState}
+     * @param {Object=} default_states
+     *    Usage:
+     *        new refinery.ObjectState();
+     *
+     * @todo  measure perf and if needed refactor to use bit masks, fsm or something else
+     */
+    function DialogState (default_states) {
+        var states = $.extend(default_states || {}, {
+            'closed' : true
+        });
+
+        refinery.ObjectState.call(this, states);
+    }
+
+    /**
+     * Custom State Object prototype
+     * @expose
+     * @type {Object}
+     */
+    DialogState.prototype = {
+        '_openable': function () {
+            return (this.get('initialised') && this.get('closed') && !this.get('opening'));
+        },
+        '_closable': function () {
+            return (!this.get('closing') && this.get('opened'));
+        },
+        '_loadable': function () {
+            return (!this.get('loading') && !this.get('loaded'));
+        },
+        '_insertable': function () {
+            return (this.get('initialised') && !this.get('inserting'));
+        }
+    };
+
+    refinery.extend(DialogState.prototype, refinery.ObjectState.prototype);
+
+
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1012,53 +1005,7 @@
              */
             ui: null,
 
-            State: /** @type {Object} */(function () {
-                /**
-                 * refinery Object State
-                 *
-                 * @constructor
-                 * @extends {refinery.ObjectState}
-                 * @param {Object=} default_states
-                 *    Usage:
-                 *        new refinery.ObjectState();
-                 *
-                 * @todo  measure perf and if needed refactor to use bit masks, fsm or something else
-                 */
-                function DialogState (default_states) {
-                    var states = $.extend(default_states || {}, {
-                        'closed' : true
-                    });
-
-                    refinery.ObjectState.call(this, states);
-                }
-
-                /**
-                 * Custom State Object prototype
-                 * @expose
-                 * @type {Object}
-                 */
-                DialogState.prototype = {
-                    '_openable': function () {
-                        return (this.get('initialised') && this.get('closed') && !this.get('opening'));
-                    },
-                    '_closable': function () {
-                        return (!this.get('closing') && this.get('opened'));
-                    },
-                    '_loadable': function () {
-                        return (!this.get('loading') && !this.get('loaded'));
-                    },
-                    '_submittable': function () {
-                        return (this.get('initialised') && !this.get('submitting'));
-                    },
-                    '_insertable': function () {
-                        return (this.get('initialised') && !this.get('inserting'));
-                    }
-                };
-
-                refinery.extend(DialogState.prototype, refinery.ObjectState.prototype);
-
-                return DialogState;
-            }()),
+            State: DialogState,
 
             /**
              *
@@ -1087,52 +1034,6 @@
                 }
 
                 return this;
-            },
-
-            /**
-             *
-             * @expose
-             *
-             * @return {Object} self
-             */
-            submit: function () {
-                var form = this.holder.find('form');
-
-                form.submit();
-
-                return this;
-            },
-
-            /**
-             * Submit form
-             * -- just dirty implementation
-             * Implement for specific cases in subclasses
-             *
-             *
-             * @expose
-             * @param {jQuery} form
-             *
-             * @return {undefined}
-             */
-            submit_form: function (form) {
-                var that = this;
-
-                if (that.is('submittable')) {
-                    that.is('submitting', true);
-
-                    $.ajax({
-                        url: form.attr('action'),
-                        type: form.attr('method'),
-                        data: form.serialize(),
-                        dataType: 'JSON'
-                    }).done(function (response, status, xhr) {
-                        that.xhr_done(response, status, xhr);
-
-                        that.trigger('submit');
-                    }).always(function () {
-                        that.is({'submitted': true, 'submitting': false});
-                    });
-                }
             },
 
             /**
@@ -1168,6 +1069,7 @@
             /**
              * Bind events to dialog buttons and forms
              *
+             * @expose
              * @return {undefined}
              */
             init_buttons: function () {
@@ -1183,72 +1085,12 @@
                 holder.on('submit', 'form', function (e) {
                     var form = $(this);
 
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    if (form.attr('action')) {
-                        that.submit_form(form);
-                    } else {
+                    if (!form.attr('action')) {
+                        e.preventDefault();
+                        e.stopPropagation();
                         that.insert(form);
                     }
-
-                    return false;
                 });
-            },
-
-            /**
-             * Process xhr response and reloading ui interface
-             *
-             * @expose
-             *
-             * @param  {json_response} response
-             * @param  {string} status
-             * @param  {jQuery.jqXHR} xhr
-             *
-             * @return {undefined}
-             */
-            xhr_done: function (response, status, xhr) {
-                var that = this,
-                    ui = that.ui,
-                    holder = ui.holder;
-
-                refinery.xhr.success(response, status, xhr, holder);
-                ui.reload(holder);
-            },
-
-            /**
-             * Xhr fail processing
-             *
-             * @expose
-             *
-             * @param  {jQuery.jqXHR} xhr
-             * @param  {string} status
-             *
-             * @return {undefined}
-             */
-            xhr_fail: function (xhr, status) {
-                refinery.xhr.error(xhr, status);
-            },
-
-            init_paginate: function () {
-                var that = this,
-                    holder = that.holder;
-
-                holder.on('click', '.pagination > a', function (e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: this.getAttribute('href'),
-                        dataType: 'JSON'
-                    })
-                    .fail(refinery.xhr.error)
-                    .done(function (response, status, xhr) {
-                        that.xhr_done(response, status, xhr);
-                    });
-                });
-            },
-
-            /** @expose */
-            after_load: function () {
             },
 
             /**
@@ -1286,11 +1128,6 @@
                             'class': 'flash error',
                             'html': t('refinery.admin.dialog_content_load_fail')
                         }));
-
-                        /**
-                         * Propagate that load finished unsuccessfully
-                         */
-                        that.trigger('load', false);
                     });
 
                     xhr.always(function () {
@@ -1299,26 +1136,43 @@
                     });
 
                     xhr.done(function (response, status, xhr) {
-                        var ui_holder;
-
                         if (status === 'success') {
                             holder.empty();
-                            ui_holder = $('<div/>').appendTo(holder);
-                            refinery.xhr.success(response, status, xhr, ui_holder);
-                            that.ui.init(ui_holder);
+                            that.ui_holder = $('<div/>').appendTo(holder);
+                            refinery.xhr.success(response, status, xhr, that.ui_holder);
+                            that.ui_change();
+
                             that.is('loaded', true);
-                            that.after_load();
 
                             /**
                              * Propagate that load finished successfully
                              */
-                            that.trigger('load', true);
+                            that.trigger('load');
                         }
                     });
 
                 }
 
                 return this;
+            },
+
+            ui_change: function () {
+                var that = this;
+
+                function ui_change () {
+                    if (that.ui) {
+                        that.ui.destroy();
+                        that.ui.unsubscribe('ui:change', ui_change);
+                    }
+
+                    that.ui = refinery('admin.UserInterface', {
+                        'main_content_selector': '.dialog-content-wrapper'
+                    }).init(that.ui_holder);
+
+                    that.ui.subscribe('ui:change', ui_change);
+                }
+
+                ui_change();
             },
 
             bind_events: function () {
@@ -1344,19 +1198,58 @@
                 holder.on('selectableselected', '.records.ui-selectable', function (event, ui) {
                     that.insert($(ui.selected));
                 });
+
+                holder.on('click', '.pagination a', function (event) {
+                    var a = $(this),
+                        url = /** @type {string} */(a.attr('href'));
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    $.get(url).done(
+                        /**
+                         * @param {json_response} response
+                         * @param {string} status
+                         * @param {jQuery.jqXHR} xhr
+                         * @return {undefined}
+                         */
+                        function (response, status, xhr) {
+                            holder.find('.dialog-content-wrapper')
+                            .trigger('ajax:success', [response, status, xhr]);
+                        }).always(function () {
+                            refinery.spinner.off();
+                        });
+                });
+
+                holder.on('ajax:success',
+                    /**
+                     *
+                     * @param  {jQuery.jqXHR} xhr
+                     * @param  {json_response} response
+                     * @return {undefined}
+                     */
+                    function (xhr, response) {
+                        that.upload_area(response);
+                    });
             },
+
+            /**
+             * Handle uploaded resource
+             *
+             * @expose
+             * @return {undefined}
+             */
+            upload_area: function () { },
 
             /**
              *
              * @expose
-             * @param {boolean=} removeGlobalReference if is true instance will be removed
-             *                   from refinery.Object.instances
-             *
              * @return {Object} self
              */
-            destroy: function (removeGlobalReference) {
+            destroy: function () {
                 if (this.ui) {
-                    this.ui.destroy(true);
+                    this.ui.destroy();
+                    this.ui.unsubscribe('ui:change', this.ui_change);
                     this.ui = null;
                 }
 
@@ -1364,9 +1257,7 @@
                     this.holder.dialog('destroy');
                 }
 
-                this._destroy(removeGlobalReference);
-
-                return this;
+                return this._destroy();
             },
 
             /**
@@ -1390,10 +1281,9 @@
                     holder.dialog(this.options);
                     this.attach_holder(holder);
 
-                    this.ui = refinery('admin.UserInterface');
                     this.bind_events();
                     this.init_buttons();
-                    this.init_paginate();
+
                     this.is({'initialised': true, 'initialising': false});
                     this.trigger('init');
                 }
@@ -1607,21 +1497,6 @@
         name: 'ImagesDialog',
 
         /**
-         * Select first image in library
-         * Put focus to first text input element
-         *
-         * @return {undefined}
-         */
-        after_load: function () {
-            var that = this,
-                holder = that.holder;
-
-            holder.on('ajax:success', function (xhr, response) {
-                that.upload_image_area(response.image);
-            });
-        },
-
-        /**
          * Handle image linked from library
          *
          * @expose
@@ -1674,11 +1549,12 @@
          * Handle uploaded image
          *
          * @expose
-         * @param {Object} image
+         * @param {json_response} json_response
          * @return {undefined}
          */
-        upload_image_area: function (image) {
+        upload_area: function (json_response) {
             var that = this,
+                image = json_response.image,
                 holder = that.holder;
 
             if (image) {
@@ -1707,6 +1583,7 @@
          * Dialog email tab action processing
          *
          * @param {!jQuery} tab
+         * @expose
          *
          * @return {undefined|pages_dialog_object}
          */
@@ -1721,17 +1598,14 @@
                 additional = '',
                 result;
 
-            subject = encodeURIComponent(subject);
-            body = encodeURIComponent(body);
-
             if (recipient) {
                 if (subject.length > 0) {
-                    additional += modifier + 'subject=' + subject;
+                    additional += modifier + 'subject=' + encodeURIComponent(subject);
                     modifier = '&';
                 }
 
                 if (body.length > 0) {
-                    additional += modifier + 'body=' + body;
+                    additional += modifier + 'body=' + encodeURIComponent(body);
                     modifier = '&';
                 }
 
@@ -1753,6 +1627,7 @@
          * Dialog Url tab action processing
          *
          * @param {!jQuery} tab
+         * @expose
          *
          * @return {undefined|pages_dialog_object}
          */
@@ -1781,6 +1656,7 @@
         /**
          * Dialog Url tab action processing
          *
+         * @expose
          * @param {!jQuery} tab
          *
          * @return {undefined|pages_dialog_object}
@@ -1790,7 +1666,7 @@
                 result;
 
             if (li.length > 0) {
-                result = /** @type {pages_dialog_object} */(li.data('link'));
+                result = /** @type {pages_dialog_object} */(li.data('dialog'));
                 result.type = 'page';
                 li.removeClass('ui-selected');
             }
@@ -1813,15 +1689,6 @@
 
         name: 'ResourcesDialog',
 
-        after_load: function () {
-            var that = this,
-                holder = that.holder;
-
-            holder.on('ajax:success', function (xhr, response) {
-                that.upload_resource_area(response.file);
-            });
-        },
-
         /**
          * Handle resource linked from library
          *
@@ -1841,11 +1708,12 @@
         /**
          * Handle uploaded file
          *
-         * @param {file_dialog_object} file
+         * @param {json_response} json_response
          * @return {undefined}
          */
-        upload_resource_area: function (file) {
+        upload_area: function (json_response) {
             var that = this,
+                file = json_response.file,
                 holder = that.holder;
 
             if (file) {

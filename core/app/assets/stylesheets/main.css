@@ -73,11 +73,11 @@ body {
     ALL: Orange Theme
    =================== */
 
-.header-container {
+#header-wrapper {
     border-bottom: 20px solid #e44d26;
 }
 
-.footer-container,
+#footer-wrapper,
 .main aside {
     border-top: 20px solid #e44d26;
 }
@@ -87,7 +87,7 @@ body,
     background-color: #f16529;
 }
 
-.main-container {
+#main-wrapper {
     background-color: #fff;
     padding: 20px 0;
 }
@@ -144,7 +144,7 @@ nav a:hover {
     padding: 0px 5% 10px;
 }
 
-.footer-container footer {
+#footer-wrapper footer {
     color: #fff;
     padding: 20px 0;
 }

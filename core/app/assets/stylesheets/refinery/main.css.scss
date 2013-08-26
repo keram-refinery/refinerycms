@@ -101,17 +101,17 @@
 }
 
 .hemisquare,
-.golden-ratio-minor,
-.golden-ratio-main {
+.block-aside,
+.block-main {
     width: 48%;
     float: left;
 }
 
-.golden-ratio-minor {
+.block-aside {
     width: 38%;
 }
 
-.golden-ratio-main {
+.block-main {
     width: 61%;
 }
 
@@ -119,7 +119,7 @@
     float: right;
 }
 
-.golden-ratio-minor.right-side {
+.block-aside.right-side {
     width: 37%;
 }
 
@@ -192,15 +192,18 @@ th {
 }
 
 /* basic layout */
-#header {
-    padding: 0px 20px;
-    padding-top: 15px;
+#header-wrapper {
+    padding: 15px 20px 0px;
     position: relative;
 }
 
-#page-container {
+#main-wrapper {
     padding: 30px 20px;
     background: #fff;
+}
+
+#footer-wrapper {
+    padding: 10px 20px;
 }
 
 a.help,
@@ -240,7 +243,7 @@ span.help {
 }
 
 .loading {
-    #wrapper {
+    #page {
         opacity: 0.9;
     }
 

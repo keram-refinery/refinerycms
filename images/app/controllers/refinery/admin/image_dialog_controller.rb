@@ -1,6 +1,6 @@
 module Refinery
   module Admin
-    class ImageDialogController < ::Refinery::AdminDialogController
+    class ImageDialogController < AdminDialogController
 
       helper Refinery::Admin::ImagesHelper
 

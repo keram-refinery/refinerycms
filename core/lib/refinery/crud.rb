@@ -104,12 +104,12 @@ module Refinery
           def destroy
             if @#{singular_name}.destroy
               title = @#{singular_name}.#{options[:title_attribute]}
-              flash.now[:notice] = t('destroyed', :scope => 'refinery.crudify',
+              flash.notice = t('destroyed', :scope => 'refinery.crudify',
                           :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
-                          :what => "'\#{title}'")
+                          :what => "\#{title}")
             end
 
-            redirect_to redirect_url unless request.xhr?
+            redirect_to redirect_url, status: :see_other # 303 See Other
           end
 
           # Finds one single result based on the id params.
@@ -219,8 +219,6 @@ module Refinery
                       db_item.move_to_left_of(next_item)
                     elsif parent_item
                       db_item.move_to_child_of(parent_item)
-                    else
-                      false
                     end
 
                     if updated

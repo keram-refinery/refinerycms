@@ -1,6 +1,6 @@
 module Refinery
   module Admin
-    class ImagesController < ::Refinery::AdminController
+    class ImagesController < AdminController
 
       crudify :'refinery/image',
               sortable: false
@@ -40,7 +40,7 @@ module Refinery
           if iframe?
             json_response redirect_to: refinery.admin_images_path
           else
-            redirect_to refinery.admin_images_path
+            redirect_to refinery.admin_images_path, status: :see_other
           end
         end
       end

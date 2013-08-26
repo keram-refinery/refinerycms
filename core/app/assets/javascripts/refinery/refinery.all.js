@@ -57,7 +57,7 @@
      * @param {string} message
      */
     refinery.flash = function (type, message) {
-        var holder = $('#flash-container').empty(),
+        var holder = $('#flash-wrapper').empty(),
             div = $('<div/>', {
                 'class': 'flash flash-' + type,
                 'html': message
@@ -275,8 +275,8 @@
          * @return {undefined}
          */
         processMessage: function (message) {
-            var i,
-                holder = $('#flash-container').empty();
+            var holder = $('#flash-wrapper').empty(),
+                i;
 
             if (typeof message === 'object') {
                 for (i in message) {
@@ -328,7 +328,7 @@
          * @return {undefined}
          */
         success: function (response, status, xhr, holder, replaceHolder) {
-            var redirected = xhr.getResponseHeader('X-XHR-Redirected-To');
+            var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To');
 
             if (response.html) {
                 refinery.xhr.processHtml(response.html, holder, replaceHolder);
@@ -338,12 +338,12 @@
                 refinery.xhr.processMessage(response.message);
             }
 
-            if (redirected) {
+            if (redirected_to) {
                 window.history.pushState({
                     'refinery': true,
-                    'url': redirected,
+                    'url': redirected_to,
                     'prev_url': document.location.href
-                }, '', redirected);
+                }, '', redirected_to);
             }
         }
     };
@@ -582,6 +582,7 @@
         /**
          * State class instatiable via Object constructor
          * @expose
+         * @lends {refinery.ObjectState}
          */
         State: refinery.ObjectState,
 
@@ -663,10 +664,10 @@
          * @expose
          * @public
          *
-         * @param {string}         eventName
-         * @param {Function=}  callback
+         * @param {string} eventName
+         * @param {Function} callback
          *
-         * @return {Object}         self
+         * @return {Object} self
          */
         subscribe: function (eventName, callback) {
             // console.log(eventName, this.uid, 'subscribed');
@@ -681,10 +682,10 @@
          * @expose
          * @public
          *
-         * @param {string}         eventName
-         * @param {Function=}  callback
+         * @param {string} eventName
+         * @param {Function} callback
          *
-         * @return {Object}         self
+         * @return {Object} self
          */
         unsubscribe: function (eventName, callback) {
             refinery.pubsub.unsubscribe(this.uid + '.' + eventName, callback);
@@ -727,12 +728,9 @@
          * listening this event/object then he must get chance to respond.
          *
          * @expose
-         * @param {boolean=} removeGlobalReference if is true instance will be removed
-         *                   from refinery.Object.instances
-         *
          * @return {Object} self
          */
-        destroy: function (removeGlobalReference) {
+        destroy: function () {
             if (this.holder) {
                 this.holder.unbind();
                 this.detach_holder();
@@ -740,9 +738,7 @@
 
             this.state = null;
 
-            if (removeGlobalReference) {
-                refinery.Object.instances.remove(this.uid);
-            }
+            refinery.Object.instances.remove(this.uid);
 
             this.trigger('destroy');
             this.events = {};
@@ -756,13 +752,10 @@
          * inherited object from refinery.Object
          *
          * @expose
-         * @param {boolean=} removeGlobalReference if is true instance will be removed
-         *                   from refinery.Object.instances
-         *
          * @return {Object} self
          */
-        _destroy: function (removeGlobalReference) {
-            return refinery.Object.prototype.destroy.apply(this, [removeGlobalReference]);
+        _destroy: function () {
+            return refinery.Object.prototype.destroy.apply(this, arguments);
         },
 
          /**

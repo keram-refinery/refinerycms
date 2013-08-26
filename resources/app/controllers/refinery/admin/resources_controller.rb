@@ -34,7 +34,7 @@ module Refinery
           create_unsuccessful invalid_resources
         else
           if iframe?
-            json_response redirect_to: refinery.admin_resources_path
+            json_response redirect_to: refinery.admin_resources_path, status: :see_other
           else
             redirect_to refinery.admin_resources_path
           end
@@ -43,13 +43,17 @@ module Refinery
 
       def update
         if @resource.update(params.require(:resource).permit(:file))
-          flash.now[:notice] = t(
+          flash.notice = t(
             'refinery.crudify.updated',
             kind: t('resource', scope: 'refinery.crudify'),
             what: "#{@resource.title}"
           )
 
-          redirect_back_or_default refinery.admin_resources_path
+          if iframe?
+            json_response redirect_to: refinery.admin_resources_path
+          else
+            redirect_back_or_default refinery.admin_resources_path
+          end
         else
           render action: 'edit'
         end

@@ -1,6 +1,6 @@
 <form>
   <div class="dialog-content-wrapper clearfix">
-    <div class="golden-ratio-main">
+    <div class="block-main">
       <div class="field">
         <label for="image-alt">Alt:</label>
         <input type="text" class="text larger widest" value="<%= @image.title %>" id="image-alt" />
@@ -33,7 +33,7 @@
         </ul>
       </div>
     </div>
-    <div class="golden-ratio-minor right-side">
+    <div class="block-aside right-side">
       <div class="field">
       <label>Preview:</label>
       <%= image_fu @image, '225x255>', {

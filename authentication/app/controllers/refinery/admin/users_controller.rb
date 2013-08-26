@@ -38,6 +38,7 @@ module Refinery
           end
 
           redirect_to refinery.admin_users_path,
+                      :status => :see_other,
                       :notice => t('created',
                         :kind => t('user', scope: 'refinery.crudify'),
                         :what => @user.username,
@@ -94,6 +95,7 @@ module Refinery
 
         if @user.update(user_params)
           redirect_to refinery.admin_users_path,
+                      :status => :see_other,
                       :notice => t('updated',
                         :kind => t('user', scope: 'refinery.crudify'),
                         :what => @user.username,

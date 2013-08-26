@@ -465,7 +465,7 @@ module Refinery
           fill_in 'Title', :with => 'Huh?'
           click_button 'Save'
 
-          within '#flash-container' do
+          within '#flash-wrapper' do
             Refinery::Page.count.should == 1
           end
         end

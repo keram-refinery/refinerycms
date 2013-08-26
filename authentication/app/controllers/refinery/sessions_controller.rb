@@ -25,7 +25,7 @@ module Refinery
     end
 
     def redirect_to_registration_if_none_user
-      redirect_to refinery.refinery_users_register_path if Refinery::Role[:refinery].users.empty?
+      redirect_to(refinery.refinery_users_register_path, status: :see_other) if Refinery::Role[:refinery].users.empty?
     end
 
   end

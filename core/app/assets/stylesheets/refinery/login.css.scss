@@ -3,15 +3,10 @@
 @import 'icons';
 
 .login {
-    #header,
-    #page-container {
+    #page-wrapper {
         max-width: 520px;
         min-width: 320px;
         margin: auto;
-    }
-
-    #page-container {
-        border-radius: 0 0 5px 5px;
     }
 
     #header {
@@ -21,6 +16,10 @@
     #header h1 {
         padding-top: 20px;
         font-size: 130%;
+    }
+
+    #main-wrapper {
+        border-radius: 0 0 5px 5px;
     }
 
     .larger {

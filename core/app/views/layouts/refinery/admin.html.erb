@@ -5,21 +5,30 @@
   </head>
   <body>
     <%= render '/refinery/site_bar' %>
-    <div id="wrapper">
-      <header id="header">
-        <%= render 'refinery/admin/menu' %>
-      </header>
-      <div id="page-container">
-        <div id="page">
-          <div id="content" class="clearfix" role="main">
-            <div id="flash-container">
+    <div id="page-wrapper">
+      <div id="page">
+        <div id="header-wrapper">
+          <header id="header" class="clearfix">
+            <%= render 'refinery/admin/menu' %>
+          </header>
+        </div>
+
+        <div id="main-wrapper">
+          <div id="main" role="main" class="clearfix">
+            <div id="flash-wrapper">
               <%= render '/refinery/no_script' %>
               <%= render '/refinery/message' %>
             </div>
-            <div id="<%= "#{controller_name}-#{action_name}" %>">
+            <div id="content" >
               <%= yield %>
             </div>
           </div>
+        </div>
+
+        <div id="footer-wrapper">
+          <footer id="footer" class="clearfix">
+            <%= render '/refinery/admin/footer' %>
+          </footer>
         </div>
       </div>
     </div>

@@ -53,6 +53,7 @@
                 id: delete_button_id,
                 method: :delete,
                 data: {
+                  remote: true,
                   confirm: delete_confirmation
                 },
                 class: 'button confirm-delete danger-button nojs-hide') unless hide_delete %>

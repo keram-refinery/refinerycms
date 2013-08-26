@@ -1,5 +1,5 @@
 <%
-  json_response :html => yield if json_response[:html].empty?
+  json_response :html => yield if json_response[:html].empty? && json_response[:redirect_to].nil?
   json_response :message => render_html_to_json_string('refinery/message') if flash.any?
 %>
 <%= json_response.to_json.html_safe %>

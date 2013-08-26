@@ -119,9 +119,9 @@ module Refinery
           click_link 'Remove this file forever'
 
           # todo fix Modal dialog present click
-          # within '#flash-container' do
-          #   page.should have_content('File "Refinery Is Awesome" was successfully removed.')
-          # end
+          within '#flash-wrapper' do
+            page.should have_content("File 'Refinery Is Awesome' was successfully removed.")
+          end
 
           Refinery::Resource.count.should == 0
         end

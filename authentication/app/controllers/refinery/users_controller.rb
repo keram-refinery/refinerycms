@@ -29,9 +29,9 @@ module Refinery
 
     def redirect?
       if refinery_user?
-        redirect_to refinery.admin_users_path
+        redirect_to refinery.admin_users_path, status: :see_other
       elsif refinery_users_exist?
-        redirect_to refinery.login_path
+        redirect_to refinery.login_path, status: :see_other
       end
     end
 
