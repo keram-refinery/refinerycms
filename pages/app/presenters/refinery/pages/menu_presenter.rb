@@ -38,7 +38,7 @@ module Refinery
 
       private
       def render_menu(items)
-        content_tag(menu_tag, :id => dom_id, :class => css) do
+        content_tag(menu_tag, :id => dom_id, :class => css, :role => 'navigation') do
           render_menu_items(items)
         end
       end
