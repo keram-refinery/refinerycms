@@ -54,7 +54,7 @@ module Refinery
           :title => page_part,
           :position => index,
           :active => page_part.in?(Pages.default_parts))
-      end if page.parts.empty?
+      end if page.new_record? && page.parts.empty?
     end
 
     before_destroy :deletable?
