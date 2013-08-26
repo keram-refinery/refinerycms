@@ -5,7 +5,7 @@ module Refinery
     config_accessor :rescue_not_found, :s3_backend, :base_cache_key,
                     :site_name, :site_notification_email,
                     :google_analytics_page_code, :authenticity_token_on_frontend,
-                    :javascripts, :I18n_javascripts, :stylesheets,
+                    :javascripts, :I18n_javascripts, :stylesheets, :turbolinks_on_frontend,
                     :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
@@ -20,6 +20,7 @@ module Refinery
     self.authenticity_token_on_frontend = false
     self.javascripts = []
     self.I18n_javascripts = {}
+    self.turbolinks_on_frontend = true
     self.stylesheets = []
     self.admin_javascripts = []
     self.admin_I18n_javascripts = {}

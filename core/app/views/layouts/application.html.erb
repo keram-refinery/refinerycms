@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <%= render '/refinery/javascripts' %>
+    <%= render '/refinery/javascripts' unless Refinery::Core.turbolinks_on_frontend %>
   </body>
 </html>
 <% end %>

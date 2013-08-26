@@ -8,10 +8,11 @@
 
 <%= stylesheet_link_tag 'application' %>
 <%= stylesheet_link_tag 'refinery/site_bar' if refinery_user? %>
-
 <%= yield :stylesheets %>
 
-<%= render '/refinery/google_analytics' unless local_request? || refinery_user? %>
+<%= javascript_include_tag 'modernizr-min', 'vendor/i18n', data: { :'turbolinks-eval' => false } %>
+<% refinery_i18n_js = ::Refinery::Core.I18n_javascripts[Globalize.locale] ||
+            ::Refinery::Core.I18n_javascripts[Refinery::I18n.default_frontend_locale] %>
+<%= javascript_include_tag *refinery_i18n_js, data: { :'turbolinks-eval' => false } unless refinery_i18n_js.nil? %>
 
-<%= javascript_include_tag 'modernizr-min', data: { :'turbolinks-eval' => false } %>
-<%= javascript_include_tag 'refinery/i18n', data: { :'turbolinks-eval' => false } %>
+<%= render '/refinery/javascripts' if Refinery::Core.turbolinks_on_frontend %>

@@ -3,6 +3,26 @@
 
 // Source: ~/refinery/scripts/refinery.js
     /**
+     * Detect if turbolinks library is present.
+     * If not create object Turbolinks with public method visit,
+     * to ensure that everything is working fine.
+     *
+     */
+    if (typeof Turbolinks === 'undefined') {
+        Turbolinks = {
+            /**
+             * Change document.location.href to passed url
+             *
+             * @param  {string} url
+             * @return {undefined}
+             */
+            'visit': function (url) {
+                document.location.href = url;
+            }
+        };
+    }
+
+    /**
      * @return {Object}
      */
     function refinery () {

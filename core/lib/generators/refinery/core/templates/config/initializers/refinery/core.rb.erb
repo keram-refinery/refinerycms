@@ -35,4 +35,8 @@ Refinery::Core.configure do |config|
 
   # Specify a different backend path than the default of /refinery.
   # config.backend_route = <%= Refinery::Core.backend_route.inspect %>
+
+  # If true it includes application javascript files in head
+  # otherwise at the bottom of the page.
+  # config.turbolinks_on_frontend = <%= Refinery::Core.turbolinks_on_frontend.inspect %>
 end
