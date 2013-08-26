@@ -29,6 +29,10 @@
     text-overflow: ellipsis;
 }
 
+.records .detail {
+    min-width: 50%;
+}
+
 .records .actions {
     float: right;
     position: relative;
