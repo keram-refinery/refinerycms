@@ -9,16 +9,27 @@ check_dependencies
 
 append_file 'Gemfile', <<-GEMFILE
 
+# temporarily for solving dependency issues
+gem 'friendly_id', github: 'norman/friendly_id', branch: 'master'
+gem 'paper_trail', github: 'airblade/paper_trail', branch: 'master'
+gem 'globalize3', github: 'keram-refinery/globalize3', branch: 'rails4'
+gem 'routing-filter', github: 'svenfuchs/routing-filter', branch: 'master'
+gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
+
+
 # Refinery CMS
-gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms.git', branch: 'refinery_light'
-gem 'refinerycms-i18n', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms-i18n.git', branch: 'refinery_light'
+gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms', branch: 'refinery_light'
+gem 'refinerycms-i18n', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms-i18n', branch: 'refinery_light'
+
+# Specify your preferred WYSIWYG editor
+gem 'refinery-epiceditor', github: 'keram-refinery/refinery-epiceditor', branch: 'master'
 
 # Specify additional Refinery CMS Extensions here (all optional):
-#  gem 'refinerycms-blog', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-blog.git', branch: 'refinery_light'
-#  gem 'refinerycms-inquiries', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-inquiries.git', branch: 'refinery_light'
-#  gem 'refinerycms-calendar', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-calendar.git', branch: 'refinery_light'
-#  gem 'refinerycms-search', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-search.git', branch: 'refinery_light'
-#  gem 'refinerycms-page-images', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-page-images.git', branch: 'refinery_light'
+#  gem 'refinerycms-blog', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-blog', branch: 'refinery_light'
+#  gem 'refinerycms-inquiries', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-inquiries', branch: 'refinery_light'
+#  gem 'refinerycms-calendar', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-calendar', branch: 'refinery_light'
+#  gem 'refinerycms-search', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-search', branch: 'refinery_light'
+#  gem 'refinerycms-page-images', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-page-images', branch: 'refinery_light'
 
 GEMFILE
 

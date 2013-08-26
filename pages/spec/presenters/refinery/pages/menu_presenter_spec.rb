@@ -49,7 +49,7 @@ module Refinery
           menu_items = Refinery::Menu.new(FactoryGirl.create(:page, :title => "Refinery CMS"))
 
           menu_presenter = MenuPresenter.new(menu_items, view)
-          expect(menu_presenter.to_html).to eq(%Q{<nav class="menu clearfix" id="menu"><ul><li class="first last"><a href="/refinery-cms">Refinery CMS</a></li></ul></nav>})
+          expect(menu_presenter.to_html).to eq(%Q{<nav class="menu clearfix" id="menu" role="navigation"><ul><li class="first last"><a href="/refinery-cms">Refinery CMS</a></li></ul></nav>})
         end
       end
 

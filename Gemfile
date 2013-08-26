@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 # Add i18n support.
-gem 'refinerycms-i18n', '~> 3.0.0.dev', :git => 'git://github.com/keram-refinery/refinerycms-i18n.git', :branch => 'refinery_light'
+gem 'refinerycms-i18n', '~> 3.0.0.dev', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
 
 gem 'quiet_assets', :group => :development
 
@@ -38,7 +38,7 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 2.0.0', :git => 'https://github.com/rails/turbolinks.git', :branch => 'master'
+gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', :branch => 'master'
 
 gem 'jquery-rails', '~> 3.0.4'
 gem 'jquery-ui-rails', '~> 4.0.4'
