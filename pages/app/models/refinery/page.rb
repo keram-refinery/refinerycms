@@ -60,10 +60,10 @@ module Refinery
     before_destroy :deletable?
 
     after_save :reload_routes, if: Proc.new { |page|
-      page.self_and_descendants.where(arel_table[:plugin_page_id].not_eq(nil)).exists? }
+      page.self_and_descendants.where(Page.arel_table[:plugin_page_id].not_eq(nil)).exists? }
 
     after_move :reload_routes, if: Proc.new { |page|
-      page.self_and_descendants.where(arel_table[:plugin_page_id].not_eq(nil)).exists? }
+      page.self_and_descendants.where(Page.arel_table[:plugin_page_id].not_eq(nil)).exists? }
 
     class << self
       # Live pages are 'allowed' to be shown in the frontend of your website.
