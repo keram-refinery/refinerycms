@@ -9,7 +9,7 @@
      *
      */
     if (typeof Turbolinks === 'undefined') {
-        Turbolinks = {
+        window.Turbolinks = {
             /**
              * Change document.location.href to passed url
              *

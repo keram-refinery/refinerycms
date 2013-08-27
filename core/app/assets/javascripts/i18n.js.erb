@@ -1,9 +1,0 @@
-//= require vendor/i18n
-<% locale = if ::Refinery::Core.I18n_javascripts[::Globalize.locale]
-              ::Globalize.locale
-            else
-              ::I18n.locale
-            end
-::Refinery::Core.I18n_javascripts[locale].each do |js| %>
-<%= require_asset js %>
-<% end if ::Refinery::Core.I18n_javascripts[locale] %>

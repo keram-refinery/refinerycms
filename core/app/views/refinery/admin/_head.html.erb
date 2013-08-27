@@ -13,7 +13,9 @@
 <%= javascript_include_tag 'modernizr-min', 'vendor/i18n', data: { :'turbolinks-eval' => false } %>
 <% refinery_admin_i18n_js = ::Refinery::Core.admin_I18n_javascripts[::I18n.locale] ||
             ::Refinery::Core.admin_I18n_javascripts[Refinery::I18n.default_locale] %>
-<%= javascript_include_tag *refinery_admin_i18n_js, data: { :'turbolinks-eval' => false } unless refinery_admin_i18n_js.nil? %>
+<%= javascript_include_tag *refinery_admin_i18n_js,
+            # cache: true,
+            data: { :'turbolinks-eval' => false } unless refinery_admin_i18n_js.nil? %>
 <%= javascript_include_tag 'refinery/application',
             defer: !Rails.configuration.assets.debug,
             async: !Rails.configuration.assets.debug,

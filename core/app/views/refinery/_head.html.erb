@@ -13,6 +13,8 @@
 <%= javascript_include_tag 'modernizr-min', 'vendor/i18n', data: { :'turbolinks-eval' => false } %>
 <% refinery_i18n_js = ::Refinery::Core.I18n_javascripts[Globalize.locale] ||
             ::Refinery::Core.I18n_javascripts[Refinery::I18n.default_frontend_locale] %>
-<%= javascript_include_tag *refinery_i18n_js, data: { :'turbolinks-eval' => false } unless refinery_i18n_js.nil? %>
+<%= javascript_include_tag *refinery_i18n_js,
+            # cache: true, unfortunately doesn't work with asset pipeline ;(
+            data: { :'turbolinks-eval' => false } unless refinery_i18n_js.nil? %>
 
 <%= render '/refinery/javascripts' if Refinery::Core.turbolinks_on_frontend %>

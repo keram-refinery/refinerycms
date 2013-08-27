@@ -172,35 +172,32 @@
             }
         },
 
-        fly_form_actions: function (left_buttons, holder, $window) {
-            var
-                window_position = $window.scrollTop() + $window.height(),
-                form_actions_pos = holder.position().top;
-
-            if (window_position < form_actions_pos) {
-                left_buttons.addClass('fly');
-            } else {
-                left_buttons.removeClass('fly');
-            }
-        },
-
         init_fly_form_actions: function () {
             var that = this,
                 $window = $(window),
                 holder = that.holder.find('.form-actions'),
-                left_buttons = that.holder.find('.form-actions-left'),
-                scroll_handler = function () {
-                    that.fly_form_actions(left_buttons, holder, $window);
-                };
+                left_buttons = that.holder.find('.form-actions-left');
+
+            function scroll () {
+                var window_position = $window.scrollTop() + $window.height(),
+                    form_actions_pos = holder.position().top;
+
+                if (window_position < form_actions_pos) {
+                    left_buttons.addClass('fly');
+                } else {
+                    left_buttons.removeClass('fly');
+                }
+            }
 
             if (that.holder.find('textarea').length > 0 &&
                 holder.length > 0 && left_buttons.length > 0) {
 
-                that.fly_form_actions(left_buttons, holder, $window);
-                $window.on('scroll', scroll_handler);
+                $window.on('scroll', scroll);
                 that.on('destroy', function () {
-                    $window.unbind('scroll', scroll_handler);
+                    $window.unbind('scroll', scroll);
                 });
+
+                scroll();
             }
         },
 
@@ -1041,21 +1038,18 @@
              * For specific use should be implemented in subclasses
              *
              * @expose
-             * @param {?jQuery} elm
+             * @param {!jQuery} elm Element which evoke insert event
              *
              * @return {Object} self
              */
             insert: function (elm) {
-                var tab, obj, fnc;
+                var tab = elm.closest('.ui-tabs-panel'),
+                    obj, fnc;
 
-                if (elm.length > 0) {
-                    tab = elm.closest('.ui-tabs-panel');
-
-                    if (tab.length > 0) {
-                        fnc = tab.attr('id').replace(/-/g, '_');
-                        if (typeof this[fnc] === 'function') {
-                            obj = this[fnc](tab);
-                        }
+                if (tab.length > 0) {
+                    fnc = tab.attr('id').replace(/-/g, '_');
+                    if (typeof this[fnc] === 'function') {
+                        obj = this[fnc](elm);
                     }
                 }
 
@@ -1130,27 +1124,21 @@
                         }));
                     });
 
-                    xhr.always(function () {
-                        that.is('loading', false);
-                        holder.removeClass('loading');
-                    });
-
                     xhr.done(function (response, status, xhr) {
                         if (status === 'success') {
                             holder.empty();
                             that.ui_holder = $('<div/>').appendTo(holder);
                             refinery.xhr.success(response, status, xhr, that.ui_holder);
                             that.ui_change();
-
                             that.is('loaded', true);
-
-                            /**
-                             * Propagate that load finished successfully
-                             */
-                            that.trigger('load');
                         }
                     });
 
+                    xhr.always(function () {
+                        that.is('loading', false);
+                        holder.removeClass('loading');
+                        that.trigger('load');
+                    });
                 }
 
                 return this;
@@ -1458,16 +1446,16 @@
         /**
          * Propagate selected image wth attributes to dialog observers
          *
+         * @param {!jQuery} form
          * @return {Object} self
          */
-        insert: function () {
-            var holder = this.holder,
-                alt = holder.find('#image-alt').val(),
-                id = holder.find('#image-id').val(),
-                size_elm = holder.find('#image-size .ui-selected a'),
+        insert: function (form) {
+            var alt = form.find('#image-alt').val(),
+                id = form.find('#image-id').val(),
+                size_elm = form.find('#image-size .ui-selected a'),
                 size = size_elm.data('size'),
                 geometry = size_elm.data('geometry'),
-                sizes = holder.find('#image-preview').data();
+                sizes = form.find('#image-preview').data();
 
             this.trigger('insert', {
                 'id': id,
@@ -1500,20 +1488,15 @@
          * Handle image linked from library
          *
          * @expose
-         * @param {jQuery} tab
-         * @return {undefined|{id: string}}
+         * @param {!jQuery} li selected row
+         * @return {{id: string}}
          */
-        existing_image_area: function (tab) {
-            var li = tab.find('li.ui-selected'),
-                obj;
+        existing_image_area: function (li) {
+            var obj = {
+                id: li.attr('id').match(/[0-9]+$/)[0]
+            };
 
-            if (li.length > 0) {
-                obj = {
-                    id: li.attr('id').match(/[0-9]+$/)[0]
-                };
-
-                li.removeClass('ui-selected');
-            }
+            li.removeClass('ui-selected');
 
             return obj;
         },
@@ -1522,12 +1505,12 @@
          * Handle image linked by url
          *
          * @expose
-         * @param {jQuery} tab
+         * @param {!jQuery} form
          * @return {undefined|{alt: string, url: string}}
          */
-        external_image_area: function (tab) {
-            var url_input = tab.find('input[type="url"]:valid'),
-                alt_input = tab.find('input[type="text"]:valid'),
+        external_image_area: function (form) {
+            var url_input = form.find('input[type="url"]:valid'),
+                alt_input = form.find('input[type="text"]:valid'),
                 url = /** @type {string} */(url_input.val()),
                 alt = /** @type {string} */(alt_input.val()),
                 obj;
@@ -1582,15 +1565,15 @@
         /**
          * Dialog email tab action processing
          *
-         * @param {!jQuery} tab
+         * @param {!jQuery} form
          * @expose
          *
          * @return {undefined|pages_dialog_object}
          */
-        email_link_area: function (tab) {
-            var email_input = tab.find('#email_address_text:valid'),
-                subject_input = tab.find('#email_default_subject_text'),
-                body_input = tab.find('#email_default_body_text'),
+        email_link_area: function (form) {
+            var email_input = form.find('#email_address_text:valid'),
+                subject_input = form.find('#email_default_subject_text'),
+                body_input = form.find('#email_default_body_text'),
                 recipient = /** @type {string} */(email_input.val()),
                 subject = /** @type {string} */(subject_input.val()),
                 body = /** @type {string} */(body_input.val()),
@@ -1626,14 +1609,14 @@
         /**
          * Dialog Url tab action processing
          *
-         * @param {!jQuery} tab
+         * @param {!jQuery} form
          * @expose
          *
          * @return {undefined|pages_dialog_object}
          */
-        website_link_area: function (tab) {
-            var url_input = tab.find('#web_address_text:valid'),
-                blank_input = tab.find('#web_address_target_blank'),
+        website_link_area: function (form) {
+            var url_input = form.find('#web_address_text:valid'),
+                blank_input = form.find('#web_address_target_blank'),
                 url = /** @type {string} */(url_input.val()),
                 blank = /** @type {boolean} */(blank_input.prop('checked')),
                 result;
@@ -1657,19 +1640,15 @@
          * Dialog Url tab action processing
          *
          * @expose
-         * @param {!jQuery} tab
+         * @param {!jQuery} li
          *
-         * @return {undefined|pages_dialog_object}
+         * @return {pages_dialog_object}
          */
-        pages_link_area: function (tab) {
-            var li = tab.find('li.ui-selected'),
-                result;
+        pages_link_area: function (li) {
+            var result = /** @type {pages_dialog_object} */(li.data('dialog'));
 
-            if (li.length > 0) {
-                result = /** @type {pages_dialog_object} */(li.data('dialog'));
-                result.type = 'page';
-                li.removeClass('ui-selected');
-            }
+            result.type = 'page';
+            li.removeClass('ui-selected');
 
             return result;
         }
@@ -1693,16 +1672,13 @@
          * Handle resource linked from library
          *
          * @expose
-         * @param {jQuery} tab
-         * @return {undefined|file_dialog_object}
+         * @param {!jQuery} li
+         * @return {file_dialog_object}
          */
-        existing_resource_area: function (tab) {
-            var li = tab.find('li.ui-selected');
+        existing_resource_area: function (li) {
+            li.removeClass('ui-selected');
 
-            if (li.length > 0) {
-                li.removeClass('ui-selected');
-                return /** @type {file_dialog_object} */(li.data('dialog'));
-            }
+            return /** @type {file_dialog_object} */(li.data('dialog'));
         },
 
         /**
