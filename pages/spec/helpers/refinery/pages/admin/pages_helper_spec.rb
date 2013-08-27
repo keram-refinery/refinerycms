@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Refinery
   module Admin
-    describe PagesHelper do
+    describe Refinery::Admin::PagesHelper do
 
       describe "#page_meta_information" do
         let(:page) { FactoryGirl.build(:page) }

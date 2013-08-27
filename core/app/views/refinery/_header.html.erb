@@ -1,22 +1,6 @@
 <div id="top">
   <a id="skip-to-main" href="#main"><%= t('.skip_to_main') %></a>
-  <div id="locales">
-  <% Refinery::I18n.frontend_locales.each do |locale| %>
-    <% if Globalize.locale != locale %>
-      <% url = if @page.translated_locales.include?(locale)
-                  refinery.url_for params.merge(locale: locale)
-                else
-                  refinery.root_path locale: locale
-                end
-      %>
-      <%= link_to url do %>
-        <span class="<%= locale %>"><%= Refinery::I18n.locales[locale] || locale %></span>
-      <% end %>
-    <% else %>
-      <span class="<%= locale %>"><%= Refinery::I18n.locales[locale] || locale %></span>
-    <% end -%>
-  <% end -%>
-  </div>
+  <%= render '/refinery/locale_picker' if Refinery::I18n.frontend_locales.many? %>
 </div>
 
 <h1 id="logo">
