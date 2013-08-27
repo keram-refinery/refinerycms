@@ -89,7 +89,7 @@ module Refinery
 
           def update
             if @#{singular_name}.update_attributes(#{singular_name}_params)
-              flash.now[:notice] = t(
+              flash.notice = t(
                 'refinery.crudify.updated',
                 :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
                 :what => "\#{@#{singular_name}.#{options[:title_attribute]}}"

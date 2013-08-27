@@ -15,14 +15,6 @@ module Refinery
         @page = Page.new parent_id: params[:parent_id].to_i
       end
 
-      def update
-        if @page.update(page_params)
-          create_or_update_successful
-        else
-          create_or_update_unsuccessful 'edit'
-        end
-      end
-
       def redirect_url
         if @page && @page.persisted?
           options = {}

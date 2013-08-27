@@ -61,6 +61,10 @@ module Refinery
     end
 
     class << self
+      def backend_route
+        # prevent / at the start.
+        config.backend_route.to_s.gsub(%r{\A/}, '')
+      end
 
       def dragonfly_custom_backend?
         config.dragonfly_custom_backend_class.present?

@@ -94,7 +94,7 @@ module Refinery
     end
 
     def to_s
-      username.to_s
+      (full_name.presence || username).to_s
     end
 
     private
