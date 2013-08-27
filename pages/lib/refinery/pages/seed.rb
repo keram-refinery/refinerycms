@@ -8,7 +8,7 @@ module Refinery
         if page.blank?
           page = Refinery::Page.create(page_attributes.except(:parent))
           page_attributes[:id] = page.id
-          parent = Refinery::Page.find(pages[page_attributes[:parent]][:id]) if page_attributes[:parent]
+          parent = Refinery::Page.find_by(id: pages[page_attributes[:parent]][:id]) if page_attributes[:parent]
           page.move_to_child_of(parent) if parent
 
           Globalize.with_locales Refinery::I18n.frontend_locales do |locale|
@@ -25,7 +25,7 @@ module Refinery
             end if Dir.exists?(dir) || Dir.exists?(default_dir)
           end
 
-          p %Q(Page "#{page.title}" created.)
+          puts %Q(Page "#{page.title}" created.)
         else
           page_attributes[:id] = page.first.id
         end
