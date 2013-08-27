@@ -92,7 +92,8 @@ module Refinery
         app.config.assets.precompile += [
           'refinery/*',
           'refinery/icons/*',
-          'modernizr-min.js'
+          'modernizr-min.js',
+          'vendor/i18n.js'
         ]
       end
 
