@@ -12,8 +12,7 @@ module Refinery
                           :admin?,
                           :paginate_page,
                           :json_response,
-                          :dialog?,
-                          :refinery_dom_id
+                          :dialog?
 
       base.protect_from_forgery # See ActionController::RequestForgeryProtection
 
@@ -108,16 +107,6 @@ module Refinery
 
     def dialog?
       false
-    end
-
-    def refinery_dom_id object
-      # if FriendlyIdActiveRecordRelation, or ActiveRecord::Relation
-      if object.respond_to?(:klass)
-        s = object.klass.name.pluralize.downcase.gsub('::', '-')
-      else
-        s = dom_id(object)
-      end
-      "#{'dialog-' if dialog?}#{s}"
     end
 
   protected
