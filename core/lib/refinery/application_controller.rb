@@ -48,7 +48,7 @@ module Refinery
     end
 
     def home_page?
-      %r{^#{Regexp.escape(request.path)}} === refinery.root_path
+      action_name == 'home'
     end
 
     def local_request?

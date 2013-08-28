@@ -40,12 +40,11 @@ module Refinery
     end
 
     def find_page(fallback_to_404 = true)
-      @page ||= case action_name
-                  when 'home'
-                    refinery_page.with_globalize.find_by(plugin_page_id: refinery_plugin.name)
-                  when 'show'
-                    refinery_page.with_globalize.find_by_path_or_id(params[:path], params[:id])
-                  end
+      @page ||= if home_page?
+                  refinery_page.with_globalize.find_by(plugin_page_id: refinery_plugin.name)
+                else
+                  refinery_page.with_globalize.find_by_path_or_id(params[:path], params[:id])
+                end
 
       @page || (error_404 if fallback_to_404)
     end
