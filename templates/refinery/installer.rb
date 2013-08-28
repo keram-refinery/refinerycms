@@ -11,11 +11,12 @@ append_file 'Gemfile', <<-GEMFILE
 
 # temporarily for solving dependency issues
 gem 'friendly_id', github: 'norman/friendly_id', branch: 'master'
+gem 'friendly_id-globalize', github: 'norman/friendly_id-globalize', branch: 'master'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'master'
 gem 'globalize3', github: 'keram-refinery/globalize3', branch: 'rails4'
 gem 'routing-filter', github: 'svenfuchs/routing-filter', branch: 'master'
 gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
-
+gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set', branch: 'master'
 
 # Refinery CMS
 gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms', branch: 'refinery_light'

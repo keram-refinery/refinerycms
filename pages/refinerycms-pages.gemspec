@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'friendly_id',                 '~> 5.0.0.beta4'
   s.add_dependency 'globalize3',                  '~> 0.3.0'
-  s.add_dependency 'awesome_nested_set',          '~> 2.1.6'
+  s.add_dependency 'awesome_nested_set',          '~> 3.0.0.rc.1'
   s.add_dependency 'seo_meta',                    '~> 1.4.0'
   s.add_dependency 'babosa',                      '~> 0.3.10'
   s.add_dependency 'refinerycms-core',            version
