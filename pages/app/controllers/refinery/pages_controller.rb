@@ -1,6 +1,7 @@
 module Refinery
   class PagesController < ::ApplicationController
     include Pages::RenderOptions
+    helper Refinery::Core::Engine.helpers
 
     before_action :find_page
     before_action :redirect_unless_path_match, :only => [:show] if Pages.marketable_urls

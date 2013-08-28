@@ -2,7 +2,7 @@
 <% Refinery::I18n.frontend_locales.each do |locale| %>
   <% if Globalize.locale != locale %>
     <% url = if @page.translated_locales.include?(locale)
-                url_for_locale(@page, locale)
+                url_for_page_with_locale(locale)
               else
                 refinery.root_path locale: locale
               end

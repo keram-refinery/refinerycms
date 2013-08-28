@@ -1,8 +1,6 @@
 module Refinery
   module ApplicationController
 
-    include ActionView::RecordIdentifier
-
     def self.included(base) # Extend controller
       base.helper_method :xhr_json_response?,
                           :render_html_to_json_string,

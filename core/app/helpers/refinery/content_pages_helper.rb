@@ -19,5 +19,14 @@ module Refinery
       content_page.fetch_template_overrides {|section_id| content_for(section_id)}
       content_page.to_html(options[:can_use_fallback])
     end
+
+    # Returns url with localized path by passed locale for page
+    def url_for_page_with_locale(locale, page = @page)
+      Globalize.with_locale locale do
+        localized_params = params.merge(locale: locale)
+        localized_params.merge!(path: page.nested_url.join('/')) unless localized_params[:path].nil?
+        refinery.url_for localized_params
+      end
+    end
   end
 end
