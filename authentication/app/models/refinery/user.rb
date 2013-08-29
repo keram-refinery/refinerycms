@@ -108,7 +108,7 @@ module Refinery
     # To ensure that we aren't creating "admin" and "admin " as the same thing.
     # Also ensures that "admin user" and "admin    user" are the same thing.
     def strip_username
-      self.username = self.username.strip.gsub(/\ {2,}/, ' ') if self.username?
+      self.username = self.username.squish if self.username?
     end
 
   end
