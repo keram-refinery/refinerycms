@@ -1,4 +1,4 @@
-<%% content_for :body_content_title do %>
+<%% content_for :title do %>
   <%%= @<%= singular_name %><% if (title = attributes.detect { |a| a.type.to_s == 'string' }).present? %>.<%= title.name %><% else %>.title<% end %> %>
 <%% end %>
 

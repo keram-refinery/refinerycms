@@ -14,7 +14,7 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
 <% end -%>
       t.integer :position
 
-      t.timestamps
+      t.timestamps null: false
     end
 <% if localized? %>
     Refinery::<%= namespacing %>::<%= class_name %>.create_translation_table! <%= attributes_for_translation_table %>
@@ -23,11 +23,11 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
 
   def down
     if defined?(::Refinery::UserPlugin)
-      ::Refinery::UserPlugin.destroy_all({:name => 'refinerycms-<%= namespacing.underscore %>'})
+      ::Refinery::UserPlugin.destroy_all({name: 'refinerycms-<%= namespacing.underscore %>'})
     end
 <% unless skip_frontend? %>
     if defined?(::Refinery::Page)
-      ::Refinery::Page.delete_all({:plugin_page_id => '<%= namespacing.underscore %>'})
+      ::Refinery::Page.delete_all({plugin_page_id: '<%= namespacing.underscore %>'})
     end
 <% end %>
     drop_table :refinery_<%= "#{namespacing.underscore}_" if table_name != namespacing.underscore.pluralize %><%= table_name %>

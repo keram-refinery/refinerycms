@@ -18,7 +18,7 @@ class Create<%= class_name.pluralize %> < ActiveRecord::Migration
       t.<%= attribute.type %> :<%= attribute.name %>
 <% end %>
 
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_index :refinery_<%= table_name %>, :updated_at
@@ -26,11 +26,11 @@ class Create<%= class_name.pluralize %> < ActiveRecord::Migration
 
   def down
     if defined?(::Refinery::UserPlugin)
-      ::Refinery::UserPlugin.destroy_all({:name => '<%= plural_name %>'})
+      ::Refinery::UserPlugin.destroy_all({name: '<%= plural_name %>'})
     end
 
     if defined?(::Refinery::Page)
-      ::Refinery::Page.delete_all({:plugin_page_id => '<%= plural_name %>'})
+      ::Refinery::Page.delete_all({plugin_page_id: '<%= plural_name %>'})
     end
 
     drop_table :refinery_<%= table_name %>
