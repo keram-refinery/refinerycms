@@ -1,6 +1,6 @@
 <% flash.each do |key, value| %>
   <% unless value.empty? %>
-  <div class="flash flash-<%= key %>" >
+  <div class="flash flash-<%= key %>" role="alert" >
     <%= value %>
     <%= link_to t(".close#{'_this_message' if key.to_s == 'message'}"), ('javascript:back(-1);' if key == :error),
                 :class => 'flash-close nojs-hide' %>
