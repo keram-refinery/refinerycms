@@ -80,13 +80,7 @@ module Refinery
       before { visit '/about' }
 
       it 'shows title at the top of the page' do
-        find('#body_content_title').text.should == about_page.title
-      end
-
-      it 'should hide title when config is set' do
-        Pages.stub(:show_title_in_body).and_return(false)
-        visit '/about'
-        page.should_not have_selector('#body_content_title')
+        find('#title').text.should == about_page.title
       end
 
       it 'uses title in the menu' do
@@ -95,50 +89,6 @@ module Refinery
 
       it 'uses title in browser title' do
         page.should have_title(about_page.title)
-      end
-    end
-
-    describe 'when menu_title is' do
-      let(:page_mt) { Page.create :title => 'Company News' }
-
-      before do
-        Page.stub(:menu).and_return([page_mt])
-      end
-
-      describe 'set' do
-        before do
-          page_mt.menu_title = 'News'
-          page_mt.save
-        end
-
-        it 'shows the menu_title in the menu' do
-          visit '/news'
-
-          find('.selected').text.strip.should == page_mt.menu_title
-        end
-
-        it 'does not effect browser title and page title' do
-          visit '/news'
-
-          page.should have_title(page_mt.title)
-          find('#body_content_title').text.should == page_mt.title
-        end
-      end
-
-      describe 'set and then unset' do
-        before do
-          page_mt.menu_title = 'News'
-          page_mt.save
-          page_mt.menu_title = ''
-          page_mt.save
-        end
-
-        it 'the friendly_id and menu are reverted to match the title' do
-          visit '/company-news'
-
-          current_path.should == '/company-news'
-          find('.selected').text.strip.should == page_mt.title
-        end
       end
     end
 
@@ -158,7 +108,7 @@ module Refinery
       it 'should not effect page title and menu title' do
         visit '/about-us'
 
-        find('#body_content_title').text.should == page_bt.title
+        find('#title').text.should == page_bt.title
         find('.selected').text.strip.should == page_bt.title
       end
     end

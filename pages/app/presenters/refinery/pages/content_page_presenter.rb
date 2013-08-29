@@ -5,21 +5,18 @@ module Refinery
     # and it will build sections from the page's parts. The page is not retained
     # internally, so if the page changes, you need to rebuild this ContentPagePresenter.
     class ContentPagePresenter < ContentPresenter
-      def initialize(page, page_title)
+      def initialize(page)
         super()
-        add_default_title_section(page_title) if page_title.present? && Pages.show_title_in_body
         add_page_parts(page.parts) if page
       end
 
     private
 
-      def add_default_title_section(title)
-        add_section TitleSectionPresenter.new(:id => :body_content_title, :fallback_html => title)
-      end
-
       def add_page_parts(parts)
         parts.each do |part|
-          add_section PagePartSectionPresenter.new(part)
+          presenter = "Refinery::Pages::#{part.title.to_s.classify}PagePartSectionPresenter".safe_constantize ||
+            PagePartSectionPresenter
+          add_section presenter.new(part)
         end
       end
     end

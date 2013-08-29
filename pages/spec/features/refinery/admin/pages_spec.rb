@@ -134,7 +134,7 @@ module Refinery
 
           click_link 'Add new page'
 
-          fill_in 'Title', :with => 'My first page'
+          fill_in 'page_title', :with => 'My first page'
           click_button 'Save'
 
           page.body.should =~ /My first page/
@@ -142,16 +142,6 @@ module Refinery
           Refinery::Page.count.should == 1
         end
 
-        it 'includes menu title field' do
-          visit refinery.new_admin_page_path
-
-          fill_in 'Title', :with => 'My first page'
-          fill_in 'Menu title', :with => 'The first page'
-
-          click_button 'Save'
-
-          refinery.url_for(Refinery::Page.last.url).should =~ %r{/the-first-page}
-        end
       end
 
       describe 'update' do
@@ -166,7 +156,7 @@ module Refinery
           it 'updates page' do
             click_link 'Edit this page'
 
-            fill_in 'Title', :with => 'Updated'
+            fill_in 'page_title', :with => 'Updated'
             click_button 'Save'
 
             updatable_page.title.should eq('Updated')
@@ -206,7 +196,7 @@ module Refinery
         it 'will append UUID to url path' do
           visit refinery.new_admin_page_path
 
-          fill_in "Title", :with => 'I was here first'
+          fill_in 'page_title', :with => 'I was here first'
           click_button "Save"
 
           Refinery::Page.last.url[:path][0].should =~ /i-was-here-first-/
@@ -268,7 +258,7 @@ module Refinery
           before do
             visit refinery.admin_pages_path
             click_link "Add new page"
-            fill_in "Title", :with => 'News'
+            fill_in 'page_title', :with => 'News'
             click_button "Save"
             visit refinery.admin_pages_path
           end
@@ -331,7 +321,7 @@ module Refinery
               click_link "ru"
             end
 
-            fill_in "Title", :with => ru_page_title
+            fill_in 'page_title', :with => ru_page_title
             click_button "Save"
 
             visit refinery.admin_pages_path
@@ -344,7 +334,7 @@ module Refinery
               click_link "en"
             end
 
-            fill_in "Title", :with => en_page_title
+            fill_in 'page_title', :with => en_page_title
             click_button "Save"
 
             Refinery::Page.count.should == 2
@@ -406,7 +396,7 @@ module Refinery
             within '.locale-picker' do
               click_link "ru"
             end
-            fill_in "Title", :with => ru_page_title
+            fill_in 'page_title', :with => ru_page_title
             click_button "Save"
 
             Refinery::Page.count.should == 2
@@ -467,7 +457,7 @@ module Refinery
               within "#page_#{sub_page.id}" do
                 click_link "Edit"
               end
-              fill_in "Title", :with => ru_page_title
+              fill_in 'page_title', :with => ru_page_title
               click_button "Save"
               within "#flash-wrapper" do
                 page.should have_content("'#{ru_page_title}' was successfully updated")
@@ -483,7 +473,7 @@ module Refinery
 
           click_link 'Add new page'
 
-          fill_in 'Title', :with => 'Huh?'
+          fill_in 'page_title', :with => 'Huh?'
           click_button 'Save'
 
           within '#flash-wrapper' do
@@ -510,7 +500,7 @@ module Refinery
           within '.locale-picker' do
             click_link 'lv'
           end
-          fill_in 'Title', :with => 'Brīva vieta reklāmai'
+          fill_in 'page_title', :with => 'Brīva vieta reklāmai'
           click_button 'Save'
 
           Refinery::Page.count.should == 2

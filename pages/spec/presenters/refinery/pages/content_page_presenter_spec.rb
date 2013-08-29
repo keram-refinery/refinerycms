@@ -7,7 +7,7 @@ module Refinery
 
       describe 'when building for page' do
         context 'withou body part' do
-          let(:page_with_one_part) { FactoryGirl.create(:page) }
+          let(:page_with_one_part) { FactoryGirl.create(:page, title: title) }
 
           before do
             body_part = page_with_one_part.part(:body)
@@ -17,13 +17,13 @@ module Refinery
           end
 
           it 'adds page title section before page parts' do
-            content = ContentPagePresenter.new(page_with_one_part, title)
+            content = ContentPagePresenter.new(page_with_one_part)
             content.get_section(0).fallback_html.should == title
           end
 
           it 'has body part hidden' do
-            content = ContentPagePresenter.new(page_with_one_part, title)
-            content.hidden_sections.map(&:id).should == [:body]
+            content = ContentPagePresenter.new(page_with_one_part)
+            content.hidden_sections.map(&:id).should == [:perex, :body]
           end
         end
 
@@ -38,24 +38,19 @@ module Refinery
           end
 
           it 'adds a section for each page part' do
-            content = ContentPagePresenter.new(page, title)
-            content.get_section(1).fallback_html.should == 'A Wonderful Page Part'
-            content.get_section(2).fallback_html.should == 'Another Wonderful Page Part'
+            content = ContentPagePresenter.new(page)
+            content.get_section(2).fallback_html.should == 'A Wonderful Page Part'
+            content.get_section(3).fallback_html.should == 'Another Wonderful Page Part'
           end
 
           it 'adds body content left and right after page parts' do
-            content = ContentPagePresenter.new(page, title)
-            content.get_section(1).id.should == :body
-            content.get_section(2).id.should == :side_body
-          end
-
-          it 'has only title section if page is nil' do
-            content = ContentPagePresenter.new(nil, title)
-            content.instance_variable_get(:@sections).map(&:id).should == [:body_content_title]
+            content = ContentPagePresenter.new(page)
+            content.get_section(2).id.should == :body
+            content.get_section(3).id.should == :side_body
           end
 
           it 'doesnt add title if it is blank' do
-            content = ContentPagePresenter.new(nil, '')
+            content = ContentPagePresenter.new(nil)
             content.instance_variable_get(:@sections).should == []
           end
         end

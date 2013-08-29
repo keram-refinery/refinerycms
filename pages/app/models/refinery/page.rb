@@ -11,7 +11,7 @@ module Refinery
     MAX_TITLE_LENGTH = 250
     MAX_SLUG_LENGTH = 250
 
-    translates :title, :menu_title, :custom_slug, :slug, include: :seo_meta
+    translates :title, :custom_slug, :slug, include: :seo_meta
 
     class Translation
       is_seo_meta
@@ -199,15 +199,15 @@ module Refinery
       Globalize.with_locale(::Refinery::I18n.default_frontend_locale) { slug }
     end
 
-    # Returns in cascading order: custom_slug or menu_title or title depending on
+    # Returns in cascading order: custom_slug or title depending on
     # which attribute is first found to be present for this page.
     def custom_slug_or_title
-      custom_slug.presence || menu_title.presence || title.presence
+      custom_slug.presence || title
     end
 
     # always regenerate slug because I don't know detect change on translation table
     # This doesn't work:
-    #   translation.custom_slug_changed? || translation.menu_title_changed? || translation.title_changed?
+    #   translation.custom_slug_changed? || translation.title_changed?
     #
     # TODO
     def should_generate_new_friendly_id?
@@ -302,7 +302,7 @@ module Refinery
         depth: depth,
         parent_id: parent_id,
         rgt: rgt,
-        title: menu_title.presence || title.presence,
+        title: title,
         type: self.class.name,
         link_url: link_url,
         path: to_param

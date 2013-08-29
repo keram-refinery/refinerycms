@@ -26,33 +26,6 @@ module Refinery
         end
       end
 
-      describe "when hiding sections" do
-        before do
-          @content = ContentPresenter.new
-          @content.add_section section1
-          @content.add_section section2
-        end
-
-        it "hides a section specified by id" do
-          section2.should_receive :hide
-          @content.hide_sections 'bar'
-        end
-
-        # Regression for https://github.com/refinery/refinerycms/issues/1516
-        it "accepts an array" do
-          section2.should_receive :hide
-          @content.hide_sections ['bar']
-        end
-
-        it "hides nothing if nil" do
-          section1.stub(:hidden?).and_return false
-          section2.stub(:hidden?).and_return false
-          @content.hide_sections nil
-          @content.hidden_sections.count.should == 0
-        end
-
-      end
-
       describe "when fetching template overrides" do
         before do
           @content = ContentPresenter.new
@@ -83,14 +56,14 @@ module Refinery
       describe "when rendering as html" do
         it "is empty section tag if it has no sections" do
           content = ContentPresenter.new
-          content.to_html.should == "<section class=\"\" id=\"body_content\"></section>"
+          content.to_html.should == "<section class=\"\" id=\"content\"></section>"
         end
 
         it "returns sections joined by a newline inside section tag" do
           section1.stub(:wrapped_html).and_return('foo')
           section2.stub(:wrapped_html).and_return('bar')
           content = ContentPresenter.new([section1, section2])
-          content.to_html.should == "<section class=\"\" id=\"body_content\">foo\nbar</section>"
+          content.to_html.should == "<section class=\"\" id=\"content\">foo\nbar</section>"
         end
 
         it "passes can_use_fallback option on to sections" do
@@ -103,7 +76,7 @@ module Refinery
           section1.stub(:wrapped_html).and_return('foo')
           section2.stub(:wrapped_html).and_return(nil)
           content = ContentPresenter.new([section1, section2])
-          content.to_html.should == "<section class=\"\" id=\"body_content\">foo</section>"
+          content.to_html.should == "<section class=\"\" id=\"content\">foo</section>"
         end
       end
     end

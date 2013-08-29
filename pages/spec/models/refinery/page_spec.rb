@@ -93,14 +93,6 @@ module Refinery
         turn_on_marketable_urls
       end
 
-      it 'returns its path with slug set by menu_title' do
-        page.menu_title = 'RSpec is great'
-        page.save
-        page.reload
-
-        page.url[:id].should be_nil
-        page.url[:path].should == ['rspec-is-great']
-      end
     end
 
     context 'canonicals' do
@@ -235,22 +227,6 @@ module Refinery
       it 'return the content when using content_for' do
         page.content_for(:body).should == "I'm the first page part for this page."
       end
-
-      it 'reposition correctly' do
-        part_first = page.parts.first
-        part_last = page.parts.last
-
-        part_first.update :position => 6
-        part_last.update :position => 4
-
-        part_first.position.should == 6
-        part_last.position.should == 4
-
-        page.parts.reload
-
-        page.parts.first.position.should == 4
-        page.parts.last.position.should == 6
-      end
     end
 
     context 'draft pages' do
@@ -359,20 +335,6 @@ module Refinery
         ##  subject[:url].should be_a(Hash) # guard against nil
         ##  subject[:url].should eq(page.url)
         #end
-      end
-
-      context 'with #menu_title' do
-        let(:menu) { Refinery::Menu.new [page] }
-
-        before do
-          page[:menu_title] = 'Menu Title'
-        end
-
-        it_should_behave_like 'Refinery menu item hash'
-
-        it 'returns the menu_title for :title' do
-          subject[:title].should eq('Menu Title')
-        end
       end
 
       context 'with #title' do

@@ -39,10 +39,15 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       body: :text
     })
 
+    # because of:
+    # SQLite3::SQLException: Cannot add a NOT NULL column with default value NULL:
+    # ALTER TABLE "refinery_page_translations" ADD "title" varchar(255) NOT NUL ..
+    #
+    # which is bug in globalize3, until it will be fixed as workaround
+    # we set default value to ''
     Refinery::Page.create_translation_table!({
-      title: { type: :string, null: false },
-      slug: { type: :string, null: false },
-      menu_title: :string,
+      title: { type: :string, null: false, default: '' },
+      slug: { type: :string, null: false, default: '' },
       custom_slug: :string
     })
 

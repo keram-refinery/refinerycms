@@ -8,13 +8,13 @@ module Refinery
                     :layout_template_whitelist,
                     :use_layout_templates,
                     :page_title,
-                    :auto_expand_admin_tree, :show_title_in_body
+                    :auto_expand_admin_tree
 
     self.per_dialog_page = 20
     self.per_admin_page = 20
     self.marketable_urls = true
-    self.default_parts = [:body, :side_body]
-    self.parts = self.default_parts
+    self.parts = [:title, :perex, :body, :side_body]
+    self.default_parts = [:title, :body, :side_body]
     self.main_part = :body
     self.use_custom_slugs = false
     self.scope_slug_by_parent = true
@@ -40,7 +40,7 @@ module Refinery
         :wrap_if_not_chained => false
       }
     }
-    self.show_title_in_body = true
+
     self.auto_expand_admin_tree = true
   end
 end

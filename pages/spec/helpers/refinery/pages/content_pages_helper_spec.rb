@@ -3,7 +3,7 @@ require 'spec_helper'
 module Refinery
   module Pages
     describe ContentPagesHelper do
-      let(:content_presenter) { double(ContentPresenter, :hide_sections => nil, :fetch_template_overrides => nil, :to_html => nil) }
+      let(:content_presenter) { double(ContentPresenter, :fetch_template_overrides => nil, :to_html => nil) }
 
       describe "when rendering content presenter" do
         it "attempts to fetch template overrides declared elsewhere via content_for" do
@@ -27,10 +27,8 @@ module Refinery
         let(:page) { double(Page) }
 
         it "builds a content page presenter and returns its html" do
-          self.should_receive(:page_title).and_return('some title')
-          Refinery::Pages::ContentPagePresenter.should_receive(:new).with(page, 'some title').and_return(content_presenter)
+          Refinery::Pages::ContentPagePresenter.should_receive(:new).with(page).and_return(content_presenter)
           content_presenter.should_receive(:to_html).and_return('barfoo')
-
           render_content_page(page).should == 'barfoo'
         end
       end
