@@ -1,7 +1,7 @@
 bg:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Файлове
         description: Качване на файлове и връзки към тях
     admin:

@@ -1,7 +1,7 @@
 pt-BR:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Imagens
         article: a
         description: Gerenciar imagens

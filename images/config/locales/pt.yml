@@ -1,7 +1,7 @@
 pt:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: "Imagens"
         description: "Gerir imagens"
     admin:

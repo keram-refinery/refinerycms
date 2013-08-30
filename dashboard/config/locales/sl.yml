@@ -1,7 +1,7 @@
 sl:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Nadzorna plošča
         description: Podaja pregled aktivnosti v Refinery
     admin:

@@ -133,7 +133,7 @@ module Refinery
 
         @selected_plugin_names = []
         @always_allowed_menu_plugins = Refinery::Plugins.always_allowed.in_menu.names
-        @always_allowed_menu_plugins |= ['refinery_users'] if current_refinery_user.id == @user.id
+        @always_allowed_menu_plugins |= ['users'] if current_refinery_user.id == @user.id
 
         @available_roles = current_refinery_user.has_role?(:superuser) ? Refinery::Role.all : current_refinery_user.roles
       end

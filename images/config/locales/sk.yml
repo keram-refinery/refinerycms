@@ -1,7 +1,7 @@
 sk:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Obrázky
         description: Spravovať obrázky
     admin:

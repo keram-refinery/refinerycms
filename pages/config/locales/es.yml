@@ -1,7 +1,7 @@
 es:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Páginas
         description: Gestionar páginas de contenido
         article: femenino

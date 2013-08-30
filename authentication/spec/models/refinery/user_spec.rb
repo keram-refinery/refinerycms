@@ -232,8 +232,7 @@ module Refinery
 
       it 'adds registered plugins' do
         first_user.plugins.collect(&:name).should eq([
-          'refinery_dashboard', 'refinery_pages', 'refinery_resources',
-            'refinery_images', 'refinery_users'
+          'dashboard', 'pages', 'resources', 'images', 'users'
         ])
       end
 

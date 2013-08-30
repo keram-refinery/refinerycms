@@ -1,7 +1,7 @@
 rs:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Kontrolna tabla
         description: Omogućava pregled aktivnosti Refinery-ja
     admin:

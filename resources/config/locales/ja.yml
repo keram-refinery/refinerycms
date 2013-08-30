@@ -1,7 +1,7 @@
 ja:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: ファイル
         description: ファイルのアップロードと管理
     admin:

@@ -19,7 +19,7 @@ module Refinery
   Page.delete_all
 
   describe 'page frontend' do
-    let(:home_page) { Page.create :title => 'Home', :link_url => '/', :plugin_page_id => 'refinery_pages' }
+    let(:home_page) { Page.create :title => 'Home', :link_url => '/', :plugin_page_id => 'pages' }
     let(:about_page) { Page.create :title => 'About' }
     let(:draft_page) { Page.create :title => 'Draft', :draft => true }
     before do

@@ -1,7 +1,7 @@
 ja:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: ダッシュボード
         description: Refineryでの活動の記録を俯瞰します。
     admin:

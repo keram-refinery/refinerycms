@@ -1,7 +1,7 @@
 nl:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Gebruikers
         description: Gebruikers beheren
     admin:

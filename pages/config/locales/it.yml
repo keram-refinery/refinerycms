@@ -1,7 +1,7 @@
 it:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Pagine
         description: Gestione dei contenuti del sito
     admin:

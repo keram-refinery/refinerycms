@@ -1,7 +1,7 @@
 pl:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Pulpit
         description: Przegląd aktywności w Refinery
     admin:

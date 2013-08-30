@@ -1,7 +1,7 @@
 sk:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Súbory
         description: Správa súborov
     admin:

@@ -1,7 +1,7 @@
 sk:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Stránky
         description: Spravovať obsahové stránky
     admin:

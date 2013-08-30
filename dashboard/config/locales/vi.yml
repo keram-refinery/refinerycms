@@ -1,7 +1,7 @@
 vi:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Dashboard
         description: Cung cấp cái nhìn tổng quan về các hoạt động của Refinery
     admin:

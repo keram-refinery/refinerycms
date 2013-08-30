@@ -1,7 +1,7 @@
 sl:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Uporabniki
     admin:
       users:

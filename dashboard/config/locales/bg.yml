@@ -1,7 +1,7 @@
 bg:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Табло
         description: Преглед на дейността в Refinery
     admin:

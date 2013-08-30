@@ -1,7 +1,7 @@
 fi:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Etusivu
         description: Yhteenveto tapahtumista
     admin:

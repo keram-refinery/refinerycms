@@ -1,7 +1,7 @@
 el:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Εικόνες
         description: Διαχείριση Εικόνων
     admin:

@@ -1,7 +1,7 @@
 pt-BR:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Painel
         description: Mostra um sumário das atividades no sistema
     admin:

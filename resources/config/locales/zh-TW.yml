@@ -1,7 +1,7 @@
 zh-TW:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: 檔案
         description: 上傳與連結檔案
     admin:

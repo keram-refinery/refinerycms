@@ -1,7 +1,7 @@
 ja:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: ユーザ
         description: ユーザ管理
     admin:

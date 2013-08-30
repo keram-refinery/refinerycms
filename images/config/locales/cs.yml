@@ -1,7 +1,7 @@
 cs:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Obrázky
         description: Spravovat obrázky
     admin:

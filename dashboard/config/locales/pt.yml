@@ -1,7 +1,7 @@
 pt:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Dashboard
         description: "Apresenta uma visão geral da actividade no Refinery"
     admin:

@@ -1,7 +1,7 @@
 nb:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Skrivebord
         description: Gir en oversikt over den siste aktiviteten i Refinery
     admin:

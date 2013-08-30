@@ -33,7 +33,7 @@ FactoryGirl.define do
     roles { [ ::Refinery::Role[:refinery], ::Refinery::Role[:translator] ] }
 
     after(:create) do |user|
-      user.plugins.create(:name => 'refinery_pages', :position => 0)
+      user.plugins.create(:name => 'pages', :position => 0)
     end
   end
 end

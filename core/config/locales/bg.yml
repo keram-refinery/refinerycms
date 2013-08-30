@@ -4,7 +4,7 @@ bg:
       admin:
         confirm_changes: Всички промени, които сте направили ще бъдат загубени. Сигурни ли сте, че искате да продължите без запис?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Основна добавка за Refinery
       refinery_dialogs:

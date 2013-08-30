@@ -1,7 +1,7 @@
 da:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Filer
         description: Upload og link til filer
     admin:

@@ -1,7 +1,7 @@
 sk:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Nástenka
         description: Prehľad akcií uskutočnených v administrácii
     admin:

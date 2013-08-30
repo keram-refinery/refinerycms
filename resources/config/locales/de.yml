@@ -1,7 +1,7 @@
 de:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Dateien
         description: Dateien hochladen und verlinken
     admin:

@@ -1,7 +1,7 @@
 nl:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Overzicht
         description: Een overzicht van activiteit binnen Refinery
     admin:

@@ -1,7 +1,7 @@
 es:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Panel de control
         description: Da una visión de la actividad en Refinery
     admin:

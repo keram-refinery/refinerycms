@@ -1,7 +1,7 @@
 bg:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Страници
         description: Управление на страници
     admin:

@@ -4,7 +4,7 @@ pt:
       admin:
         confirm_changes: "Qualquer alteração que tenha sido realizada não será gravada. Tem a certeza que deseja continuar sem gravar?"
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Core refinery plugin
       refinery_dialogs:

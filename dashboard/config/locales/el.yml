@@ -1,7 +1,7 @@
 el:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Πανόπτης
         description: Περίληψη δραστηριοτήτων στο Refinery
     admin:

@@ -13,10 +13,10 @@ module Refinery
         ::Refinery::Resources::Dragonfly.attach!(app)
       end
 
-      initializer 'register refinery_resources plugin' do
+      initializer 'register resources plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
-          plugin.name = 'refinery_resources'
+          plugin.name = 'resources'
           plugin.activity = { :class_name => :'refinery/resource', :title => :file_name }
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_resources_path }
         end

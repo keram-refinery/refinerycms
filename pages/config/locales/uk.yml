@@ -1,7 +1,7 @@
 uk:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Cторінки
         article: feminine
         description: Управління сторінками з вмістом

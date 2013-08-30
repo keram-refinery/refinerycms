@@ -1,7 +1,7 @@
 pl:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Pliki
         description: Wgrywaj i linkuj do plików
         article: masculine

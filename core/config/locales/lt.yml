@@ -1,7 +1,7 @@
 lt:
   refinery:
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Refinery šerdies įskiepiai
       refinery_dialogs:

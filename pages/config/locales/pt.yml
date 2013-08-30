@@ -1,7 +1,7 @@
 pt:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Páginas
         description: Gerir páginas
     admin:

@@ -1,7 +1,7 @@
 cs:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Soubory
         description: Správa souborů
     admin:

@@ -1,7 +1,7 @@
 el:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Σελίδες
         description: Διαχείριση στατικών σελιδών
     admin:

@@ -13,10 +13,10 @@ module Refinery
         Refinery.include_once(Refinery::AdminController, Refinery::Pages::Admin::InstanceMethods)
       end
 
-      initializer 'refinery.pages register plugin' do
+      initializer 'register pages plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
-          plugin.name = 'refinery_pages'
+          plugin.name = 'pages'
           plugin.position = 10 # put after dashboard
           plugin.activity = {
             :class_name => :'refinery/page'
@@ -25,7 +25,7 @@ module Refinery
         end
       end
 
-      initializer 'refinery.pages append marketable routes', :after => :set_routes_reloader_hook do
+      initializer 'refinery_pages append marketable routes', :after => :set_routes_reloader_hook do
         append_marketable_routes if Refinery::Pages.marketable_urls
       end
 

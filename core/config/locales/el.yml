@@ -1,7 +1,7 @@
 el:
   refinery:
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Core refinery plugin
       refinery_dialogs:

@@ -1,7 +1,7 @@
 nb:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Brukere
         description: Behandle brukere
     admin:

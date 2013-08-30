@@ -1,7 +1,7 @@
 rs:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Slike
         description: Menjaj slike
     admin:

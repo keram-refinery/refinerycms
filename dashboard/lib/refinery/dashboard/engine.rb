@@ -8,10 +8,10 @@ module Refinery
 
       config.autoload_paths += %W( #{config.root}/lib )
 
-      initializer 'register refinery_dashboard plugin' do
+      initializer 'register dashboard plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
-          plugin.name = 'refinery_dashboard'
+          plugin.name = 'dashboard'
           plugin.always_allow_access = true
           plugin.dashboard = true
           plugin.position = 1

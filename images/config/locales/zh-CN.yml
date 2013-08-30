@@ -1,7 +1,7 @@
 zh-CN:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: 图片
         description: 图片管理
     admin:

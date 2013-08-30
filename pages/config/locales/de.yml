@@ -1,7 +1,7 @@
 de:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Seiten
         description: Verwaltet Inhaltsseiten
     admin:

@@ -1,7 +1,7 @@
 rs:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Fajlovi
         description: Upload-uj i linkuj fajlove
     admin:

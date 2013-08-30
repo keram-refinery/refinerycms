@@ -1,7 +1,7 @@
 uk:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Зображення
         description: Управління зображеннями
         article: neuter

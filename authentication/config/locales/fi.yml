@@ -1,7 +1,7 @@
 fi:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Käyttäjät
         description: Hallitse käyttäjiä
     admin:

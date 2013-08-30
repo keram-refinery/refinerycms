@@ -1,7 +1,7 @@
 ru:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Сводка
         description: Обзор последних действий в Refinery
     admin:

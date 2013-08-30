@@ -1,7 +1,7 @@
 ja:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: ページ
         description: ページの管理
     admin:

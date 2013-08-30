@@ -4,7 +4,7 @@ fi:
       admin:
         confirm_changes: "Kaikki muutoksesi menetetään. Oletko varma, että haluat jatkaa tallentamatta?"
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Refineryn keskuspalikka
       refinery_dialogs:

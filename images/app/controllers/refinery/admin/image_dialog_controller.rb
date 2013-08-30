@@ -11,7 +11,7 @@ module Refinery
       protected
 
       def refinery_plugin
-        @refinery_plugin ||= ::Refinery::Plugins['refinery_images']
+        @refinery_plugin ||= ::Refinery::Plugins['images']
       end
 
     end

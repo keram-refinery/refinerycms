@@ -1,7 +1,7 @@
 nb:
   refinery:
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Refinery kjernetillegg
       refinery_dialogs:

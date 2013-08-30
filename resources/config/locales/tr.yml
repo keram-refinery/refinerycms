@@ -1,7 +1,7 @@
 tr:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Dosyalar
         description: Bir baglanti ve dosya yukle
     admin:

@@ -1,7 +1,7 @@
 zh-TW:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: 圖片
         description: 管理圖片
     admin:

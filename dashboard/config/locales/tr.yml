@@ -1,7 +1,7 @@
 tr:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Kontrol Paneli
         description: RefineryCMS aktivite ekrani
     admin:

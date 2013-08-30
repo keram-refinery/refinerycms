@@ -3,7 +3,7 @@
 ja:
   refinery:
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Refineryのコアプラグイン
       refinery_dialogs:

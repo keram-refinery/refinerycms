@@ -1,7 +1,7 @@
 pt:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Ficheiros
         description: Carregar ficheiros
     admin:

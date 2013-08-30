@@ -1,7 +1,7 @@
 ru:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Страницы
         article: feminine
         description: Управление страницами с содержимым

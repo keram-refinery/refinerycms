@@ -1,7 +1,7 @@
 sv:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Filer
         description: Ladda upp och länka till filer
     admin:

@@ -1,7 +1,7 @@
 de:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Bilder
         description: Verwaltet Bilder
     admin:

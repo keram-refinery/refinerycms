@@ -13,10 +13,10 @@ module Refinery
         ::Refinery::Images::Dragonfly.attach!(config.middleware)
       end
 
-      initializer 'register refinery_images plugin' do
+      initializer 'register images plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
-          plugin.name = 'refinery_images'
+          plugin.name = 'images'
           plugin.activity = {
             :class_name => :'refinery/image',
             :title => :image_name

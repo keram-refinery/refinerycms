@@ -4,7 +4,7 @@ nl:
       admin:
         confirm_changes: Wijzigingen zullen verloren gaan. Weet u zeker dat u wilt doorgaan zonder op te slaan?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Kern van Refinery
       refinery_dialogs:

@@ -1,7 +1,7 @@
 zh-TW:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: 頁面
         description: 管理頁面
     admin:

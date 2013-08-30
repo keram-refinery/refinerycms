@@ -1,7 +1,7 @@
 pl:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Obrazy
         description: Zarządzaj obrazami
         article: masculine

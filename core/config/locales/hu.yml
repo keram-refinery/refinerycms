@@ -4,7 +4,7 @@ hu:
       admin:
         confirm_changes: Minden változtatás el fog veszni. Biztosan mentés nélkül akarod folytatni?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Core refinery plugin
       refinery_dialogs:

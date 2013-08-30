@@ -10,7 +10,7 @@ describe Refinery::Admin::UsersController do
     #end
 
     it 'loads plugins' do
-      user_plugin = Refinery::Plugins['refinery_users']
+      user_plugin = Refinery::Plugins['users']
 
       plugins = Refinery::Plugins.new
       plugins << user_plugin
@@ -81,9 +81,9 @@ describe Refinery::Admin::UsersController do
       it "won't allow to remove 'Users' plugin from self" do
         # Refinery::User.should_receive(:find).at_least(1).times{ logged_in_user }
         Refinery::Admin::UsersController.any_instance.should_receive(:find_user).at_least(1).times{ logged_in_user }
-        put 'update', :id => logged_in_user.id.to_s, :user => { username: additional_user.username, email: additional_user.email, plugins: ['refinery_dashboard']}
+        put 'update', :id => logged_in_user.id.to_s, :user => { username: additional_user.username, email: additional_user.email, plugins: ['dashboard']}
 
-        logged_in_user.plugins.collect(&:name).should include('refinery_users', 'refinery_dashboard')
+        logged_in_user.plugins.collect(&:name).should include('users', 'dashboard')
       end
     end
 

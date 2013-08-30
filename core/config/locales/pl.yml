@@ -4,7 +4,7 @@ pl:
       admin:
         confirm_changes: Wszystkie zmiany zostaną utracone. Kontynuować bez zapisu?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Podstawa Refinery
       refinery_dialogs:

@@ -1,7 +1,7 @@
 pt-BR:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Usuários
         description: Gerenciar usuários
     admin:

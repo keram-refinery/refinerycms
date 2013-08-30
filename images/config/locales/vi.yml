@@ -1,7 +1,7 @@
 vi:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Hình ảnh
         description: Quản lý các hình ảnh
     admin:

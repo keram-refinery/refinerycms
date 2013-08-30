@@ -1,7 +1,7 @@
 nb:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Bilder
         description: Behandle bilder
     admin:

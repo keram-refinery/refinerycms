@@ -1,7 +1,7 @@
 ko:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: 이미지
         description: 이미지를 관리합니다.
     admin:

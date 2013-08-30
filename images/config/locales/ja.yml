@@ -1,7 +1,7 @@
 ja:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: 画像
         description: 画像の編集
     admin:

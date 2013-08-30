@@ -1,7 +1,7 @@
 da:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Billeder
         description: Vedligehold billeder
     admin:

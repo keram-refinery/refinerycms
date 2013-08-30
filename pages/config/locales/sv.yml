@@ -1,7 +1,7 @@
 sv:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Sidor
         description: Hantera sidor och dess innehåll
     admin:

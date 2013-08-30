@@ -1,7 +1,7 @@
 sl:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Strani
     admin:
       pages_dialog:

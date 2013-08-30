@@ -1,7 +1,7 @@
 da:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Overblik
         description: Giver et overblik over aktiviteterne i Refinery
     admin:

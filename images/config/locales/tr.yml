@@ -1,7 +1,7 @@
 tr:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Resimler
         description: Resimleri Yonet
     admin:

@@ -1,7 +1,7 @@
 tr:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Kullanicilar
         description: Kullanicilari Yonet
     admin:

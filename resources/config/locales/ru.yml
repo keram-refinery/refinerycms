@@ -1,7 +1,7 @@
 ru:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Файлы
         article: masculine
     admin:

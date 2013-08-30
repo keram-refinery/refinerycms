@@ -1,7 +1,7 @@
 ru:
   refinery:
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Ядро Refinery
       refinery_dialogs:

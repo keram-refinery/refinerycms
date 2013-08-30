@@ -1,7 +1,7 @@
 vi:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Users
         description: Quản lý người dùng
     admin:

@@ -4,7 +4,7 @@ fr:
       admin:
         confirm_changes: Toute modification sera perdue. Êtes-vous sûr de vouloir de vouloir continuer ?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Base de Refinery
       refinery_dialogs:

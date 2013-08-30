@@ -240,7 +240,7 @@ module Refinery
           # Create a home page in both locales (needed to test menus)
           home_page = Globalize.with_locale(:en) do
             Page.create :title => 'Home',
-                        :plugin_page_id => 'refinery_pages',
+                        :plugin_page_id => 'pages',
                         :link_url => '/'
           end
 

@@ -1,7 +1,7 @@
 lv:
   refinery:
     plugins:
-      refinery_pages:
+      pages:
         title: Lapas
         description: Lapu satura pārvaldīšana
         article: s

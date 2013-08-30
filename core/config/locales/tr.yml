@@ -4,7 +4,7 @@ tr:
       admin:
         confirm_changes: Yaptiginiz degisiklikler kaybolacaktir. Kayit etmeden devam etmek istediginize emin misiniz ?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Cekirdek refinery eklentisi
       refinery_dialogs:

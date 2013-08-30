@@ -1,7 +1,7 @@
 fr:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Tableau de bord
         description: Donne un aperçu des activités de votre site.
     admin:

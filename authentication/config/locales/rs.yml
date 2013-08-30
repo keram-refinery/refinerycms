@@ -1,7 +1,7 @@
 rs:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Administratori
         description: Menjaj administratore
     admin:

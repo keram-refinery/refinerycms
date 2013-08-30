@@ -1,7 +1,7 @@
 lt:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Paveikslėliai
         description: Valdyti paveikslėlius
     admin:

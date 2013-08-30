@@ -1,7 +1,7 @@
 sk:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Užívatelia
         description: Spravovať užívateľov
     admin:

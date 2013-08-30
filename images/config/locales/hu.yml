@@ -1,7 +1,7 @@
 hu:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Képek
         description: Képek kezelése
     admin:

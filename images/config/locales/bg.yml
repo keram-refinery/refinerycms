@@ -1,7 +1,7 @@
 bg:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Изображения
         description: Управление на изображения
     admin:

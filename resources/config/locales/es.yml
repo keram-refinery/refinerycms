@@ -1,7 +1,7 @@
 es:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Archivos
         description: Subir y enlazar archivos
         article: masculino

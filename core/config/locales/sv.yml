@@ -1,7 +1,7 @@
 sv:
   refinery:
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Kärnprogrammet för Refinery
       refinery_dialogs:

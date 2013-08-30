@@ -4,7 +4,7 @@ it:
       admin:
         confirm_changes: Le modifiche che hai fatto andranno perse. Sei sicuro di voler continuare senza salvare?
     plugins:
-      refinery_core:
+      core:
         title: Refinery
         description: Plugin principale di Refinery
       refinery_dialogs:

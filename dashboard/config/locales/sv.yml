@@ -1,7 +1,7 @@
 sv:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Dashboard
         description: Ger en översikt över aktivitet i Refinery
     admin:

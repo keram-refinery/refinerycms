@@ -1,7 +1,7 @@
 vi:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Các tập tin
         description: Tải lên và liên kết đến tập tin
     admin:

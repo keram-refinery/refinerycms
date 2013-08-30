@@ -1,7 +1,7 @@
 nl:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Afbeeldingen
         description: Afbeeldingen beheren
     admin:

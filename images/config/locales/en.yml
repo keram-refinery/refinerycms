@@ -1,7 +1,7 @@
 en:
   refinery:
     plugins:
-      refinery_images:
+      images:
         title: Images
         description: Manage images
     crudify:

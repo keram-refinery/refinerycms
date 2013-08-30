@@ -1,7 +1,7 @@
 pt-BR:
   refinery:
     plugins:
-      refinery_resources:
+      resources:
         title: Arquivos
         description: Gerenciar arquivos
     admin:

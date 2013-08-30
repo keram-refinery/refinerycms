@@ -1,7 +1,7 @@
 uk:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: Зведення
         description: Огляд останніх дій у Refinery
     admin:

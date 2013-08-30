@@ -11,7 +11,7 @@ module Refinery
       initializer 'register refinery_user plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
-          plugin.name = 'refinery_users'
+          plugin.name = 'users'
           plugin.position = 1000 # put plugin at end but before settings
           plugin.activity = {
             :class_name => :'refinery/user',

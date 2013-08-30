@@ -2,7 +2,7 @@ en:
   refinery:
     resource: File
     plugins:
-      refinery_resources:
+      resources:
         title: Files
         description: Upload and link to files
     crudify:

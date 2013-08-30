@@ -39,10 +39,10 @@ module Refinery
         WillPaginate.per_page = 20
       end
 
-      initializer 'register refinery_core plugin' do
+      initializer 'register refinery core plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
-          plugin.name = 'refinery_core'
+          plugin.name = 'core'
           plugin.class_name = 'RefineryEngine'
           plugin.hide_from_menu = true
           plugin.always_allow_access = true
@@ -51,7 +51,7 @@ module Refinery
 
       initializer 'register javascripts' do
         ['refinery'].each do |modul|
-          Refinery::Core.config.register_javascript "refinery/#{modul}.all.js"
+          Refinery::Core.config.register_javascript "refinery/#{modul}.min.js"
 
           ::Refinery::I18n.frontend_locales.each do |locale|
             file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/#{modul}-#{locale}.js"

@@ -1,7 +1,7 @@
 ru:
   refinery:
     plugins:
-      refinery_users:
+      users:
         title: Пользователи
         article: masculine
     admin:

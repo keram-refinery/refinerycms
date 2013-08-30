@@ -1,7 +1,7 @@
 zh-TW:
   refinery:
     plugins:
-      refinery_dashboard:
+      dashboard:
         title: 控制面板
         description: 提供 Refinery 上的活動總覽
     admin:
