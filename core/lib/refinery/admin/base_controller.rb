@@ -6,8 +6,6 @@ module Refinery
 
 
       def self.included(base)
-        base.layout :layout?
-
         base.before_action :force_ssl!,
                            :authenticate_refinery_user!,
                            :activate_plugins,

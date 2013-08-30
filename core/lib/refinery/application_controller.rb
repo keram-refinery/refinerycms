@@ -2,6 +2,8 @@ module Refinery
   module ApplicationController
 
     def self.included(base) # Extend controller
+      base.layout :layout?
+
       base.helper_method :xhr_json_response?,
                           :render_html_to_json_string,
                           :refinery_plugin,
@@ -54,7 +56,11 @@ module Refinery
     end
 
     def refinery_plugin
-      @refinery_plugin ||= ::Refinery::Plugins.registered.selected params[:controller]
+      @refinery_plugin ||= ::Refinery::Plugins.registered.selected plugin_name_from_params
+    end
+
+    def plugin_name_from_params
+      params[:controller].gsub(/\Arefinery\/(admin\/)?/, '').gsub(/_dialog\z/, '').gsub('/', '_')
     end
 
     def xhr_json_response?
