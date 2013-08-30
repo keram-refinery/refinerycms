@@ -8,7 +8,7 @@ module Refinery
 
       initializer "register refinerycms_<%= plural_name %> plugin" do
         Refinery::Plugin.register do |plugin|
-          plugin.name = "<%= plural_name %>"
+          plugin.name = '<%= plural_name %>'
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_<%= namespacing.underscore %>_<%= plural_name %>_path }
           plugin.pathname = root
           plugin.activity = {
@@ -20,6 +20,7 @@ module Refinery
 
       config.after_initialize do
         Refinery.register_extension(Refinery::<%= class_name.pluralize %>)
+        Rails.application.routes_reloader.reload!
       end
     end
   end

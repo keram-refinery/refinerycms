@@ -1,6 +1,6 @@
 module Refinery
-  module <%= namespacing %>
-    module Admin
+  module Admin
+    module <%= namespacing %>
       class <%= class_name.pluralize %>Controller < ::Refinery::AdminController
 
         crudify :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'<% if (title = attributes.detect { |a| a.type.to_s =~ /string|text/ }).present? and title.name != 'title' %>,
