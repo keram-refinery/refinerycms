@@ -9,8 +9,6 @@ module Refinery
 
       before_action :redirect_unless_path_match, :only => [:edit] if Pages.marketable_urls
 
-      before_action :load_valid_templates, :only => [:edit, :new, :update, :create]
-
       def new
         @page = Page.new parent_id: params[:parent_id].to_i
       end
@@ -43,20 +41,13 @@ module Refinery
         end
       end
 
-      def load_valid_templates
-        @valid_layout_templates = Pages.layout_template_whitelist.map(&:to_s) &
-                                  Pages.valid_templates('app', 'views', '{layouts,refinery/layouts}', '*html*')
-        @valid_view_templates = Pages.valid_templates('app', 'views', '{pages,refinery/pages}', '*html*')
-      end
-
     private
 
       def page_params
         params.require(:page).permit(
           :title, :draft, :parent_id, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description,
-          :view_template, :layout_template, :custom_slug,
-          :parts_attributes => [:id, :title, :body, :position, :active]
+          :custom_slug, :parts_attributes => [:id, :title, :body, :position, :active]
         )
       end
 

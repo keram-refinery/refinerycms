@@ -3,7 +3,7 @@ require 'spec_helper'
 module Refinery
   describe PagesController do
     before do
-      FactoryGirl.create(:page, :plugin_page_id => 'refinery_pages', :link_url => '/', :view_template => 'home')
+      FactoryGirl.create(:page, :plugin_page_id => 'pages', :link_url => '/')
       FactoryGirl.create(:page, :title => 'test')
     end
 

@@ -1,6 +1,5 @@
 module Refinery
   class PagesController < ::ApplicationController
-    include Pages::RenderOptions
     helper Refinery::Core::Engine.helpers
 
     before_action :find_page
@@ -9,7 +8,6 @@ module Refinery
 
     # This action is usually accessed with the root path, normally '/'
     def home
-      render_with_templates?
     end
 
     # This action can be accessed normally, or as nested pages.
@@ -23,7 +21,6 @@ module Refinery
     #   GET /about/mission
     #
     def show
-      render_with_templates?
     end
 
   protected
@@ -53,7 +50,7 @@ module Refinery
     alias_method :page, :find_page
 
     def refinery_page
-      if current_refinery_user && current_refinery_user.authorized_plugins.include?('refinery_pages')
+      if current_refinery_user && current_refinery_user.authorized_plugins.include?('pages')
         Page
       else
         Page.live

@@ -1,11 +1,10 @@
-plugin = Refinery::Plugins['refinery_pages']
+plugin = Refinery::Plugins['pages']
 
 pages = {
   home: {
     title: 'Home',
     deletable: false,
     link_url: '/',
-    view_template: 'home',
     plugin_page_id: plugin.name
   },
   not_found: {

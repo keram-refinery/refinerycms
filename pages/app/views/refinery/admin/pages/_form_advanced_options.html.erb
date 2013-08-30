@@ -13,24 +13,6 @@
     </div>
     <% end %>
 
-    <% if Refinery::Pages.use_layout_templates %>
-    <div class="field">
-      <%= refinery_form_field f, :select, :layout_template, {
-                    :options => @valid_layout_templates,
-                    :selected => @page.layout_template,
-                    :label => true,
-                    :help => true } %>
-    </div>
-    <% end %>
-
-    <div class="field">
-      <%= refinery_form_field f, :select, :view_template, {
-                    :options => @valid_view_templates.map { |t| [t.titleize, t] },
-                    :selected => @page.view_template,
-                    :label => true,
-                    :help => true } %>
-    </div>
-
     <% if Refinery::Pages.use_custom_slugs %>
     <div class="field">
       <%= refinery_form_field f, :text_field, :custom_slug, :label => true, :help => true -%>
