@@ -1,7 +1,7 @@
 module Refinery
   class Version
-    @major = 3
-    @minor = 0
+    @major = 2
+    @minor = 718
     @tiny  = 0
     @build = 'dev'
 

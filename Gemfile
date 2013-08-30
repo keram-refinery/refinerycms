@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 # Add i18n support.
-gem 'refinerycms-i18n', '~> 3.0.0.dev', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
+gem 'refinerycms-i18n', '~> 2.718.0.dev', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
 
 gem 'quiet_assets', :group => :development
 
@@ -27,7 +27,7 @@ end
 gem 'jruby-openssl', :platform => :jruby
 
 group :test do
-  gem 'refinerycms-testing', '~> 3.0.0.dev'
+  gem 'refinerycms-testing', '~> 2.718.0.dev'
   gem 'generator_spec', '~> 0.9.0'
 end
 
