@@ -1,6 +1,6 @@
 <%
-  admin_path = '#{Refinery::Core.backend_route}'
-  admin_path << "/#{namespacing.underscore}" if namespacing.underscore != plural_name
+  admin_path = 'Refinery::Core.backend_route'
+  admin_path = "\"\#\{#{admin_path}\}/#{namespacing.underscore}\"" if namespacing.underscore != plural_name
 -%>
 plugin = Refinery::Plugins['<%= plural_name -%>']
 if plugin
@@ -19,7 +19,7 @@ if plugin
     end
   <% end %>
     # Admin routes
-    namespace :admin, path: "<%= admin_path %>" do
+    namespace :admin, path: <%= admin_path %> do
       namespace :<%= namespacing.underscore %> do
         resources :<%= plural_name %>, except: :show do
           collection do

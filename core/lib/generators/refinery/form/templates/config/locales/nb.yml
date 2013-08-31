@@ -71,6 +71,6 @@ nb:
       setting: Innstillinger for Forespørsler
     attributes:
       <%= singular_name %>:
-<% attributes.each do |a| %>
+<% attributes.each do |a| -%>
         <%= a.name %>: <%= a.name.humanize %>
-<% end %>
+<% end -%>

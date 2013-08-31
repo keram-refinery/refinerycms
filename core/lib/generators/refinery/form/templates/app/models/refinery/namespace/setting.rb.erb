@@ -11,7 +11,7 @@ module Refinery
 
         def confirmation_subject
           Refinery::Setting.find_or_set(:<%= singular_name %>_confirmation_subject,
-                                        "Thank you for your <%= singular_name.humanize.downcase %>")
+                                        'Thank you for your <%= singular_name.humanize.downcase %>')
         end
 
         def confirmation_subject=(value)
@@ -25,7 +25,7 @@ module Refinery
 
         def notification_subject
           Refinery::Setting.find_or_set(:<%= singular_name %>_notification_subject,
-                                        "New <%= singular_name.humanize.downcase %> from your website")
+                                        'New <%= singular_name.humanize.downcase %> from your website')
         end
       end
 

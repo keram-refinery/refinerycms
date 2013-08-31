@@ -5,7 +5,7 @@
       <tr>
         <td<%= ' valign="top"' if attribute.type.to_s == 'text' %>>
           <strong>
-            <%%= t('.<%= attribute.name %>', :default => t('activerecord.attributes.<%= singular_name %>.<%= attribute.name %>')) %>
+            <%%= t('.<%= attribute.name %>', default: t('activerecord.attributes.<%= singular_name %>.<%= attribute.name %>')) %>
           </strong>
         </td>
         <td>
@@ -37,15 +37,15 @@
   <h2><%%= t('.actions') %></h2>
   <ul>
     <li>
-      <%%= link_to t('.back_to_all_<%= plural_name %>'), refinery.url_for(:action => 'index'),
-                   :class => 'back_icon' %>
+      <%%= link_to t('.back_to_all_<%= plural_name %>'), refinery.url_for(action: 'index'),
+                   class: 'back_icon' %>
     </li>
     <li>
-      <%%= link_to t('delete', :scope => 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),
+      <%%= link_to t('delete', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),
                   refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(@<%= singular_name %>),
-                  :class => 'delete-icon confirm-delete',
-                  :title => t('delete', :scope => 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),
-                  :'data-confirm' => t('message', :scope => 'refinery.admin.delete', :title => @<%= singular_name %>.name),
+                  class: 'delete-icon confirm-delete',
+                  title: t('delete', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),
+                  :'data-confirm' => t('message', scope: 'refinery.admin.delete', title: @<%= singular_name %>.name),
                   :'data-method' => 'delete' %>
     </li>
   </ul>

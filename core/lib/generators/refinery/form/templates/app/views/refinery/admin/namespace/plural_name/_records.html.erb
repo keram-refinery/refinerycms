@@ -1,12 +1,12 @@
 <%% if @grouped_<%= plural_name %>.any? %>
   <%% @grouped_<%= plural_name %>.each do |container| %>
-    <h3><%%= l((<%= singular_name %>_group = container.last).first.created_at, :format => :short) %></h3>
+    <h3><%%= l((<%= singular_name %>_group = container.last).first.created_at, format: :short) %></h3>
     <ul class="records">
-      <%%= render :partial => '<%= singular_name %>', :collection => <%= singular_name %>_group %>
+      <%%= render partial: '<%= singular_name %>', collection: <%= singular_name %>_group %>
     </ul>
   <%% end %>
 <%% else %>
   <p>
-    <strong><%%= t('no_<%= plural_name %>', :scope => 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.index') %></strong>
+    <strong><%%= t('no_<%= plural_name %>', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.index') %></strong>
   </p>
 <%% end %>

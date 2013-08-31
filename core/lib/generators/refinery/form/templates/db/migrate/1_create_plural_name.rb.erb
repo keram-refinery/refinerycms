@@ -14,9 +14,9 @@ class Create<%= class_name.pluralize %> < ActiveRecord::Migration
     when :checkbox
       attribute.type = 'boolean'
     end
-%>
+-%>
       t.<%= attribute.type %> :<%= attribute.name %>
-<% end %>
+<% end -%>
 
       t.timestamps null: false
     end

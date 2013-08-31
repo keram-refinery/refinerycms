@@ -2,14 +2,14 @@ module Refinery
   module <%= class_name.pluralize %>
     class <%= class_name.pluralize %>Controller < ::ApplicationController
 
-      before_action :find_page, :only => [:create, :new]
+      before_action :find_page, only: [:create, :new]
 
       def index
-        redirect_to :action => 'new'
+        redirect_to action: :new
       end
 
       def thank_you
-        @page = Refinery::Page.includes(:parts).find_by(plugin_page_id: "<%= plural_name %>_thank_you")
+        @page = Page.includes(:parts).find_by(plugin_page_id: '<%= plural_name %>_thank_you')
       end
 
       def new
@@ -36,16 +36,16 @@ module Refinery
             logger.warn "Please add an 'email' field to <%= class_name %> if you wish to send confirmation emails when forms are submitted."
           end
 
-          redirect_to refinery.thank_you_<%= namespacing.underscore %>_<%= plural_name %>_path
+          redirect_to refinery.thank_you_<%= namespacing.underscore %>_<%= plural_name %>_path, status: :see_other
         else
-          render :action => 'new'
+          render action: :new
         end
       end
 
     protected
 
       def find_page
-        @page = Refinery::Page.includes(:parts).find_by(plugin_page_id: "<%= plural_name %>")
+        @page = Page.includes(:parts).find_by(plugin_page_id: '<%= plural_name %>')
       end
 
     private

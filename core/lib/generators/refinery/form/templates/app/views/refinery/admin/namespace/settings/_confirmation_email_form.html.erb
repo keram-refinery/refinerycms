@@ -1,4 +1,4 @@
-<%%= form_for @setting, :url => refinery.admin_<%= namespacing.underscore %>_setting_path do |f| %>
+<%%= form_for @setting, url: refinery.admin_<%= namespacing.underscore %>_setting_path do |f| %>
 
   <p>
     <%%= t('.explanation') %>
@@ -29,22 +29,22 @@
       </td>
       <td>
         <%%= text_field_tag 'subject', Refinery::<%= namespacing %>::Setting.confirmation_subject,
-                           :class => 'widest' %>
+                           class: 'widest' %>
       </td>
     </tr>
     <tr>
       <td valign="top">
-        <%%= f.label :value, t('.message'), :class => 'stripped' %>
+        <%%= f.label :value, t('.message'), class: 'stripped' %>
       </td>
       <td>
-        <%%= f.text_area :value, :value => @setting.value, :rows => '7', :class => 'widest' %>
+        <%%= f.text_area :value, value: @setting.value, rows: '7', class: 'widest' %>
         <br/>
         <em><%%= t('.note') %>
       </td>
     </tr>
   </table>
 
-  <%%= render '/refinery/admin/form_actions', :f => f,
-             :cancel_url => refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_url,
-             :hide_delete => true %>
+  <%%= render '/refinery/admin/form_actions', f: f,
+             cancel_url: refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_url,
+             hide_delete: true %>
 <%% end %>

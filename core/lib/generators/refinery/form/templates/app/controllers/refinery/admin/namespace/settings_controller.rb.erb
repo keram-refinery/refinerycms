@@ -3,8 +3,8 @@ module Refinery
     module Admin
       class SettingsController < Refinery::AdminController
 
-        before_action :check_setting, :only => [:edit, :update]
-        after_action :save_subject_for_confirmation, :save_message_for_confirmation, :only => :update
+        before_action :check_setting, only: [:edit, :update]
+        after_action :save_subject_for_confirmation, :save_message_for_confirmation, only: :update
 
         def edit
           @setting = Refinery::Setting.find(params[:id].to_s)
@@ -15,8 +15,8 @@ module Refinery
 
           if @setting.update_attributes(params[:setting])
             flash[:notice] = t('refinery.crudify.updated',
-              :kind => t('setting', scope: 'refinery.crudify'),
-              :what => @setting.name.gsub("<%= singular_name %>_", "").titleize)
+              kind: t('setting', scope: 'refinery.crudify'),
+              what: @setting.name.gsub("<%= singular_name %>_", "").titleize)
 
             redirect_back_or_default(refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path)
           end
@@ -24,7 +24,7 @@ module Refinery
 
       protected
         def check_setting
-          setting = params[:id].gsub("<%= singular_name %>_", "")
+          setting = params[:id].gsub('<%= singular_name %>_', '')
 
           Refinery::<%= namespacing %>::Setting.send(setting) if Refinery::<%= namespacing %>::Setting.respond_to?(setting)
         end

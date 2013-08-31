@@ -4,7 +4,7 @@
     <%% @grouped_<%= plural_name %>.each do |container| %>
       <h3><%%= l((<%= singular_name %>_group = container.last).first.created_at) %></h3>
       <ul>
-        <%%= render :partial => '<%= singular_name %>', :collection => <%= singular_name %>_group %>
+        <%%= render partial: '<%= singular_name %>', collection: <%= singular_name %>_group %>
       </ul>
     <%% end %>
   <%% else %>
