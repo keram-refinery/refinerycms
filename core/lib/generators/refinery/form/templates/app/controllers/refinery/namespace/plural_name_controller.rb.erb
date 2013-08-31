@@ -17,7 +17,7 @@ module Refinery
       end
 
       def create
-        @<%= singular_name %> = <%= class_name %>.new(params[:<%= singular_name %>])
+        @<%= singular_name %> = <%= class_name %>.new(<%= singular_name %>_params)
 
         if @<%= singular_name %>.save
           begin
@@ -46,6 +46,20 @@ module Refinery
 
       def find_page
         @page = Refinery::Page.includes(:parts).find_by(plugin_page_id: "<%= plural_name %>")
+      end
+
+    private
+
+      def <%= singular_name %>_params
+        params.require(:<%= singular_name %>).permit(<%= [].tap do |a|
+          attributes.each.each do |attribute|
+            if [:image, :resource].include?(attribute.type)
+              a << ":#{attribute.name}_id".gsub("_id_id", "_id")
+            else
+              a << ":#{attribute.name}"
+            end
+          end
+        end.join(', ') -%>)
       end
 
     end
