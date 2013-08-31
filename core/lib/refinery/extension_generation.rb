@@ -64,11 +64,11 @@ module Refinery
     end
 
     def attributes_for_translation_table
-      localized_attributes.inject([]) {|memo, attr| memo << ":#{attr.name} => :#{attr.type}"}.join(', ')
+      localized_attributes.inject([]) {|memo, attr| memo << "#{attr.name}: :#{attr.type}"}.join(', ')
     end
 
     def string_attributes
-      @string_attributes ||= attributes.select {|a| /string|text/ === a.type.to_s}.uniq
+      @string_attributes ||= attributes.select {|a| [:string, :text].include?(a.type)}.uniq
     end
 
     def image_attributes
@@ -239,9 +239,7 @@ module Refinery
       end
     end
 
-    def reject_file?(file)
-      !localized? && file.to_s.include?('locale_picker')
-    end
+    def reject_file?(file); end
 
     def reject_template?(file)
       file.directory? || reject_file?(file)

@@ -26,7 +26,7 @@ module Refinery
       end
 
       def find_page
-        @page = ::Refinery::Page.where(:plugin_page_id => '<%= plural_name %>').first
+        @page = ::Refinery::Page.find_by(plugin_page_id: '<%= plural_name %>')
       end
 
     end

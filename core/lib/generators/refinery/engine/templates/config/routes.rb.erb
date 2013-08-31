@@ -7,24 +7,24 @@ if plugin
   Refinery::Core::Engine.routes.draw do
   <% unless skip_frontend? %>
     # Frontend routes
-    if plugin.page.present?
-      if Refinery::Pages.marketable_urls
-        Globalize.with_locales plugin.page.translated_locales do |locale|
-          get "#{plugin.page.nested_path}", :to => "<%= plural_name -%>#index"
-          get "#{plugin.page.nested_path}/:id", :to => "<%= plural_name -%>#show"
-        end
-      else
-        namespace :<%= namespacing.underscore %> do
-          resources :<%= plural_name %><%= ", :path => ''" if namespacing.underscore == plural_name %>, :only => [:index, :show]
-        end
+    if plugin.page.present? && Refinery::Pages.marketable_urls
+      Globalize.with_locales plugin.page.translated_locales do |locale|
+        get "#{plugin.page.nested_path}", to: "<%= plural_name -%>#index"
+        get "#{plugin.page.nested_path}/:id", to: "<%= plural_name -%>#show"
+      end
+    else
+      namespace :<%= namespacing.underscore %> do
+        resources :<%= plural_name %><%= ", path: ''" if namespacing.underscore == plural_name %>, only: [:index, :show]
       end
     end
   <% end %>
     # Admin routes
-    namespace :admin, :path => "<%= admin_path %>" do
-      resources :<%= plural_name %>, :except => :show do
-        collection do
-          post :update_positions
+    namespace :admin, path: "<%= admin_path %>" do
+      namespace :<%= namespacing.underscore %> do
+        resources :<%= plural_name %>, except: :show do
+          collection do
+            post :update_positions
+          end
         end
       end
     end

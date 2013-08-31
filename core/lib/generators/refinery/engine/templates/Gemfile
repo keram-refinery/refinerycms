@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'refinerycms-i18n', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
+gem 'refinerycms-i18n', github: 'keram-refinery/refinerycms-i18n', branch: 'refinery_light'
 
-git 'git://github.com/keram-refinery/refinerycms.git', :branch => 'refinery_light' do
+git 'git://github.com/keram-refinery/refinerycms.git', branch: 'refinery_light' do
   gem 'refinerycms'
 
   group :development, :test do
@@ -41,7 +41,12 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier', '~> 2.2.0'
 
-gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', :branch => 'master'
+gem 'turbolinks'
 
 gem 'jquery-rails', '~> 3.0.4'
 gem 'jquery-ui-rails', '~> 4.0.4'
+
+# Load local gems according to Refinery developer preference.
+if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
+  eval File.read(local_gemfile)
+end

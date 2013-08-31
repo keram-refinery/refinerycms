@@ -8,32 +8,32 @@
   <% if localized? %>
     <%% if Refinery::I18n.frontend_locales.many? %>
       <%%= render 'record_translations',
-                  :record => <%= singular_name %>,
-                  :link => 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>' %>
+                  record: <%= singular_name %>,
+                  link: 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>' %>
     <%% end %>
   <% end %>
   </div>
 
   <span class="actions">
-    <%%= link_to t('delete', :scope => 'refinery.admin.record'),
+    <%%= link_to t('delete', scope: 'refinery.admin.record'),
                 refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
-                :title => t('.delete'),
-                :remote => true,
-                :confirm => t('message', :scope => 'refinery.admin.delete', :title => <%= singular_name %>.<%= title_attribute %>),
-                :method => :delete %>
+                class: 'delete confirm-delete nojs-hide icon-small delete-icon',
+                title: t('.delete'),
+                remote: true,
+                confirm: t('message', scope: 'refinery.admin.delete', title: <%= singular_name %>.<%= title_attribute %>),
+                method: :delete %>
 
-    <%%= link_to t('edit', :scope => 'refinery.admin.record'),
+    <%%= link_to t('edit', scope: 'refinery.admin.record'),
                 refinery.edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                :class => 'icon-small edit-icon',
-                :title => t('.edit') %>
+                class: 'icon-small edit-icon',
+                title: t('.edit') %>
 
   <% unless skip_frontend? %>
-    <%%= link_to t('live', :scope => 'refinery.admin.record'),
+    <%%= link_to t('live', scope: 'refinery.admin.record'),
                 refinery.<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                :class => 'icon-small live-icon',
-                :title => t('.view_live'),
-                :target => '_blank' %>
+                class: 'icon-small live-icon',
+                title: t('.view_live'),
+                target: '_blank' %>
   <% end %>
   </span>
 </li>

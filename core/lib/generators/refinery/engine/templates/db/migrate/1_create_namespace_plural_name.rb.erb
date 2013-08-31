@@ -4,13 +4,15 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
     create_table :refinery_<%= "#{namespacing.underscore}_" if table_name != namespacing.underscore.pluralize %><%= table_name %> do |t|
 <%
   attributes.each do |attribute|
+    attribute_type = attribute.type
+    attribute_name = attribute.name
     # turn image or resource into what it was supposed to be which is an integer reference to an image or resource.
-    if attribute.type.to_s =~ /^(image|resource)$/
-      attribute.type = 'integer'
-      attribute.name = "#{attribute.name}_id".gsub("_id_id", "_id")
+    if [:image, :resource].include?(attribute.type)
+      attribute_type = :integer
+      attribute_name = "#{attribute.name}_id".gsub("_id_id", "_id")
     end
 -%>
-      t.<%= attribute.type %> :<%= attribute.name %>
+      t.<%= attribute_type %> :<%= attribute_name %>
 <% end -%>
       t.integer :position
 

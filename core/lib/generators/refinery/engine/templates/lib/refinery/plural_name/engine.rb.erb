@@ -12,15 +12,18 @@ module Refinery
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_<%= namespacing.underscore %>_<%= plural_name %>_path }
           plugin.pathname = root
           plugin.activity = {
-            :class_name => :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'<% if (title = attributes.detect { |a| a.type.to_s == 'string' }).present? and title.name != 'title' %>,
-            :title => '<%= title.name %>'<% end %>
+            class_name: :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'<% if (title = attributes.detect { |a| a.type.to_s == 'string' }).present? and title.name != 'title' %>,
+            title: '<%= title.name %>'<% end %>
           }
         end
       end
 
+      initializer "reload routes" do
+        Rails.application.routes_reloader.reload!
+      end
+
       config.after_initialize do
         Refinery.register_extension(Refinery::<%= class_name.pluralize %>)
-        Rails.application.routes_reloader.reload!
       end
     end
   end

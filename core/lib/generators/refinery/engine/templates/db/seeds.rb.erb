@@ -3,9 +3,9 @@ plugin = Refinery::Plugins['<%= plural_name -%>']
 if plugin
   if defined?(Refinery::User)
     Refinery::User.all.each do |user|
-      if user.plugins.where(:name => plugin.name).blank?
-        user.plugins.create(:name => plugin.name,
-                            :position => (user.plugins.maximum(:position) || -1) +1)
+      if user.plugins.where(name: plugin.name).blank?
+        user.plugins.create(name: plugin.name,
+                            position: (user.plugins.maximum(:position) || -1) +1)
       end
     end
   end
@@ -13,9 +13,9 @@ if plugin
 <% unless skip_frontend? -%>
   if defined?(Refinery::Page) && plugin.page.nil?
     page = Refinery::Page.create(
-      :title => '<%= class_name.pluralize.underscore.titleize %>',
-      :plugin_page_id => plugin.name,
-      :deletable => false
+      title: '<%= class_name.pluralize.underscore.titleize %>',
+      plugin_page_id: plugin.name,
+      deletable: false
     )
   end
 <% end %>

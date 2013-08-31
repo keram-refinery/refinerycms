@@ -1,8 +1,8 @@
 <%%
   config = {
-    :update_url => refinery.url_for(:action => 'update_positions')
+    update_url: refinery.url_for(action: 'update_positions')
   }
 %>
 <ul class="records sortable-list" data-sortable-options="<%%= config.to_json %>">
-  <%%= render :partial => '<%= singular_name %>', :collection => @<%= plural_name %> %>
+  <%%= render partial: '<%= singular_name %>', collection: @<%= plural_name %> %>
 </ul>

@@ -36,8 +36,8 @@ module Refinery
     end
 
     def reject_file_with_skip_frontend?(file)
-      (skip_frontend? && (file.to_s.include?('app') && file.to_s.scan(/admin|models|mailers/).empty?)) ||
-        reject_file_without_skip_frontend?(file)
+      (skip_frontend? && (file.to_s.include?('app') &&
+        file.to_s.scan(/admin|models|mailers/).empty?)) || reject_file_without_skip_frontend?(file)
     end
     alias_method_chain :reject_file?, :skip_frontend
   end
