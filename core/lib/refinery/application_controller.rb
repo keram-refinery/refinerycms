@@ -60,7 +60,7 @@ module Refinery
     end
 
     def plugin_name_from_params
-      params[:controller].gsub(/\Arefinery\/(admin\/)?/, '').gsub(/_dialog\z/, '').gsub('/', '_')
+      params[:controller].gsub(/\Arefinery\/(admin\/)?/, '').split('/').first.gsub(/_dialog\z/, '')
     end
 
     def xhr_json_response?

@@ -46,8 +46,6 @@ module Refinery
         authorized_plugins = current_refinery_user.authorized_plugins
         ::Refinery::Plugins.set_active(authorized_plugins)
 
-        # we don't have always active plugin, for example Links Dialog,
-        # so this is obsolete
         unless refinery_plugin
           logger.warn "Plugin accessed via '#{params[:controller]}' was not found."
           return error_404
