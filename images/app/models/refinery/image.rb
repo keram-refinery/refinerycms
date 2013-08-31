@@ -83,6 +83,13 @@ module Refinery
       CGI::unescape(image_name.to_s).gsub(/\.\w+$/, '').titleize
     end
 
+    def to_images_dialog
+      {
+        id: id,
+        thumbnail: thumbnail(geometry: :medium).url
+      }
+    end
+
     private
 
     def convert_to_geometry(geometry)

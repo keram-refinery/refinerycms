@@ -416,6 +416,16 @@
     };
 
     /**
+     * if browser doesn't support console.log log nothing
+     *
+     * @expose
+     * @typedef {Function}
+     */
+    refinery.log = (typeof console === 'object' &&
+                    typeof console.log === 'function') ? console.log : function () {};
+
+
+    /**
      * [ui description]
      *
      * @expose
@@ -1029,6 +1039,13 @@
             main_content_selector: '#content'
         },
 
+        /**
+         * Register standard ui events on holder
+         *     - flash message close button
+         *     - ajax response processing
+         *
+         * @return {undefined}
+         */
         bind_events: function () {
             var that = this,
                 holder = that.holder;
@@ -1039,28 +1056,37 @@
                 return false;
             });
 
-            holder.on('ajax:success', function (event, response, status, xhr) {
+            /**
+             * Process ajax response
+             *
+             * @param  {jQuery.event} event
+             * @param  {json_response} response
+             * @param  {string} status
+             * @param  {jQuery.jqXHR} xhr
+             * @return {undefined}
+             */
+            function ajax_success (event, response, status, xhr) {
                 var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To'),
                     replace_target = true,
-                    target;
+                    target = event.target;
 
-                if (response && typeof response === 'object') {
-                    if (response.redirect_to) {
-                        Turbolinks.visit(response.redirect_to);
+                if (response.redirect_to) {
+                    Turbolinks.visit(response.redirect_to);
+                } else {
+                    if (redirected_to || target.tagName.toLowerCase() === 'a') {
+                        target = holder.find(that.options.main_content_selector);
+                        replace_target = false;
                     } else {
-                        if (redirected_to || event.target.tagName.toLowerCase() === 'a') {
-                            target = holder.find(that.options.main_content_selector);
-                            replace_target = false;
-                        } else {
-                            target = $(event.target);
-                        }
-
-                        that.destroy();
-                        refinery.xhr.success(response, status, xhr, target, replace_target);
-                        that.trigger('ui:change');
+                        target = $(target);
                     }
+
+                    that.destroy();
+                    refinery.xhr.success(response, status, xhr, target, replace_target);
+                    that.trigger('ui:change');
                 }
-            });
+            }
+
+            holder.on('ajax:success', ajax_success);
 
             holder.on('ajax:error',
                 /**
@@ -1074,6 +1100,12 @@
                 });
         },
 
+        /**
+         * Iterate through refinery.ui namespace
+         * and if found function, call with passed ui holder and self
+         *
+         * @return {undefined}
+         */
         initialize_elements: function () {
             var that = this,
                 holder = that.holder,
@@ -1110,23 +1142,8 @@
                         }
                     });
                 } catch (e) {
-                    if (typeof console === 'object' && typeof console.log === 'function') {
-                        console.log(e);
-                        console.log(holders);
-                    }
+                    refinery.log(e);
                 }
-
-                // we can't do this because destroying jquery ui instances a
-                // also removes classes on objects which we use
-                //
-                // try {
-                //     holder.find('.collapsible-list').accordion('destroy');
-                //     holder.find('.ui-tabs').tabs('destroy');
-                //     holder.find('.ui-selectable').selectable('destroy');
-                //     holder.find('.sortable-list').not('.records').sortable('destroy');
-                // } catch (e) {
-                //     console.log(e);
-                // }
             }
 
             return this._destroy();

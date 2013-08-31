@@ -1,23 +1,17 @@
-<%
-  description ||= 'resource'
-  thumbnail ||= 'medium'
-  conditions ||= nil
-  current_resource_link_href = refinery.admin_insert_resources_path(:conditions => conditions)
-  current_resource_title = t('.change', :what => description.titleize)
-%>
 <div class="resource-picker">
-  <%= f.hidden_field field, :class => 'current-resource-id' %>
-  <div class="current-resource-container" >
-    <%= link_to current_resource_link_href, :class => 'current-resource-link', :title => current_resource_title do %>
-      <span class="resource-holder">
-          <%= resource_fu resource, :class => 'current-picked-resource' if resource.present? %>
+  <%= f.hidden_field field, class: 'current-resource-id' %>
+  <div class="current-record-container" >
+    <%= link_to '#', class: 'current-record-link', title: t('.change') do %>
+      <span class="record-holder">
+        <%= resource_fu resource, class: 'current-picked-record' if resource.present? %>
       </span>
-      <span class="no-picked-resource-selected <%= 'hide' if resource.present? %>">
+      <span class="no-picked-record-selected <%= 'hide' if resource.present? %>">
         <%= t('.no_resource_selected') %>
       </span>
     <% end %>
     <br/>
-    <%= link_to t('.remove_current'), "#",
-                :class => "remove-picked-resource #{' hide' if resource.nil?}" %>
+    <%= link_to t('.remove_current'), '#',
+                class: "remove-picked-record #{' hide' if resource.nil?}" %>
   </div>
 </div>
+

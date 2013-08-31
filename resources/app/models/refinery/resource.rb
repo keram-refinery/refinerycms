@@ -5,6 +5,7 @@ module Refinery
     ::Refinery::Resources::Dragonfly.setup!
 
     include Resources::Validators
+    include ActionView::Helpers::NumberHelper
 
     MAX_FILE_MIME_TYPE_LENGTH = 128
 
@@ -35,7 +36,7 @@ module Refinery
       {
         id: id,
         name: file_name,
-        size: file_size,
+        size: number_to_human_size(file_size),
         url: url,
         ext: ext.to_s.downcase,
         mime_type: file_mime_type

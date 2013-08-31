@@ -790,6 +790,36 @@
             var that = this,
                 holder = that.holder;
 
+            /**
+             * Process ajax response
+             *
+             * @param  {jQuery.event} event
+             * @param  {json_response} response
+             * @param  {string} status
+             * @param  {jQuery.jqXHR} xhr
+             * @return {undefined}
+             */
+            function ajax_success (event, response, status, xhr) {
+                var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To'),
+                    replace_target = true,
+                    target;
+
+                if (response.redirect_to) {
+                    Turbolinks.visit(response.redirect_to);
+                } else {
+                    if (redirected_to || event.target.tagName.toLowerCase() === 'a') {
+                        target = holder.find(that.options.main_content_selector);
+                        replace_target = false;
+                    } else {
+                        target = $(event.target);
+                    }
+
+                    that.destroy();
+                    refinery.xhr.success(response, status, xhr, target, replace_target);
+                    that.trigger('ui:change');
+                }
+            }
+
             holder.on('click', '.flash-close', function (e) {
                 e.preventDefault();
                 $(this).parent().fadeOut();
@@ -801,33 +831,18 @@
                 that.toggle_tree_branch($(this).parents('li:first'));
             });
 
-            holder.on('ajax:success', function (event, response, status, xhr) {
-                var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To'),
-                    replace_target = true,
-                    target;
+            holder.on('ajax:success', ajax_success);
 
-                if (response && typeof response === 'object') {
-                    if (response.redirect_to) {
-                        Turbolinks.visit(response.redirect_to);
-                    } else {
-                        if (redirected_to || event.target.tagName.toLowerCase() === 'a') {
-                            target = holder.find(that.options.main_content_selector);
-                            replace_target = false;
-                        } else {
-                            target = $(event.target);
-                        }
-
-
-                        that.destroy();
-                        refinery.xhr.success(response, status, xhr, target, replace_target);
-                        that.trigger('ui:change');
-                    }
-                }
-            });
-
-            holder.on('ajax:error', function (event, xhr, status) {
-                refinery.xhr.error(xhr, status);
-            });
+            holder.on('ajax:error',
+                /**
+                 * @param {jQuery.event} event
+                 * @param {jQuery.jqXHR} xhr
+                 * @param {string} status
+                 * @return {undefined}
+                 */
+                function (event, xhr, status) {
+                    refinery.xhr.error(xhr, status);
+                });
 
             holder.find('.ui-selectable').selectable({ 'filter': 'li' });
         },
@@ -884,23 +899,9 @@
                         }
                     });
                 } catch (e) {
-                    if (typeof console === 'object' && typeof console.log === 'function') {
-                        console.log(e);
-                        console.log(holders);
-                    }
+                    refinery.log(e);
+                    refinery.log(holders);
                 }
-
-                // we can't do this because destroying jquery ui instances a
-                // also removes classes on objects which we use
-                //
-                // try {
-                //     holder.find('.collapsible-list').accordion('destroy');
-                //     holder.find('.ui-tabs').tabs('destroy');
-                //     holder.find('.ui-selectable').selectable('destroy');
-                //     holder.find('.sortable-list').not('.records').sortable('destroy');
-                // } catch (e) {
-                //     console.log(e);
-                // }
             }
 
             return this._destroy();
@@ -1292,26 +1293,26 @@
         module: 'admin',
 
         /**
-         *
+         * @expose
          * @type {?string}
          */
         elm_current_record_id: null,
 
         /**
-         *
-         * @type {?(jQuerySelector|jQuery)}
+         * @expose
+         * @type {jQuery}
          */
         elm_record_holder: null,
 
         /**
-         *
-         * @type {?(jQuerySelector|jQuery)}
+         * @expose
+         * @type {jQuery}
          */
         elm_no_picked_record: null,
 
         /**
-         *
-         * @type {?(jQuerySelector|jQuery)}
+         * @expose
+         * @type {jQuery}
          */
         elm_remove_picked_record: null,
 
@@ -1357,7 +1358,7 @@
          * @return {Object} self
          */
         insert: function (record) {
-            console.log(record);
+            refinery.log(record);
             return this;
         },
 
@@ -1393,14 +1394,23 @@
         },
 
         /**
+         * Abstract method
+         *
+         * abstract
+         * @expose
+         */
+        init_dialog: function () {
+
+        },
+
+        /**
          * Initialization and binding
          *
          * @param {!jQuery} holder
-         * @param {!refinery.Object} dialog
          *
          * @return {refinery.Object} self
          */
-        init: function (holder, dialog) {
+        init: function (holder) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
                 this.attach_holder(holder);
@@ -1408,7 +1418,7 @@
                 this.elm_record_holder = holder.find('.record-holder');
                 this.elm_no_picked_record = holder.find('.no-picked-record-selected');
                 this.elm_remove_picked_record = holder.find('.remove-picked-record');
-                this.dialog = dialog.init(holder);
+                this.init_dialog();
                 this.bind_events();
                 this.is({'initialised': true, 'initialising': false});
                 this.is({'initialising' : false, 'initialised': true });
@@ -1489,16 +1499,12 @@
          *
          * @expose
          * @param {!jQuery} li selected row
-         * @return {{id: string}}
+         * @return {images_dialog_object}
          */
         existing_image_area: function (li) {
-            var obj = {
-                id: li.attr('id').match(/[0-9]+$/)[0]
-            };
-
             li.removeClass('ui-selected');
 
-            return obj;
+            return /** @type {images_dialog_object} */(li.data('dialog'));
         },
 
         /**
@@ -1506,7 +1512,7 @@
          *
          * @expose
          * @param {!jQuery} form
-         * @return {undefined|{alt: string, url: string}}
+         * @return {undefined|images_dialog_object}
          */
         external_image_area: function (form) {
             var url_input = form.find('input[type="url"]:valid'),
@@ -1537,7 +1543,7 @@
          */
         upload_area: function (json_response) {
             var that = this,
-                image = json_response.image,
+                image = /** @type {images_dialog_object} */(json_response.image),
                 holder = that.holder;
 
             if (image) {
@@ -1659,6 +1665,7 @@
      * @constructor
      * @extends {refinery.admin.Dialog}
      * @param {Object=} options
+     * @return {refinery.admin.ResourcesDialog}
      */
     refinery.Object.create({
         objectPrototype: refinery('admin.Dialog', {
@@ -1713,27 +1720,47 @@
         name: 'ImagePicker',
 
         /**
+         * Initialize Images Dialog
+         */
+        init_dialog: function () {
+            /**
+             * refinery.admin.ImagesDialog
+             */
+            var dialog = refinery('admin.ImagesDialog').init();
+
+            /**
+             * Hide url tab as we can insert in picker only images from our library.
+             * When it will be implemented functionality upload external image to server
+             * then this can disappear
+             *
+             * @return {undefined}
+             */
+            dialog.on('load', function () {
+                dialog.holder.find('a[href="#external-image-area"]').parent().hide();
+            });
+
+            this.dialog = dialog;
+        },
+
+        /**
          * Attach image to form
          *
-         * @param {{id: string, size: string, medium: string}} img
+         * @param {images_dialog_object} img
          *
          * @return {Object} self
          */
         insert: function (img) {
-            if (img) {
-                this.elm_current_record_id.val(img.id);
-                this.holder.find('.current-image-size').val(img.size);
+            this.elm_current_record_id.val(img.id);
 
-                this.elm_record_holder.html($('<img/>', {
-                    'class': 'size-medium',
-                    'src': img.medium
-                }));
+            this.elm_record_holder.html($('<img/>', {
+                'class': 'record size-medium',
+                'src': img.thumbnail
+            }));
 
-                this.elm_no_picked_record.addClass('hide');
-                this.elm_remove_picked_record.removeClass('hide');
-                this.dialog.close();
-                this.trigger('insert');
-            }
+            this.elm_no_picked_record.addClass('hide');
+            this.elm_remove_picked_record.removeClass('hide');
+            this.dialog.close();
+            this.trigger('insert');
 
             return this;
         }
@@ -1751,26 +1778,44 @@
         name: 'ResourcePicker',
 
         /**
-         * Attach resource to form
+         * Initialize Resources Dialog
          *
-         * @param {{id: string, url: string, html: string}} resource
+         */
+        init_dialog: function () {
+            /**
+             * refinery.admin.ResourcesDialog
+             */
+            this.dialog = refinery('admin.ResourcesDialog').init();
+        },
+
+
+        /**
+         * Attach resource - file to form
+         *
+         * @param {file_dialog_object} file
          *
          * @return {Object} self
          */
-        insert: function (resource) {
-            if (resource) {
-                this.elm_current_record_id.val(resource.id);
+        insert: function (file) {
+            var html;
 
-                this.elm_record_holder.html($('<a/>', {
-                    src: resource.url,
-                    html: resource.html
-                }));
+            html = $('<span/>', {
+                'text': file.name + ' - ' + file.size,
+                'class': 'title' + ( ' ' + file.ext || '')
+            });
 
-                this.elm_no_picked_record.addClass('hide');
-                this.elm_remove_picked_record.removeClass('hide');
-                this.dialog.close();
-                this.trigger('insert');
-            }
+            this.elm_current_record_id.val(file.id);
+
+            this.elm_record_holder.html($('<a/>', {
+                'src': file.url,
+                'html': html,
+                'class': 'record'
+            }));
+
+            this.elm_no_picked_record.addClass('hide');
+            this.elm_remove_picked_record.removeClass('hide');
+            this.dialog.close();
+            this.trigger('insert');
 
             return this;
         }

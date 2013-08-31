@@ -1,24 +1,17 @@
-<%
-  description ||= 'image'
-  thumbnail ||= 'medium'
-  conditions ||= nil
-  current_image_link_href = refinery.admin_insert_images_path(:conditions => conditions)
-  current_image_title = t('.change', :what => description.titleize)
-%>
 <div class="image-picker">
-  <%= f.hidden_field field, :class => 'current-image-id' %>
-  <div class="current-image-container" >
-    <%= link_to current_image_link_href, :class => 'current-image-link', :title => current_image_title do %>
-      <span class="image-holder">
-          <%= image_fu image, Refinery::Images.user_image_sizes[thumbnail.to_sym],
-                                 :class => 'current-picked-image' if image.present? %>
+  <%= f.hidden_field field, class: 'current-record-id' %>
+  <div class="current-record-container" >
+    <%= link_to '#', class: 'current-record-link', title: t('.change') do %>
+      <span class="record-holder">
+        <%= image_fu image, Refinery::Images.user_image_sizes[:medium],
+                    class: 'current-picked-record' if image.present? %>
       </span>
-      <span class="no-picked-image-selected <%= 'hide' if image.present? %>">
+      <span class="no-picked-record-selected <%= 'hide' if image.present? %>">
         <%= t('.none_selected') %>
       </span>
     <% end %>
     <br/>
-    <%= link_to t('.remove_current'), "#",
-                :class => "remove-picked-image #{' hide' if image.nil?}" %>
+    <%= link_to t('.remove_current'), '#',
+                class: "remove-picked-record #{' hide' if image.nil?}" %>
   </div>
 </div>

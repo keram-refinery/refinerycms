@@ -17,7 +17,7 @@ module Refinery
         end
 
         if @image.valid?
-          json_response image: { id: @image.id }
+          json_response image: @image.to_images_dialog
           index
           json_response html: { 'existing-image-area' => render_html_to_json_string('existing_image') }
           json_response html: render_html_to_json_string('upload_image')
