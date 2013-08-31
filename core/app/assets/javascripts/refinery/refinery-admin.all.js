@@ -802,16 +802,16 @@
             function ajax_success (event, response, status, xhr) {
                 var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To'),
                     replace_target = true,
-                    target;
+                    target = event.target;
 
                 if (response.redirect_to) {
                     Turbolinks.visit(response.redirect_to);
                 } else {
-                    if (redirected_to || event.target.tagName.toLowerCase() === 'a') {
+                    if (redirected_to || target.tagName.toLowerCase() === 'a') {
                         target = holder.find(that.options.main_content_selector);
                         replace_target = false;
                     } else {
-                        target = $(event.target);
+                        target = $(target);
                     }
 
                     that.destroy();

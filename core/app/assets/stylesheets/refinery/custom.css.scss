@@ -75,3 +75,14 @@
 #refinery-cms-logo:active  {
     background-position: 50% -29px;
 }
+
+.wysiwyg-editor-holder,
+.wysiwyg-editor-on textarea {
+  display: none;
+}
+
+.wysiwyg-editor-on .wysiwyg-editor-holder {
+  display: block;
+  min-height: 400px;
+  margin-bottom: 0.5em;
+}
