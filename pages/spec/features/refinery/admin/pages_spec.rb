@@ -15,20 +15,6 @@ def new_window_should_not_have_content(content)
   end
 end
 
-def stub_frontend_locales *locales
-  Refinery::I18n.stub(:frontend_locales).and_return(locales)
-  Refinery::AdminController.any_instance.stub(:frontend_locales_rgxp).and_return(%r{\A(#{::Refinery::I18n.frontend_locales.join('|')})\z})
-  RoutingFilter::RefineryLocales.any_instance.stub(:locales_regexp).and_return(%r{^/(#{::Refinery::I18n.frontend_locales.join('|')})(/|$)})
-end
-
-def unstub_frontend_locales
-  Refinery::I18n.unstub(:frontend_locales)
-  Refinery::AdminController.any_instance.unstub(:frontend_locales_rgxp)
-  RoutingFilter::RefineryLocales.any_instance.unstub(:locales_regexp)
-  Globalize.locale = Refinery::I18n.default_frontend_locale
-  ::I18n.locale = Refinery::I18n.default_locale
-end
-
 module Refinery
   module Admin
     describe 'Pages' do
@@ -235,7 +221,7 @@ module Refinery
 
       context 'with translations' do
         before do
-          stub_frontend_locales :en, :ru
+          Refinery::Testing::FeatureMacros::I18n.stub_frontend_locales :en, :ru
 
           # Create a home page in both locales (needed to test menus)
           home_page = Globalize.with_locale(:en) do
@@ -251,7 +237,7 @@ module Refinery
         end
 
         after do
-          unstub_frontend_locales
+          Refinery::Testing::FeatureMacros::I18n.unstub_frontend_locales
         end
 
         describe 'add a page with title for default locale' do
@@ -484,12 +470,12 @@ module Refinery
 
       describe 'add page to second locale' do
         before do
-          stub_frontend_locales :en, :lv
+          Refinery::Testing::FeatureMacros::I18n.stub_frontend_locales :en, :lv
           Page.create :title => 'First Page'
         end
 
         after do
-          unstub_frontend_locales
+          Refinery::Testing::FeatureMacros::I18n.unstub_frontend_locales
         end
 
         it 'succeeds' do
@@ -509,7 +495,7 @@ module Refinery
 
       describe 'Pages Link-to Dialog' do
         before do
-          stub_frontend_locales :en, :ru
+          Refinery::Testing::FeatureMacros::I18n.stub_frontend_locales :en, :ru
 
           # Create a page in both locales
           about_page = Globalize.with_locale(:en) do
@@ -523,7 +509,7 @@ module Refinery
         end
 
         after do
-          unstub_frontend_locales
+          Refinery::Testing::FeatureMacros::I18n.unstub_frontend_locales
         end
 
         let(:about_page) do

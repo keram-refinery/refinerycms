@@ -122,8 +122,8 @@ module Refinery
               directory 'spec' do
                 directory 'features' do
                   directory 'refinery' do
-                    directory 'rspec_product_tests' do
-                      directory 'admin' do
+                    directory 'admin' do
+                      directory 'rspec_product_tests' do
                         file 'rspec_product_tests_spec.rb'
                       end
                     end

@@ -9,7 +9,7 @@ module Refinery
       end
 
       def thank_you
-        @page = Page.includes(:parts).find_by(plugin_page_id: '<%= plural_name %>_thank_you')
+        @page = Page.includes(:parts).find_by(plugin_page_id: '<%= extension_name %>_thank_you')
       end
 
       def new
@@ -45,7 +45,7 @@ module Refinery
     protected
 
       def find_page
-        @page = Page.includes(:parts).find_by(plugin_page_id: '<%= plural_name %>')
+        @page = Page.includes(:parts).find_by(plugin_page_id: '<%= extension_name %>')
       end
 
     private

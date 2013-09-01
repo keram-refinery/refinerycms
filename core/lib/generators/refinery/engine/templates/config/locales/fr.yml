@@ -1,8 +1,8 @@
 fr:
   refinery:
     plugins:
-      <%= plural_name %>:
-        title: <%= plural_name.titleize %>
+      <%= extension_name %>:
+        title: <%= extension_name.titleize %>
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -18,6 +18,7 @@ fr:
             view_live: Voir ce(t/tte) <%= singular_name.titleize.downcase %> (Ouvre une nouvelle fenêtre)
             edit: Modifier ce(t/tte) <%= singular_name.titleize.downcase %>
             delete: Supprimer définitivement ce(t/tte) <%= singular_name.titleize.downcase %>
+    <%= namespacing.underscore %>:
       <%= plural_name %>:
         show:
           other: Autres <%= singular_name.titleize.pluralize %>

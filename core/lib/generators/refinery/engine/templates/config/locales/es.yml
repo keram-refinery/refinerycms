@@ -1,8 +1,8 @@
 es:
   refinery:
     plugins:
-      <%= plural_name %>:
-        title: <%= plural_name.titleize %>
+      <%= extension_name %>:
+        title: <%= extension_name.titleize %>
 #        article: masculino/femenino
     admin:
       <%= namespacing.underscore %>:
@@ -19,6 +19,7 @@ es:
             view_live: Ver este <%= singular_name.titleize.downcase %> como abierto al público (abre en ventana nueva)
             edit: Editar este <%= singular_name.titleize.downcase %>
             delete: Borrar este <%= singular_name.titleize.downcase %> para siempre
+    <%= namespacing.underscore %>:
       <%= plural_name %>:
         show:
           other: Otros <%= singular_name.titleize.pluralize.downcase %>

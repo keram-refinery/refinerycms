@@ -1,5 +1,6 @@
-<%%= form_for @setting, url: refinery.admin_<%= namespacing.underscore %>_setting_path do |f| %>
-
+<%%= form_for @setting,
+              url: refinery.admin_<%= namespacing.underscore %>_setting_path,
+              html: { data: { remote: true }} do |f| %> do |f| %>
   <p>
     <%%= t('.explanation') %>
   </p>

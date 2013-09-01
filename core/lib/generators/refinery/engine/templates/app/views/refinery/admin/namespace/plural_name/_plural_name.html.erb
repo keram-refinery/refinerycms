@@ -1,2 +1,8 @@
-<%%= will_paginate @<%= plural_name %> if Refinery::Admin::<%= namespacing %>::<%= class_name.pluralize %>Controller.pageable? %>
+<%%= will_paginate @<%= plural_name %> %>
+<% if sortable? -%>
 <%%= render 'sortable_list' %>
+<% else -%>
+<ul class="records">
+  <%%= render partial: '<%= singular_name %>', collection: @<%= plural_name %> %>
+</ul>
+<% end -%>

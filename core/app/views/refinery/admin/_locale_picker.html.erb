@@ -4,7 +4,7 @@
   if request.method === 'GET'
     locale_params = params.dup
   else
-    locale_params = {id: object.id, action: :edit}
+    locale_params = { id: object.id, action: :edit }
   end
 -%>
   <ul class="locale-picker clearfix">

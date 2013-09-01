@@ -6,11 +6,11 @@ describe Refinery do
     describe 'Admin' do
       describe "<%= plural_name %>" do
         refinery_login_with :refinery_user
-<% if (title = attributes.detect { |a| a.type.to_s == 'string' }).present? %>
+<% if title_attribute.present? %>
         describe "<%= plural_name %> list" do
           before do
-            FactoryGirl.create(:<%= singular_name %>, <%= title.name %>: 'UniqueTitleOne')
-            FactoryGirl.create(:<%= singular_name %>, <%= title.name %>: 'UniqueTitleTwo')
+            FactoryGirl.create(:<%= singular_name %>, <%= title_attribute_name %>: 'UniqueTitleOne')
+            FactoryGirl.create(:<%= singular_name %>, <%= title_attribute_name %>: 'UniqueTitleTwo')
           end
 
           it 'shows two items' do
@@ -29,7 +29,7 @@ describe Refinery do
 
           context 'valid data' do
             it 'should succeed' do
-              fill_in "<%= title.name.titleize %>", with: 'This is a test of the first string field'
+              fill_in "<%= title_attribute_name.titleize %>", with: 'This is a test of the first string field'
               click_button "Save"
 
               page.should have_content("'This is a test of the first string field' was successfully added.")
@@ -41,20 +41,20 @@ describe Refinery do
             it 'should fail' do
               click_button "Save"
 
-              page.should have_content("<%= title.name.titleize %> can't be blank")
+              page.should have_content("<%= title_attribute_name.titleize %> can't be blank")
               Refinery::<%= namespacing %>::<%= class_name %>.count.should == 0
             end
           end
 
           context 'duplicate' do
-            before { FactoryGirl.create(:<%= singular_name %>, <%= title.name %>: 'UniqueTitle') }
+            before { FactoryGirl.create(:<%= singular_name %>, <%= title_attribute_name %>: 'UniqueTitle') }
 
             it 'should fail' do
               visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
 
               click_link "Add New <%= singular_name.titleize %>"
 
-              fill_in "<%= title.name.titleize %>", with: 'UniqueTitle'
+              fill_in "<%= title_attribute_name.titleize %>", with: 'UniqueTitle'
               click_button "Save"
 
               page.should have_content("There were problems")
@@ -64,14 +64,18 @@ describe Refinery do
 <% if localized? %>
           context 'with translations' do
             before do
-              Refinery::I18n.stub(:frontend_locales).and_return([:en, :cs])
+              Refinery::Testing::FeatureMacros::I18n.stub_frontend_locales :en, :cs
+            end
+
+            after do
+              Refinery::Testing::FeatureMacros::I18n.unstub_frontend_locales
             end
 
             describe 'add a page with title for default locale' do
               before do
                 visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
                 click_link "Add New <%= singular_name.titleize %>"
-                fill_in "<%= title.name.titleize %>", with: 'First column'
+                fill_in "<%= title_attribute_name.titleize %>", with: 'First column'
                 click_button "Save"
               end
 
@@ -82,11 +86,11 @@ describe Refinery do
               it 'should show locale flag for page' do
                 p = Refinery::<%= namespacing %>::<%= class_name %>.last
                 within "#<%= singular_name %>_#{p.id}" do
-                  page.should have_css("img[src='/assets/refinery/icons/flags/en.png']")
+                  page.should have_css('a.flag-en')
                 end
               end
 
-              it "should show <%= title.name %> in the admin menu" do
+              it "should show <%= title_attribute_name %> in the admin menu" do
                 p = Refinery::<%= namespacing %>::<%= class_name %>.last
                 within "#<%= singular_name %>_#{p.id}" do
                   page.should have_content('First column')
@@ -96,19 +100,21 @@ describe Refinery do
 
             describe "add a <%= singular_name %> with title for primary and secondary locale" do
               before do
+                Refinery::<%= namespacing %>::<%= class_name %>.delete_all
+                Refinery::<%= namespacing %>::<%= class_name %>::Translation.delete_all
                 visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
                 click_link "Add New <%= singular_name.titleize %>"
-                fill_in "<%= title.name.titleize %>", with: 'First column'
+                fill_in "<%= title_attribute_name.titleize %>", with: 'First column'
                 click_button "Save"
 
                 visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
                 within '.actions' do
                   click_link "Edit this <%= singular_name %>"
                 end
-                within "#frontend_locale_picker" do
-                  click_link "Cs"
+                within ".locale-picker" do
+                  click_link "cs"
                 end
-                fill_in "<%= title.name.titleize %>", with: 'First translated column'
+                fill_in "<%= title_attribute_name.titleize %>", with: 'First translated column'
                 click_button "Save"
               end
 
@@ -120,12 +126,12 @@ describe Refinery do
               it 'should show locale flag for page' do
                 p = Refinery::<%= namespacing %>::<%= class_name %>.last
                 within "#<%= singular_name %>_#{p.id}" do
-                  page.should have_css("img[src='/assets/refinery/icons/flags/en.png']")
-                  page.should have_css("img[src='/assets/refinery/icons/flags/cs.png']")
+                  page.should have_css('a.flag-en')
+                  page.should have_css('a.flag-cs')
                 end
               end
 
-              it "should show <%= title.name %> in backend locale in the admin menu" do
+              it "should show <%= title_attribute_name %> in backend locale in the admin menu" do
                 p = Refinery::<%= namespacing %>::<%= class_name %>.last
                 within "#<%= singular_name %>_#{p.id}" do
                   page.should have_content('First column')
@@ -133,15 +139,16 @@ describe Refinery do
               end
             end
 
-            describe "add a <%= title.name %> with title only for secondary locale" do
+<% if localized_attributes.include?(title_attribute) %>
+            describe "add a <%= title_attribute_name %> with title only for secondary locale" do
               before do
                 visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
                 click_link "Add New <%= singular_name.titleize %>"
-                within "#frontend_locale_picker" do
-                  click_link "Cs"
+                within ".locale-picker" do
+                  click_link "cs"
                 end
 
-                fill_in "<%= title.name.titleize %>", with: 'First translated column'
+                fill_in "<%= title_attribute_name.titleize %>", with: 'First translated column'
                 click_button "Save"
               end
 
@@ -155,16 +162,17 @@ describe Refinery do
               it 'should show locale flag for page' do
                 p = Refinery::<%= namespacing %>::<%= class_name %>.last
                 within "#<%= singular_name %>_#{p.id}" do
-                  page.should have_css("img[src='/assets/refinery/icons/flags/cs.png']")
+                  page.should have_css('a.flag-cs')
                 end
               end
             end
+<% end -%>
           end
-<% end %>
+<% end -%>
         end
 
         describe 'edit' do
-          before { FactoryGirl.create(:<%= singular_name %>, <%= title.name %>: 'A <%= title.name %>') }
+          before { FactoryGirl.create(:<%= singular_name %>, <%= title_attribute_name %>: 'A <%= title_attribute_name %>') }
 
           it 'should succeed' do
             visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
@@ -173,16 +181,16 @@ describe Refinery do
               click_link "Edit this <%= singular_name.titleize.downcase %>"
             end
 
-            fill_in "<%= title.name.titleize %>", with: 'A different <%= title.name %>'
+            fill_in "<%= title_attribute_name.titleize %>", with: 'A different <%= title_attribute_name %>'
             click_button "Save"
 
-            page.should have_content("'A different <%= title.name %>' was successfully updated.")
-            page.should have_no_content("A <%= title.name %>")
+            page.should have_content("'A different <%= title_attribute_name %>' was successfully updated.")
+            page.should have_no_content("A <%= title_attribute_name %>")
           end
         end
 
         describe 'destroy' do
-          before { FactoryGirl.create(:<%= singular_name %>, <%= title.name %>: 'UniqueTitleOne') }
+          before { FactoryGirl.create(:<%= singular_name %>, <%= title_attribute_name %>: 'UniqueTitleOne') }
 
           it 'should succeed' do
             visit refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path

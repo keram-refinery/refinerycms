@@ -9,13 +9,18 @@ module Refinery
       translates <%= localized_attributes.map { |a| ":#{a.name}" }.join(', ') %>
 <% end -%>
 
-<% if string_attributes.any? -%>
-      validates <%= string_attributes.first.name.to_sym.inspect %>, presence: true, uniqueness: true
-<% else -%>
-      # def title was created automatically because you didn't specify a string field
-      # when you ran the refinery:engine generator. <3 <3 Refinery CMS.
+<% if title_attribute.present? -%>
+      validates :<%= title_attribute_name %>, presence: true, uniqueness: true
+
+<% end -%>
+
+<% if title_attribute.nil? || title_attribute_name != 'title' %>
+
       def title
         "Override def title in vendor/extensions/<%= namespacing.underscore %>/app/models/refinery/<%= namespacing.underscore %>/<%= singular_name %>.rb"
+        <% if title_attribute_name != 'title' -%>
+          <%= title_attribute_name %>
+        <% end -%>
       end
 <% end -%>
 
@@ -25,6 +30,14 @@ module Refinery
 
 <% resource_attributes.each do |a| -%>
       belongs_to :<%= a.name %>, class_name: '::Refinery::Resource'
+<% end -%>
+
+<% if localized? && title_attribute.present? && localized_attributes.include?(title_attribute) %>
+      def title_with_translation
+        <%= title_attribute_name %>.presence || translations.detect {|t| t.<%= title_attribute_name %>.present? }.<%= title_attribute_name %>
+      end
+
+      alias_method_chain :title, :translation
 <% end -%>
     end
   end

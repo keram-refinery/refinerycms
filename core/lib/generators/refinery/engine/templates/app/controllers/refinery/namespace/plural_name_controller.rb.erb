@@ -26,7 +26,7 @@ module Refinery
       end
 
       def find_page
-        @page = ::Refinery::Page.find_by(plugin_page_id: '<%= plural_name %>')
+        @page = ::Refinery::Page.find_by(plugin_page_id: '<%= extension_name %>')
       end
 
     end

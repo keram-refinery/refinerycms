@@ -1,8 +1,8 @@
 zh-CN:
   refinery:
     plugins:
-      <%= plural_name %>:
-        title: <%= plural_name.titleize %>
+      <%= extension_name %>:
+        title: <%= extension_name.titleize %>
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -18,6 +18,7 @@ zh-CN:
             view_live: 查看 <%= singular_name.titleize.downcase %> 的最新内容.\n(新窗口中打开)
             edit: 编辑 <%= singular_name.titleize.downcase %>
             delete: 永久删除 <%= singular_name.titleize.downcase %>
+    <%= namespacing.underscore %>:
       <%= plural_name %>:
         show:
           other: 其他 <%= singular_name.titleize.pluralize %>

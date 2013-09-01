@@ -1,4 +1,4 @@
-plugin = Refinery::Plugins['<%= plural_name -%>']
+plugin = Refinery::Plugins['<%= extension_name -%>']
 if plugin
 
   if defined?(Refinery::User)
@@ -19,7 +19,7 @@ if plugin
 
     thank_you_page = page.children.create(
       title: 'Thank You',
-      plugin_page_id: '<%= plural_name -%>_thank_you',
+      plugin_page_id: '<%= extension_name -%>_thank_you',
       deletable: false,
       show_in_menu: false
     )

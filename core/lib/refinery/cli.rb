@@ -100,7 +100,6 @@ module Refinery
         crud_options = controller_class.fetch(:crudify_options){{}}
         crud_method.gsub! '#{options[:redirect_to_url]}', crud_options[:redirect_to_url].to_s
         crud_method.gsub! '#{options[:conditions].inspect}', crud_options[:conditions].inspect
-        crud_method.gsub! '#{options[:title_attribute]}', crud_options[:title_attribute]
         crud_method.gsub! '#{singular_name}', crud_options[:singular_name]
         crud_method.gsub! '#{class_name}', crud_options[:class_name]
         crud_method.gsub! '#{plural_name}', crud_options[:plural_name]

@@ -1,8 +1,8 @@
 tr:
   refinery:
     plugins:
-      <%= plural_name %>:
-        title: <%= plural_name.titleize %>
+      <%= extension_name %>:
+        title: <%= extension_name.titleize %>
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -18,6 +18,7 @@ tr:
             view_live: Bunu canlu <%= singular_name.titleize.downcase %> goruntule (yeni bir pencerede acar)
             edit: Bunu Duzenle <%= singular_name.titleize.downcase %>
             delete: Bunu Sil <%= singular_name.titleize.downcase %> sonsuza dek
+    <%= namespacing.underscore %>:
       <%= plural_name %>:
         show:
           other: Diger <%= singular_name.titleize.pluralize %>

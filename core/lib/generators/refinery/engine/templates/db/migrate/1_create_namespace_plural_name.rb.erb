@@ -3,7 +3,7 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
   def up
     create_table :refinery_<%= "#{namespacing.underscore}_" if table_name != namespacing.underscore.pluralize %><%= table_name %> do |t|
 <%
-  attributes.each do |attribute|
+  attributes.reject {|attr| localized_attributes.include?(attr) }.each do |attribute|
     attribute_type = attribute.type
     attribute_name = attribute.name
     # turn image or resource into what it was supposed to be which is an integer reference to an image or resource.
@@ -14,22 +14,22 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
 -%>
       t.<%= attribute_type %> :<%= attribute_name %>
 <% end -%>
-      t.integer :position
 
       t.timestamps null: false
     end
 <% if localized? %>
-    Refinery::<%= namespacing %>::<%= class_name %>.create_translation_table! <%= attributes_for_translation_table %>
+    Refinery::<%= namespacing %>::<%= class_name %>.create_translation_table!({<% localized_attributes.each do |attr| %>
+      <%= "#{attr.name}: :#{attr.type}#{',' unless localized_attributes.last == attr}" -%> <% end -%>})
 <% end -%>
   end
 
   def down
     if defined?(::Refinery::UserPlugin)
-      ::Refinery::UserPlugin.destroy_all({name: 'refinerycms-<%= namespacing.underscore %>'})
+      ::Refinery::UserPlugin.destroy_all({name: '<%= extension_name %>'})
     end
 <% unless skip_frontend? %>
     if defined?(::Refinery::Page)
-      ::Refinery::Page.delete_all({plugin_page_id: '<%= namespacing.underscore %>'})
+      ::Refinery::Page.delete_all({plugin_page_id: '<%= extension_name %>'})
     end
 <% end %>
     drop_table :refinery_<%= "#{namespacing.underscore}_" if table_name != namespacing.underscore.pluralize %><%= table_name %>

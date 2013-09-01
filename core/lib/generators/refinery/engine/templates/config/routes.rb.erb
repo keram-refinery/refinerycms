@@ -1,16 +1,12 @@
-<%
-  admin_path = 'Refinery::Core.backend_route'
-  admin_path = "\"\#\{#{admin_path}\}/#{namespacing.underscore}\"" if namespacing.underscore != plural_name
--%>
-plugin = Refinery::Plugins['<%= plural_name -%>']
+plugin = Refinery::Plugins['<%= extension_name -%>']
 if plugin
   Refinery::Core::Engine.routes.draw do
   <% unless skip_frontend? %>
     # Frontend routes
     if plugin.page.present? && Refinery::Pages.marketable_urls
       Globalize.with_locales plugin.page.translated_locales do |locale|
-        get "#{plugin.page.nested_path}", to: "<%= plural_name -%>#index"
-        get "#{plugin.page.nested_path}/:id", to: "<%= plural_name -%>#show"
+        get plugin.page.nested_path, to: '<%= plural_name -%>#index'
+        get "#{plugin.page.nested_path}/:id", to: '<%= plural_name -%>#show'
       end
     else
       namespace :<%= namespacing.underscore %> do
@@ -19,13 +15,13 @@ if plugin
     end
   <% end %>
     # Admin routes
-    namespace :admin, path: <%= admin_path %> do
-      namespace :<%= namespacing.underscore %> do
-        resources :<%= plural_name %>, except: :show do
+    namespace :admin, path: Refinery::Core.backend_route do
+      namespace :<%= namespacing.underscore %><%= ", path: ''" if namespacing.underscore == plural_name %> do
+        resources :<%= plural_name %>, except: :show<% if sortable? -%> do
           collection do
             post :update_positions
           end
-        end
+        end<% end %>
       end
     end
   end

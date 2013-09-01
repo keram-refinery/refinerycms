@@ -97,6 +97,10 @@ module Refinery
       (full_name.presence || username).to_s
     end
 
+    def title
+      to_s
+    end
+
     private
     # To ensure uniqueness without case sensitivity we first downcase the username.
     # We do this here and not in SQL is that it will otherwise bypass indexes using LOWER:

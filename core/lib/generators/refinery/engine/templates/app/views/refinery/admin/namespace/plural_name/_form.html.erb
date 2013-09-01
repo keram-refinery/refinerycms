@@ -1,8 +1,5 @@
-<%
-  text_areas = attributes.reject{|a| a.field_type.to_s != 'text_area'}
-  generated_text_areas = false
-%>
-<%%= form_for [refinery, :admin_<%= namespacing.underscore %>, @<%= singular_name %>] do |f| %>
+<%%= form_for [refinery, :admin_<%= namespacing.underscore %>, @<%= singular_name %>],
+              html: { data: { remote: true }} do |f| %>
   <%%= render '/refinery/admin/error_messages',
               object: f.object,
               include_object_name: true %>
@@ -11,7 +8,7 @@
   <%%= render '/refinery/admin/locale_picker', object: f.object %>
 <% end -%>
 <% attributes.each_with_index do |attribute, index| -%>
-<% if attribute.type.to_s == 'image' %>
+<% if attribute.type == :image %>
   <div class="field">
     <%%= f.label :<%= attribute.name %> %>
     <%%= render '/refinery/admin/image_picker',
@@ -20,7 +17,7 @@
                image: @<%= singular_name %>.<%= attribute.name.gsub("_id", "") %> %>
   </div>
 
-<% elsif attribute.type.to_s == 'resource' -%>
+<% elsif attribute.type == :resource -%>
   <div class="field">
     <%%= f.label :<%= attribute.name %> %>
     <%%= render '/refinery/admin/resource_picker',
@@ -29,16 +26,15 @@
                resource: @<%= singular_name %>.<%= attribute.name.gsub("_id", "") %> %>
   </div>
 
-<% elsif attribute.field_type.to_s == 'text_area' and !generated_text_areas -%>
+<% elsif attribute.field_type.to_s == 'text_area' -%>
   <div class="field">
+    <%%= f.label :<%= attribute.name %> %>
     <%%= render '/refinery/admin/wysiwyg',
                 f: f,
-                fields: <%= text_areas.map{|t| t.name.to_sym}.inspect %>,
-                object: '<%= namespacing.underscore %>/<%= singular_name %>' -%>
+                field: :<%= attribute.name %> -%>
   </div>
 
-<% generated_text_areas = true -%>
-<% elsif attribute.field_type.to_s != 'text_area' -%>
+<% else -%>
   <div class="field">
     <%%= f.label :<%= attribute.name %> %>
     <%%= f.<%= attribute.field_type %> :<%= attribute.name %><%= ", class: 'larger widest'" if (index == 0 && attribute.field_type == :text_field) %><%= ", checked: @#{singular_name}[:#{attribute.name}]" if attribute.field_type == :check_box %> %>
@@ -48,5 +44,5 @@
 <% end -%>
   <%%= render '/refinery/admin/form_actions', f: f,
              delete_title: t('delete', scope: 'refinery.<%= plural_name %>.admin.<%= plural_name %>.<%= singular_name %>'),
-             delete_confirmation: t('message', scope: 'refinery.admin.delete'<% if (title = attributes.detect { |a| a.type.to_s == 'string' }).present? %>, title: @<%= singular_name %>.<%= title.name %><% end %>) %>
+             delete_confirmation: t('message', scope: 'refinery.admin.delete'<% if title_attribute.present? %>, title: @<%= singular_name %>.<%= title_attribute_name %><% end %>) %>
 <%% end -%>

@@ -23,10 +23,10 @@ module Refinery
       singular_name = ActiveModel::Naming.param_key(this_class)
       plural_name = singular_name.pluralize
       order = if this_class.column_names.include?('position')
-        'position ASC'
-      elsif this_class.column_names.include?('updated_at')
-        'updated_at DESC'
-      end if this_class.table_exists?
+                'position ASC'
+              elsif this_class.column_names.include?('updated_at')
+                'updated_at DESC'
+              end if this_class.table_exists?
 
       {
         :conditions => '',
@@ -36,7 +36,6 @@ module Refinery
         :per_page => false,
         :redirect_to_url => "refinery.#{Refinery.route_for_model(class_name.constantize, :plural => true)}",
         :sortable => true,
-        :title_attribute => 'title',
         :class_name => class_name,
         :singular_name => singular_name,
         :plural_name => plural_name
@@ -72,10 +71,10 @@ module Refinery
 
           def create
             if (@#{singular_name} = #{class_name}.create(#{singular_name}_params)).valid?
-              flash.now[:notice] = t(
+              flash.notice = t(
                 'refinery.crudify.created',
                 :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
-                :what => "'\#{@#{singular_name}.#{options[:title_attribute]}}'"
+                :what => "\#{@#{singular_name}.title}"
               )
               create_or_update_successful
             else
@@ -92,7 +91,7 @@ module Refinery
               flash.notice = t(
                 'refinery.crudify.updated',
                 :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
-                :what => "\#{@#{singular_name}.#{options[:title_attribute]}}"
+                :what => "\#{@#{singular_name}.title}"
               )
 
               create_or_update_successful
@@ -103,7 +102,7 @@ module Refinery
 
           def destroy
             if @#{singular_name}.destroy
-              title = @#{singular_name}.#{options[:title_attribute]}
+              title = @#{singular_name}.title
               flash.notice = t('destroyed', :scope => 'refinery.crudify',
                           :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
                           :what => "\#{title}")

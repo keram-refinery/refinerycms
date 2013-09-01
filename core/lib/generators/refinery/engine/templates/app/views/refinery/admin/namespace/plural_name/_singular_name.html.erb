@@ -1,10 +1,8 @@
-<% title_attribute = (title = attributes.detect { |a| a.type.to_s == 'string' }).present? ? title.name : 'title' %>
 <li class="record" id="<%%= dom_id(<%= singular_name %>) %>">
   <div class="detail">
     <span class="title">
-      <%%= <%= singular_name %>.<%= title_attribute %> %>
+      <%%= <%= singular_name %>.<%= title_attribute_name %> %>
     </span>
-
   <% if localized? %>
     <%% if Refinery::I18n.frontend_locales.many? %>
       <%%= render 'record_translations',
@@ -19,8 +17,10 @@
                 refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
                 class: 'delete confirm-delete nojs-hide icon-small delete-icon',
                 title: t('.delete'),
-                remote: true,
-                confirm: t('message', scope: 'refinery.admin.delete', title: <%= singular_name %>.<%= title_attribute %>),
+                data: {
+                  remote: true,
+                  confirm: t('message', scope: 'refinery.admin.delete', title: <%= singular_name %>.<%= title_attribute_name %>)
+                },
                 method: :delete %>
 
     <%%= link_to t('edit', scope: 'refinery.admin.record'),
@@ -28,12 +28,18 @@
                 class: 'icon-small edit-icon',
                 title: t('.edit') %>
 
-  <% unless skip_frontend? %>
+<% unless skip_frontend? -%>
     <%%= link_to t('live', scope: 'refinery.admin.record'),
                 refinery.<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
                 class: 'icon-small live-icon',
                 title: t('.view_live'),
                 target: '_blank' %>
-  <% end %>
+<% end -%>
+
+<% if sortable? -%>
+    <%%= content_tag :a, t('move', :scope => 'refinery.admin.record'),
+                class: 'move nojs-hide icon-small move-icon',
+                title: t('move', :scope => 'refinery.admin.record') %>
+<% end -%>
   </span>
 </li>

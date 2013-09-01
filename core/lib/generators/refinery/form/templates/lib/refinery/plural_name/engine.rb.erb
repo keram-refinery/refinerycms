@@ -4,7 +4,7 @@ module Refinery
       extend Refinery::Engine
       isolate_namespace Refinery::<%= namespacing %>
 
-      engine_name :refinery_<%= extension_plural_name %>
+      engine_name :refinery_<%= extension_name %>
 
       initializer 'register refinerycms_<%= plural_name %> plugin' do
         Refinery::Plugin.register do |plugin|
@@ -12,8 +12,7 @@ module Refinery
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_<%= namespacing.underscore %>_<%= plural_name %>_path }
           plugin.pathname = root
           plugin.activity = {
-            class_name: :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'<% if (title = attributes.detect { |a| a.type.to_s == 'string' }).present? and title.name != 'title' %>,
-            title: '<%= title.name %>'<% end %>
+            class_name: :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'
           }
         end
       end

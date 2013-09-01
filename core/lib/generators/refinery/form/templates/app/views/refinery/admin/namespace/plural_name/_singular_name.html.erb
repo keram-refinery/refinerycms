@@ -9,8 +9,10 @@
     <%%= link_to refinery_icon_tag('delete.png'), refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
                 class: 'delete confirm-delete',
                 title: t('admin.<%= plural_name %>.delete'),
-                :'data-confirm' => t('shared.admin.delete.message', title: <%= singular_name %>.name),
-                :'data-method' => 'delete' %>
+                data: {
+                  confirm: t('shared.admin.delete.message', title: <%= singular_name %>.name),
+                  method: 'delete'
+                } %>
 
     <%%= link_to refinery_icon_tag('zoom.png'), refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
                 title: t('.read_<%= singular_name %>') %>

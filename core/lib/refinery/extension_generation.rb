@@ -3,12 +3,13 @@ module Refinery
 
     def self.included(base)
       base.class_eval do
-        argument :attributes, :type => :array, :default => [], :banner => 'field:type field:type'
+        argument :attributes, type: :array, default: [], banner: 'field:type field:type'
 
-        class_option :namespace, :type => :string, :default => nil, :banner => 'NAMESPACE', :required => false
-        class_option :extension, :type => :string, :default => nil, :banner => 'ENGINE', :required => false
-        class_option :i18n, :type => :array, :default => [], :required => false, :banner => 'field field', :desc => 'Indicates generated fields'
-        class_option :install, :type => :boolean, :default => false, :required => false, :banner => nil, :desc => 'Bundles and runs the generated generator, rake db:migrate, rake db:seed for you'
+        class_option :namespace, type: :string, default: nil, banner: 'NAMESPACE', required: false
+        class_option :extension, type: :string, default: nil, banner: 'ENGINE', required: false
+        class_option :i18n, type: :array, default: [], required: false, banner: 'field field', desc: 'Indicates generated fields'
+        class_option :sortable, type: :boolean, default: false, required: false, banner: nil, desc: 'Sortable list'
+        class_option :install, type: :boolean, default: false, required: false, banner: nil, desc: 'Bundles and runs the generated generator, rake db:migrate, rake db:seed for you'
 
         remove_class_option :skip_namespace
       end
@@ -30,29 +31,11 @@ module Refinery
     end
 
     def extension_name
-      @extension_name ||= options[:extension].presence || singular_name
+      @extension_name ||= options[:namespace].presence || options[:extension].presence || singular_name.pluralize
     end
 
     def extension_class_name
       @extension_class_name ||= extension_name.camelize
-    end
-
-    def extension_plural_class_name
-      @extension_plural_class_name ||= if options[:extension].present?
-        # Use exactly what the user requested, not a plural version.
-        extension_class_name
-      else
-        extension_class_name.pluralize
-      end
-    end
-
-    def extension_plural_name
-      @extension_plural_name ||= if options[:extension].present?
-        # Use exactly what the user requested, not a plural version.
-        extension_name
-      else
-        extension_name.pluralize
-      end
     end
 
     def localized?
@@ -63,12 +46,20 @@ module Refinery
       @localized_attributes ||= attributes.select{|a| options[:i18n].include?(a.name)}
     end
 
-    def attributes_for_translation_table
-      localized_attributes.inject([]) {|memo, attr| memo << "#{attr.name}: :#{attr.type}"}.join(', ')
+    def sortable?
+      options[:sortable].present?
     end
 
     def string_attributes
       @string_attributes ||= attributes.select {|a| [:string, :text].include?(a.type)}.uniq
+    end
+
+    def title_attribute
+      @title_attribute ||= string_attributes.detect {|a| a.name == 'title'}.presence || string_attributes.first.presence
+    end
+
+    def title_attribute_name
+      @title_attribute_name ||= title_attribute.present? ? title_attribute.name : 'title'
     end
 
     def image_attributes
@@ -79,12 +70,16 @@ module Refinery
       @resource_attributes ||= attributes.select { |a| a.type == :resource }.uniq
     end
 
+    def include_position_attribute
+      attributes << OpenStruct.new( name: 'position', type: :integer )
+    end
+
   protected
 
     def append_extension_to_gemfile!
       unless Rails.env.test? || (self.behavior != :revoke && extension_in_gemfile?)
         path = extension_pathname.parent.relative_path_from(gemfile.parent)
-        append_file gemfile, "\ngem '#{gem_name}', :path => '#{path}'"
+        append_file gemfile, "\ngem '#{gem_name}', path: '#{path}'"
       end
     end
 
@@ -101,6 +96,8 @@ module Refinery
 
     def default_generate!
       sanity_check!
+
+      include_position_attribute if sortable?
 
       evaluate_templates!
 
@@ -122,7 +119,7 @@ module Refinery
     end
 
     def extension_pathname
-      destination_pathname.join('vendor', 'extensions', extension_plural_name)
+      destination_pathname.join('vendor', 'extensions', extension_name)
     end
 
     def extension_path_for(path, extension, apply_tmp = true)
@@ -181,7 +178,7 @@ module Refinery
     end
 
     def gem_name
-      "refinerycms-#{extension_plural_name}"
+      "refinerycms-#{extension_name}"
     end
 
     def gemfile
@@ -196,7 +193,7 @@ module Refinery
 
     def install!
       run "bundle install"
-      run "rails generate refinery:#{extension_plural_name}"
+      run "rails generate refinery:#{extension_name}"
       run "rake db:migrate"
       run "rake db:seed"
     end
@@ -204,7 +201,7 @@ module Refinery
     def merge_existing_files!
       # go through all of the temporary files and merge what we need into the current files.
       tmp_directories = []
-      globs = %w[config/locales/*.yml config/routes.rb.erb lib/refinerycms-extension_plural_name.rb.erb]
+      globs = %w[config/locales/*.yml config/routes.rb.erb lib/refinerycms-extension_name.rb.erb]
       Pathname.glob(source_pathname.join("{#{globs.join(',')}}"), File::FNM_DOTMATCH).each do |path|
         # get the path to the current tmp file.
         # Both the new and current paths need to strip the .erb portion from the generator template
@@ -212,7 +209,7 @@ module Refinery
         tmp_directories << new_file_path.split.first
         current_path = extension_path_for(path, extension_name, false).sub(/\.erb$/, '')
 
-        FileMerger.new(self, current_path, new_file_path, :to => current_path, :mode => 'w+').call
+        FileMerger.new(self, current_path, new_file_path, to: current_path, mode: 'w+').call
       end
 
       tmp_directories.uniq.each(&:rmtree)
@@ -230,7 +227,7 @@ module Refinery
         else
           puts "Now run:"
           puts "bundle install"
-          puts "rails generate refinery:#{extension_plural_name}"
+          puts "rails generate refinery:#{extension_name}"
           puts "rake db:migrate"
           puts "rake db:seed"
         end
@@ -239,7 +236,9 @@ module Refinery
       end
     end
 
-    def reject_file?(file); end
+    def reject_file?(file)
+      file == '_sortable_list.html.erb' && !sortable?
+    end
 
     def reject_template?(file)
       file.directory? || reject_file?(file)
@@ -256,7 +255,8 @@ module Refinery
       @source_pathname ||= Pathname.new(self.class.source_root.to_s)
     end
 
-    private
+  private
+
     def extension_path_for_nested_extension(path, apply_tmp)
       return nil if !path.sub(/\.erb$/, '').file? &&
                     %r{readme.md|(lib/)?#{plural_name}.rb$} === path.to_s
@@ -320,7 +320,7 @@ module Refinery
     end
 
     def substitute_path_placeholders(path)
-      Pathname.new path.to_s.gsub('extension_plural_name', extension_plural_name).
+      Pathname.new path.to_s.gsub('extension_name', extension_name).
                              gsub('plural_name', plural_name).
                              gsub('singular_name', singular_name).
                              gsub('namespace', namespacing.underscore)
@@ -347,7 +347,7 @@ module Refinery
         @templater = templater
         @source = source
         @destination = destination
-        @options = {:to => @destination, :mode => 'a+'}.merge(options)
+        @options = {to: @destination, mode: 'a+'}.merge(options)
       end
 
       def call
@@ -381,7 +381,7 @@ module Refinery
       def templated_merge!
         Dir.mktmpdir do |tmp|
           tmp = Pathname.new(tmp)
-          @templater.template @source, tmp.join(@source.basename), :verbose => false
+          @templater.template @source, tmp.join(@source.basename), verbose: false
           merge! tmp.join(@source.basename).read.to_s
         end
       end

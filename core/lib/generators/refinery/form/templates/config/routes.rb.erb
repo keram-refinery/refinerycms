@@ -1,7 +1,3 @@
-<%
-  admin_path = 'Refinery::Core.backend_route'
-  admin_path = "\"\#\{#{admin_path}\}/#{namespacing.underscore}\"" if namespacing.underscore != plural_name
--%>
 Refinery::Core::Engine.routes.draw do
   # Frontend routes
   namespace :<%= namespacing.underscore %> do
@@ -13,8 +9,8 @@ Refinery::Core::Engine.routes.draw do
   end
 
   # Admin routes
-  namespace :admin, path: <%= admin_path %> do
-    namespace :<%= plural_name %>, path: '' do
+  namespace :admin, path: Refinery::Core.backend_route do
+    namespace :<%= plural_name %><%= ", path: ''" if namespacing.underscore == plural_name %> do
       resources :<%= plural_name %>, only: [:index, :show, :destroy] <% if @includes_spam %> do
         collection do
           get :spam

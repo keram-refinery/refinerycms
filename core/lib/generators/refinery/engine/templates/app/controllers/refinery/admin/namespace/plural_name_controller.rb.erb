@@ -1,11 +1,9 @@
-<% title = attributes.detect { |a| [:string, :text].include?(a.type) } -%>
 module Refinery
   module Admin
     module <%= namespacing %>
       class <%= class_name.pluralize %>Controller < ::Refinery::AdminController
 
-        crudify :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'<% if title.present? && title.name != 'title' %>,
-                title_attribute: '<%= title.name %>'<% end %><% if plural_name == singular_name %>,
+        crudify :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'<% if plural_name == singular_name %>,
                 redirect_to_url: :refinery_admin_<%= namespacing.underscore %>_<%= singular_name %>_index_path<% end %>
 
       private
