@@ -324,8 +324,10 @@ module Refinery
       self.parts.detect { |part| part.title == part_title }
     end
 
-    def any_title
-      title.presence || translations.detect {|t| t.title.present? }.title
+    def title
+      return self[:title] if self[:title].present?
+      translation = translations.detect {|t| t.title.present? }
+      translation.title if translation
     end
 
   private

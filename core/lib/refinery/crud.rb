@@ -101,11 +101,13 @@ module Refinery
           end
 
           def destroy
+            title = @#{singular_name}.title
             if @#{singular_name}.destroy
-              title = @#{singular_name}.title
-              flash.notice = t('destroyed', :scope => 'refinery.crudify',
+              flash.notice = t('destroyed',
+                          :scope => 'refinery.crudify',
                           :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
-                          :what => "\#{title}")
+                          :what => title
+              )
             end
 
             redirect_to redirect_url, status: :see_other # 303 See Other

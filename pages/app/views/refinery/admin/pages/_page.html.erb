@@ -18,7 +18,7 @@
 
     <div class="detail">
       <span class="title icon-small icon-with-text<%= title_cls %>">
-        <%= page.any_title -%>
+        <%= page.title -%>
       </span>
       <%= page_meta_information page %>
 
@@ -37,7 +37,7 @@
                     :remote => true,
                     :confirm => t('message',
                       :scope => 'refinery.admin.delete',
-                      :title => page.any_title
+                      :title => page.title
                     )
                   },
                   :method => :delete if page.deletable? %>
