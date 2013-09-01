@@ -8,9 +8,8 @@
   </div>
 
   <ul class="nojs-hide ui-tabs-nav">
-    <% main_part = ::Refinery::Pages.main_part %>
     <% @page.parts.each_with_index do |part, part_index| %>
-      <% cls = "#{'ui-state-active' if part.title == main_part}#{' js-hide' if !part.active}" %>
+      <% cls = "#{'ui-state-active' if part.title == :body}#{' js-hide' if !part.active}" %>
       <li class="<%= cls %>">
         <%= link_to t(part.title, scope: 'refinery.admin.pages.parts'), "##{part.to_param}" %>
       </li>

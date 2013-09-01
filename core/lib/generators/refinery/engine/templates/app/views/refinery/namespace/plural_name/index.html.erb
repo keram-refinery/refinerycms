@@ -1,4 +1,4 @@
-<%% content_for Refinery::Pages.main_part do %>
+<%% content_for :body do %>
   <ul>
     <%% @<%= "all_" if plural_name == singular_name%><%= plural_name %>.each do |<%= singular_name %>| %>
       <li>

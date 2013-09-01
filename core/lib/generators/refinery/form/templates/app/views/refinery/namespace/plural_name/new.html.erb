@@ -1,6 +1,6 @@
-<%% content_for Refinery::Pages.main_part do %>
+<%% content_for :body do %>
   <div class="<%= plural_name %>">
-    <%%=raw @page.content_for(Refinery::Pages.main_part) %>
+    <%%=raw @page.content_for(:body) %>
 
     <%%= form_for [refinery, :<%= namespacing.underscore %>, @<%= singular_name %>],
                   html: { data: { remote: true }} do |f| %>
