@@ -22,7 +22,7 @@ module Refinery
     protected
 
       def find_all_<%= plural_name %>
-        @<%= 'all_' if plural_name == singular_name %><%= plural_name %> = <%= class_name %>.order(position: :asc)
+        @<%= 'all_' if plural_name == singular_name %><%= plural_name %> = <%= class_name %><% if sortable? %>.order(position: :asc)<% end %>
       end
 
       def find_page

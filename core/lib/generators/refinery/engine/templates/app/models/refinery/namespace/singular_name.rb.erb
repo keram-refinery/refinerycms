@@ -21,6 +21,7 @@ module Refinery
         translation = translations.detect {|t| t.<%= title_attribute_name %>.present? }
         translation.<%= title_attribute_name %> if translation
 <% end -%>
+<% end -%>
       end
 
 <% image_attributes.each do |a| -%>
