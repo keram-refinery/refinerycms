@@ -14,15 +14,17 @@ module Refinery
 
 <% end -%>
 
+<% if localized? || (title_attribute.present? && title_attribute_name != 'title')
       def title
 <% if title_attribute.present? %>
         return self[:<%= title_attribute_name %>] if self[:<%= title_attribute_name %>].present?
-<% if localized? && localized_attributes.include?(title_attribute) %>
+<% if localized? && localized_attributes.include?(title_attribute) -%>
         translation = translations.detect {|t| t.<%= title_attribute_name %>.present? }
         translation.<%= title_attribute_name %> if translation
 <% end -%>
 <% end -%>
       end
+<% end -%>
 
 <% image_attributes.each do |a| -%>
       belongs_to :<%= a.name %>, class_name: '::Refinery::Image'
