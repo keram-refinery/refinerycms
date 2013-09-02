@@ -74,6 +74,29 @@ module Refinery
       attributes << OpenStruct.new( name: 'position', type: :integer )
     end
 
+    def normalize_html_attributes
+      attributes.select {|a| a.field_type == :text_field}.each do |attribute|
+        case
+        when attribute.type == :url || attribute.name =~ /\A(\w+_|)url\z/
+          attribute.type = :string
+          attribute.instance_variable_set("@field_type", :url_field)
+        when attribute.type == :email || attribute.name =~ /\A(\w+_|)email\z/
+          attribute.type = :string
+          attribute.instance_variable_set("@field_type", :email_field)
+        when %i(tel phone telephone).include?(attribute.type) ||
+              attribute.name =~ /\A(\w+_|\w+_tele|tele|)phone\z/
+          attribute.type = :string
+          attribute.instance_variable_set("@field_type", :telephone_field)
+        when attribute.type == :password || attribute.name =~ /\A(\w+_|)password\z/
+          attribute.type = :string
+          attribute.instance_variable_set("@field_type", :password_field)
+        when attribute.type == :color || attribute.name =~ /\A(\w+_|)color\z/
+          attribute.type = :string
+          attribute.instance_variable_set("@field_type", :color_field)
+        end
+      end
+    end
+
   protected
 
     def append_extension_to_gemfile!
@@ -98,6 +121,8 @@ module Refinery
       sanity_check!
 
       include_position_attribute if sortable?
+
+      normalize_html_attributes
 
       evaluate_templates!
 
