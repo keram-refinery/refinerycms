@@ -8,8 +8,6 @@ nb:
         <%= plural_name %>:
           actions:
             create_new: Lag en ny <%= singular_name.titleize %>
-            reorder: Endre rekkefølgen på <%= singular_name.titleize.pluralize %>
-            reorder_done: Ferdig å endre rekkefølgen <%= singular_name.titleize.pluralize %>
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: Beklager! Vi fant ikke noen resultater.
@@ -23,6 +21,8 @@ nb:
         show:
           other: Andre <%= singular_name.titleize.pluralize %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>

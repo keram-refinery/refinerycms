@@ -8,8 +8,6 @@ cs:
         <%= plural_name %>:
           actions:
             create_new: Přidat <%= singular_name.titleize %>
-            reorder: Řadit <%= singular_name.titleize.pluralize %>
-            reorder_done: Konec řazení <%= singular_name.titleize.pluralize %>
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: Litujeme, ale nebyly nalezny žádné výsledky.
@@ -23,6 +21,8 @@ cs:
         show:
           other: Další <%= singular_name.titleize.pluralize %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>

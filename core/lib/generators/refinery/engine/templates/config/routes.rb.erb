@@ -5,8 +5,8 @@ if plugin
     # Frontend routes
     if plugin.page.present? && Refinery::Pages.marketable_urls
       Globalize.with_locales plugin.page.translated_locales do |locale|
-        get plugin.page.nested_path, to: '<%= plural_name -%>#index'
-        get "#{plugin.page.nested_path}/:id", to: '<%= plural_name -%>#show'
+        get plugin.page.nested_path, to: '<%= plural_name -%>#index', as: "<%= "#{namespacing.underscore}_#{plural_name}_\#{locale}" %>"
+        get "#{plugin.page.nested_path}/:id", to: '<%= plural_name -%>#show', as: "<%= "#{namespacing.underscore}_#{singular_name}_\#{locale}" %>"
       end
     else
       namespace :<%= namespacing.underscore %> do

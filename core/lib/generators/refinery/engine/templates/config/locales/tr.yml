@@ -8,8 +8,6 @@ tr:
         <%= plural_name %>:
           actions:
             create_new: Yeni Ekle <%= singular_name.titleize %>
-            reorder: Tekrar sirala <%= singular_name.titleize.pluralize %>
-            reorder_done: Tekrar siralama tamamlandi<%= singular_name.titleize.pluralize %>
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: Uzgunum! Herhangi bir sonuc bulunamadi.
@@ -23,6 +21,8 @@ tr:
         show:
           other: Diger <%= singular_name.titleize.pluralize %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>

@@ -8,8 +8,6 @@ zh-CN:
         <%= plural_name %>:
           actions:
             create_new: 建立新的 <%= singular_name.titleize %>
-            reorder: 对 <%= singular_name.titleize.pluralize %> 重新排序
-            reorder_done: 对 <%= singular_name.titleize.pluralize %> 的重新排序结束
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: 对不起，未找到结果
@@ -23,6 +21,8 @@ zh-CN:
         show:
           other: 其他 <%= singular_name.titleize.pluralize %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>

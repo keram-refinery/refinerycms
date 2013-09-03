@@ -9,8 +9,6 @@ es:
         <%= plural_name %>:
           actions:
             create_new: Crear nuevo <%= singular_name.titleize.downcase %>
-            reorder: Reordenar <%= singular_name.titleize.pluralize.downcase %>
-            reorder_done: Reordenación de <%= singular_name.titleize.pluralize.downcase %> completada
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: Lo siento, no hay resultados
@@ -24,6 +22,8 @@ es:
         show:
           other: Otros <%= singular_name.titleize.pluralize.downcase %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>

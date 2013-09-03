@@ -8,8 +8,6 @@ it:
         <%= plural_name %>:
           actions:
             create_new: Aggiungi Nuovo <%= singular_name.titleize %>
-            reorder: Riordina <%= singular_name.titleize.pluralize %>
-            reorder_done: Termina il Riordino di <%= singular_name.titleize.pluralize %>
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: "Spiacenti! Nessun risultato trovato"
@@ -23,6 +21,8 @@ it:
         show:
           other: Altri <%= singular_name.titleize.pluralize %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>

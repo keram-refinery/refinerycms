@@ -8,8 +8,6 @@ nl:
         <%= plural_name %>:
           actions:
             create_new: Nieuwe <%= singular_name.titleize %> toevoegen
-            reorder: De volgorde van de <%= singular_name.titleize.pluralize %> wijzigen
-            reorder_done: Klaar met het wijzingen van de van de <%= singular_name.titleize %>-volgorde
           records:
             title: <%= plural_name.titleize %>
             sorry_no_results: Helaas! Er zijn geen resultaten gevonden.
@@ -23,6 +21,8 @@ nl:
         show:
           other: Andere <%= singular_name.titleize.pluralize %>
   activerecord:
+    models:
+      'refinery/<%= namespacing.underscore %>/<%= singular_name %>': <%= singular_name %>
     attributes:
       'refinery/<%= namespacing.underscore %>/<%= singular_name %>':<% attributes.each do |a| %>
         <%= a.name %>: <%= a.name.titleize -%>
