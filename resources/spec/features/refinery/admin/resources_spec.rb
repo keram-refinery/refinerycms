@@ -31,7 +31,7 @@ module Refinery
       end
 
       context 'new/create' do
-        it 'uploads file', :js => true do
+        it 'uploads file' do
           visit refinery.admin_resources_path
           click_link 'Upload new file'
 

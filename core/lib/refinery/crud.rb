@@ -73,7 +73,7 @@ module Refinery
             if (@#{singular_name} = #{class_name}.create(#{singular_name}_params)).valid?
               flash.notice = t(
                 'refinery.crudify.created',
-                :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
+                :kind => t('#{model_name}', scope: 'activerecord.models'),
                 :what => "\#{@#{singular_name}.title}"
               )
               create_or_update_successful
@@ -90,7 +90,7 @@ module Refinery
             if @#{singular_name}.update_attributes(#{singular_name}_params)
               flash.notice = t(
                 'refinery.crudify.updated',
-                :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
+                :kind => t('#{model_name}', scope: 'activerecord.models'),
                 :what => "\#{@#{singular_name}.title}"
               )
 
@@ -103,10 +103,10 @@ module Refinery
           def destroy
             title = @#{singular_name}.title
             if @#{singular_name}.destroy
-              flash.notice = t('destroyed',
-                          :scope => 'refinery.crudify',
-                          :kind => t('#{singular_name}', :scope => 'refinery.crudify'),
-                          :what => title
+              flash.notice = t(
+                'refinery.crudify.destroyed',
+                :kind => t('#{model_name}', scope: 'activerecord.models'),
+                :what => title
               )
             end
 

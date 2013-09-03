@@ -4,8 +4,6 @@ en:
       images:
         title: Images
         description: Manage images
-    crudify:
-      image: Image
     admin:
       images:
         delete: Remove this image forever
@@ -39,7 +37,7 @@ en:
           new_image: Upload
   activerecord:
     models:
-      refinery/image: image
+      refinery/image: Image
     errors:
       models:
         refinery/image:

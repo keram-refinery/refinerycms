@@ -45,7 +45,7 @@ module Refinery
         if @resource.update(params.require(:resource).permit(:file))
           flash.notice = t(
             'refinery.crudify.updated',
-            kind: t('resource', scope: 'refinery.crudify'),
+            kind: t(Resource.model_name.i18n_key, scope: 'activerecord.models'),
             what: "#{@resource.title}"
           )
 
@@ -66,7 +66,8 @@ module Refinery
 
         if @resources.any?
           flash.now[:notice] = t('created', scope: 'refinery.crudify',
-                      kind: t('resource', scope: 'refinery.crudify'), what: "#{@resources.map(&:title).join(", ")}")
+                      kind: t(Resource.model_name.i18n_key, scope: 'activerecord.models'),
+                      what: "#{@resources.map(&:title).join(", ")}")
         end
 
         unless invalid_resources.empty? ||

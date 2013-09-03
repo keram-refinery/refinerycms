@@ -4,8 +4,6 @@ en:
       users:
         title: Users
         description: Manage users
-    crudify:
-      user: User
     admin:
       users:
         delete: Remove this user forever
@@ -67,7 +65,7 @@ en:
       signed_in: ''
   activerecord:
     models:
-      refinery/user: user
+      refinery/user: User
     attributes:
       refinery/user:
         login: Username or email

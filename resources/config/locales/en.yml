@@ -5,8 +5,6 @@ en:
       resources:
         title: Files
         description: Upload and link to files
-    crudify:
-      resource: File
     admin:
       resources:
         delete: Remove this file forever
@@ -38,7 +36,7 @@ en:
         no_resources_yet: There are no files yet.
   activerecord:
     models:
-      refinery/resource: file
+      refinery/resource: File
     errors:
       models:
         refinery/resource:

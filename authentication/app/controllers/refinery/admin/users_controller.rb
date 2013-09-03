@@ -40,7 +40,7 @@ module Refinery
           redirect_to refinery.admin_users_path,
                       :status => :see_other,
                       :notice => t('created',
-                        :kind => t('user', scope: 'refinery.crudify'),
+                        :kind => t(Refinery::User.model_name.i18n_key, scope: 'activerecord.models'),
                         :what => @user.username,
                         :scope => 'refinery.crudify')
         else
@@ -97,7 +97,7 @@ module Refinery
           redirect_to refinery.admin_users_path,
                       :status => :see_other,
                       :notice => t('updated',
-                        :kind => t('user', scope: 'refinery.crudify'),
+                        :kind => t(Refinery::User.model_name.i18n_key, scope: 'activerecord.models'),
                         :what => @user.username,
                         :scope => 'refinery.crudify')
         else

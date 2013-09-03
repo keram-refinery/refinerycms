@@ -49,7 +49,7 @@ module Refinery
         if @image.update(params.require(:image).permit(:image))
           flash.notice = t(
             'refinery.crudify.updated',
-            kind: t('image', scope: 'refinery.crudify'),
+            kind: t(Image.model_name.i18n_key, scope: 'activerecord.models'),
             what: "#{@image.title}"
           )
 
@@ -79,7 +79,7 @@ module Refinery
 
         if @images.any?
           flash.now[:notice] = t('created', scope: 'refinery.crudify',
-                      kind: t('image', scope: 'refinery.crudify'),
+                      kind: t(Image.model_name.i18n_key, scope: 'activerecord.models'),
                       what: "#{@images.map(&:title).join(", ")}")
         end
 
