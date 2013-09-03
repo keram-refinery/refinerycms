@@ -89,12 +89,18 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="tel"],
+input[type="url"],
 input[type="search"],
 textarea {
     border: 1px solid #7F9DB9;
     line-height: 20px;
+    min-height: 20px;
     margin: 0px;
     padding: 0.4% 0.5%;
+}
+
+select {
+    padding: 5px 3px;
 }
 
 .widest, textarea {
