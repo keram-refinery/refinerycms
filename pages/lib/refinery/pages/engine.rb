@@ -41,7 +41,7 @@ module Refinery
 
       def append_marketable_routes
         Refinery::Core::Engine.routes.append do
-          get '*path', :to => 'pages#show', :as => :marketable_page
+          get '*path', :to => 'pages#show', as: :marketable_page
         end
 
         Rails.application.routes_reloader.reload!

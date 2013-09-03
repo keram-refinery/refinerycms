@@ -14,7 +14,7 @@ module Refinery
       end
     end
 
-    describe '#show', js: true do
+    describe '#show' do
       it 'renders show template' do
         request.stub(:fullpath).and_return('/test')
         get :show, :path => 'test'

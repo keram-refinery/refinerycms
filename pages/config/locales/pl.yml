@@ -50,7 +50,6 @@ pl:
           parent_page: Strona nadrzędna
           advanced_options: Opcje zaawansowane
           menu_title: Tytuł menu
-          custom_slug: Inny slug
           show_in_menu_title: Pokaż w menu
           show_in_menu_description: Wyświetl tę stronę w menu witryny
           show_in_menu_help: 'Odznacz tę kratkę aby usunąć tę stronę z menu witryny. To może być przydatne jeżeli chcesz linkować do tej strony, ale nie chcesz aby była widoczna w menu.'
@@ -64,7 +63,6 @@ pl:
           custom_title_help: 'Jeżeli chcesz aby ta strona miała inny tytuł niż ten widoczny w menu wybierz &apos;Tekst&apos; i wpisz go tutaj.'
           menu_title: Tytuł w menu
           menu_title_help: 'Jeżeli chcesz aby ta strona miała inny tytuł w menu wybierz &apos;Tekst&apos; i wpisz go tutaj.'
-          custom_slug_help: Slug to czytelny identyfikator strony widoczny w URLu, np. &pos;o-nas&pos;. Aby nadpisać slug, który jest automatycznie generowany przez Refinery, wpisz go tutaj.
           layout_template: Layout strony
           layout_template_help: Możesz zmienić layout dla tej strony
           view_template: Szablon strony
@@ -77,6 +75,7 @@ pl:
           meta_keywords_help: Wpisz 5-10 słów kluczowych, które charakteryzują stronę. Słowa oddziel przecinkiem.
           meta_description_title: Meta opis
           meta_description_help: Opisz w 2-3 zwięzłych zdaniach czego dotyczy strona.
+          custom_slug_help: Slug to czytelny identyfikator strony widoczny w URLu, np. &pos;o-nas&pos;. Aby nadpisać slug, który jest automatycznie generowany przez Refinery, wpisz go tutaj.
         actions:
           create_new_page: Dodaj nową stronę
           reorder_pages: Zmień kolejność stron
@@ -90,3 +89,4 @@ pl:
     attributes:
       refinery/page:
         title: Tytuł
+        custom_slug: Inny slug

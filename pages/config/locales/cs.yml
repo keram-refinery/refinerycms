@@ -60,6 +60,8 @@ cs:
           custom_title_help: Pokud chcete aby stránka měla jiný titulek než ten který se zobrazuje v menu vyberte &apos;Text&apos; a vložte jej zde.
           view_template: Šablona
           view_template_help: Můžete zvolit odlišnou šablonu pro tuto stránku
+        form_advanced_options_seo:
+          custom_slug_help: 'Url identifikátor je človekom čitateľný identifikátor, ktorý sa používa na vytvorenie celej url adresy stránky, napríklad &apos;o-nas&apos;. Ak chcete zmeniť url identifikátor, ktorý automaticky vytvorí Refinery, napíšte váš vlastný url identifikátor sem.'
         actions:
           create_new_page: Přidat novou stránku
           reorder_pages: Přeuspořádat stránky
@@ -72,3 +74,4 @@ cs:
     attributes:
       refinery/page:
         title: Název
+        custom_slug: Vlastný url identifikátor

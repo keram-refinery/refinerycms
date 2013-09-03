@@ -4,7 +4,7 @@ module Refinery
 
     config_accessor :per_dialog_page, :per_admin_page,
                     :marketable_urls, :default_parts, :parts,
-                    :use_custom_slugs, :scope_slug_by_parent,
+                    :scope_slug_by_parent,
                     :layout_template_whitelist,
                     :use_layout_templates,
                     :page_title,
@@ -15,7 +15,6 @@ module Refinery
     self.marketable_urls = true
     self.parts = [:title, :perex, :body, :side_body]
     self.default_parts = [:title, :body, :side_body]
-    self.use_custom_slugs = false
     self.scope_slug_by_parent = true
     self.layout_template_whitelist = ['application']
 
