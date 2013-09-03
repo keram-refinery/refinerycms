@@ -23,10 +23,18 @@ module Refinery
     # Returns url with localized path by passed locale for page
     def url_for_page_with_locale(locale, page = @page)
       Globalize.with_locale locale do
-        localized_params = params.merge(locale: locale)
-        localized_params.merge!(path: page.nested_url.join('/')) unless localized_params[:path].nil?
-        refinery.url_for localized_params
+        if params[:controller] && params[:controller] == 'refinery/pages'
+          localized_params = params.merge(locale: :cs)
+          localized_params.merge!(path: @page.nested_url.join('/')) unless localized_params[:path].nil?
+          refinery.url_for localized_params
+        else
+          refinery.url_for @page.url
+        end
       end
+    end
+
+    def best_locale_for(record)
+      record.translated_locales.include?(Globalize.locale) ? Globalize.locale : record.translated_locales.first
     end
   end
 end
