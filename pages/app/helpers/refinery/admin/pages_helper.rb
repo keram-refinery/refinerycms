@@ -5,7 +5,7 @@ module Refinery
       # select only pages where don't belongs under current page, her including
       def parent_id_nested_set_options(current_page)
         [].tap do |pages|
-          query = ::Refinery::Page.with_globalize
+          query = ::Refinery::Page
           if current_page.persisted?
             query = query.where.not('lft >= ? AND rgt <= ?',
                         current_page.lft, current_page.rgt)
