@@ -1,2 +1,2 @@
 <%= render_content_page @page, can_use_fallback: !local_assigns[:show_empty_sections] %>
-<%= render '/refinery/draft_page_message' if @page.draft? %>
+<%= render '/refinery/draft_page_message' if draft_page? %>

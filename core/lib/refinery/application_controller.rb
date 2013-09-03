@@ -8,6 +8,7 @@ module Refinery
                           :render_html_to_json_string,
                           :refinery_plugin,
                           :home_page?,
+                          :draft_page?,
                           :local_request?,
                           :admin?,
                           :paginate_page,
@@ -49,6 +50,10 @@ module Refinery
 
     def home_page?
       action_name == 'home'
+    end
+
+    def draft_page?
+      @page.present? && @page.draft?
     end
 
     def local_request?
