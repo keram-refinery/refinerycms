@@ -69,11 +69,11 @@ module Refinery
     end
 
     def xhr_json_response?
-      request.xhr? && request.format === 'application/json'
+      request.xhr? && request.format === Mime::JSON
     end
 
     def render_html_to_json_string(partial, options={})
-      options.merge({ :content_type => 'application/json', :layout => false})
+      options.merge({ :content_type => Mime::JSON, :layout => false})
       case partial
       when NilClass
         options[:template] = action_name
@@ -104,7 +104,7 @@ module Refinery
       @json_response.merge!(hash)
     end
 
-    JSON_LAYOUT_FOR_RESPONSE_FORMATS = ['application/json', 'text/javascript']
+    JSON_LAYOUT_FOR_RESPONSE_FORMATS = [Mime::JSON, Mime::JS]
 
     def json_layout?
       request.xhr? && JSON_LAYOUT_FOR_RESPONSE_FORMATS.include?(request.format)
