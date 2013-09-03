@@ -14,7 +14,7 @@ module Refinery
 
 <% end -%>
 
-<% if localized? || (title_attribute.present? && title_attribute_name != 'title')
+<% if localized? || (title_attribute.present? && title_attribute_name != 'title') %>
       def title
 <% if title_attribute.present? %>
         return self[:<%= title_attribute_name %>] if self[:<%= title_attribute_name %>].present?
