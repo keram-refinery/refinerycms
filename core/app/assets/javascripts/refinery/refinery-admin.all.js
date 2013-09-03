@@ -59,13 +59,34 @@
                     data: form.serialize(),
                     dataType: 'JSON',
                     success: function (response, status, xhr) {
-                        var redirected = xhr.getResponseHeader('X-XHR-Redirected-To');
+                        var param_re = /frontend_locale=[\w\-]+/,
+                            redirected = xhr.getResponseHeader('X-XHR-Redirected-To');
 
                         dialog.dialog('close');
                         dialog.dialog('destroy');
 
                         if (redirected) {
-                            Turbolinks.visit(redirected + param);
+                            /**
+                             * This is requried in case that user has defined other locale than default.
+                             * In that case this scenario is happen:
+                             *
+                             * POST /refinery/pages/12 // Save request
+                             * 302 Found
+                             *
+                             * GET /refinery/pages/12/edit?frontend_locale=cs // Ok, redirect after save
+                             * 200 OK
+                             *
+                             * GET /refinery/pages/12/edit?frontend_locale=sk // Locale switch request
+                             * 200 OK
+                             */
+                            if (param_re.test(redirected) && param_re.test(param)) {
+                                url = redirected.replace(param_re, param.match(param_re)[0]);
+                            } else if (/\?/.test(redirected)) {
+                                url = redirected + '&' + param.match(param_re)[0];
+                            } else {
+                                url = redirected + param;
+                            }
+                            Turbolinks.visit(url);
                         } else if (status === 'error') {
                             refinery.xhr.success(response, status, xhr, form, true);
                         } else {
@@ -76,6 +97,7 @@
             };
 
             buttons[t('refinery.admin.form_unsaved_continue')] = function () {
+                $(this).dialog('destroy');
                 Turbolinks.visit(url);
             };
 
