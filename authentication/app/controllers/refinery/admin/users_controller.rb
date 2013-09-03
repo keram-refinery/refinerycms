@@ -155,7 +155,10 @@ module Refinery
     private
 
       def user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation, :locale, :full_name)
+        params.require(:user).permit(
+          :username, :email, :about,
+          :password, :password_confirmation,
+          :locale, :full_name)
       end
     end
   end

@@ -6,20 +6,29 @@
             data: { remote: true } do |f| %>
 
   <%= render '/refinery/admin/error_messages', :object => @user, :include_object_name => true %>
+  <div class="clearfix">
+    <div class="hemisquare">
+      <div class="field">
+        <%= f.label :username %>
+        <%= f.text_field :username, :required => true, :size => 20, :maxlength => Refinery::User::USERNAME_MAX_LENGTH %>
+      </div>
 
-  <div class="field">
-    <%= f.label :username %>
-    <%= f.text_field :username, :required => true, :size => 20, :maxlength => Refinery::User::USERNAME_MAX_LENGTH %>
-  </div>
+      <div class="field">
+        <%= f.label :full_name %>
+        <%= f.text_field :full_name %>
+      </div>
 
-  <div class="field">
-    <%= f.label :full_name %>
-    <%= f.text_field :full_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, :required => true %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, :required => true %>
+      </div>
+    </div>
+    <div class="hemisquare right-side">
+      <div class="field">
+        <%= f.label :about %>
+        <%= f.text_area :about, rows: 5, cols: 60 %>
+      </div>
+    </div>
   </div>
 
   <div class="field">
