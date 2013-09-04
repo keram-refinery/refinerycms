@@ -24,11 +24,14 @@ module Refinery
     attr_accessor :login
 
     USERNAME_MAX_LENGTH = 64
-    EMAIL_MAX_LENGTH = 255
+    EMAIL_MAX_LENGTH = Refinery::STRING_MAX_LENGTH
     LOCALE_MAX_LENGTH = 8
 
     validates :username, presence: true, uniqueness: true, length: { maximum: USERNAME_MAX_LENGTH }
     validates :email, presence: true, uniqueness: true, length: { maximum: EMAIL_MAX_LENGTH }
+    validates :full_name, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
+    validates :slug, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
+    validates :locale, presence: true, length: { maximum: LOCALE_MAX_LENGTH }
 
     before_validation :downcase_username, :strip_username
 
