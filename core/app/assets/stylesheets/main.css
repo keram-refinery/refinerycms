@@ -61,7 +61,7 @@ textarea {
    ========================================================================== */
 
 body {
-    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    font: 16px/1.625em Helvetica, Helvetica Neue, Arial;
 }
 
 .wrapper {
@@ -74,17 +74,18 @@ body {
    =================== */
 
 #header-wrapper {
-    border-bottom: 20px solid #e44d26;
+    border-bottom: 20px solid #D44D0D;
+    /* border-bottom: 20px solid #e44d26;*/
 }
 
 #footer-wrapper,
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 20px solid #D44D0D;
 }
 
 body,
 .main aside {
-    background-color: #f16529;
+    background-color: #22A7F2;
 }
 
 #main-wrapper {
@@ -105,17 +106,10 @@ nav ul {
     padding: 0;
 }
 
-nav a {
+#header nav a,
+#footer nav a {
     display: block;
     padding: 15px 25px;
-    margin-right: 15px;
-
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-
-    color: #fff;
-    background: #e44d26;
 }
 
 nav a:hover,
@@ -144,11 +138,6 @@ nav a:hover {
     padding: 0px 5% 10px;
 }
 
-#footer-wrapper footer {
-    color: #fff;
-    padding: 20px 0;
-}
-
 /* ===============
     ALL: IE Fixes
    =============== */
@@ -161,32 +150,122 @@ nav a:hover {
    Author's custom styles
    ========================================================================== */
 
+body {
+    color: #333;
+}
+
+p, pre {
+    margin: 0 0 1em;
+}
+
+blockquote #body{
+    font-style: italic;
+}
+
+footer {
+    clear: both;
+}
+
 #locales {
-  float: right;
+    float: right;
 }
 
 #locales span {
-  padding-left: 5px;
-  margin-left: 5px;
+    padding-left: 5px;
+    margin-left: 5px;
 }
 
-#header a {
+#logo {
+    margin: 0;
+    padding-top: 25px;
+    clear: both;
+    font-weight: 100;
+}
+
+#header,
+#footer,
+#header a,
+#footer a {
     color: #fff;
+    text-decoration: none;
 }
 
-
-ul ul {
-  display: none;
+#header nav a,
+#footer nav a {
+    background: #D44D0D;
+    font-weight: bold;
 }
 
+#header nav a:hover,
+#footer nav a:hover {
+    background: #D44D0D;
+    font-weight: bold;
+}
 
+#header nav a {
+    border-radius: 5px 5px 0 0;
+}
 
+#footer nav a {
+    border-radius: 0px 0px 5px 5px;
+}
 
+#footer p {
+    padding-top: 15px;
+}
 
+#body ul:not(.records) li {
+    margin-bottom: 0.5em;
+    padding-left: 0.5em;
+}
 
+#content {
+    h1, h2, h3, h4 {
+        line-height: 1.25em;
+    }
 
+    a {
+        color: #F16529;
+    }
 
+    a:hover {
+        background: #E44D26;
+        color: #fff;
+        text-decoration: none;
+    }
 
+    a:active {
+        background: #fff;
+        color: #E44D26;
+    }
+}
+
+.records {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+
+    > li {
+        padding-left: 0;
+        border-bottom: solid 1px #808080;
+    }
+
+    a {
+        display: block;
+        font-weight: 100;
+        color: #E44D26;
+    }
+
+    a:hover {
+        background: #E44D26;
+        color: #fff;
+    }
+}
+
+aside ul {
+    list-style: none;
+    padding: 0px;
+}
 
 /* ==========================================================================
    Media Queries
@@ -197,8 +276,8 @@ ul ul {
 /* ====================
     INTERMEDIATE: Menu
    ==================== */
-
-    nav a {
+    #header nav a,
+    #footer nav a {
         float: left;
     }
 
@@ -209,6 +288,21 @@ ul ul {
     nav li:last-child a {
         margin-right: 0;
     }
+
+
+    #header nav a,
+    #footer nav a {
+        margin-left: 15px;
+        text-align: center;
+    }
+
+
+    #side_body {
+        float: right;
+        width: 37%;
+    }
+
+
 
 /* ========================
     INTERMEDIATE: IE Fixes
@@ -225,30 +319,14 @@ ul ul {
 
 @media only screen and (min-width: 768px) {
 
-/* ============
-    WIDE: Menu
-   ============ */
-
-    .title {
-        float: left;
-    }
-
-    nav {
+    #header nav,
+    #footer nav {
         float: right;
     }
 
-/* ============
-    WIDE: Main
-   ============ */
-
-    .main article {
+    #body {
         float: left;
-        width: 57%;
-    }
-
-    .main aside {
-        float: right;
-        width: 28%;
+        width: 60%;
     }
 }
 

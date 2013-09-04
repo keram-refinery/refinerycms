@@ -7,6 +7,9 @@
 <%= yield :meta %>
 
 <%= stylesheet_link_tag 'application' %>
+<% ::Refinery::Core.stylesheets.each do |css| %>
+  <%= stylesheet_link_tag css.path, css.options %>
+<% end %>
 <%= stylesheet_link_tag 'refinery/site_bar' if refinery_user? %>
 <%= yield :stylesheets %>
 
