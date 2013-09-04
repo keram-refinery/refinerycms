@@ -7,6 +7,8 @@ module Refinery
   require 'refinery/errors'
   require 'refinery/secret_tokens'
 
+  STRING_MAX_LENGTH = 250
+
   autoload :Activity, 'refinery/activity'
   autoload :ApplicationController, 'refinery/application_controller'
   autoload :Engine, 'refinery/engine'
