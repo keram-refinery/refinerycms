@@ -101,9 +101,7 @@ module Refinery
       (full_name.presence || username).to_s
     end
 
-    def title
-      to_s
-    end
+    alias_method :title, :to_s
 
     private
     # To ensure uniqueness without case sensitivity we first downcase the username.
