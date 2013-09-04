@@ -401,11 +401,12 @@ module Refinery
       end
 
       it "should return (root) about page when looking for '/about'" do
-        Page.find_by_path('/about').should == created_root_about
+
+        Page.find_by_path('about').should == created_root_about
       end
 
       it "should return child about page when looking for '/team/about'" do
-        Page.find_by_path('/team/about').should == created_child
+        Page.find_by_path('team/about').should == created_child
       end
     end
 

@@ -1,12 +1,16 @@
 Refinery::Core::Engine.routes.draw do
-  root :to => 'pages#home', :via => :get
+  root to: 'pages#home', via: :get
 
-  resources :pages, :only => [:show] unless Refinery::Pages.marketable_urls
+  resources :pages, only: [:show] unless Refinery::Pages.marketable_urls
 
-  namespace :admin, :path => Refinery::Core.backend_route do
-    resources :pages, :except => :show do
-      get :children, :on => :member
-      post :update_positions, :on => :collection
+  namespace :admin, path: Refinery::Core.backend_route do
+    get 'pages/*path/edit', to: 'pages#edit'
+    patch 'pages/*path', to: 'pages#update'
+    delete 'pages/*path', to: 'pages#destroy'
+
+    resources :pages, except: :show do
+      get :children, on: :member
+      post :update_positions, on: :collection
     end
 
     get '/dialogs/pages' => 'pages_dialog#index'

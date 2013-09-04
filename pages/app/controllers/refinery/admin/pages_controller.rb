@@ -7,8 +7,6 @@ module Refinery
               :include => [:translations, :children],
               :paging => false
 
-      before_action :redirect_unless_path_match, :only => [:edit] if Pages.marketable_urls
-
       def new
         @page = Page.new parent_id: params[:parent_id].to_i
       end
@@ -20,7 +18,7 @@ module Refinery
             options[:frontend_locale] = Globalize.locale
           end
 
-          refinery.edit_admin_page_path(@page.id, options)
+          refinery.edit_admin_page_path(@page.admin_path, options)
         else
           refinery.admin_pages_path
         end
@@ -34,7 +32,10 @@ module Refinery
     protected
 
       def find_page
-        @page ||= Page.find_by_path_or_id(params[:path], params[:id])
+        Globalize.with_locales([Globalize.locale, Refinery::I18n.frontend_locales].flatten.uniq) do |locale|
+          @page ||= Page.find_by_path_or_id(params[:path], params[:id]) unless @page
+        end
+
         unless @page
           raise ::ActiveRecord::RecordNotFound, "Couldn't find Refinery::Page " +
                                                 "with #{(params[:path].present? ? 'path' : 'id')}=#{params[:path] || params[:id]}"
@@ -49,11 +50,6 @@ module Refinery
           :link_url, :show_in_menu, :browser_title, :meta_description,
           :custom_slug, :parts_attributes => [:id, :title, :body, :position, :active]
         )
-      end
-
-      def redirect_unless_path_match
-        url = refinery.edit_admin_page_path(@page.id)
-        redirect_to url and return unless request.fullpath.match(url)
       end
 
     end

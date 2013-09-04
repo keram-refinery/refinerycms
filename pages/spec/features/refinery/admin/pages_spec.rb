@@ -145,6 +145,8 @@ module Refinery
             fill_in 'page_title', :with => 'Updated'
             click_button 'Save'
 
+            updatable_page.reload
+
             updatable_page.title.should eq('Updated')
           end
         end
@@ -408,7 +410,7 @@ module Refinery
 
           it 'uses id instead of slug in admin' do
             within "#page_#{ru_page_id}" do
-              page.find_link('Edit this page')[:href].should include(ru_page_id.to_s)
+              page.find_link('Edit this page')[:href].should include(ru_page_slug_encoded)
             end
           end
 
@@ -440,9 +442,11 @@ module Refinery
               }
               sub_page.parent.should == parent_page
               visit refinery.admin_pages_path
+
               within "#page_#{sub_page.id}" do
                 click_link "Edit"
               end
+
               fill_in 'page_title', :with => ru_page_title
               click_button "Save"
               within "#flash-wrapper" do
@@ -525,7 +529,6 @@ module Refinery
           describe 'with relative urls' do
             it "shows Russian pages if we're editing the Russian locale" do
               visit refinery.admin_dialogs_pages_path :frontend_locale => :ru
-
               within '#pages-link-area' do
                 page.should have_content('About Ru')
               end
