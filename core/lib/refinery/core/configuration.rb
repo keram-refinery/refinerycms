@@ -9,7 +9,8 @@ module Refinery
                     :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
-                    :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts
+                    :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts,
+                    :extern_javascripts, :admin_extern_javascripts
 
     self.rescue_not_found = false
     self.s3_backend = false
@@ -20,10 +21,12 @@ module Refinery
     self.authenticity_token_on_frontend = false
     self.javascripts = []
     self.I18n_javascripts = {}
+    self.extern_javascripts = []
     self.turbolinks_on_frontend = true
     self.stylesheets = []
     self.admin_javascripts = []
     self.admin_I18n_javascripts = {}
+    self.admin_extern_javascripts = []
     self.admin_stylesheets = []
     self.s3_bucket_name = ENV['S3_BUCKET']
     self.s3_region = ENV['S3_REGION']
@@ -43,6 +46,10 @@ module Refinery
       self.I18n_javascripts[locale] |= Array(name)
     end
 
+    def config.register_extern_javascript(options)
+      self.extern_javascripts << options
+    end
+
     def config.register_stylesheet(*args)
       self.stylesheets |= Array(Stylesheet.new(*args))
     end
@@ -54,6 +61,10 @@ module Refinery
     def config.register_admin_I18n_javascript(locale, name)
       self.admin_I18n_javascripts[locale] ||= []
       self.admin_I18n_javascripts[locale] |= Array(name)
+    end
+
+    def config.register_extern_javascript(options)
+      self.admin_extern_javascripts << options
     end
 
     def config.register_admin_stylesheet(*args)

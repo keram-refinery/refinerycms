@@ -6,16 +6,24 @@
 <%= csrf_meta_tags %>
 
 <%= stylesheet_link_tag 'refinery/application' %>
-<% ::Refinery::Core.admin_stylesheets.each do |css| %>
+<% Refinery::Core.admin_stylesheets.each do |css| %>
   <%= stylesheet_link_tag css.path, css.options %>
 <% end %>
 
 <%= javascript_include_tag 'modernizr-min', 'vendor/i18n', data: { :'turbolinks-eval' => false } %>
-<% refinery_admin_i18n_js = ::Refinery::Core.admin_I18n_javascripts[::I18n.locale] ||
-            ::Refinery::Core.admin_I18n_javascripts[Refinery::I18n.default_locale] %>
+<% refinery_admin_i18n_js = Refinery::Core.admin_I18n_javascripts[::I18n.locale] ||
+            Refinery::Core.admin_I18n_javascripts[Refinery::I18n.default_locale] %>
 <%= javascript_include_tag *refinery_admin_i18n_js,
             # cache: true,
             data: { :'turbolinks-eval' => false } unless refinery_admin_i18n_js.nil? %>
+
+<% Refinery::Core.admin_extern_javascripts.each do |js| %>
+  <%= javascript_include_tag js[:url],
+              defer: js[:defer],
+              async: js[:async],
+              data: { :'turbolinks-eval' => false } %>
+<% end -%>
+
 <%= javascript_include_tag 'refinery/application',
             defer: !Rails.configuration.assets.debug,
             async: !Rails.configuration.assets.debug,

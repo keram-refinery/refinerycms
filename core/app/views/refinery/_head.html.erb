@@ -20,4 +20,11 @@
             # cache: true, unfortunately doesn't work with asset pipeline ;(
             data: { :'turbolinks-eval' => false } unless refinery_i18n_js.nil? %>
 
+<% Refinery::Core.extern_javascripts.each do |js| %>
+  <%= javascript_include_tag js[:url],
+              defer: js[:defer],
+              async: js[:async],
+              data: { :'turbolinks-eval' => false } %>
+<% end -%>
+
 <%= render '/refinery/javascripts' if Refinery::Core.turbolinks_on_frontend %>
