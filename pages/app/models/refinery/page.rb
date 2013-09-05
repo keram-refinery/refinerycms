@@ -314,7 +314,7 @@ module Refinery
         title: title,
         type: self.class.name,
         link_url: link_url,
-        path: to_param
+        path: custom_slug.presence || to_param
       }
     end
 
