@@ -18,7 +18,7 @@ module Refinery
             options[:frontend_locale] = Globalize.locale
           end
 
-          refinery.edit_admin_page_path(@page.admin_path, options)
+          refinery.edit_admin_page_path(@page.relative_path, options)
         else
           refinery.admin_pages_path
         end

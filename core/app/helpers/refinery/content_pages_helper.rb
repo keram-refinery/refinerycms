@@ -25,7 +25,7 @@ module Refinery
       Globalize.with_locale locale do
         if params[:controller] && params[:controller] == 'refinery/pages'
           localized_params = params.merge(locale: locale)
-          localized_params.merge!(path: @page.nested_url.join('/')) unless localized_params[:path].nil?
+          localized_params.merge!(path: @page.relative_path) unless localized_params[:path].nil?
           refinery.url_for localized_params
         else
           refinery.url_for @page.url

@@ -1,5 +1,5 @@
 <%= form_for [refinery, :admin, @page],
-              :url => (refinery.admin_page_path(@page.admin_path) if @page.persisted?),
+              :url => (refinery.admin_page_path(@page.relative_path) if @page.persisted?),
               :html => { :data => { :remote => true }} do |f| %>
 
   <%= render '/refinery/admin/error_messages', :object => @page, :include_object_name => true %>
