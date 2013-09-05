@@ -178,7 +178,7 @@ a.move:active {
 .records:not(.image-grid) .ui-selected,
 .records:not(.image-grid) .ui-selected:hover,
 .records:not(.tree) .ui-selected:nth-child(2n-1) {
-    background: #E0F5E0;
+    background-color: #E0F5E0;
     outline: solid 1px #00A017;
     color: #00A017;
 }
@@ -209,6 +209,10 @@ a.move:active {
 #actions li a:active {
     background-color: #22A7F2;
     color: #fff;
+}
+
+#actions li.active a {
+    font-weight: bold;
 }
 
 li.child-1 {
