@@ -3,7 +3,7 @@ module Refinery
     include ActiveSupport::Configurable
 
     config_accessor :rescue_not_found, :s3_backend, :base_cache_key,
-                    :site_name, :site_notification_email,
+                    :site_name, :site_notifications_email,
                     :google_analytics_page_code, :authenticity_token_on_frontend,
                     :javascripts, :I18n_javascripts, :stylesheets, :turbolinks_on_frontend,
                     :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
@@ -16,7 +16,7 @@ module Refinery
     self.s3_backend = false
     self.base_cache_key = :refinery
     self.site_name = 'Site Name'
-    self.site_notification_email = 'no-reply@localhost'
+    self.site_notifications_email = 'no-reply@localhost'
     self.google_analytics_page_code = 'UA-xxxxxx-x'
     self.authenticity_token_on_frontend = false
     self.javascripts = []

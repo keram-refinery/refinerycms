@@ -9,7 +9,7 @@ module Refinery
 
       mail(:to => user.email,
            :subject => t('subject', :scope => 'refinery.user_mailer.reset_notification'),
-           :from => "\"#{Refinery::Core.site_name}\" <#{Refinery::Core.site_notification_email}>")
+           :from => "\"#{Refinery::Core.site_name}\" <#{Refinery::Core.site_notifications_email}>")
     end
 
   end

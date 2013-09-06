@@ -23,7 +23,9 @@ Refinery::Core.configure do |config|
   # config.site_name = <%= Refinery::Core.site_name.inspect %>
 
   # Site email from which are send emails
-  # config.site_name = <%= Refinery::Core.site_notification_email.inspect %>
+  # For Example when you request password reset, e-mail with confirmation link
+  # will came from this address.
+  # config.site_notifications_email = <%= Refinery::Core.site_notifications_email.inspect %>
 
   # This activates Google Analytics tracking within your website. If this
   # config is left blank or set to UA-xxxxxx-x then no remote calls to

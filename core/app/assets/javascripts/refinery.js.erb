@@ -1,0 +1,33 @@
+<% ::Refinery::Core.javascripts.each do |js| %>
+<%= require_asset js %>
+<% end %>
+
+$(function () {
+    var doc = $(document);
+
+    $.ajaxSettings.dataType = 'JSON';
+
+    function destroy () {
+        if (refinery.PageUI) {
+            refinery.PageUI.destroy();
+            refinery.PageUI.unsubscribe('ui:change', reload);
+            refinery.PageUI = null;
+        }
+    }
+
+    function reload () {
+        destroy();
+        refinery.PageUI = refinery('UserInterface').init($('#page'));
+        refinery.PageUI.subscribe('ui:change', reload);
+        refinery.spinner.off();
+    }
+
+    doc.on('page:fetch', function () {
+        refinery.spinner.on();
+    });
+
+    doc.on('page:receive', destroy);
+    doc.on('page:load', reload);
+    doc.on('page:restore', reload);
+    reload();
+});
