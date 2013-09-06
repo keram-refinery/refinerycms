@@ -87,7 +87,11 @@ module Refinery
       # than find_by_path.
       def find_by_path_or_id(path, id)
         if (page_uid = (path.presence || id.presence).to_s).friendly_id?
-          find_by_path page_uid
+          page = if (id_from_path = page_uid.split('/').last).friendly_id?
+                    find_by_path page_uid
+                  else
+                    find id_from_path
+                  end
         else
           find page_uid.to_i
         end
@@ -265,10 +269,10 @@ module Refinery
       [].tap do |params|
         Globalize.with_locale(Globalize.locale) do
           ancestors.each do |page|
-            params << (page.custom_slug.presence || page.to_param.to_s)
+            params << (page.translation.custom_slug.presence || page.to_param.to_s)
           end if ancestors
 
-          params << (custom_slug.presence || to_param.to_s)
+          params << (translation.custom_slug.presence || to_param.to_s)
         end
       end
     end
@@ -341,13 +345,15 @@ module Refinery
     end
 
     def update_signature
-      signature = OpenSSL::Digest::MD5.hexdigest(relative_path)
-      if self[:signature] != signature
-        translation.update_column(:signature, signature)
-        self[:signature] = signature
-        children.each do |child|
-          child.update_signature
-        end unless new_record?
+      Globalize.with_locale Globalize.locale do
+        signature = OpenSSL::Digest::MD5.hexdigest(relative_path)
+        if self[:signature] != signature
+          translation.update_column(:signature, signature) unless translation.new_record?
+          self[:signature] = signature
+          children.each do |child|
+            child.update_signature
+          end unless new_record?
+        end
       end
     end
 
@@ -370,17 +376,6 @@ module Refinery
     def puts_destroy_help
       puts 'This page is not deletable. Please use .destroy! if you really want it deleted '
       puts 'set .deletable to true' unless deletable
-    end
-
-    def slug_locale
-      return Globalize.locale if translation_for(Globalize.locale).try(:slug)
-      #return Globalize.locale if translated_locales.include?(Globalize.locale)
-
-      if translation_for(Refinery::I18n.default_frontend_locale).present?
-        Refinery::I18n.default_frontend_locale
-      else
-        translations.first.locale
-      end
     end
 
     def reload_routes

@@ -410,7 +410,7 @@ module Refinery
 
           it 'uses id instead of slug in admin' do
             within "#page_#{ru_page_id}" do
-              page.find_link('Edit this page')[:href].should include(ru_page_slug_encoded)
+              page.find_link('Edit this page')[:href].should include("#{ru_page_id}")
             end
           end
 
@@ -446,6 +446,7 @@ module Refinery
               within "#page_#{sub_page.id}" do
                 click_link "Edit"
               end
+
 
               fill_in 'page_title', :with => ru_page_title
               click_button "Save"

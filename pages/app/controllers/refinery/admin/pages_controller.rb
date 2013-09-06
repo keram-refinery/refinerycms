@@ -7,6 +7,7 @@ module Refinery
               :include => [:translations, :children],
               :paging => false
 
+
       def new
         @page = Page.new parent_id: params[:parent_id].to_i
       end
@@ -14,7 +15,7 @@ module Refinery
       def redirect_url
         if @page && @page.persisted?
           options = {}
-          if Globalize.locale != I18n.default_frontend_locale
+          if Globalize.locale != ::I18n.locale
             options[:frontend_locale] = Globalize.locale
           end
 
