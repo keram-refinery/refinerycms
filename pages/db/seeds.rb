@@ -25,7 +25,7 @@ pages = {
     deletable: true,
     show_in_menu: false,
     plugin_page_id: "#{plugin.name}_colophon"
-  },
+  }
 }
 
-Refinery::Pages.seed(plugin, pages)
+Refinery::Pages::Import.new(plugin, pages, false).run
