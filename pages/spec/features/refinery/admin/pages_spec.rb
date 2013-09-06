@@ -306,7 +306,7 @@ module Refinery
             click_link "Add new page"
 
             within '.locale-picker' do
-              click_link "ru"
+              first('.flag-ru').click
             end
 
             fill_in 'page_title', :with => ru_page_title
@@ -319,7 +319,7 @@ module Refinery
             end
 
             within '.locale-picker' do
-              click_link "en"
+              first('.flag-en').click
             end
 
             fill_in 'page_title', :with => en_page_title
@@ -382,7 +382,7 @@ module Refinery
             ru_page.destroy!
             click_link "Add new page"
             within '.locale-picker' do
-              click_link "ru"
+              first('.flag-ru').click
             end
             fill_in 'page_title', :with => ru_page_title
             click_button "Save"
@@ -489,8 +489,9 @@ module Refinery
           click_link 'Add new page'
 
           within '.locale-picker' do
-            click_link 'lv'
+            first('.flag-lv').click
           end
+
           fill_in 'page_title', :with => 'Brīva vieta reklāmai'
           click_button 'Save'
 

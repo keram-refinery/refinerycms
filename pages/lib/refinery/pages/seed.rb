@@ -12,7 +12,7 @@ module Refinery
           page.move_to_child_of(parent) if parent
 
           Globalize.with_locales Refinery::I18n.frontend_locales do |locale|
-            page.update(title: page_attributes[:title])
+            page.update(title: page_attributes[:title], custom_slug: page_attributes[:custom_slug])
 
             dir = Rails.root.join('db', 'pages', locale.to_s)
             default_dir = plugin.pathname.join('db', 'pages', locale.to_s)

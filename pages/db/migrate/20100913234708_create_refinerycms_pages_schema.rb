@@ -45,8 +45,8 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
     # which is bug in globalize3, until it will be fixed as workaround
     # we set default value to ''
     Refinery::Page.create_translation_table!({
-      title: { type: :string, null: false },
-      slug: { type: :string, null: false },
+      title: { type: :string, null: false, default: '' },
+      slug: { type: :string, null: false, default: '' },
       signature: { type: :string, null: false, default: '', limit: 32 },
       custom_slug: :string,
     })
