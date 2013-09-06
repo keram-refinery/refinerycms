@@ -32,6 +32,9 @@ module Refinery
       def initialize(collection, context)
         @collection = collection
         @context = context
+        @request_path = context.request.path
+        @request_path = @request_path.force_encoding('utf-8') if @request_path.respond_to?(:force_encoding)
+        @request_path_with_decoded = [@request_path, URI.decode(@request_path)]
       end
 
       def to_html
@@ -49,6 +52,7 @@ module Refinery
         if menu_items.present?
           content_tag(list_tag, :class => list_tag_css) do
             menu_items.each_with_index.inject(ActiveSupport::SafeBuffer.new) do |buffer, (item, index)|
+              @menu_item_url = context.refinery.url_for(item.url)
               buffer << render_menu_item(item, index)
             end
           end
@@ -56,7 +60,7 @@ module Refinery
       end
 
       def render_menu_item_link(menu_item)
-        link_to(menu_item.title, context.refinery.url_for(menu_item.url))
+        link_to(menu_item.title, @menu_item_url)
       end
 
       def render_menu_item(menu_item, index)
@@ -72,30 +76,26 @@ module Refinery
       # Just calls selected_item? for each descendant of the supplied item
       # unless it first quickly determines that there are no descendants.
       def descendant_item_selected?(item)
-        item.has_children? && item.descendants.any?(&method(:selected_item?))
+        re = %r{#{@menu_item_url.gsub(/\/\z/, '')}}
+        (0 == (@request_path_with_decoded.first =~ re) ||
+          0 == (@request_path_with_decoded.last =~ re))
       end
 
       def selected_item_or_descendant_item_selected?(item)
-        selected_item?(item) || descendant_item_selected?(item)
+        selected_item? || (item.has_children? && is_not_home? && descendant_item_selected?(item))
       end
 
       # Determine whether the supplied item is the currently open item according to Refinery.
-      def selected_item?(item)
-        path = context.request.path
-        path = path.force_encoding('utf-8') if path.respond_to?(:force_encoding)
+      def selected_item?
+        @request_path_with_decoded.include?(@menu_item_url.gsub(/(\w+)\/\z/, '\1'))
+      end
 
-        # Find the first url that is a string.
-        url = [item.url]
-        url << ['', item.url[:path]].compact.flatten.join('/') if item.url.respond_to?(:keys)
-        url = url.last.match(%r{^/#{Globalize.locale}(/.*)}) ? $1 : url.detect{|u| u.is_a?(String)}
-
-        # Now use all possible vectors to try to find a valid match
-        [path, URI.decode(path)].include?(url) || path == "/#{item.original_id}"
+      def is_not_home?
+        !['/', "/#{Globalize.locale}/"].include?(@menu_item_url)
       end
 
       def menu_item_css(menu_item, index)
         css = []
-
         css << selected_css if selected_item_or_descendant_item_selected?(menu_item)
         css << first_css if index == 0
         css << last_css if index == menu_item.shown_siblings.length
