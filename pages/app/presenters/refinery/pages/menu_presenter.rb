@@ -76,7 +76,7 @@ module Refinery
       # Just calls selected_item? for each descendant of the supplied item
       # unless it first quickly determines that there are no descendants.
       def descendant_item_selected?(item)
-        re = %r{#{@menu_item_url.gsub(/\/\z/, '')}}
+        re = %r{#{@menu_item_url.gsub(/(\w+)\z/, '\1/')}}
         (0 == (@request_path_with_decoded.first =~ re) ||
           0 == (@request_path_with_decoded.last =~ re))
       end
