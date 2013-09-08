@@ -8,13 +8,6 @@ uk:
       dashboard:
         index:
           quick_tasks: Швидкі завдання
-        actions:
-          add_a_new_page: Додати нову сторінку
-          update_a_page: Змінити сторінку
-          upload_a_image: Завантажити зображення
-          upload_a_file: Завантажити файл
-          change_language: Змінити мову
-          see_home_page: Переглянути домашню сторінку
         recent_activity:
           empty: Останнім часом не було активності.
           latest_activity: Останні дії

@@ -8,13 +8,6 @@ fi:
       dashboard:
         index:
           quick_tasks: Pikavalinnat
-        actions:
-          add_a_new_page: Lisää uusi sivu
-          update_a_page: Muokkaa sivua
-          upload_a_image: Lisää kuva
-          upload_a_file: Lisää tiedosto
-          change_language: Vaihda kieltä
-          see_home_page: Katso kotisivua
         recent_activity:
           empty: Tapahtumia ei ole ollut viimeaikoina.
           latest_activity: Uusimmat tapahtumat

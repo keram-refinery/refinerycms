@@ -1,0 +1,7 @@
+<% if ::Refinery::Plugins.active.names.include?('pages') %>
+<li>
+  <%= link_to t('create_new_page', scope: 'refinery.admin.pages.actions'),
+              refinery.new_admin_page_path,
+              :class => 'add-icon icon-small icon-with-text' %>
+</li>
+<% end -%>

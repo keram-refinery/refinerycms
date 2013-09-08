@@ -1,0 +1,7 @@
+<% if ::Refinery::Plugins.active.names.include?('resources') %>
+  <li>
+    <%= link_to t('upload_new', scope: 'refinery.admin.resources.actions'),
+                refinery.new_admin_resource_path,
+                :class => 'add-icon icon-small icon-with-text' %>
+  </li>
+<% end %>

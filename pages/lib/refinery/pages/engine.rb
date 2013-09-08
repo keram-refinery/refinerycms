@@ -23,6 +23,8 @@ module Refinery
           }
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_pages_path }
         end
+
+        Refinery::Dashboard.sidebar_actions.unshift('/refinery/admin/pages/dashboard_actions')
       end
 
       initializer 'refinery_pages append marketable routes', :after => :set_routes_reloader_hook do

@@ -1,1 +1,4 @@
 <%= render 'recent_activity' if @recent_activity.present? %>
+<% Refinery::Dashboard.records_templates.each do |template| %>
+  <%= render template unless template.nil? %>
+<% end -%>

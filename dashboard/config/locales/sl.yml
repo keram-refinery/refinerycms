@@ -8,19 +8,10 @@ sl:
       dashboard:
         index:
           quick_tasks: Pogosta opravila
-        actions:
-          add_a_new_page: Dodaj novo stran
-          update_a_page: Uredi stran
-          upload_a_image: Naloži sliko
-          upload_a_file: Naloži datoteko
-          change_language: Spremeni Jezik
-          see_home_page: Poglej domačo stran
         recent_activity:
           empty: V zadnjem času ni bilo nobene aktivnosti.
           latest_activity: Zadnje Aktivnosti
           latest_activity_message: '%{what} %{kind} je bila %{action}'
-        recent_inquiries:
-          latest_inquiries: Latest Inquiries
     updated:
       'with_article "the"':  posodobitev
     created:

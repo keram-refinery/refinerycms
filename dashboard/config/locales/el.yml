@@ -8,13 +8,6 @@ el:
       dashboard:
         index:
           quick_tasks: Γρήγορες ενέργειες
-        actions:
-          add_a_new_page: Προσθήκη σελίδας
-          update_a_page: Ενημέρωση σελίδας
-          upload_a_image: Μεταφόρτωση εικόνας
-          upload_a_file: Μεταφόρτωση αρχείου
-          change_language: Επιλογή γλώσσας
-          see_home_page: Προβολή αρχικής
         recent_activity:
           empty: Δεν υπάρχει πρόσφατη δραστηριότητα.
           latest_activity: Τελευταίες δραστηριότητες

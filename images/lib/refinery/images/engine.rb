@@ -23,6 +23,8 @@ module Refinery
           }
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_images_path }
         end
+
+        Refinery::Dashboard.sidebar_actions << '/refinery/admin/images/dashboard_actions'
       end
 
       config.after_initialize do

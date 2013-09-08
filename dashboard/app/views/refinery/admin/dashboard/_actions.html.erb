@@ -1,24 +1,6 @@
 <ul>
-  <% if ::Refinery::Plugins.active.names.include?('pages') %>
-    <li>
-      <%= link_to t('.add_a_new_page'),
-                  refinery.new_admin_page_path,
-                  :class => 'add-icon icon-small icon-with-text' %>
-    </li>
-  <% end %>
-  <% if ::Refinery::Plugins.active.names.include?('resources') %>
-    <li>
-      <%= link_to t('.upload_a_file'),
-                  refinery.new_admin_resource_path,
-                  :class => 'add-icon icon-small icon-with-text' %>
-    </li>
-  <% end %>
-  <% if ::Refinery::Plugins.active.names.include?('images') %>
-    <li>
-      <%= link_to t('.upload_a_image'),
-                  refinery.new_admin_image_path,
-                  :class => 'add-icon icon-small icon-with-text' %>
-    </li>
-  <% end %>
-  <%= render 'additional_dashboard_menu_items' %>
+<% Refinery::Dashboard.sidebar_actions.each do |template| %>
+  <%= render template unless template.nil? %>
+<% end -%>
+<%= render 'additional_dashboard_menu_items' %>
 </ul>

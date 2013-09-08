@@ -8,19 +8,10 @@ pt-BR:
       dashboard:
         index:
           quick_tasks: Tarefas comuns
-        actions:
-          add_a_new_page: Adicionar uma nova página
-          update_a_page: Atualizar uma página
-          upload_a_image: Enviar uma imagem
-          upload_a_file: Enviar um arquivo
-          change_language: Mudar Língua
-          see_home_page: Ver página inicial
         recent_activity:
           empty: Não houve atividades recentemente.
           latest_activity: Atividades Recentes
           latest_activity_message: '%{kind} %{what} foi %{action}'
-        recent_inquiries:
-          latest_inquiries: Últimas Mensagens
     updated:
       'with_article "a"': atualizada
       'with_article "o"': atualizado

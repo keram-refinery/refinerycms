@@ -8,13 +8,6 @@ tr:
       dashboard:
         index:
           quick_tasks: Hizli Gorev
-        actions:
-          add_a_new_page: Yeni bir sayfa ekle
-          update_a_page: Yeni bir sayfa guncelle
-          upload_a_image: Fotograf ekle
-          upload_a_file: Dosya ekle
-          change_language: Dil'i Degistir
-          see_home_page: Ana Sayfayi Gor
         recent_activity:
           empty: Son zamanlarda herhangi bir aktivite yok
           latest_activity: Son Aktivite

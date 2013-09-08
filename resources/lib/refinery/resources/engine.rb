@@ -20,6 +20,8 @@ module Refinery
           plugin.activity = { :class_name => :'refinery/resource', :title => :file_name }
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_resources_path }
         end
+
+        Refinery::Dashboard.sidebar_actions << '/refinery/admin/resources/dashboard_actions'
       end
 
       config.after_initialize do

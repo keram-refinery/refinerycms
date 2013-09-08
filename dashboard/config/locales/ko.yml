@@ -8,13 +8,6 @@ ko:
       dashboard:
         index:
           quick_tasks: 빠른 실행
-        actions:
-          add_a_new_page: 새 페이지
-          update_a_page: 페이지 수정
-          upload_a_image: 이미지 업로드
-          upload_a_file: 파일 업로드
-          change_language: 언어 변경
-          see_home_page: 홈 페이지 보기
         recent_activity:
           empty: 최근 활동이 없습니다.
           latest_activity: 최근 활동
