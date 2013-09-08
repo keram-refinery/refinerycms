@@ -2,23 +2,24 @@
     background-color: #f0f0f0;
 }
 
-form .locale-picker li {
+.locale-picker li {
     float: left;
     margin: 0px;
     padding: 0px;
     width: 50px;
-    overflow: hidden;
     height: 3em;
     line-height: 3em;
-}
+ }
 
-form .locale-picker a {
+.locale-picker a {
     margin: 0px;
     display: block;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     color: transparent;
-    text-indent: 200%;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .locale-picker a:hover {
@@ -35,4 +36,3 @@ form .locale-picker a {
 .locale-picker .selected a:active {
     background-color: #fff;
 }
-

@@ -61,15 +61,15 @@
     text-align: center;
     text-indent: 100%;
     overflow: hidden;
-    background: asset-url('refinery/logo-site-bar.png') no-repeat top center;
+    background: asset-url('refinery/logo-site-bar.png') no-repeat;
+    background-position: 50% -30px;
     float: right;
-    opacity: 0.5;
+    opacity: 0.75;
 }
 
 #refinery-cms-logo:hover,
 #refinery-cms-logo:focus {
-    background-position: 50% -30px;
-    opacity: 0.8;
+    opacity: 1;
 }
 
 #refinery-cms-logo:active  {

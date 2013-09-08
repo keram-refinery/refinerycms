@@ -758,7 +758,6 @@
         },
 
         init_collapsible_lists: function () {
-            this.holder.find('.collapsible-list').accordion();
             this.holder.find('.collapsible-list').each(function () {
                 var list = $(this),
                     options = /** Object */(list.data('ui-accordion-options'));
