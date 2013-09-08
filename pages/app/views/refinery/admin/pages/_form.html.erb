@@ -4,7 +4,8 @@
 
   <%= render '/refinery/admin/error_messages', :object => @page, :include_object_name => true %>
 
-  <%= render '/refinery/admin/locale_picker', :object => @page %>
+  <%= render '/refinery/admin/locale_picker',
+              :url => @page.persisted? ? refinery.edit_admin_page_path(@page.relative_path) : refinery.new_admin_page_path %>
 
   <div class="field">
     <%= f.label :title %>

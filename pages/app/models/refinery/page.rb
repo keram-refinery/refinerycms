@@ -2,10 +2,12 @@
 require 'friendly_id'
 require 'refinery/core/base_model'
 require 'refinery/pages/url'
+require 'refinery/globalize_finder'
 
 module Refinery
   class Page < Core::BaseModel
     extend FriendlyId
+    extend GlobalizeFinder
 
     PATH_SEPARATOR = ' - '
 
@@ -23,7 +25,7 @@ module Refinery
 
     validates :title, presence: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
 
-    validates :custom_slug, uniqueness: true, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
+    validates :custom_slug, uniqueness: { scope: :parent_id }, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :slug, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :link_url, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
 
@@ -40,7 +42,7 @@ module Refinery
       friendly_id_options.merge!(scope: :parent)
     end
 
-    friendly_id :custom_slug_or_title, friendly_id_options
+    friendly_id :title, friendly_id_options
 
     has_many :parts, -> {
       order(position: :asc).includes(:translations)
@@ -165,25 +167,6 @@ module Refinery
         where(conditions).joins(:translations).where(translations_conditions).
                                                readonly(false)
       end
-
-      def rebuild_with_slug_nullification!
-        rebuild_without_slug_nullification!
-        nullify_duplicate_slugs_under_the_same_parent!
-      end
-      alias_method_chain :rebuild!, :slug_nullification
-
-      protected
-
-      def nullify_duplicate_slugs_under_the_same_parent!
-        t_slug = translation_class.arel_table[:slug]
-        joins(:translations).group(:locale, :parent_id, t_slug).having(t_slug.count.gt(1)).count.
-        each do |(locale, parent_id, slug), count|
-          by_slug(slug, locale: locale).where(parent_id: parent_id).drop(1).each do |page|
-            page.slug = nil # kill the duplicate slug
-            page.save # regenerate the slug
-          end
-        end
-      end
     end
 
     def ancestors
@@ -208,21 +191,12 @@ module Refinery
     # The canonical slug for this particular page.
     # This is the slug for the default frontend locale.
     def canonical_slug
-      Globalize.with_locale(::Refinery::I18n.default_frontend_locale) {
-        custom_slug.presence || slug
-      }
-    end
-
-    # Returns in cascading order: custom_slug or title depending on
-    # which attribute is first found to be present for this page.
-    def custom_slug_or_title
-      custom_slug.presence || title
+      Globalize.with_locale(::Refinery::I18n.default_frontend_locale) { slug }
     end
 
     def should_generate_new_friendly_id?
-      slug.blank? ||
-      custom_slug != translation.custom_slug ||
-      (custom_slug.blank? && title != translation.title)
+      self[:slug] = custom_slug if custom_slug.present? || custom_slug != translation.custom_slug
+      slug.blank?
     end
 
     # Before destroying a page we check to see if it's a deletable page or not
@@ -271,10 +245,10 @@ module Refinery
       [].tap do |params|
         Globalize.with_locale(Globalize.locale) do
           ancestors.each do |page|
-            params << (page.translation.custom_slug.presence || page.to_param.to_s)
+            params << page.to_param
           end if ancestors
 
-          params << (translation.custom_slug.presence || to_param.to_s)
+          params << to_param
         end
       end
     end
@@ -321,7 +295,7 @@ module Refinery
         title: title,
         type: self.class.name,
         link_url: link_url,
-        path: custom_slug.presence || to_param
+        path: to_param
       }
     end
 
@@ -344,6 +318,10 @@ module Refinery
       return self[:title] if self[:title].present?
       translation = translations.detect {|t| t.title.present? }
       translation.title if translation
+    end
+
+    def has_child_with_same_slug?(page)
+      children.includes(:translations).where(Refinery::Page.translation_class.arel_table[:slug].in(page.translations.pluck(:slug))).exists?
     end
 
     def update_signature

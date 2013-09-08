@@ -4,8 +4,8 @@ module Refinery
       include Pages::InstanceMethods
 
       crudify :'refinery/page',
-              :include => [:translations, :children],
-              :paging => false
+              include: [:translations, :children],
+              paging: false
 
 
       def new
@@ -27,7 +27,7 @@ module Refinery
 
       def children
         find_page
-        render :layout => false
+        render layout: false
       end
 
     protected
@@ -49,8 +49,22 @@ module Refinery
         params.require(:page).permit(
           :title, :draft, :parent_id, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description,
-          :custom_slug, :parts_attributes => [:id, :title, :body, :position, :active]
+          :custom_slug, parts_attributes: [:id, :title, :body, :position, :active]
         )
+      end
+
+      def move_allowed?(page, new_parent=nil)
+        if new_parent && page.parent != new_parent && new_parent.has_child_with_same_slug?(page)
+          #flash.now[:alert] = # todo
+          return false
+        end
+
+        if page.plugin_page_id.present? && page.parent != new_parent
+          # flash.now[:alert] = # todo
+          return false
+        end
+
+        true
       end
 
     end

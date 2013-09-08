@@ -212,19 +212,23 @@ module Refinery
               if item
                 model = #{class_name}
                 model.transaction do
-                  db_item = model.find_by(id: item['id'].to_i) if item['id'].present?
-
-                  if db_item
-                    prev_item = model.find_by(id: item['prev_id'].to_i) if item['prev_id'].present?
-                    next_item = model.find_by(id: item['next_id'].to_i) if item['next_id'].present? && !prev_item
-                    parent_item = model.find_by(id: item['parent_id'].to_i) if item['parent_id'].present? && !prev_item && !next_item
-
-                    updated = if prev_item
-                      db_item.move_to_right_of(prev_item)
-                    elsif next_item
-                      db_item.move_to_left_of(next_item)
-                    elsif parent_item
-                      db_item.move_to_child_of(parent_item)
+                  if (db_item = model.find_by(id: item['id'].to_i) if item['id']).present?
+                    case
+                    when item['prev_id'].present?
+                      prev_item = model.find_by(id: item['prev_id'].to_i) if item['prev_id'].present?
+                      if prev_item && move_allowed?(db_item, prev_item.parent)
+                        updated = db_item.move_to_right_of(prev_item)
+                      end
+                    when item['next_id'].present?
+                      next_item = model.find_by(id: item['next_id'].to_i) if item['next_id'].present?
+                      if next_item && move_allowed?(db_item, next_item.parent)
+                        updated = db_item.move_to_left_of(next_item)
+                      end
+                    when item['parent_id'].present?
+                      parent_item = model.find_by(id: item['parent_id'].to_i) if item['parent_id'].present?
+                      if parent_item && move_allowed?(db_item, parent_item)
+                        updated = db_item.move_to_child_of(parent_item)
+                      end
                     end
 
                     if updated
@@ -239,8 +243,12 @@ module Refinery
               logger.warn "#{$!.class.name} raised while updating positions of #{class_name}"
               logger.warn $!.message
             ensure
-              flash.now[:alert] = t('refinery.crudify.update_positions_fail') unless updated
+              flash.now[:alert] = t('refinery.crudify.update_positions_fail') unless updated || flash.now[:alert].present?
               find_all_#{plural_name}
+            end
+
+            def move_allowed?(item, new_parent)
+              true
             end
           )
         end

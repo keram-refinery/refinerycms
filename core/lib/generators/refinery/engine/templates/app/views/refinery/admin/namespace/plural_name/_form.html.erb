@@ -5,8 +5,10 @@
               include_object_name: true %>
 
 <% if localized? -%>
-  <%%= render '/refinery/admin/locale_picker', object: f.object %>
+  <%%= render '/refinery/admin/locale_picker',
+              url: @<%= singular_name %>.persisted? ? refinery.edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>) : refinery.new_admin_<%= namespacing.underscore %>_<%= singular_name %>_path %>
 <% end -%>
+
 <% attributes.each_with_index do |attribute, index| -%>
 <% if attribute.type == :image %>
   <div class="field">

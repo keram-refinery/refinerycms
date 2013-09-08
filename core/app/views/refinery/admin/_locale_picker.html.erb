@@ -1,17 +1,10 @@
 <% locales ||= Refinery::I18n.frontend_locales %>
 <% if locales.many? %>
-<%
-  if request.method === 'GET'
-    locale_params = params.dup
-  else
-    locale_params = { id: object.id, action: :edit }
-  end
--%>
   <ul class="locale-picker clearfix">
     <% locales.each do |locale| %>
       <li<%= ' class="selected" aria-selected="true"'.html_safe if locale == Globalize.locale %>>
         <%= link_to t("lang_#{locale}", scope: 'refinery'),
-                    refinery.url_for(locale_params.merge(frontend_locale: locale)),
+                    "#{url}?frontend_locale=#{locale}",
                     title: t("lang_#{locale}", scope: 'refinery'),
                     class: "locale flag-#{locale}" %>
       </li>
