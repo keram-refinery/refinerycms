@@ -13,6 +13,7 @@ module Refinery
                           :admin?,
                           :paginate_page,
                           :json_response,
+                          :render_content,
                           :dialog?
 
       base.protect_from_forgery # See ActionController::RequestForgeryProtection
@@ -116,6 +117,10 @@ module Refinery
 
     def dialog?
       false
+    end
+
+    def render_content(string='')
+      Refinery.content_renderer.render(string)
     end
 
   protected

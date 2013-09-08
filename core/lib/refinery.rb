@@ -24,6 +24,9 @@ module Refinery
   require 'refinery/ext/action_view/helpers/form_helper'
   require 'refinery/ext/action_view/helpers/form_tag_helper'
 
+  require 'refinery/content_renderer'
+  require 'refinery/safe_html_content_renderer'
+
   module Admin
     autoload :BaseController, 'refinery/admin/base_controller'
   end
@@ -157,7 +160,14 @@ module Refinery
       base.send :include, extension_module unless included_extension_module?(base, extension_module)
     end
 
+    attr_writer :content_renderer
+
+    def content_renderer
+      @content_renderer ||= SafeHtmlContentRenderer.new
+    end
+
     private
+
     def detect_invoker(the_caller = caller)
       return '' unless the_caller && the_caller.respond_to?(:detect)
       the_caller.detect{|c| /#{Rails.root}/ === c }.inspect.to_s.split(':in').first

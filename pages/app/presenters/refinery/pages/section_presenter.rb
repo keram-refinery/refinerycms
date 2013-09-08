@@ -58,7 +58,7 @@ module Refinery
       end
 
       def html_from_fallback(can_use_fallback)
-        fallback_html if fallback_html.present? && can_use_fallback
+        render_content(fallback_html) if fallback_html.present? && can_use_fallback
       end
 
     private
@@ -67,6 +67,10 @@ module Refinery
 
       def wrap_content_in_tag(content)
         content_tag(:section, content_tag(:div, content, :class => 'inner'), :id => id)
+      end
+
+      def render_content content
+        Refinery.content_renderer.render(content)
       end
     end
   end
