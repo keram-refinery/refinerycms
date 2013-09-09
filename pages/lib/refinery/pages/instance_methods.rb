@@ -8,7 +8,7 @@ module Refinery
       end
 
       def error_404(exception=nil)
-        @page = ::Refinery::Page.with_globalize.find_by(plugin_page_id: 'pages_not_found')
+        @page = ::Refinery::Page.live.with_globalize.find_by(plugin_page_id: 'pages_not_found')
 
         if @page.present?
           # render the application's custom 404 page with layout and meta.
