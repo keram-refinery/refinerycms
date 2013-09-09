@@ -16,6 +16,7 @@ en:
       created: "%{kind} '%{what}' was successfully added."
       updated: "%{kind} '%{what}' was successfully updated."
       destroyed: "%{kind} '%{what}' was successfully removed."
+      published: "%{kind} '%{what}' was successfully published."
       error: "Oops...an error occurred."
     site_bar:
       log_out: Log out
