@@ -1,5 +1,5 @@
 <% new_record = @image.new_record? %>
-<%= form_for @image, :url => (new_record ? refinery.admin_images_path) : refinery.admin_image_path(@image),
+<%= form_for @image, :url => (new_record ? refinery.admin_images_path : refinery.admin_image_path(@image)),
              :html => { :multipart => true, :remote => true } do |f| %>
 
   <%= render '/refinery/admin/error_messages',
