@@ -1,5 +1,5 @@
-<% persisted = @image.persisted? %>
-<%= form_for @image, :url => (persisted ? refinery.admin_image_path(@image) : refinery.admin_images_path),
+<% new_record = @image.new_record? %>
+<%= form_for @image, :url => (new_record ? refinery.admin_images_path) : refinery.admin_image_path(@image),
              :html => { :multipart => true, :remote => true } do |f| %>
 
   <%= render '/refinery/admin/error_messages',
@@ -7,7 +7,7 @@
              :include_object_name => false %>
 
   <div class="field clearfix">
-    <% if persisted %>
+    <% unless new_record %>
       <div id="existing-image">
         <label><%=t('.current_image') %></label>
         <%= image_fu @thumbnail || @image, '225x255>' %>
@@ -18,7 +18,7 @@
       </p>
     <% end %>
     <% # we must only hint at multiple when it's a new record otherwise update fails. %>
-    <%= f.file_field :image, :required => true, :multiple => !persisted %>
+    <%= f.file_field :image, :required => true, :multiple => new_record %>
     <label id="maximum-image-size">
       <%= t('.maximum_image_size', :bytes => number_to_human_size(Refinery::Images.max_image_size)) %>
     </label>
@@ -28,5 +28,5 @@
              :hide_cancel => false,
              :delete_title => t('delete', :scope => 'refinery.admin.images'),
              :delete_confirmation => (t('message', :scope => 'refinery.admin.delete',
-                    :title => @image.image_name) if persisted) %>
+                    :title => @image.image_name) unless new_record) %>
 <% end %>

@@ -6,7 +6,7 @@
 
 <% if localized? -%>
   <%%= render '/refinery/admin/locale_picker',
-              url: @<%= singular_name %>.persisted? ? refinery.edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>) : refinery.new_admin_<%= namespacing.underscore %>_<%= singular_name %>_path %>
+              url: @<%= singular_name %>.new_record? ? refinery.new_admin_<%= namespacing.underscore %>_<%= singular_name %>_path : refinery.edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>) %>
 <% end -%>
 
 <% attributes.each_with_index do |attribute, index| -%>

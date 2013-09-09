@@ -1,5 +1,5 @@
-<% persisted = @resource.persisted? %>
-<%= form_for @resource, :url => (persisted ? refinery.admin_resource_path(@resource) : refinery.admin_resources_path),
+<% new_record = @resource.new_record? %>
+<%= form_for @resource, :url => (new_record ? refinery.admin_resources_path : refinery.admin_resource_path(@resource)),
              :html => { :multipart => true },
              :as => 'resource' do |f| %>
 
@@ -8,15 +8,15 @@
              :include_object_name => false %>
 
   <div class="field clearfix">
-    <% if persisted %>
+    <% unless new_record %>
       <p>
         <%= link_to t('.download_current'), @resource.url,
                     :title => @resource.title %>
         <em><%= t('.or')%></em><%= t('.replace') %>
       </p>
     <% end %>
-    <% # we must only hint at multiple when it's a *new* record otherwise update fails. %>
-    <%= f.file_field :file, :required => true, :multiple => !persisted %>
+    <%# we must only hint at multiple when it's a *new* record otherwise update fails. %>
+    <%= f.file_field :file, :required => true, :multiple => new_record %>
     <label id="maximum-file-size">
       <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Resources.max_file_size)) %>
     </label>
@@ -26,6 +26,6 @@
              :hide_cancel => (action_name == 'insert'),
              :delete_title => t('delete', :scope => 'refinery.admin.resources'),
              :delete_confirmation => (t('message', :scope => 'refinery.admin.delete',
-                                      :title => @resource.title) if persisted) %>
+                                      :title => @resource.title) unless new_record) %>
 
 <% end %>

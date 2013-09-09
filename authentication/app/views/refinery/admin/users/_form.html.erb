@@ -2,7 +2,7 @@
 <% new_or_current_superuser = @user.new_record? || (is_current_user_superuser && !@user.has_role?(:superuser)) %>
 
 <%= form_for [refinery, :admin, @user],
-            url: (refinery.admin_user_path(@user) if @user.persisted?),
+            url: (refinery.admin_user_path(@user) unless @user.new_record?),
             data: { remote: true } do |f| %>
 
   <%= render '/refinery/admin/error_messages', :object => @user, :include_object_name => true %>
@@ -34,7 +34,7 @@
   <div class="field">
     <%= f.label :password %>
     <%= f.password_field :password, :autocomplete => 'off' %>
-    <% if @user.persisted? %>
+    <% unless @user.new_record? %>
       <%= content_tag(:p, t('.blank_password_keeps_current'), :class => 'note') %>
     <% end %>
   </div>
