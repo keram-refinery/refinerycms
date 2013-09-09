@@ -233,7 +233,6 @@ module Refinery
 
                     if updated
                       db_item.rebuild! if db_item.respond_to?(:rebuild!)
-                      db_item.touch
                     end
                   end
                 end
