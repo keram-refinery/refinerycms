@@ -18,6 +18,7 @@ module Refinery
 
         context "with permission" do
           let(:controller_permission) { true }
+
           it "allows access" do
             controller.should_not_receive :error_403
             get :index
