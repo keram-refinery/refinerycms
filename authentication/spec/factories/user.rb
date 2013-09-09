@@ -10,7 +10,8 @@ FactoryGirl.define do
   factory :user, :class => Refinery::User do
     sequence(:username) { |n| "refinery#{n}#{rand(10000000)}" }
     sequence(:email) { |n| "refinery#{n}#{rand(10000000)}@refinerycms.com" }
-    locale :en
+    locale 'en'
+    frontend_locale 'en'
     password  "refinerycms"
     password_confirmation "refinerycms"
   end

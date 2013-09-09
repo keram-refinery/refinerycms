@@ -50,6 +50,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :frontend_locale %>
+    <%= f.select :frontend_locale, Refinery::I18n.frontend_locales %>
+  </div>
+
+  <div class="field">
   <%= checkboxes do -%>
     <div class="label_with_help">
       <%= f.label :plugin_access, t('.plugin_access') %>

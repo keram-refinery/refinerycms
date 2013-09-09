@@ -40,7 +40,12 @@ class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
       t.datetime  :remember_created_at
       t.string    :reset_password_token
       t.datetime  :reset_password_sent_at
-      t.string    :locale, null: false, default: :en, limit: Refinery::User::LOCALE_MAX_LENGTH
+      t.string    :locale, null: false,
+                            default: Refinery::I18n.default_locale,
+                            limit: 8
+      t.string    :frontend_locale, null: false,
+                                    default: Refinery::I18n.default_frontend_locale,
+                                    limit: 8
 
       t.timestamps null: false
     end

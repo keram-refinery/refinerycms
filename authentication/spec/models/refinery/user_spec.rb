@@ -57,7 +57,8 @@ module Refinery
           :email => 'refinery@cms.com',
           :password => '123456',
           :password_confirmation => '123456',
-          :locale => :en
+          :locale => 'en',
+          :frontend_locale => 'en'
         }
       end
 
