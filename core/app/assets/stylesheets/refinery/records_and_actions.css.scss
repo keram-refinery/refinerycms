@@ -42,10 +42,13 @@
     vertical-align: middle;
 }
 
+.locales a,
 .actions a {
     padding: 4px;
 }
 
+.locales a:hover,
+.locales a:focus,
 .actions a:hover,
 .actions a:focus {
     background-color: #65C3F7;
