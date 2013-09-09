@@ -1,29 +1,54 @@
 <%= form_for [refinery, :admin, @page],
-              :url => (refinery.admin_page_path(@page.relative_path) if @page.persisted?),
-              :html => { :data => { :remote => true }} do |f| %>
-
-  <%= render '/refinery/admin/error_messages', :object => @page, :include_object_name => true %>
+              url: (refinery.admin_page_path(@page.relative_path) unless @page.new_record?),
+              html: { data: { remote: true }} do |f| %>
+  <%= render '/refinery/admin/error_messages', object: @page, include_object_name: true %>
 
   <%= render '/refinery/admin/locale_picker',
-              :url => @page.persisted? ? refinery.edit_admin_page_path(@page.relative_path) : refinery.new_admin_page_path %>
+              url: @page.new_record? ? refinery.new_admin_page_path : refinery.edit_admin_page_path(@page.relative_path) %>
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title, :class => 'larger widest', :autofocus => true, :required => true %>
+    <%= f.text_field :title, class: 'larger widest', autofocus: true, required: true %>
   </div>
 
-  <%= render 'form_fields_after_title', :f => f %>
+  <%= render 'form_fields_after_title', f: f %>
 
   <div class="field">
-    <%= render 'form_page_parts', :f => f %>
+    <%= render 'form_page_parts', f: f %>
   </div>
 
-  <%= render 'form_advanced_options', :f => f %>
+  <%= render 'form_advanced_options', f: f %>
 
-  <%= render '/refinery/admin/form_actions', :f => f,
-             :delete_title => t('delete', :scope => 'refinery.admin.pages'),
-             :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @page.title),
-             :cancel_url => refinery.admin_pages_path
-  %>
+  <%= f.hidden_field :status, value: 'draft' %>
+
+  <div class="form-actions clearfix">
+    <div class="form-actions-left">
+     <%= submit_tag(t('.save_draft'),
+                  class: 'button'
+                ) %>
+
+     <%= submit_tag(t('.preview'),
+                  class: 'button'
+                ) %>
+
+     <%= submit_tag(t('.publish'),
+                  name: 'publish',
+                  class: 'button'
+                ) %>
+    </div>
+
+    <div class="form-actions-right">
+
+     <%= submit_tag(t('delete', :scope => 'refinery.admin.pages'),
+                  name: 'delete',
+                  method: :delete,
+                  data: {
+                    remote: true,
+                    confirm: t('message', :scope => 'refinery.admin.delete', :title => @page.title)
+                  },
+                  class: 'button confirm-delete danger-button nojs-hide'
+                ) if @page.persisted? && @page.deletable? %>
+    </div>
+  </div>
 
 <% end %>

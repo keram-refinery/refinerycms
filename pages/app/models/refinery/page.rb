@@ -10,8 +10,9 @@ module Refinery
     extend GlobalizeFinder
 
     PATH_SEPARATOR = ' - '
+    STATES = %w(draft review live)
 
-    translates :title, :custom_slug, :slug, :signature, include: :seo_meta
+    translates :title, :custom_slug, :slug, :signature, :status, include: :seo_meta
 
     class Translation
       is_seo_meta
@@ -28,6 +29,7 @@ module Refinery
     validates :custom_slug, uniqueness: { scope: :parent_id }, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :slug, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :link_url, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
+    validates :status, allow_blank: true, inclusion: { in: STATES }
 
     # Docs for acts_as_nested_set https://github.com/collectiveidea/awesome_nested_set
     # rather than :delete_all we want :destroy
@@ -53,9 +55,9 @@ module Refinery
     after_initialize do |page|
       Pages.parts.each_with_index do |page_part, index|
         page.parts << PagePart.new(
-          :title => page_part,
-          :position => index,
-          :active => page_part.in?(Pages.default_parts))
+          title: page_part,
+          position: index,
+          active: page_part.in?(Pages.default_parts))
       end if page.new_record? && page.parts.empty?
     end
 
@@ -74,7 +76,7 @@ module Refinery
       # Live pages are 'allowed' to be shown in the frontend of your website.
       # By default, this is all pages that are not set as 'draft'.
       def live
-        where(draft: false)
+        includes(:translations).where(translation_class.arel_table[:status].eq('live')).references(:translations)
       end
 
       # With slugs scoped to the parent page we need to find a page by its full path.
@@ -146,27 +148,11 @@ module Refinery
       # controls if parent is also displayed in live localized menu
       def with_live_localized_parents
         where("parent_id IS NULL OR ((SELECT COUNT(*) FROM #{self.table_name} AS t3 INNER JOIN #{self.translation_class.table_name} AS t4 ON t3.id = t4.refinery_page_id" +
-              " WHERE t3.lft < #{self.table_name}.lft AND t3.rgt > #{self.table_name}.rgt AND t3.draft = ? AND t3.show_in_menu = ? AND t4.locale = ?)" +
+              " WHERE t3.lft < #{self.table_name}.lft AND t3.rgt > #{self.table_name}.rgt AND t4.status = ? AND t3.show_in_menu = ? AND t4.locale = ?)" +
               " = (SELECT COUNT(*) FROM #{self.table_name} AS t5 WHERE t5.lft < #{self.table_name}.lft AND t5.rgt > #{self.table_name}.rgt))",
-              false, true, ::Globalize.locale)
+              'live', true, ::Globalize.locale)
       end
 
-      # Wrap up the logic of finding the pages based on the translations table.
-      def with_globalize(conditions = {})
-        conditions = {locale: ::Globalize.locale.to_s}.merge(conditions)
-        translations_conditions = {}
-        translated_attrs = translated_attribute_names.map(&:to_s) | %w(locale)
-
-        conditions.keys.each do |key|
-          if translated_attrs.include? key.to_s
-            translations_conditions["#{self.translation_class.table_name}.#{key}"] = conditions.delete(key)
-          end
-        end
-
-        # A join implies readonly which we don't really want.
-        where(conditions).joins(:translations).where(translations_conditions).
-                                               readonly(false)
-      end
     end
 
     def ancestors
@@ -265,9 +251,14 @@ module Refinery
       nested_url.join('/')
     end
 
-    # Returns true if this page is "published"
+    # Returns true if this page has status "live"
     def live?
-      !draft?
+      status == 'live'
+    end
+
+    # Returns true if this page  has status "draft"
+    def draft?
+      status == 'draft'
     end
 
     # Return true if this page can be shown in the navigation.
@@ -321,7 +312,7 @@ module Refinery
     end
 
     def has_child_with_same_slug?(page)
-      children.includes(:translations).where(Refinery::Page.translation_class.arel_table[:slug].in(page.translations.pluck(:slug))).exists?
+      children.includes(:translations).where(::Refinery::Page.translation_class.arel_table[:slug].in(page.translations.pluck(:slug))).exists?
     end
 
     def update_signature

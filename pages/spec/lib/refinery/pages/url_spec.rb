@@ -46,7 +46,7 @@ module Refinery
           page = double(:page, nested_url: 'test', translated_locales: [:en])
           Url::Marketable.new(page).url.should eq({
             controller: '/refinery/pages', action: 'show', only_path: true,
-            path: 'test', id: nil
+            path: 'test', id: nil, locale: :en
           })
         end
       end

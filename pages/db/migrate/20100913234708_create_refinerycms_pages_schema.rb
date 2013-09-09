@@ -18,7 +18,6 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       t.boolean :show_in_menu, default: true
       t.string  :link_url
       t.boolean :deletable, null: false, default: true
-      t.boolean :draft,     null: false, default: false
       t.boolean :skip_to_first_child, null: false, default: false
       t.integer :lft,       null: false
       t.integer :rgt,       null: false
@@ -30,7 +29,7 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
 
     add_index :refinery_pages, [:lft, :rgt]
     add_index :refinery_pages, [:rgt]
-    add_index :refinery_pages, [:draft, :show_in_menu, :lft, :rgt]
+    add_index :refinery_pages, [:show_in_menu, :lft, :rgt]
     add_index :refinery_pages, :parent_id
     add_index :refinery_pages, :updated_at
 
@@ -48,11 +47,12 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       title: { type: :string, null: false, default: '' },
       slug: { type: :string, null: false, default: '' },
       signature: { type: :string, null: false, default: '', limit: 32 },
+      status: { type: :string, null: false, default: 'draft', limit: 16 },
       custom_slug: :string,
     })
 
     add_index :refinery_page_translations, :title
-    add_index :refinery_page_translations, [:locale, :signature], unique: true
+    add_index :refinery_page_translations, [:locale, :status, :signature], unique: true, name: 'index_on_locale_status_signature'
   end
 
   def down

@@ -21,11 +21,7 @@ module Refinery
       refinery_login_with :refinery_user
 
       before do
-        Refinery::Page.delete_all
-      end
-
-      after do
-        Refinery::Page.delete_all
+        Refinery::Page.destroy_all
       end
 
       context 'when no pages' do
@@ -46,7 +42,7 @@ module Refinery
         end
 
         context 'when some pages exist' do
-          before { 2.times { |i| Page.create :title => "Page #{i}" } }
+          before { 2.times { |i| Page.create title: "Page #{i}" } }
 
           it 'shows move page link' do
             visit refinery.admin_pages_path
@@ -58,10 +54,10 @@ module Refinery
         end
 
         context 'when sub pages exist' do
-          let!(:company) { Page.create :title => 'Our Company' }
-          let!(:team) { company.children.create :title => 'Our Team' }
-          let!(:locations) { company.children.create :title => 'Our Locations' }
-          let!(:location) { locations.children.create :title => 'New York' }
+          let!(:company) { Page.create title: 'Our Company' }
+          let!(:team) { company.children.create title: 'Our Team' }
+          let!(:locations) { company.children.create title: 'Our Locations' }
+          let!(:location) { locations.children.create title: 'New York' }
 
           context 'with auto expand option turned off' do
             before do
@@ -120,7 +116,7 @@ module Refinery
 
           click_link 'Add new page'
 
-          fill_in 'page_title', :with => 'My first page'
+          fill_in 'page_title', with: 'My first page'
           click_button 'Save'
 
           page.body.should =~ /My first page/
@@ -131,7 +127,7 @@ module Refinery
       end
 
       describe 'update' do
-        let!(:updatable_page) { Page.create :title => 'Update me' }
+        let!(:updatable_page) { Page.create title: 'Update me' }
 
         before do
           visit refinery.admin_pages_path
@@ -142,7 +138,7 @@ module Refinery
           it 'updates page' do
             click_link 'Edit this page'
 
-            fill_in 'page_title', :with => 'Updated'
+            fill_in 'page_title', with: 'Updated'
             click_button 'Save'
 
             updatable_page.reload
@@ -155,7 +151,7 @@ module Refinery
 
       describe 'destroy' do
         context 'when page can be deleted' do
-          before { Page.create :title => 'Delete me' }
+          before { Page.create title: 'Delete me' }
 
           it 'will show delete button' do
             visit refinery.admin_pages_path
@@ -167,7 +163,7 @@ module Refinery
         end
 
         context "when page can't be deleted" do
-          before { Page.create :title => 'Indestructible', :deletable => false }
+          before { Page.create title: 'Indestructible', deletable: false }
 
           it 'wont show delete button' do
             visit refinery.admin_pages_path
@@ -179,13 +175,13 @@ module Refinery
       end
 
       context 'duplicate page titles' do
-        before { Page.create :title => 'I was here first' }
+        before { Page.create title: 'I was here first' }
 
         it 'will append UUID to url path' do
           visit refinery.new_admin_page_path
 
-          fill_in 'page_title', :with => 'I was here first'
-          click_button "Save"
+          fill_in 'page_title', with: 'I was here first'
+          click_button "Publish page"
 
           Refinery::Page.last.url[:path][0].should =~ /i-was-here-first-/
         end
@@ -195,7 +191,7 @@ module Refinery
       # regression spec for https://github.com/refinery/refinerycms/issues/1891
       describe 'page part body' do
         before do
-          page = Refinery::Page.create! :title => 'test'
+          page = Refinery::Page.create! title: 'test'
           page.parts.each do |part|
             part.body = '<header class="regression">test</header>'
             part.save
@@ -213,27 +209,22 @@ module Refinery
     describe 'TranslatePages' do
       refinery_login_with :refinery_user
 
-      before do
-        Refinery::Page.delete_all
-      end
-
-      after do
-        Refinery::Page.delete_all
-      end
-
       context 'with translations' do
         before do
+          Refinery::Page.destroy_all
           Refinery::Testing::FeatureMacros::I18n.stub_frontend_locales :en, :ru
 
           # Create a home page in both locales (needed to test menus)
           home_page = Globalize.with_locale(:en) do
-            Page.create :title => 'Home',
-                        :plugin_page_id => 'pages',
-                        :link_url => '/'
+            Page.create title: 'Home',
+                        plugin_page_id: 'pages',
+                        link_url: '/',
+                        status: 'live'
           end
 
           Globalize.with_locale(:ru) do
             home_page.title = 'Домашняя страница'
+            home_page.status = 'live'
             home_page.save
           end
         end
@@ -246,20 +237,13 @@ module Refinery
           before do
             visit refinery.admin_pages_path
             click_link "Add new page"
-            fill_in 'page_title', :with => 'News'
-            click_button "Save"
+            fill_in 'page_title', with: 'News'
+            click_button "Publish page"
             visit refinery.admin_pages_path
           end
 
           it 'succeeds' do
             Refinery::Page.count.should == 2
-          end
-
-          it 'shows locale flag for page' do
-            p = ::Refinery::Page.by_slug('news').first
-            within "#page_#{p.id}" do
-              page.should have_css('a[class="locale flag-en"]')
-            end
           end
 
           it "shows in frontend menu for 'en' locale" do
@@ -276,7 +260,7 @@ module Refinery
 
             within "#menu" do
               # we should only have the home page in the menu
-              page.should have_css('li', :count => 1)
+              page.should have_css('li', count: 1)
             end
           end
         end
@@ -289,10 +273,11 @@ module Refinery
           let(:ru_page_slug_encoded) { '%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8' }
           let!(:news_page) do
             _page = Globalize.with_locale(:en) {
-              Page.create :title => en_page_title
+              Page.create title: en_page_title, status: 'live'
             }
             Globalize.with_locale(:ru) do
               _page.title = ru_page_title
+              _page.status = 'live'
               _page.save
             end
 
@@ -305,12 +290,10 @@ module Refinery
 
             click_link "Add new page"
 
-            within '.locale-picker' do
-              first('.flag-ru').click
-            end
+            first('.flag-ru').click
 
-            fill_in 'page_title', :with => ru_page_title
-            click_button "Save"
+            fill_in 'page_title', with: ru_page_title
+            click_button "Publish page"
 
             visit refinery.admin_pages_path
 
@@ -318,23 +301,12 @@ module Refinery
               click_link "Edit this page"
             end
 
-            within '.locale-picker' do
-              first('.flag-en').click
-            end
+            first('.flag-en').click
 
-            fill_in 'page_title', :with => en_page_title
-            click_button "Save"
+            fill_in 'page_title', with: en_page_title
+            click_button "Publish page"
 
             Refinery::Page.count.should == 2
-          end
-
-          it 'shows both locale flags for page' do
-            visit refinery.admin_pages_path
-
-            within "#page_#{news_page.id}" do
-              page.should have_css('a[class="locale flag-en"]')
-              page.should have_css('a[class="locale flag-ru"]')
-            end
           end
 
           it 'shows title in admin menu in current admin locale' do
@@ -365,7 +337,7 @@ module Refinery
         describe 'add a page with title only for secondary locale' do
           let(:ru_page) {
             Globalize.with_locale(:ru) {
-              Page.create :title => ru_page_title
+              Page.create title: ru_page_title, status: 'live'
             }
           }
           let(:ru_page_id) { ru_page.id }
@@ -381,19 +353,19 @@ module Refinery
           it 'succeeds' do
             ru_page.destroy!
             click_link "Add new page"
-            within '.locale-picker' do
-              first('.flag-ru').click
-            end
-            fill_in 'page_title', :with => ru_page_title
-            click_button "Save"
-
+            first('.flag-ru').click
+            fill_in 'page_title', with: ru_page_title
+            click_button "Publish page"
             Refinery::Page.count.should == 2
           end
 
-          it 'shows locale flag for page' do
-            within "#page_#{ru_page_id}" do
-              page.should have_css('a[class="locale flag-ru"]')
-            end
+          it 'has only ru localization' do
+            Globalize.with_locale(:ru) {
+              ru_page.translation.persisted?.should be(true)
+            }
+            Globalize.with_locale(:en) {
+              ru_page.translation.persisted?.should be(false)
+            }
           end
 
           it "doesn't show locale flag for primary locale" do
@@ -428,17 +400,17 @@ module Refinery
 
             within "#menu" do
               # we should only have the home page in the menu
-              page.should have_css('li', :count => 1)
+              page.should have_css('li', count: 1)
             end
           end
 
           context "when page is a child page" do
             it 'succeeds' do
-              ru_page.destroy!
-              parent_page = Page.create(:title => "Parent page")
+              #ru_page.destroy!
+              parent_page = Page.create(title: "Parent page")
               sub_page = Globalize.with_locale(:ru) {
-                Page.create :title => ru_page_title
-                Page.create :title => ru_page_title, :parent_id => parent_page.id
+                Page.create title: ru_page_title
+                Page.create title: ru_page_title, parent_id: parent_page.id
               }
               sub_page.parent.should == parent_page
               visit refinery.admin_pages_path
@@ -448,10 +420,10 @@ module Refinery
               end
 
 
-              fill_in 'page_title', :with => ru_page_title
-              click_button "Save"
+              fill_in 'page_title', with: ru_page_title
+              click_button "Publish page"
               within "#flash-wrapper" do
-                page.should have_content("'#{ru_page_title}' was successfully updated")
+                page.should have_content("'#{ru_page_title}' was successfully published")
               end
             end
           end
@@ -464,7 +436,7 @@ module Refinery
 
           click_link 'Add new page'
 
-          fill_in 'page_title', :with => 'Huh?'
+          fill_in 'page_title', with: 'Huh?'
           click_button 'Save'
 
           within '#flash-wrapper' do
@@ -476,7 +448,7 @@ module Refinery
       describe 'add page to second locale' do
         before do
           Refinery::Testing::FeatureMacros::I18n.stub_frontend_locales :en, :lv
-          Page.create :title => 'First Page'
+          Page.create title: 'First Page'
         end
 
         after do
@@ -488,11 +460,9 @@ module Refinery
 
           click_link 'Add new page'
 
-          within '.locale-picker' do
-            first('.flag-lv').click
-          end
+          first('.flag-lv').click
 
-          fill_in 'page_title', :with => 'Brīva vieta reklāmai'
+          fill_in 'page_title', with: 'Brīva vieta reklāmai'
           click_button 'Save'
 
           Refinery::Page.count.should == 2
@@ -505,7 +475,7 @@ module Refinery
 
           # Create a page in both locales
           about_page = Globalize.with_locale(:en) do
-            Page.create :title => 'About'
+            Page.create title: 'About'
           end
 
           Globalize.with_locale(:ru) do
@@ -522,7 +492,7 @@ module Refinery
           page = Refinery::Page.last
           # we need page parts so that there's wymeditor
           Refinery::Pages.default_parts.each_with_index do |default_page_part, index|
-            page.parts.create(:title => default_page_part, :body => nil, :position => index)
+            page.parts.create(title: default_page_part, body: nil, position: index)
           end
           page
         end
@@ -530,7 +500,7 @@ module Refinery
         describe 'adding page link' do
           describe 'with relative urls' do
             it "shows Russian pages if we're editing the Russian locale" do
-              visit refinery.admin_dialogs_pages_path :frontend_locale => :ru
+              visit refinery.admin_dialogs_pages_path frontend_locale: :ru
               within '#pages-link-area' do
                 page.should have_content('About Ru')
               end
@@ -549,7 +519,7 @@ module Refinery
 
           describe 'with absolute urls' do
             it "shows Russian pages if we're editing the Russian locale" do
-              visit refinery.admin_dialogs_pages_path :frontend_locale => :ru
+              visit refinery.admin_dialogs_pages_path frontend_locale: :ru
 
               within '#pages-link-area' do
                 page.should have_content('About Ru')

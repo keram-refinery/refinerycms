@@ -3,8 +3,8 @@ module Refinery
     helper Refinery::Core::Engine.helpers
 
     before_action :find_page
-    before_action :redirect_unless_path_match, :only => [:show] if Pages.marketable_urls
-    before_action :redirect_if_skip_to_first_or_link_url, :only => [:show]
+    before_action :redirect_unless_path_match, only: [:show] if Pages.marketable_urls
+    before_action :redirect_if_skip_to_first_or_link_url, only: [:show]
 
     # This action is usually accessed with the root path, normally '/'
     def home
@@ -34,7 +34,7 @@ module Refinery
     end
 
     def first_live_child
-      page.children.order(:lft => :asc).live.first
+      page.children.order(lft: :asc).live.first
     end
 
     def find_page(fallback_to_404 = true)

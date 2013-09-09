@@ -13,7 +13,7 @@ module Refinery
       end
 
       def redirect_url
-        if @page && @page.persisted?
+        if @page && @page.draft?
           options = {}
           if Globalize.locale != ::I18n.locale
             options[:frontend_locale] = Globalize.locale
@@ -22,6 +22,20 @@ module Refinery
           refinery.edit_admin_page_path(@page.relative_path, options)
         else
           refinery.admin_pages_path
+        end
+      end
+
+      def update
+        if @page.update_attributes(page_params)
+          flash.notice = t(
+            "refinery.crudify.#{@page.live? ? 'published' : 'updated'}",
+            kind: t(Page.model_name.i18n_key, scope: 'activerecord.models'),
+            what: @page.title
+          )
+
+          create_or_update_successful
+        else
+          create_or_update_unsuccessful 'edit'
         end
       end
 
@@ -46,8 +60,9 @@ module Refinery
     private
 
       def page_params
+        params[:page][:status] = 'live' if params[:publish].present?
         params.require(:page).permit(
-          :title, :draft, :parent_id, :skip_to_first_child,
+          :title, :status, :parent_id, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description,
           :custom_slug, parts_attributes: [:id, :title, :body, :position, :active]
         )

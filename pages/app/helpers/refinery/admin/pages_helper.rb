@@ -6,7 +6,7 @@ module Refinery
       def parent_id_nested_set_options(current_page)
         [].tap do |pages|
           query = ::Refinery::Page
-          if current_page.persisted?
+          unless current_page.new_record?
             query = query.where.not('lft >= ? AND rgt <= ?',
                         current_page.lft, current_page.rgt)
           end

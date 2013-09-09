@@ -231,12 +231,12 @@ module Refinery
 
     context 'draft pages' do
       it 'not live when set to draft' do
-        page.draft = true
+        page.status = 'draft'
         page.live?.should_not be
       end
 
       it 'live when not set to draft' do
-        page.draft = false
+        page.status = 'live'
         page.live?.should be
       end
     end

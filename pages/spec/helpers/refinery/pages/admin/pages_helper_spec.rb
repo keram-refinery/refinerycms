@@ -17,7 +17,7 @@ module Refinery
 
         context 'when draft is true' do
           it "adds 'draft' label" do
-            page.draft = true
+            page.status = 'draft'
 
             helper.page_meta_information(page).should eq(%q{<span class="label notice">draft</span>})
           end
