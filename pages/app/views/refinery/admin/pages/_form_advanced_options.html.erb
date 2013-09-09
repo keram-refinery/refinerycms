@@ -1,4 +1,4 @@
-<%= render '/refinery/admin/form_advanced_options_menu', :f => f %>
+<%= render '/refinery/admin/form_advanced_options_menu', f: f %>
 <div id="more-options" class="js-hide clearfix">
   <div class="hemisquare">
     <h2><%= t('.page_options') %></h2>
@@ -6,32 +6,32 @@
     <% if @page.plugin_page_id.blank? -%>
     <div class="field">
       <%= refinery_form_field f, :select, :parent_id,
-                  :options => parent_id_nested_set_options(@page),
-                  :include_blank => true,
-                  :label => t('.parent_page'),
-                  :help => t('.parent_page_help'),
-                  :html => { :class => 'widest' } %>
+                  options: parent_id_nested_set_options(@page),
+                  include_blank: true,
+                  label: t('.parent_page'),
+                  help: t('.parent_page_help'),
+                  html: { class: 'widest' } %>
     </div>
     <% end %>
 
     <% if @page.plugin_page_id.blank? -%>
     <div class="field">
-      <%= refinery_form_field f, :check_box, :skip_to_first_child, :label => true, :help => true  -%>
-      <%= f.label :skip_to_first_child, t('.skip_to_first_child_label'), :class => 'stripped' %>
+      <%= refinery_form_field f, :check_box, :skip_to_first_child, label: true, help: true  -%>
+      <%= f.label :skip_to_first_child, t('.skip_to_first_child_label'), class: 'stripped' %>
     </div>
 
     <div class="field">
       <%= refinery_form_field f, :text_field, :link_url,
-                  :label => true, :help => true, html: { class: 'widest' } -%>
+                  label: true, help: true, html: { class: 'widest' } -%>
     </div>
     <% end %>
 
     <div class="field">
-      <%= refinery_form_field f, :check_box, :show_in_menu, :label => t('.show_in_menu_title'), :help => true  -%>
-      <%= f.label :show_in_menu, t('.show_in_menu_description'), :class => 'stripped' %>
+      <%= refinery_form_field f, :check_box, :show_in_menu, label: t('.show_in_menu_title'), help: true  -%>
+      <%= f.label :show_in_menu, t('.show_in_menu_description'), class: 'stripped' %>
     </div>
 
   </div>
 
-  <%= render 'form_advanced_options_seo', :f => f %>
+  <%= render 'form_advanced_options_seo', f: f %>
 </div>
