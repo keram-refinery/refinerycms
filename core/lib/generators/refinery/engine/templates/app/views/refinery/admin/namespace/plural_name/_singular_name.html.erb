@@ -3,13 +3,6 @@
     <span class="title">
       <%%= <%= singular_name %>.<%= title_attribute_name %> %>
     </span>
-  <% if localized? %>
-    <%% if Refinery::I18n.frontend_locales.many? %>
-      <%%= render 'record_translations',
-                  record: <%= singular_name %>,
-                  link: 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>' %>
-    <%% end %>
-  <% end %>
   </div>
 
   <span class="actions">

@@ -21,53 +21,52 @@
         <%= page.title -%>
       </span>
       <%= page_meta_information page %>
-
-      <% if Refinery::I18n.frontend_locales.many? %>
-        <%= render 'record_translations', :record => page, :link => 'edit_admin_page' %>
-      <% end %>
     </div>
-
     <span class="actions">
 
-      <%= link_to t('delete', :scope => 'refinery.admin.record'),
+      <%= link_to t('delete', scope: 'refinery.admin.record'),
                   refinery.admin_page_path(page.relative_path),
-                  :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
-                  :title => t('delete', :scope => 'refinery.admin.pages'),
-                  :data => {
-                    :remote => true,
-                    :confirm => t('message',
-                      :scope => 'refinery.admin.delete',
-                      :title => page.title
+                  class: 'delete confirm-delete nojs-hide icon-small delete-icon',
+                  title: t('delete', scope: 'refinery.admin.pages'),
+                  data: {
+                    remote: true,
+                    confirm: t('message',
+                      scope: 'refinery.admin.delete',
+                      title: page.title
                     )
                   },
-                  :method => :delete if page.deletable? %>
+                  method: :delete if page.deletable? %>
 
-      <%= link_to t('edit', :scope => 'refinery.admin.record'),
-                  refinery.edit_admin_page_url(page.relative_path),
-                  :class => 'icon-small edit-icon',
-                  :title => t('edit', :scope => 'refinery.admin.pages') %>
+      <%= link_to t('edit', scope: 'refinery.admin.record'),
+                  refinery.edit_admin_page_url(page.relative_path, frontend_locale: Globalize.locale),
+                  class: 'icon-small edit-icon',
+                  title: t('edit', scope: 'refinery.admin.pages') %>
 
-      <%= link_to t('add_child', :scope => 'refinery.admin.record'),
-                  refinery.new_admin_page_path(:parent_id => page.id),
-                  :class => 'icon-small page-add-icon',
-                  :title => t('new', :scope => 'refinery.admin.pages') %>
+      <%= link_to t('add_child', scope: 'refinery.admin.record'),
+                  refinery.new_admin_page_path(parent_id: page.id),
+                  class: 'icon-small page-add-icon',
+                  title: t('new', scope: 'refinery.admin.pages') %>
 
-      <%= link_to t('live', :scope => 'refinery.admin.record'),
-                  page.url,
-                  :target => '_blank',
-                  :class => 'icon-small live-icon',
-                  :title => t('.view_live').html_safe %>
+      <% if page.translation.new_record? %>
+        <%= content_tag :a, '', class: 'icon-small no-live-icon', title: t('.translation_not_exists') %>
+      <% else %>
+        <%= link_to t('live', scope: 'refinery.admin.record'),
+                    page.url,
+                    target: '_blank',
+                    class: 'icon-small live-icon',
+                    title: t('.view_live') %>
+      <% end %>
 
-      <%= content_tag :a, t('move', :scope => 'refinery.admin.record'),
-                  :class => 'move nojs-hide icon-small move-icon',
-                  :title => t('move', :scope => 'refinery.admin.record') %>
+      <%= content_tag :a, t('move', scope: 'refinery.admin.record'),
+                  class: 'move nojs-hide icon-small move-icon',
+                  title: t('move', scope: 'refinery.admin.record') %>
 
     </span>
   </div>
   <% if has_childrens %>
 
   <ul class="<%= ul_cls %>" data-ajax-content="<%= refinery.children_admin_page_path(page.id) %>"  >
-    <%= render(:partial => 'page', :collection => page.children.order(:lft)) if expand_tree %>
+    <%= render(partial: 'page', collection: page.children.includes(:translations).order(:lft)) if expand_tree %>
   </ul>
   <% end %>
 </li>
