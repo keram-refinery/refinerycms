@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<%= render '/refinery/html_tag' %>
+  <head>
+    <%= render 'refinery/head' %>
+  </head>
+  <body id="<%= canonical_id @page %>">
+    <div id="page-wrapper">
+      <div id="page">
+        <div id="header-wrapper">
+          <header id="header" class="wrapper clearfix" role="banner">
+            <% cache refinery_record_cache_key(@page, 'header') do -%>
+              <%= render '/refinery/header' %>
+            <% end %>
+          </header>
+        </div>
+
+        <div id="main-wrapper">
+          <div id="main" class="wrapper clearfix" role="main">
+            <%= yield %>
+          </div>
+        </div>
+
+        <div id="footer-wrapper">
+          <footer id="footer" class="wrapper clearfix" role="contentinfo">
+            <%= render '/refinery/footer' %>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <%= render '/refinery/javascripts' unless Refinery::Core.turbolinks_on_frontend %>
+  </body>
+</html>

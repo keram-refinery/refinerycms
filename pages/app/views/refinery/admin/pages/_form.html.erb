@@ -1,6 +1,7 @@
 <%= form_for [refinery, :admin, @page],
               url: (refinery.admin_page_path(@page.relative_path) unless @page.new_record?),
               html: { data: { remote: true }} do |f| %>
+
   <%= render '/refinery/admin/error_messages', object: @page, include_object_name: true %>
 
   <%= render '/refinery/admin/locale_picker',
@@ -23,17 +24,21 @@
 
   <div class="form-actions clearfix">
     <div class="form-actions-left">
-     <%= submit_tag(t('.save_draft'),
-                  class: 'button'
+      <%= submit_tag(t('.save_draft'),
+                  name: 'draft',
+                  class: 'button submit-button',
+                  data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
                 ) %>
 
-     <%= submit_tag(t('.preview'),
-                  class: 'button'
-                ) %>
+      <%= link_to t('.preview'),
+                  refinery.preview_page_path(id: @page.id, locale: Globalize.locale),
+                  class: 'button preview-button secondary-button nojs-hide',
+                  title: t('.preview_title') %>
 
-     <%= submit_tag(t('.publish'),
+      <%= submit_tag(t('.publish'),
                   name: 'publish',
-                  class: 'button'
+                  class: 'button secondary-button publish-button',
+                  data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
                 ) %>
     </div>
 

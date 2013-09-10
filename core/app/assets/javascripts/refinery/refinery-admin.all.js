@@ -188,6 +188,77 @@
             }
         },
 
+        /**
+         * Handle click on preview button
+         * If preview window exists it is refreshed after form change.
+         *
+         * @return {undefined}
+         */
+        init_preview: function () {
+            var form = this.holder,
+                prev_url = form.attr('action'),
+                prev_target = form.attr('target'),
+                prev_method = form.attr('method'),
+                prev_remote = form.data('remote'),
+                preview_btn = form.find('.preview-button'),
+                preview_window;
+
+            /**
+             * Submits form to window with name href attribute of preview link button.
+             * If window doesn't exists or was closed create it at first.
+             *
+             * @return {undefined}
+             */
+            function preview_submit () {
+                if (form.is(':valid')) {
+                    // removing jquery_ujs form submit handle
+                    form.removeData('remote');
+                    form.removeAttr('data-remote');
+
+                    if (!preview_window || preview_window.closed) {
+                        preview_window = window.open('', preview_btn.attr('href'));
+                    }
+
+                    form.attr({
+                        'action': preview_btn.attr('href'),
+                        'method': 'POST',
+                        'target': preview_btn.attr('href')
+                    });
+
+                    form.submit();
+
+                    form.attr({
+                        'action': prev_url,
+                        'method': prev_method,
+                        'target': prev_target
+                    });
+
+                    if (prev_remote) {
+                        form.attr('data-remote', prev_remote);
+                        form.data('remote', prev_remote);
+                    }
+                }
+            }
+
+            if (preview_btn.length > 0) {
+                form.on('click', '.preview-button', function (e) {
+                    e.preventDefault();
+                    preview_submit();
+                });
+
+                form.on('change', 'input, select, textarea', function () {
+                    if (preview_window && !preview_window.closed) {
+                        preview_submit();
+                    }
+                });
+            }
+        },
+
+        /**
+         * Include exclamation mark to submit button if form has unsaved changes.
+         *
+         * @return {undefined}
+         */
         init_inputs: function () {
             var that = this,
                 form = that.holder,
@@ -208,6 +279,11 @@
             }
         },
 
+        /**
+         * Fix buttons to bottom of page if their holder is out of screen.
+         *
+         * @return {undefined}
+         */
         init_fly_form_actions: function () {
             var that = this,
                 $window = $(window),
@@ -253,6 +329,7 @@
                 that.init_pickers();
                 that.init_inputs();
                 that.init_upload();
+                that.init_preview();
                 that.initial_values = holder.serialize();
                 that.init_fly_form_actions();
 

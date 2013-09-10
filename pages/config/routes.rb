@@ -2,6 +2,7 @@ Refinery::Core::Engine.routes.draw do
   root to: 'pages#home', via: :get
 
   resources :pages, only: [:show] unless Refinery::Pages.marketable_urls
+  match 'preview/page', via: [:post, :patch], to: 'pages_preview#show', as: :preview_page
 
   namespace :admin, path: Refinery::Core.backend_route do
     get 'pages/*path/edit', to: 'pages#edit'
@@ -13,6 +14,6 @@ Refinery::Core::Engine.routes.draw do
       post :update_positions, on: :collection
     end
 
-    get '/dialogs/pages' => 'pages_dialog#index'
+    get '/dialogs/pages', to: 'pages_dialog#index'
   end
 end
