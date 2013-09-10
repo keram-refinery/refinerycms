@@ -1,5 +1,6 @@
 module Refinery
   module GlobalizeFinder
+    extend ActiveSupport::Concern
 
     # Wrap up the logic of finding the pages based on the translations table.
     def with_globalize(conditions = {})
