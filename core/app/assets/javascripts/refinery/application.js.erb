@@ -37,4 +37,6 @@ $(function () {
     doc.on('page:load', reload);
     doc.on('page:restore', reload);
     reload();
+
+    $(window).on('beforeunload', destroy);
 });
