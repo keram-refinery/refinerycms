@@ -2,7 +2,6 @@
 require 'friendly_id'
 require 'refinery/core/base_model'
 require 'refinery/pages/url'
-require 'refinery/globalize_finder'
 
 module Refinery
   class Page < Core::BaseModel
