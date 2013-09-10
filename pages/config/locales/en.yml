@@ -42,10 +42,7 @@ en:
           hidden: hidden
           draft: draft
         form:
-          preview: Preview
-          save_draft: Save draft
-          publish: Publish page
-          preview_changes: Preview your changes before making them live
+          preview_changes: Preview your changes before making them live (opens in a new window)
         form_page_parts:
           configure: Configure
           manage_page_parts: Manage page parts

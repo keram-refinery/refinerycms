@@ -39,6 +39,9 @@ en:
         insert: Insert
         cancel: Cancel
         processing: Processing
+        preview: Preview
+        save_draft: Save draft
+        publish: Publish
         cancel_lose_changes: If you cancel you will lose any changes you have made here
         delete: Remove
         close: Close

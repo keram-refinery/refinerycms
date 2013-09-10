@@ -24,18 +24,18 @@
 
   <div class="form-actions clearfix">
     <div class="form-actions-left">
-      <%= submit_tag(t('.save_draft'),
+      <%= submit_tag(t('save_draft', scope: 'refinery.admin.form_actions'),
                   name: 'draft',
                   class: 'button submit-button',
                   data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
                 ) %>
 
-      <%= link_to t('.preview'),
+      <%= link_to t('preview', scope: 'refinery.admin.form_actions'),
                   refinery.preview_page_path(id: @page.id, locale: Globalize.locale),
                   class: 'button preview-button secondary-button nojs-hide',
-                  title: t('.preview_title') %>
+                  title: t('.preview_changes') %>
 
-      <%= submit_tag(t('.publish'),
+      <%= submit_tag(t('publish', scope: 'refinery.admin.form_actions'),
                   name: 'publish',
                   class: 'button secondary-button publish-button',
                   data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
@@ -44,13 +44,14 @@
 
     <div class="form-actions-right">
 
-     <%= submit_tag(t('delete', :scope => 'refinery.admin.pages'),
+     <%= submit_tag(t('delete', scope: 'refinery.admin.form_actions'),
                   name: 'delete',
                   method: :delete,
                   data: {
                     remote: true,
-                    confirm: t('message', :scope => 'refinery.admin.delete', :title => @page.title)
+                    confirm: t('message', scope: 'refinery.admin.delete', title: @page.title)
                   },
+                  title: t('delete', scope: 'refinery.admin.pages'),
                   class: 'button confirm-delete danger-button nojs-hide'
                 ) if @page.persisted? && @page.deletable? %>
     </div>
