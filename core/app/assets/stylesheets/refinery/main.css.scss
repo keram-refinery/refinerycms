@@ -16,12 +16,30 @@
 .label {
     background-color: #BFBFBF;
     border-radius: 3px 3px 3px 3px;
-    color: #FFFFFF;
+    color: #fff;
     font-size: 9.75px;
     font-weight: bold;
     padding: 1px 3px 2px;
     text-transform: uppercase;
     white-space: nowrap;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.label.important {
+  background-color: #c43c35;
+}
+
+.label.warning {
+  background-color: #f89406;
+}
+
+.label.success {
+  background-color: #46a546;
+}
+
+.label.notice {
+  background-color: #62cffc;
 }
 
 .hide,
@@ -252,9 +270,9 @@ span.help {
         background-color: #fafafa;
         background-position: 50% center;
         background-repeat: no-repeat;
-        border: 1px solid #FAFAFA;
+        border: 1px solid #fafafa;
         border-radius: 3px 3px 3px 3px;
-        box-shadow: 0 0 5px #CCCCCC;
+        box-shadow: 0 0 5px #ccc;
         height: 42px;
         left: 40%;
         position: fixed;

@@ -18,6 +18,7 @@ en:
       destroyed: "%{kind} '%{what}' was successfully removed."
       published: "%{kind} '%{what}' was successfully published."
       error: "Oops...an error occurred."
+      update_positions_fail: Error occurred on item position update.
     site_bar:
       log_out: Log out
       switch_to_your_website: Switch to your website

@@ -38,17 +38,10 @@
     position: relative;
 }
 
-.locales img {
-    vertical-align: middle;
-}
-
-.locales a,
 .actions a {
     padding: 4px;
 }
 
-.locales a:hover,
-.locales a:focus,
 .actions a:hover,
 .actions a:focus {
     background-color: #65C3F7;
@@ -196,7 +189,7 @@ a.move:active {
     margin-bottom: 10px;
 }
 
-#actions li a {
+#actions a {
     background-color: #DBEDFF;
     background-position: 12px center;
     border: 1px solid #65C3F7;
@@ -209,11 +202,11 @@ a.move:active {
     font-weight: bold;
 }
 
-#actions li a:hover {
+#actions a:hover {
     background-color: #cae7fb;
 }
 
-#actions li a:active {
+#actions a:active {
     background-color: #22A7F2;
     color: #fff;
 }
