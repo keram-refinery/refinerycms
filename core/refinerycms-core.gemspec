@@ -33,4 +33,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails',                '~> 3.0.4'
   s.add_dependency 'jquery-ui-rails',             '~> 4.0.4'
   s.add_dependency 'decorators',                  '~> 1.0.3'
+  s.add_dependency 'i18n-iso639matrix',           '~> 0.0.1'
 end

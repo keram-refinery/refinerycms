@@ -64,7 +64,7 @@ module Refinery
         ['refinery', 'refinery-admin'].each do |modul|
           Refinery::Core.config.register_admin_javascript "refinery/#{modul}.min.js"
 
-          ::Refinery::I18n.locales.keys.each do |locale|
+          ::Refinery::I18n.locales.each do |locale|
             file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/#{modul}-#{locale}.js"
             if File.exists?(file_path)
               Refinery::Core.config.register_admin_I18n_javascript locale, "refinery/i18n/#{modul}-#{locale}.js"

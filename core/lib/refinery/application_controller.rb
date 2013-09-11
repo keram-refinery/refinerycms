@@ -14,7 +14,8 @@ module Refinery
                           :paginate_page,
                           :json_response,
                           :render_content,
-                          :dialog?
+                          :dialog?,
+                          :lang
 
       base.protect_from_forgery # See ActionController::RequestForgeryProtection
 
@@ -121,6 +122,11 @@ module Refinery
 
     def render_content(string='')
       Refinery.content_renderer.render(string)
+    end
+
+    def lang(locale)
+      l, r = locale.to_s.split('-')
+      t(l) + (r ? " (#{r})" : '')
     end
 
   protected

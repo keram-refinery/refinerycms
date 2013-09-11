@@ -46,12 +46,12 @@
 
   <div class="field">
     <%= f.label :locale %>
-    <%= f.select :locale, sorted_locales %>
+    <%= f.select :locale, options_for_locale %>
   </div>
 
   <div class="field">
     <%= f.label :frontend_locale %>
-    <%= f.select :frontend_locale, Refinery::I18n.frontend_locales %>
+    <%= f.select :frontend_locale, options_for_frontend_locale %>
   </div>
 
   <div class="field">

@@ -76,4 +76,4 @@ en:
         remember_me: Remember me
         full_name: Full Name
         locale: Admin language
-        frontend_locale: Frontend locale
+        frontend_locale: Frontend language

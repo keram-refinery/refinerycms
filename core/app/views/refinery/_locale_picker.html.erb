@@ -8,10 +8,10 @@
               end
     %>
     <%= link_to url do %>
-      <span class="<%= locale %>"><%= Refinery::I18n.locales[locale] || locale %></span>
+      <span class="<%= locale %>"><%= I18n.with_locale locale do lang(locale) end %></span>
     <% end %>
   <% else %>
-    <span class="<%= locale %>"><%= Refinery::I18n.locales[locale] || locale %></span>
+    <span class="<%= locale %>"><%= I18n.with_locale locale do lang(locale) end %></span>
   <% end -%>
 <% end -%>
 </div>
