@@ -52,7 +52,8 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
     })
 
     add_index :refinery_page_translations, :title
-    add_index :refinery_page_translations, [:locale, :status, :signature], unique: true, name: 'index_on_locale_status_signature'
+    add_index :refinery_page_translations, [:locale, :status]
+    add_index :refinery_page_translations, [:signature, :locale], unique: true, name: 'index_on_signature_locale'
   end
 
   def down

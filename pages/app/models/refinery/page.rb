@@ -35,7 +35,7 @@ module Refinery
     acts_as_nested_set dependent: :destroy
 
     # Docs for friendly_id http://github.com/norman/friendly_id
-    friendly_id_options = { use: [:reserved, :globalize],
+    friendly_id_options = { use: [:slugged, :reserved, :globalize],
                 reserved_words: %w(index new session login logout users refinery admin images) }
 
     if ::Refinery::Pages.scope_slug_by_parent
@@ -181,7 +181,7 @@ module Refinery
 
     def should_generate_new_friendly_id?
       self[:slug] = custom_slug if custom_slug.present? || custom_slug != translation.custom_slug
-      slug.blank?
+      true if slug.blank? || (custom_slug.blank? && title != translation.title)
     end
 
     # Before destroying a page we check to see if it's a deletable page or not

@@ -158,11 +158,13 @@ module Refinery
           end
 
           def redirect_url
+            options = Globalize.locale.to_s == current_refinery_user.frontend_locale ? {} : { frontend_locale: Globalize.locale }
+
             if paginate_page > 1
               page = [paginate_page, #{class_name}.page(1).total_pages].min
-              #{options[:redirect_to_url]}(:page => page)
+              #{options[:redirect_to_url]}(options.merge!(page: page))
             else
-              #{options[:redirect_to_url]}
+              #{options[:redirect_to_url]}(options)
             end
           end
 

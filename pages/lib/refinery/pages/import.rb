@@ -14,6 +14,7 @@ module Refinery
 
           if page.blank?
             page = create_page attributes
+            attributes.merge!(slug: page.slug) if attributes[:slug].nil?
             update_page page, key, attributes
             update_page_parts page, key
 

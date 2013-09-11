@@ -181,7 +181,7 @@ module Refinery
           visit refinery.new_admin_page_path
 
           fill_in 'page_title', with: 'I was here first'
-          click_button "Publish page"
+          click_button "Publish"
 
           Refinery::Page.last.url[:path][0].should =~ /i-was-here-first-/
         end
@@ -238,7 +238,7 @@ module Refinery
             visit refinery.admin_pages_path
             click_link "Add new page"
             fill_in 'page_title', with: 'News'
-            click_button "Publish page"
+            click_button "Publish"
             visit refinery.admin_pages_path
           end
 
@@ -293,7 +293,7 @@ module Refinery
             first('.flag-ru').click
 
             fill_in 'page_title', with: ru_page_title
-            click_button "Publish page"
+            click_button "Publish"
 
             visit refinery.admin_pages_path
 
@@ -304,7 +304,7 @@ module Refinery
             first('.flag-en').click
 
             fill_in 'page_title', with: en_page_title
-            click_button "Publish page"
+            click_button "Publish"
 
             Refinery::Page.count.should == 2
           end
@@ -355,7 +355,7 @@ module Refinery
             click_link "Add new page"
             first('.flag-ru').click
             fill_in 'page_title', with: ru_page_title
-            click_button "Publish page"
+            click_button "Publish"
             Refinery::Page.count.should == 2
           end
 
@@ -421,7 +421,7 @@ module Refinery
 
 
               fill_in 'page_title', with: ru_page_title
-              click_button "Publish page"
+              click_button "Publish"
               within "#flash-wrapper" do
                 page.should have_content("'#{ru_page_title}' was successfully published")
               end

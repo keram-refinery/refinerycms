@@ -1,0 +1,11 @@
+<% if Refinery::I18n.frontend_locales.many? %>
+<ul>
+  <% Refinery::I18n.frontend_locales.each do |locale| %>
+    <li <%= 'class="active"'.html_safe if Globalize.locale == locale %>>
+      <%= link_to lang(locale),
+                  params.merge(frontend_locale: locale),
+                  class: "icon-small icon-with-text flag-#{locale}" %>
+    </li>
+  <% end -%>
+</ul>
+<% end %>
