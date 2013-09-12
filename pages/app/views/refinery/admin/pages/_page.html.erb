@@ -1,7 +1,7 @@
 <%
   expand_tree = Refinery::Pages.auto_expand_admin_tree
   has_childrens = (page.rgt - page.lft > 1)
-  cache_key = [page, current_refinery_user.id]
+  cache_key = [page, current_refinery_user.id, Globalize.locale]
   title_cls = ''
 
   if has_childrens
