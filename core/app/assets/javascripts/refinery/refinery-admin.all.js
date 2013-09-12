@@ -204,6 +204,14 @@
                 preview_window;
 
             /**
+             * @param  {Object} event
+             * @return {undefined}
+             */
+            function stop_event_propagation (event) {
+                event.stopPropagation();
+            }
+
+            /**
              * Submits form to window with name href attribute of preview link button.
              * If window doesn't exists or was closed create it at first.
              *
@@ -225,7 +233,14 @@
                         'target': preview_btn.attr('href')
                     });
 
+                    // disable other events on form submit (jquery_ujs etc..)
+                    form.on('submit', stop_event_propagation);
+
+                    // submit to new window/tab
                     form.submit();
+
+                    // enable other events on form submit
+                    form.off('submit', stop_event_propagation);
 
                     form.attr({
                         'action': prev_url,
@@ -243,6 +258,7 @@
             if (preview_btn.length > 0) {
                 form.on('click', '.preview-button', function (e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     preview_submit();
                 });
 
@@ -378,7 +394,6 @@
 
             list = '<ul class="records">';
             for (var i = 0, l = data.length; i < l; i++) {
-
                 part = /** @type {page_part} */(data[i]);
                 list += '<li data-part="' + part.name + '" ' +
                             'class="clearfix" >' +
@@ -1002,8 +1017,6 @@
                     ui[fnc](holder, that);
                 }
             }
-
-            holder.find('input.text, textarea').first().focus();
         },
 
         /**
