@@ -23,7 +23,7 @@ gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms', b
 gem 'refinerycms-i18n', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms-i18n', branch: 'refinery_light'
 
 # Specify your preferred WYSIWYG editor
-gem 'refinery-epiceditor', github: 'keram-refinery/refinery-epiceditor', branch: 'master'
+gem 'refinerycms-epiceditor', github: 'keram-refinery/refinerycms-epiceditor', branch: 'master'
 
 # Specify additional Refinery CMS Extensions here (all optional):
 #  gem 'refinerycms-blog', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-blog', branch: 'refinery_light'

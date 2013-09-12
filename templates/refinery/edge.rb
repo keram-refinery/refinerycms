@@ -11,7 +11,7 @@ gem 'refinerycms-i18n', github: 'keram-refinery/refinerycms-i18n', :branch => 'r
 # USER DEFINED
 
 # Specify your preferred WYSIWYG editor
-gem 'refinery-epiceditor', github: 'keram-refinery/refinery-epiceditor', branch: 'master'
+gem 'refinerycms-epiceditor', github: 'keram-refinery/refinerycms-epiceditor', branch: 'master'
 
 # Specify additional Refinery CMS Engines here (all optional):
 #  gem 'refinerycms-acts-as-indexed', github: 'keram-refinery/refinerycms-acts-as-indexed', :branch => 'refinery_light'
