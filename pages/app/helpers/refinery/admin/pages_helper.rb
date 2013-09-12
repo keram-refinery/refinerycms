@@ -30,6 +30,10 @@ module Refinery
           ::I18n.t('draft', :scope => 'refinery.admin.pages.page')
         end if page.draft?
 
+        meta_information << content_tag(:span, :class => 'label important') do
+          ::I18n.t('untranslated', :scope => 'refinery.admin.pages.page')
+        end if page.translation.new_record?
+
         meta_information
       end
 
