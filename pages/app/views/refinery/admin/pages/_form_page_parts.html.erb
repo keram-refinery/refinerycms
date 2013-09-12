@@ -4,11 +4,19 @@
     <%= link_to t('.configure'), '#',
                 id: 'page-parts-options',
                 class: 'icon-small page-add-icon',
-                title: t('.manage_page_parts') %>
+                title: t('.manage_page_parts'),
+                data: {
+                  page_parts: @page.parts.map do |part|
+                    {
+                      name: part.title,
+                      title: t(part.title, scope: 'refinery.admin.pages.parts'),
+                      active: part.active
+                    }
+                  end
+                } %>
   </div>
-
   <ul class="nojs-hide ui-tabs-nav">
-    <% @page.parts.each_with_index do |part, part_index| %>
+    <% @page.parts.reject {|p| p.title == :title }.each_with_index do |part, part_index| %>
       <% cls = "#{'ui-state-active' if part.title == :body}#{' js-hide' if !part.active}" %>
       <li class="<%= cls %>">
         <%= link_to t(part.title, scope: 'refinery.admin.pages.parts'), "##{part.to_param}" %>

@@ -372,28 +372,28 @@
          * @return {string} dialog content
          */
         get_dialog_content: function () {
-            var content;
+            var data = this.holder.find('#page-parts-options').data('page-parts'),
+                list,
+                part;
 
-            content = '<ul class="records">';
+            list = '<ul class="records">';
+            for (var i = 0, l = data.length; i < l; i++) {
 
-            this.nav.find('a').each(function () {
-                var a = $(this),
-                    active = !a.parent().hasClass('js-hide');
+                part = /** @type {page_part} */(data[i]);
+                list += '<li data-part="' + part.name + '" ' +
+                            'class="clearfix" >' +
+                            '<label class="stripped">' +
+                            '<input type="checkbox"' + (part.active ? ' checked="1"' : '') + '"> ' +
+                             part.title +
+                            '</label>' +
+                            ' <span class="actions"><span class="icon-small move-icon">' +
+                            t('refinery.admin.button_move') + '</span></span>' +
+                            '</li>';
+            }
 
-                content += '<li data-part="' + a.attr('href') + '" ';
-                content += 'class="clearfix" >';
-                content += '<label class="stripped">';
-                content += '<input type="checkbox"' + (active ? ' checked="1"' : '') + '"> ';
-                content += a.text();
-                content += '</label>';
-                content += ' <span class="actions"><span class="icon-small move-icon">';
-                content += t('refinery.admin.button_move') + '</span></span>';
-                content += '</li>';
-            });
+            list += '</ul>';
 
-            content += '</ul>';
-
-            return content;
+            return list;
         },
 
         /**
@@ -420,8 +420,8 @@
                     var li = $(this),
                         part = /** @type string */(li.data('part')),
                         active = li.find('input').is(':checked'),
-                        tab = nav.find('a[href="' + part + '"]').parent().detach(),
-                        panel = $(part);
+                        tab = nav.find('li[aria-controls="page_part_' + part + '"]').detach(),
+                        panel = $('#page_part_' + part);
 
                     if (active) {
                         tab.removeClass('js-hide');
@@ -434,15 +434,30 @@
 
                     panel.find('input.part-active').prop('checked', active);
                     panel.find('input.part-position').val(j);
-                    list[list.length] = tab;
+
+                    /**
+                     * If title part exist is not showed in tabs, but
+                     * as field "Custom content title" in Advanced options
+                     */
+                    if (part !== 'title') {
+                        list[list.length] = tab;
+                    }
                 });
 
+                /**
+                 * Reordeting tabs by parts position
+                 *
+                 */
                 for (i = 0, l = list.length; i < l; i++) {
                     nav.append(list[i]);
                 }
 
+                /**
+                 * Ensure that if we hide current active tab,
+                 * will be activated other, first visible tab.
+                 */
                 if (nav.find('.ui-tabs-active').length === 0) {
-                    active_tab = parts_tabs.index(nav.find('li:visible').first());
+                    active_tab = /** @type {number} */(parts_tabs.index(nav.find('li:visible').first()));
 
                     holder.tabs({
                         'active': active_tab
