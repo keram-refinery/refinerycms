@@ -1,38 +1,41 @@
-.locale-picker {
-    background-color: #f0f0f0;
-}
+form {
+    .locale-picker {
+        background-color: #f0f0f0;
+        float: right;
+    }
 
-.locale-picker li {
-    float: left;
-    margin: 0px;
-    padding: 0px;
-    width: 50px;
-    height: 3em;
-    line-height: 3em;
- }
+    .locale-picker li {
+        float: left;
+        margin: 0px;
+        padding: 0px;
+        width: 50px;
+        height: 3em;
+        line-height: 3em;
+     }
 
-.locale-picker a {
-    margin: 0px;
-    display: block;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    color: transparent;
-    text-indent: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-}
+    .locale-picker a {
+        margin: 0px;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        color: transparent;
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 
-.locale-picker a:hover {
-    background-color: #ccc;
-    color: transparent;
-}
+    .locale-picker a:hover {
+        background-color: #ccc;
+        color: transparent;
+    }
 
-.locale-picker a:active {
-    background-color: #aaa;
-}
+    .locale-picker a:active {
+        background-color: #aaa;
+    }
 
-.locale-picker .selected,
-.locale-picker .selected a:hover,
-.locale-picker .selected a:active {
-    background-color: #fff;
+    .locale-picker .selected,
+    .locale-picker .selected a:hover,
+    .locale-picker .selected a:active {
+        background-color: #fff;
+    }
 }

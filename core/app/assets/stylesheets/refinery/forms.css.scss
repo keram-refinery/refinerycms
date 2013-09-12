@@ -11,6 +11,17 @@ form {
     max-width: 940px;
 }
 
+.form-title {
+    float: left;
+    max-width: 70%;
+}
+
+.form-title h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .form-actions {
     position: relative;
     background-color: #F2F2F2;
