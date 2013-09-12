@@ -44,6 +44,7 @@ gem 'jquery-rails', '~> 3.0.4'
 gem 'jquery-ui-rails', '~> 4.0.4'
 
 gem 'will_paginate', '~> 3.0.4'
+gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
