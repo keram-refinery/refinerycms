@@ -13,12 +13,10 @@ module Refinery
       end
 
       def redirect_url
-        options = Globalize.locale.to_s == current_refinery_user.frontend_locale ? {} : { frontend_locale: Globalize.locale }
-
         if @page && @page.draft?
-          refinery.edit_admin_page_path(@page.relative_path, options)
+          refinery.edit_admin_page_path(@page.relative_path, frontend_locale_param)
         else
-          refinery.admin_pages_path(options)
+          refinery.admin_pages_path(frontend_locale_param)
         end
       end
 
