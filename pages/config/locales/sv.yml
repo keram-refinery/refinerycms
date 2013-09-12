@@ -59,8 +59,6 @@ sv:
           custom_title_help: Om du vill att sidan har en annan huvudrubrik än den som visas i menyn, välj Text, och fyll i här.
         actions:
           create_new_page: Lägg till en ny sida
-          reorder_pages: Ändra ordning på sidor
-          reorder_pages_done: Spara ny ordning på sidor
         records:
           no_pages_yet: Det finns inga sidor ännu. Klicka på "Lägg till en ny sida" för att skapa din första sida.
   activerecord:

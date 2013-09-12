@@ -59,8 +59,6 @@ rs:
           custom_title_help: Ako želiš da strana ima drugačiji naslov od onog koji piše u meniju, onda izaberi &apos;Tekst&apos; i upiši ga ovde.
         actions:
           create_new_page: Dodaj novu stranu
-          reorder_pages: Promeni redosled strana
-          reorder_pages_done: Završi sa promenom
         records:
           no_pages_yet: Ne postoji nijedna strana. Klinki na "Dodaj novu stranu" da dodaš prvu stranu.
   activerecord:

@@ -72,8 +72,6 @@ pt:
           custom_slug_help: "Uma slug (permalink) é um ID de fácil leitura para os humanos usado para criar o URL da página. Exemplo: &apos;about-us&apos;. Para alterar escreva o que pretende aqui."
         actions:
           create_new_page: Adicionar nova página
-          reorder_pages: Ordenar páginas
-          reorder_pages_done: Terminei de ordenar as páginas
         records:
           no_pages_yet: Não existem páginas de momento. Clique em 'Adicionar nova página' para criar a primeira.
         translator_access: Não tem as permissões necessárias para modificar esta página.

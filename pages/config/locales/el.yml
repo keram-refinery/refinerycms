@@ -60,8 +60,6 @@ el:
           custom_title_help: 'If you want the page to have a different title than the one that shows in the menu then select &apos;Text&apos; and enter it here.'
         actions:
           create_new_page: Προσθήκη νέας σελίδας
-          reorder_pages: Αναδιάταξη σελιδών
-          reorder_pages_done: Έγινε αναδιάταξη σελιδών
         records:
           no_pages_yet: There are no pages yet. Click "Add new page" to add your first page.
   activerecord:

@@ -58,8 +58,6 @@ sl:
           custom_title_help: "Če želite da ima stran drugačen naslov od tistega, ki se prikaže v meniju potem izberite &apos;Tekst&apos; in ga vnesite tukaj."
         actions:
           create_new_page: Dodaj novo stran
-          reorder_pages: Spremeni vrstni red Strani
-          reorder_pages_done: Končaj s prerazporeditvijo Strani
         records:
           no_pages_yet: Trenutno še ni nobene strani. Za dodajanje prve strani kliknite "Dodaj novo stran".
   activerecord:

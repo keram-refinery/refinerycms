@@ -61,8 +61,6 @@ lv:
           custom_title_help: Ja vēlaties, lai lapai būtu cits nosaukums nekā tas ir izvēlnē, tad izvēlieties &apos;Teksts&apos; un ievadiet to izveidotajā laukā.
         actions:
           create_new_page: Izveidot jaunu lapu
-          reorder_pages: Pārkārtot lapas
-          reorder_pages_done: Pabeigt lapu pārkārtošanu
         records:
           no_pages_yet: Vēl nav nevienas lapas. Spied "Izveidot jaunu lapu", lai izveidotu pirmo lapu.
   activerecord:

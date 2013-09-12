@@ -59,8 +59,6 @@ ko:
           custom_title_help: 페이지가 메뉴에서 보이는 것과 다른 제목을 가지도록 하고 싶다면 &apos;텍스트&apos;를 선택하여 새 제목을 입력하세요.
         actions:
           create_new_page: 새 페이지
-          reorder_pages: 페이지 재정렬
-          reorder_pages_done: 재정렬 완료
         records:
           no_pages_yet: 페이지가 없습니다. "새 페이지"를 클릭하여 페이지를 추가하세요.
         translator_access: 해당 언어로 페이지를 수정할 권한이 없습니다.

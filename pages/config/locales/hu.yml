@@ -72,8 +72,6 @@ hu:
           custom_slug_help: 'A slug egy ember számára jól olvasható azonosító, ami az URL-ben jelenik meg, pl: kapcsolat-velunk. Hogy felülírd a Refinery által generált értéket, add meg a saját slug-ot itt.'
         actions:
           create_new_page: 'Új oldal hozzáadása'
-          reorder_pages: 'Oldalak átrendezése'
-          reorder_pages_done: 'Oldalak átrendezésének befejezése'
         records:
           no_pages_yet: 'Jelenleg nincsenek oldalak. Kattints az "Új oldal hozzáadása" linkre, az első oldal létrehozásához.'
         translator_access: 'Nincs meg a szükséges engedélyed, hogy módosítsd az oldalakat ezen a nyelven.'

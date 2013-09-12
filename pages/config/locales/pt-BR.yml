@@ -60,8 +60,6 @@ pt-BR:
           custom_title_help: "Se você quer que a página tenha um título diferente do que é mostrado no menu então selecione &apos;Texto&apos; e digite o novo título."
         actions:
           create_new_page: Criar uma nova página
-          reorder_pages: Reordenar as Páginas
-          reorder_pages_done: Terminei de reordenar as Páginas
         records:
           no_pages_yet: Ainda não existem páginas. Clique em "Criar Nova Página" para adicionar sua primeira página.
   activerecord:

@@ -57,8 +57,6 @@ ja:
           custom_title_help: このページにメニューに表示されているもの以外のタイトルを付けたい時にはここに書いて下さい。
         actions:
           create_new_page: 新規ページを追加
-          reorder_pages: ページを並べ替える
-          reorder_pages_done: 並べ替えを終了する
         records:
           no_pages_yet: まだページはありません。"新規ページを追加"をクリックして下さい。
   activerecord:

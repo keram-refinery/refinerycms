@@ -78,8 +78,6 @@ pl:
           custom_slug_help: Slug to czytelny identyfikator strony widoczny w URLu, np. &pos;o-nas&pos;. Aby nadpisać slug, który jest automatycznie generowany przez Refinery, wpisz go tutaj.
         actions:
           create_new_page: Dodaj nową stronę
-          reorder_pages: Zmień kolejność stron
-          reorder_pages_done: Zakończono zmianę kolejności stron
         records:
           no_pages_yet: Nie ma jeszcze żadnej strony. Kliknij "Dodaj nową stronę" aby stworzyć pierwszą.
         translator_access: Nie masz wystarczających uprawnień do modyfikacji strony w tym języku.

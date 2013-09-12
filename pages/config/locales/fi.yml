@@ -59,8 +59,6 @@ fi:
           custom_title_help: "Jos haluat sivun näyttävän eri otsikon valikossa, valitse 'Teksti' ja kirjoita se tähän."
         actions:
           create_new_page: Lisää uusi sivu
-          reorder_pages: Muuta sivujen järjestystä
-          reorder_pages_done: Tallenna
         records:
           no_pages_yet: Sivuja ei ole vielä. Paina "Lisää uusi sivu-" painiketta lisätäksesi ensimmäisen sivun.
         translator_access: Sinulla ei ole lupaa muokata sivuja tällä kielellä.

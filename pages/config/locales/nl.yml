@@ -69,8 +69,6 @@ nl:
           custom_slug_help: Een 'slug' is een leesbare aanduiding die in het adres van de pagina gebruikt wordt, bijvoorbeeld 'over'. Refinery genereert automatisch slugs, hier kunt u een aangepaste slug instellen.
         actions:
           create_new_page: Nieuwe pagina toevoegen
-          reorder_pages: De volgorde van de pagina's wijzigen
-          reorder_pages_done: Klaar met het wijzingen van de paginavolgorde
         records:
           no_pages_yet: Er zijn nog geen pagina's. Druk op 'Nieuwe pagina toevoegen' om de eerste aan te maken.
         translator_access: U heeft niet de benodigde permissies om pagina's in deze taal te wijzigen.

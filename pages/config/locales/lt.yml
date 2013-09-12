@@ -61,8 +61,6 @@ lt:
           custom_title_help: "Jei norite, kad puslapio antraštė būtų kitokia, nei naudojama meniu, tai pasirinkite &apos;Tekstas&apos; ir įveskite antraštę."
         actions:
           create_new_page: Pridėti naują puslapį
-          reorder_pages: Keisti puslapių tvarką
-          reorder_pages_done: Baigti keisti puslapių tvarką
         records:
           no_pages_yet: Dar nėra puslapių. Paspauskite "Pridėti naują puslapį" norėdami sukurti pirmą puslapį.
   activerecord:

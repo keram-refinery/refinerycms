@@ -64,8 +64,6 @@ cs:
           custom_slug_help: 'Url identifikátor je človekom čitateľný identifikátor, ktorý sa používa na vytvorenie celej url adresy stránky, napríklad &apos;o-nas&apos;. Ak chcete zmeniť url identifikátor, ktorý automaticky vytvorí Refinery, napíšte váš vlastný url identifikátor sem.'
         actions:
           create_new_page: Přidat novou stránku
-          reorder_pages: Přeuspořádat stránky
-          reorder_pages_done: Uložit uspořádání
         records:
           no_pages_yet: Zatím nebyly vytvořeny žádné stránky.
   activerecord:

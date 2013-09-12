@@ -59,8 +59,6 @@ nb:
           custom_title_help: "Dersom du ønsker at siden skal ha en annen tittel enn den som vises i menyen så kan du velge &apos;Tekst&apos; og skrive inn tittelen her."
         actions:
           create_new_page: Legg til ny side
-          reorder_pages: Endre rekkefølgen
-          reorder_pages_done: Ferdig med endring av rekkefølgen
         records:
           no_pages_yet: Det er ingen sider her enda. Klikk på "Legg til ny side" for å legge til din første side.
   activerecord:
