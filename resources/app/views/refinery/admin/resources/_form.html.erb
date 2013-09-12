@@ -1,31 +1,47 @@
 <% new_record = @resource.new_record? %>
-<%= form_for @resource, :url => (new_record ? refinery.admin_resources_path : refinery.admin_resource_path(@resource)),
-             :html => { :multipart => true },
-             :as => 'resource' do |f| %>
+<%= form_for @resource, url: (new_record ? refinery.admin_resources_path : refinery.admin_resource_path(@resource)),
+             html: { multipart: true },
+             as: 'resource' do |f| %>
+
+  <div class="clearfix">
+    <div class="form-title">
+      <h1>
+        <% if @resource.new_record? %>
+          <%= t('upload_new', scope: 'refinery.admin.resources.actions') %>
+        <% else %>
+          <%= t('edit_resource', scope: 'refinery.admin.resources.actions') %>:
+          <%= link_to @resource.name, @resource.url, target: '_blank' %>
+        <% end %>
+      </h1>
+      <p class="less-important">
+        <%= link_to refinery_plugin.title, refinery.admin_resources_path %>
+      </p>
+    </div>
+  </div>
 
   <%= render '/refinery/admin/error_messages',
-             :object => @resource,
-             :include_object_name => false %>
+             object: @resource,
+             include_object_name: false %>
 
   <div class="field clearfix">
     <% unless new_record %>
       <p>
         <%= link_to t('.download_current'), @resource.url,
-                    :title => @resource.title %>
+                    title: @resource.title %>
         <em><%= t('.or')%></em><%= t('.replace') %>
       </p>
     <% end %>
     <%# we must only hint at multiple when it's a *new* record otherwise update fails. %>
-    <%= f.file_field :file, :required => true, :multiple => new_record %>
+    <%= f.file_field :file, required: true, multiple: new_record %>
     <label id="maximum-file-size">
-      <%= t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Resources.max_file_size)) %>
+      <%= t('.maximum_file_size', bytes: number_to_human_size(Refinery::Resources.max_file_size)) %>
     </label>
   </div>
 
-  <%= render '/refinery/admin/form_actions', :f => f,
-             :hide_cancel => (action_name == 'insert'),
-             :delete_title => t('delete', :scope => 'refinery.admin.resources'),
-             :delete_confirmation => (t('message', :scope => 'refinery.admin.delete',
-                                      :title => @resource.title) unless new_record) %>
+  <%= render '/refinery/admin/form_actions', f: f,
+             hide_cancel: (action_name == 'insert'),
+             delete_title: t('delete', scope: 'refinery.admin.resources'),
+             delete_confirmation: (t('message', scope: 'refinery.admin.delete',
+                                      title: @resource.title) unless new_record) %>
 
 <% end %>

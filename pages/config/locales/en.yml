@@ -70,8 +70,7 @@ en:
           custom_slug_help: A slug is a human-readable ID used to create a page&apos;s full URL, for example &apos;about-us&apos;. To override the slug that is automatically created by Refinery, enter your custom slug here.
         actions:
           create_new_page: Add new page
-          reorder_pages: Reorder pages
-          reorder_pages_done: Done reordering pages
+          edit_page: Edit page
         records:
           no_pages_yet: There are no pages yet. Click "Add new page" to add your first page.
         translator_access: You do not have the required permission to modify pages in this language.

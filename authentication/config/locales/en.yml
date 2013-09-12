@@ -20,6 +20,7 @@ en:
           disable_all: disable all
         actions:
           create_new_user: Add new user
+          edit_user: Edit user
         user:
           email_user: Email this user
           preview: '(%{who}) added %{created_at}'

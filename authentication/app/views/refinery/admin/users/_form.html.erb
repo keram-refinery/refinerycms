@@ -5,12 +5,29 @@
             url: (refinery.admin_user_path(@user) unless @user.new_record?),
             data: { remote: true } do |f| %>
 
-  <%= render '/refinery/admin/error_messages', :object => @user, :include_object_name => true %>
+  <div class="clearfix">
+    <div class="form-title">
+      <h1>
+        <% if @user.new_record? %>
+          <%= t('create_new_user', scope: 'refinery.admin.users.actions') %>
+        <% else %>
+          <%= t('edit_user', scope: 'refinery.admin.users.actions') %>:
+          <%= @user %>
+        <% end %>
+      </h1>
+      <p class="less-important">
+        <%= link_to refinery_plugin.title, refinery.admin_users_path %>
+      </p>
+    </div>
+  </div>
+
+  <%= render '/refinery/admin/error_messages', object: @user, include_object_name: true %>
+
   <div class="clearfix">
     <div class="hemisquare">
       <div class="field">
         <%= f.label :username %>
-        <%= f.text_field :username, :required => true, :size => 20, :maxlength => Refinery::User::USERNAME_MAX_LENGTH %>
+        <%= f.text_field :username, required: true, autofocus: true, size: 20, maxlength: Refinery::User::USERNAME_MAX_LENGTH %>
       </div>
 
       <div class="field">
@@ -20,7 +37,7 @@
 
       <div class="field">
         <%= f.label :email %>
-        <%= f.email_field :email, :required => true %>
+        <%= f.email_field :email, required: true %>
       </div>
     </div>
     <div class="hemisquare right-side">
@@ -33,15 +50,15 @@
 
   <div class="field">
     <%= f.label :password %>
-    <%= f.password_field :password, :autocomplete => 'off' %>
+    <%= f.password_field :password, autocomplete: 'off' %>
     <% unless @user.new_record? %>
-      <%= content_tag(:p, t('.blank_password_keeps_current'), :class => 'note') %>
+      <%= content_tag(:p, t('.blank_password_keeps_current'), class: 'note') %>
     <% end %>
   </div>
 
   <div class="field">
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, :autocomplete => 'off' %>
+    <%= f.password_field :password_confirmation, autocomplete: 'off' %>
   </div>
 
   <div class="field">
@@ -66,15 +83,15 @@
               <% if new_or_current_superuser %>
                 <%= check_box_tag 'user[plugins][]', plugin[:name],
                                 @selected_plugin_names.include?(plugin[:name]) || @always_allowed_menu_plugins.include?(plugin[:name]) ,
-                                :readonly => @always_allowed_menu_plugins.include?(plugin[:name]) || !is_current_user_superuser,
-                                :id => "plugins_#{plugin[:name]}" %>
+                                readonly: @always_allowed_menu_plugins.include?(plugin[:name]) || !is_current_user_superuser,
+                                id: "plugins_#{plugin[:name]}" %>
               <% else %>
-                <%= hidden_field_tag 'user[plugins][]', plugin[:name], :readonly => true, :id => "plugins_#{plugin[:name]}" %>
+                <%= hidden_field_tag 'user[plugins][]', plugin[:name], readonly: true, id: "plugins_#{plugin[:name]}" %>
               <% end %>
               <%= f.label 'user[plugins][]',
-                          t('title', :scope => "refinery.plugins.#{plugin[:name].downcase}", :default => plugin[:title]),
-                          :class => 'stripped',
-                          :for => "plugins_#{plugin[:name]}" %>
+                          t('title', scope: "refinery.plugins.#{plugin[:name].downcase}", default: plugin[:title]),
+                          class: 'stripped',
+                          for: "plugins_#{plugin[:name]}" %>
             </li>
         <% end %>
       <% end %>
@@ -85,20 +102,20 @@
   <% if is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles %>
     <div class="field">
     <%= checkboxes do -%>
-      <%= f.label :role_access, t('.role_access'), :class => 'title-label' %>
+      <%= f.label :role_access, t('.role_access'), class: 'title-label' %>
       <ul id="roles" class="checkboxes">
         <% @available_roles.each do |role|
           downcased_title = (title = role[:title]).downcase %>
           <li>
             <%= check_box_tag 'user[roles][]', downcased_title, @user.has_role?(title),
-                              :readonly => current_refinery_user == @user &&
+                              readonly: current_refinery_user == @user &&
                                           downcased_title.in?(['refinery', 'superuser']) &&
                                           @user.has_role?(title),
-                              :id => "roles_#{downcased_title}" %>
+                              id: "roles_#{downcased_title}" %>
             <%= f.label 'user[roles][]',
-                        t(downcased_title, :scope => 'refinery.roles', :default => title),
-                        :class => 'stripped',
-                        :for => "roles_#{downcased_title}" %>
+                        t(downcased_title, scope: 'refinery.roles', default: title),
+                        class: 'stripped',
+                        for: "roles_#{downcased_title}" %>
           </li>
         <% end %>
       </ul>
@@ -110,13 +127,13 @@
   <% if !@user.new_record? || (is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles) %>
     <div class="field">
       <%= f.label :current_user_password, t('your_current_password',
-            :scope => 'refinery.admin.users.update') %>
-      <%= f.password_field :current_user_password, :autocomplete => 'off', :required => true %>
+            scope: 'refinery.admin.users.update') %>
+      <%= f.password_field :current_user_password, autocomplete: 'off', required: true %>
     </div>
   <% end %>
 
-  <%= render '/refinery/admin/form_actions', :f => f,
-             :hide_delete => !current_refinery_user.can_delete?(@user),
-             :delete_title => t('delete', :scope => 'refinery.admin.users'),
-             :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @user.username) %>
+  <%= render '/refinery/admin/form_actions', f: f,
+             hide_delete: !current_refinery_user.can_delete?(@user),
+             delete_title: t('delete', scope: 'refinery.admin.users'),
+             delete_confirmation: t('message', scope: 'refinery.admin.delete', title: @user.username) %>
 <% end %>

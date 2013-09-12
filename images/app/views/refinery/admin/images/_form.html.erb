@@ -1,10 +1,26 @@
 <% new_record = @image.new_record? %>
-<%= form_for @image, :url => (new_record ? refinery.admin_images_path : refinery.admin_image_path(@image)),
-             :html => { :multipart => true, :remote => true } do |f| %>
+<%= form_for @image, url: (new_record ? refinery.admin_images_path : refinery.admin_image_path(@image)),
+             html: { multipart: true, remote: true } do |f| %>
+
+  <div class="clearfix">
+    <div class="form-title">
+      <h1>
+        <% if @image.new_record? %>
+          <%= t('create_new_image', scope: 'refinery.admin.images.actions') %>
+        <% else %>
+          <%= t('edit_image', scope: 'refinery.admin.images.actions') %>:
+          <%= link_to @image.name, @image.url, target: '_blank' %>
+        <% end %>
+      </h1>
+      <p class="less-important">
+        <%= link_to refinery_plugin.title, refinery.admin_images_path %>
+      </p>
+    </div>
+  </div>
 
   <%= render '/refinery/admin/error_messages',
-             :object => @image,
-             :include_object_name => false %>
+             object: @image,
+             include_object_name: false %>
 
   <div class="field clearfix">
     <% unless new_record %>
@@ -18,15 +34,15 @@
       </p>
     <% end %>
     <% # we must only hint at multiple when it's a new record otherwise update fails. %>
-    <%= f.file_field :image, :required => true, :multiple => new_record %>
+    <%= f.file_field :image, required: true, multiple: new_record %>
     <label id="maximum-image-size">
-      <%= t('.maximum_image_size', :bytes => number_to_human_size(Refinery::Images.max_image_size)) %>
+      <%= t('.maximum_image_size', bytes: number_to_human_size(Refinery::Images.max_image_size)) %>
     </label>
   </div>
 
-  <%= render '/refinery/admin/form_actions', :f => f,
-             :hide_cancel => false,
-             :delete_title => t('delete', :scope => 'refinery.admin.images'),
-             :delete_confirmation => (t('message', :scope => 'refinery.admin.delete',
-                    :title => @image.image_name) unless new_record) %>
+  <%= render '/refinery/admin/form_actions', f: f,
+             hide_cancel: false,
+             delete_title: t('delete', scope: 'refinery.admin.images'),
+             delete_confirmation: (t('message', scope: 'refinery.admin.delete',
+                    title: @image.image_name) unless new_record) %>
 <% end %>

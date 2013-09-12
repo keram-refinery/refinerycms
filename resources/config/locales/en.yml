@@ -18,6 +18,7 @@ en:
           download: Download this file (%{size})
         actions:
           upload_new: Upload new file
+          edit_resource: Edit file
         records:
           no_files_yet: There are no files yet. Click "Upload new file" to add your first file.
         insert:
