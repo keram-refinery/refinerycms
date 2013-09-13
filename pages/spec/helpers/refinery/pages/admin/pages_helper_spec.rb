@@ -10,14 +10,16 @@ module Refinery
         context 'when show_in_menu is false' do
           it "adds 'hidden' label" do
             page.show_in_menu = false
+            page.save
 
-            helper.page_meta_information(page).should eq(%q{<span class="label">hidden</span>})
+            helper.page_meta_information(page).should eq(%q{<span class="label">hidden</span><span class="label notice">draft</span>})
           end
         end
 
         context 'when draft is true' do
           it "adds 'draft' label" do
             page.status = 'draft'
+            page.save
 
             helper.page_meta_information(page).should eq(%q{<span class="label notice">draft</span>})
           end
