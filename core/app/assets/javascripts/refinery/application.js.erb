@@ -14,18 +14,22 @@ $(function () {
 
     $.ajaxSettings.dataType = 'JSON';
 
-    function destroy () {
+    function unload_ui () {
         if (refinery.PageUI) {
             refinery.PageUI.destroy();
-            refinery.PageUI.unsubscribe('ui:change', reload);
+            refinery.PageUI.unsubscribe('ui:change', reload_ui);
             refinery.PageUI = null;
         }
     }
 
-    function reload () {
-        destroy();
+    function reload_ui () {
+        unload_ui();
+        load_ui();
+    }
+
+    function load_ui () {
         refinery.PageUI = refinery('admin.UserInterface').init($('#page'));
-        refinery.PageUI.subscribe('ui:change', reload);
+        refinery.PageUI.subscribe('ui:change', reload_ui);
         refinery.spinner.off();
     }
 
@@ -33,10 +37,10 @@ $(function () {
         refinery.spinner.on();
     });
 
-    doc.on('page:receive', destroy);
-    doc.on('page:load', reload);
-    doc.on('page:restore', reload);
-    reload();
+    doc.on('page:receive', unload_ui);
+    doc.on('page:load', load_ui);
+    doc.on('page:restore', load_ui);
+    load_ui();
 
-    $(window).on('beforeunload', destroy);
+    $(window).on('beforeunload', unload_ui);
 });
