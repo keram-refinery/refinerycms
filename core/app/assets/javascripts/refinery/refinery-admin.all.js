@@ -2,6 +2,8 @@
 (function (window, $) {
 
 // Source: ~/refinery/scripts/admin/admin.js
+(function (refinery) {
+
     /**
      * Refinery Admin namespace
      *
@@ -23,7 +25,11 @@
         }())
     };
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/form.js
+(function (refinery) {
+
     /**
      * @constructor
      * @class  refinery.admin.Form
@@ -370,7 +376,11 @@
         });
     };
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/form_page_parts.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -560,7 +570,11 @@
         });
     };
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/sortable_list.js
+(function (refinery) {
+
     /**
      * Sortable List
      *
@@ -815,7 +829,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/user_interface.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1066,7 +1084,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/dialogs/dialog.js
+(function (refinery) {
+
    /**
      * refinery Object State
      *
@@ -1424,7 +1446,11 @@
             }
         });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/pickers/picker.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1572,7 +1598,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/dialogs/image_dialog.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1622,7 +1652,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/dialogs/images_dialog.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1697,7 +1731,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/dialogs/pages_dialog.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1803,7 +1841,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/dialogs/resources_dialog.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.admin.Dialog}
@@ -1851,7 +1893,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/pickers/image_picker.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.admin.Picker}
@@ -1909,7 +1955,11 @@
         }
     });
 
+}(refinery));
+
 // Source: ~/refinery/scripts/admin/pickers/resource_picker.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.admin.Picker}
@@ -1964,4 +2014,6 @@
         }
 
     });
+
+}(refinery));
 }(window, jQuery));

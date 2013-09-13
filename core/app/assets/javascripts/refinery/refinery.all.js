@@ -2,6 +2,8 @@
 (function (window, $) {
 
 // Source: ~/refinery/scripts/refinery.js
+(function () {
+
     /**
      * Detect if turbolinks library is present.
      * If not create object Turbolinks with public method visit,
@@ -435,7 +437,11 @@
 
     refinery.provide('refinery', refinery);
 
+}());
+
 // Source: ~/refinery/scripts/object_state.js
+(function (refinery) {
+
     /**
      * refinery Object State
      *
@@ -517,7 +523,11 @@
         }
     };
 
+}(refinery));
+
 // Source: ~/refinery/scripts/object.js
+(function (refinery) {
+
     /**
      * Refinery Object
      *
@@ -1016,8 +1026,11 @@
             }
         };
     }());
+}(refinery));
 
 // Source: ~/refinery/scripts/user_interface.js
+(function (refinery) {
+
     /**
      * @constructor
      * @extends {refinery.Object}
@@ -1164,4 +1177,6 @@
             return that;
         }
     });
+
+}(refinery));
 }(window, jQuery));
