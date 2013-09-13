@@ -10,6 +10,9 @@
         <% else %>
           <%= t('edit_page', scope: 'refinery.admin.pages.actions') %>:
           <%= link_to_if @page.translation.persisted?, @page.title, @page.url, target: '_blank' %>
+          <sup>
+          <%= page_meta_information @page %>
+          </sup>
         <% end %>
       </h1>
       <p class="less-important">
