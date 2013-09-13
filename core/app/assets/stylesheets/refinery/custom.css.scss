@@ -89,3 +89,15 @@
 .translation_missing {
     color: #f00;
 }
+
+/**
+ * If is missing translation in html attribute it may broke dom,
+ * and we want to know about that
+ */
+[title="<span class="]:before {
+    content: 'I18n:'
+}
+
+[title="<span class="] {
+    outline: dashed 1px #f00 !important;
+}
