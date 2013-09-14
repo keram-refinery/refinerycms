@@ -106,7 +106,7 @@ module Refinery
             part_file = "#{page_key}_#{part_name}.html"
             part_data = IO.read("#{dir}/#{part_file}") if File.exists?("#{dir}/#{part_file}")
             part_data = IO.read("#{default_dir}/#{part_file}") if File.exists?("#{default_dir}/#{part_file}") && part_data.nil?
-            page.part(part_name).update(body: part_data) if part_data
+            page.part(part_name).update(body: part_data)
           end if Dir.exists?(dir) || Dir.exists?(default_dir)
         end
       end
