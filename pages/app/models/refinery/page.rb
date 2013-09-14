@@ -155,11 +155,11 @@ module Refinery
     end
 
     def ancestors
-      @ancestors ||= if has_ancestors
-                  Refinery::Page.where('lft < ? AND rgt > ?', lft, rgt).order(lft: :asc).includes(:translations)
-                else
-                  []
-                end
+      if has_ancestors
+        Refinery::Page.where('lft < ? AND rgt > ?', lft, rgt).order(lft: :asc).includes(:translations)
+      else
+        []
+      end
     end
 
     def has_ancestors
@@ -231,7 +231,7 @@ module Refinery
         Globalize.with_locale(Globalize.locale) do
           ancestors.each do |page|
             params << page.to_param
-          end if ancestors
+          end
 
           params << to_param
         end
