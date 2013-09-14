@@ -39,9 +39,9 @@ module Refinery
 
     def find_page(fallback_to_404 = true)
       @page ||= if home_page?
-                  refinery_page.with_globalize.find_by(plugin_page_id: refinery_plugin.name)
+                  refinery_page.includes(:translations).with_globalize.find_by(plugin_page_id: refinery_plugin.name)
                 else
-                  refinery_page.with_globalize.find_by_path_or_id(params[:path], params[:id])
+                  refinery_page.includes(:translations).with_globalize.find_by_path_or_id(params[:path], params[:id])
                 end
 
       @page || (error_404 if fallback_to_404)
