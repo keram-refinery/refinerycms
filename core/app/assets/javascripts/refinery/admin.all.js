@@ -1,7 +1,7 @@
 
 (function (window, $) {
 
-// Source: ~/refinery/scripts/admin/admin.js
+// Source: refinerycms-clientside/scripts/admin/admin.js
 (function (refinery) {
 
     /**
@@ -27,7 +27,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/form.js
+// Source: refinerycms-clientside/scripts/admin/form.js
 (function (refinery) {
 
     /**
@@ -378,7 +378,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/form_page_parts.js
+// Source: refinerycms-clientside/scripts/admin/form_page_parts.js
 (function (refinery) {
 
     /**
@@ -572,7 +572,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/sortable_list.js
+// Source: refinerycms-clientside/scripts/admin/sortable_list.js
 (function (refinery) {
 
     /**
@@ -831,7 +831,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/user_interface.js
+// Source: refinerycms-clientside/scripts/admin/user_interface.js
 (function (refinery) {
 
     /**
@@ -1086,7 +1086,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/dialogs/dialog.js
+// Source: refinerycms-clientside/scripts/admin/dialogs/dialog.js
 (function (refinery) {
 
    /**
@@ -1448,7 +1448,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/pickers/picker.js
+// Source: refinerycms-clientside/scripts/admin/pickers/picker.js
 (function (refinery) {
 
     /**
@@ -1600,7 +1600,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/dialogs/image_dialog.js
+// Source: refinerycms-clientside/scripts/admin/dialogs/image_dialog.js
 (function (refinery) {
 
     /**
@@ -1654,7 +1654,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/dialogs/images_dialog.js
+// Source: refinerycms-clientside/scripts/admin/dialogs/images_dialog.js
 (function (refinery) {
 
     /**
@@ -1733,7 +1733,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/dialogs/pages_dialog.js
+// Source: refinerycms-clientside/scripts/admin/dialogs/pages_dialog.js
 (function (refinery) {
 
     /**
@@ -1843,7 +1843,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/dialogs/resources_dialog.js
+// Source: refinerycms-clientside/scripts/admin/dialogs/resources_dialog.js
 (function (refinery) {
 
     /**
@@ -1895,7 +1895,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/pickers/image_picker.js
+// Source: refinerycms-clientside/scripts/admin/pickers/image_picker.js
 (function (refinery) {
 
     /**
@@ -1957,7 +1957,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/admin/pickers/resource_picker.js
+// Source: refinerycms-clientside/scripts/admin/pickers/resource_picker.js
 (function (refinery) {
 
     /**

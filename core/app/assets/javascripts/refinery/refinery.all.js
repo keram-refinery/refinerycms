@@ -1,7 +1,7 @@
 
 (function (window, $) {
 
-// Source: ~/refinery/scripts/refinery.js
+// Source: refinerycms-clientside/scripts/refinery.js
 (function () {
 
     /**
@@ -439,7 +439,7 @@
 
 }());
 
-// Source: ~/refinery/scripts/object_state.js
+// Source: refinerycms-clientside/scripts/object_state.js
 (function (refinery) {
 
     /**
@@ -525,7 +525,7 @@
 
 }(refinery));
 
-// Source: ~/refinery/scripts/object.js
+// Source: refinerycms-clientside/scripts/object.js
 (function (refinery) {
 
     /**
@@ -1028,7 +1028,7 @@
     }());
 }(refinery));
 
-// Source: ~/refinery/scripts/user_interface.js
+// Source: refinerycms-clientside/scripts/user_interface.js
 (function (refinery) {
 
     /**
