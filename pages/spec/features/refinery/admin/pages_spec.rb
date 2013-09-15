@@ -20,10 +20,6 @@ module Refinery
     describe 'Pages' do
       refinery_login_with :refinery_user
 
-      before do
-        Refinery::Page.destroy_all
-      end
-
       context 'when no pages' do
         it 'invites to create one' do
           visit refinery.admin_pages_path

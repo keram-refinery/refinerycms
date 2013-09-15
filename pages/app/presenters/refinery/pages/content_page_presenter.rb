@@ -15,7 +15,8 @@ module Refinery
       def add_page_parts(parts)
         parts.each do |part|
           presenter = "Refinery::Pages::#{part.title.to_s.classify}PagePartSectionPresenter".safe_constantize ||
-            PagePartSectionPresenter
+                      PagePartSectionPresenter
+
           add_section presenter.new(part)
         end
       end

@@ -26,7 +26,7 @@
 
   <div class="ui-tabs-panels">
     <%= f.fields_for :parts do |ff| %>
-      <%= render 'page_part_field', ff: ff, part: ff.object %>
+      <%= render 'page_part_field', f: f, ff: ff, part: ff.object %>
     <% end %>
   </div>
 

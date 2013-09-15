@@ -47,6 +47,8 @@ en:
         form_page_parts:
           configure: Configure
           manage_page_parts: Manage page parts
+        page_part_field:
+          featured_image_is_same_for_all_translations: Featured image is the same for all translations.
         form_advanced_options:
           page_options: Page Options
           parent_page: Parent page
@@ -81,6 +83,7 @@ en:
           body: Body
           side_body: Side Body
           perex: Perex
+          featured_image: Featured image
   activerecord:
     models:
       refinery/page: Page

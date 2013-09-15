@@ -21,6 +21,14 @@ module Refinery
     seo_fields = ::SeoMeta.attributes.keys.map{|a| [a, :"#{a}="]}.flatten
     delegate(*(seo_fields << { to: :translation }))
 
+    has_many :parts, -> {
+      order(position: :asc).includes(:translations)
+    }, class_name: '::Refinery::PagePart', inverse_of: :page, dependent: :destroy
+
+    accepts_nested_attributes_for :parts, allow_destroy: true
+
+    belongs_to :featured_image, class_name: '::Refinery::Image'
+
     attr_readonly :plugin_page_id
 
     validates :title, presence: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
@@ -44,12 +52,6 @@ module Refinery
     end
 
     friendly_id :title, friendly_id_options
-
-    has_many :parts, -> {
-      order(position: :asc).includes(:translations)
-    }, class_name: '::Refinery::PagePart', inverse_of: :page, dependent: :destroy
-
-    accepts_nested_attributes_for :parts, allow_destroy: true
 
     after_initialize do |page|
       Pages.parts.each_with_index do |page_part, index|

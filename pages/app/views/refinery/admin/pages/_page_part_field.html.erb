@@ -5,7 +5,20 @@
       <%= ff.check_box :active, class: 'part-active' %>
       <%= ff.label :active, t('active', scope: 'refinery.admin.pages.parts'), class: 'stripped' %>
     </div>
-    <%= render '/refinery/admin/wysiwyg', f: ff, field: :body %>
+    <% if part.title == :featured_image %>
+      <br/>
+      <%= f.label :featured_image_id, class: 'js-hide' %>
+      <%= render '/refinery/admin/image_picker',
+                 f: f,
+                 field: :featured_image_id,
+                 image: @page.featured_image %>
+
+      <% if Refinery::I18n.frontend_locales.many? %>
+        <p class="note"><%= t('.featured_image_is_same_for_all_translations') %></p>
+      <% end %>
+    <% else %>
+      <%= render '/refinery/admin/wysiwyg', f: ff, field: :body %>
+    <% end %>
     <%= ff.hidden_field :position, class: 'part-position' %>
     <%= ff.hidden_field :title if part.new_record? %>
   </div>
