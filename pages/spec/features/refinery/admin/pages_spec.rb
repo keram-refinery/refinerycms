@@ -380,9 +380,17 @@ module Refinery
             end
           end
 
-          it 'uses id instead of slug in admin' do
+          it 'uses id if page has not translation (slug) for current frontend locale' do
+            visit "#{refinery.admin_pages_path}?frontend_locale=en"
             within "#page_#{ru_page_id}" do
-              page.find_link('Edit this page')[:href].should include("#{ru_page_slug_encoded}")
+              page.find_link('Edit this page')[:href].should include("#{ru_page_id}/edit")
+            end
+          end
+
+          it 'uses slug if page has translation' do
+            visit "#{refinery.admin_pages_path}?frontend_locale=ru"
+            within "#page_#{ru_page_id}" do
+              page.find_link('Edit this page')[:href].should include("#{ru_page_slug_encoded}/edit")
             end
           end
 
