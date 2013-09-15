@@ -32,6 +32,7 @@ class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
       t.string    :encrypted_password, null: false
       t.string    :slug,               null: false, limit: Refinery::User::USERNAME_MAX_LENGTH
       t.text      :about
+      t.references :image
       t.datetime  :current_sign_in_at
       t.datetime  :last_sign_in_at
       t.string    :current_sign_in_ip

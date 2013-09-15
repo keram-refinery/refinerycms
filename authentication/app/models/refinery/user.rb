@@ -26,6 +26,8 @@ module Refinery
     USERNAME_MAX_LENGTH = 64
     EMAIL_MAX_LENGTH = Refinery::STRING_MAX_LENGTH
 
+    belongs_to :image, class_name: '::Refinery::Image'
+
     validates :username, presence: true, uniqueness: true, length: { maximum: USERNAME_MAX_LENGTH }
     validates :email, presence: true, uniqueness: true, length: { maximum: EMAIL_MAX_LENGTH }
     validates :full_name, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }

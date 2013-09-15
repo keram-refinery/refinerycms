@@ -39,8 +39,39 @@
         <%= f.label :email %>
         <%= f.email_field :email, required: true %>
       </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: 'off' %>
+        <% unless @user.new_record? %>
+          <%= content_tag(:p, t('.blank_password_keeps_current'), class: 'note') %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, autocomplete: 'off' %>
+      </div>
+
+      <div class="field">
+        <%= f.label :locale %>
+        <%= f.select :locale, options_for_locale %>
+      </div>
+
+      <div class="field">
+        <%= f.label :frontend_locale %>
+        <%= f.select :frontend_locale, options_for_frontend_locale %>
+      </div>
     </div>
+
     <div class="hemisquare right-side">
+      <div class="field">
+        <%= f.label :image_id %>
+        <%= render '/refinery/admin/image_picker',
+                   f: f,
+                   field: :image_id,
+                   image: @user.image %>
+      </div>
       <div class="field">
         <%= f.label :about %>
         <%= f.text_area :about, rows: 5, cols: 60 %>
@@ -48,80 +79,63 @@
     </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: 'off' %>
-    <% unless @user.new_record? %>
-      <%= content_tag(:p, t('.blank_password_keeps_current'), class: 'note') %>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: 'off' %>
-  </div>
-
-  <div class="field">
-    <%= f.label :locale %>
-    <%= f.select :locale, options_for_locale %>
-  </div>
-
-  <div class="field">
-    <%= f.label :frontend_locale %>
-    <%= f.select :frontend_locale, options_for_frontend_locale %>
-  </div>
-
-  <div class="field">
-  <%= checkboxes do -%>
-    <div class="label_with_help">
-      <%= f.label :plugin_access, t('.plugin_access') %>
-    </div>
-    <ul id="plugins" class="checkboxes sortable-list">
-      <% if @available_plugins.any? %>
-        <% @available_plugins.each do |plugin| %>
-            <li>
-              <% if new_or_current_superuser %>
-                <%= check_box_tag 'user[plugins][]', plugin[:name],
-                                @selected_plugin_names.include?(plugin[:name]) || @always_allowed_menu_plugins.include?(plugin[:name]) ,
-                                readonly: @always_allowed_menu_plugins.include?(plugin[:name]) || !is_current_user_superuser,
-                                id: "plugins_#{plugin[:name]}" %>
-              <% else %>
-                <%= hidden_field_tag 'user[plugins][]', plugin[:name], readonly: true, id: "plugins_#{plugin[:name]}" %>
-              <% end %>
-              <%= f.label 'user[plugins][]',
-                          t('title', scope: "refinery.plugins.#{plugin[:name].downcase}", default: plugin[:title]),
-                          class: 'stripped',
-                          for: "plugins_#{plugin[:name]}" %>
-            </li>
-        <% end %>
+  <div class="clearfix">
+    <div class="hemisquare">
+      <div class="field">
+      <%= checkboxes do -%>
+        <div class="label_with_help">
+          <%= f.label :plugin_access, t('.plugin_access') %>
+        </div>
+        <ul id="plugins" class="checkboxes sortable-list">
+          <% if @available_plugins.any? %>
+            <% @available_plugins.each do |plugin| %>
+                <li>
+                  <% if new_or_current_superuser %>
+                    <%= check_box_tag 'user[plugins][]', plugin[:name],
+                                    @selected_plugin_names.include?(plugin[:name]) || @always_allowed_menu_plugins.include?(plugin[:name]) ,
+                                    readonly: @always_allowed_menu_plugins.include?(plugin[:name]) || !is_current_user_superuser,
+                                    id: "plugins_#{plugin[:name]}" %>
+                  <% else %>
+                    <%= hidden_field_tag 'user[plugins][]', plugin[:name], readonly: true, id: "plugins_#{plugin[:name]}" %>
+                  <% end %>
+                  <%= f.label 'user[plugins][]',
+                              t('title', scope: "refinery.plugins.#{plugin[:name].downcase}", default: plugin[:title]),
+                              class: 'stripped',
+                              for: "plugins_#{plugin[:name]}" %>
+                </li>
+            <% end %>
+          <% end %>
+        </ul>
       <% end %>
-    </ul>
-  <% end %>
-  </div>
-
-  <% if is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles %>
-    <div class="field">
-    <%= checkboxes do -%>
-      <%= f.label :role_access, t('.role_access'), class: 'title-label' %>
-      <ul id="roles" class="checkboxes">
-        <% @available_roles.each do |role|
-          downcased_title = (title = role[:title]).downcase %>
-          <li>
-            <%= check_box_tag 'user[roles][]', downcased_title, @user.has_role?(title),
-                              readonly: current_refinery_user == @user &&
-                                          downcased_title.in?(['refinery', 'superuser']) &&
-                                          @user.has_role?(title),
-                              id: "roles_#{downcased_title}" %>
-            <%= f.label 'user[roles][]',
-                        t(downcased_title, scope: 'refinery.roles', default: title),
-                        class: 'stripped',
-                        for: "roles_#{downcased_title}" %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+      </div>
     </div>
-  <% end %>
+
+    <% if is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles %>
+      <div class="hemisquare right-side">
+        <div class="field">
+        <%= checkboxes do -%>
+          <%= f.label :role_access, t('.role_access'), class: 'title-label' %>
+          <ul id="roles" class="checkboxes">
+            <% @available_roles.each do |role|
+              downcased_title = (title = role[:title]).downcase %>
+              <li>
+                <%= check_box_tag 'user[roles][]', downcased_title, @user.has_role?(title),
+                                  readonly: current_refinery_user == @user &&
+                                              downcased_title.in?(['refinery', 'superuser']) &&
+                                              @user.has_role?(title),
+                                  id: "roles_#{downcased_title}" %>
+                <%= f.label 'user[roles][]',
+                            t(downcased_title, scope: 'refinery.roles', default: title),
+                            class: 'stripped',
+                            for: "roles_#{downcased_title}" %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
   <%# Protect against csrf by xss or by direct access to superuser browser by attacker -%>
   <% if !@user.new_record? || (is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles) %>
