@@ -10,7 +10,8 @@ module Refinery
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
                     :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts,
-                    :extern_javascripts, :admin_extern_javascripts
+                    :extern_javascripts, :admin_extern_javascripts,
+                    :wysiwyg_editor
 
     self.rescue_not_found = false
     self.s3_backend = false
