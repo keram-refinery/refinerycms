@@ -115,20 +115,19 @@ describe 'CLI' do
       let(:not_found_message) { "Couldn't match any javascript files in any extensions like non-existent\n" }
       let(:spec_success_message) { %W(create app/assets/javascripts/refinery/#{file_name}) }
       let!(:file_location) { File.expand_path("../../../../app/assets/javascripts/refinery", __FILE__) }
-      let(:env_file_location) { "refinery/#{file_name.sub(%r{\..+}, "")}" }
+      let(:env_file_location) { "refinery/#{file_name.sub(%r{\.[^\.]+\z}, '')}"  }
       let(:copied_file_location) { "app/assets/javascripts/refinery/#{file_name}" }
     end
   end
 
-# todo: something wrong is here
-#  describe 'overriding stylesheets' do
-#    it_behaves_like "refinery:override" do
-#      let(:env) { "stylesheet" }
-#      let(:not_found_message) { "Couldn't match any stylesheet files in any extensions like non-existent\n" }
-#      let(:spec_success_message) { %W(create app/assets/stylesheets/refinery/#{file_name}) }
-#      let!(:file_location) { File.expand_path('../../../../app/assets/stylesheets/refinery', __FILE__) }
-#      let(:env_file_location) { "refinery/#{file_name.sub(%r{\..+}, "")}" }
-##      let(:copied_file_location) { "app/assets/stylesheets/refinery/#{file_name}" }
-#    end
-#  end
+  describe 'overriding stylesheets' do
+    it_behaves_like "refinery:override" do
+      let(:env) { "stylesheet" }
+      let(:not_found_message) { "Couldn't match any stylesheet files in any extensions like non-existent\n" }
+      let(:spec_success_message) { %W(create app/assets/stylesheets/refinery/#{file_name}) }
+      let!(:file_location) { File.expand_path('../../../../app/assets/stylesheets/refinery', __FILE__) }
+      let(:env_file_location) { "refinery/#{file_name.sub(%r{\..+}, "")}" }
+      let(:copied_file_location) { "app/assets/stylesheets/refinery/#{file_name}" }
+    end
+  end
 end
