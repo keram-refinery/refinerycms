@@ -191,6 +191,34 @@
     padding: 10px;
 }
 
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    padding: 10px;
+    background-color: #F2F2F2;
+    border-top: solid 1px #ccc;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin: 0;
+    margin-right: 7px;
+    background: #afafaf;
+    color: #fff;
+}
+
+.ui-dialog .ui-dialog-buttonpane button:hover,
+.ui-dialog .ui-dialog-buttonpane button:focus {
+    background: #bbb;
+}
+
+.ui-dialog .ui-dialog-buttonpane button:active {
+    background: #999;
+}
+
 .ui-button {
     background: #BCBCBC;
 }

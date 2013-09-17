@@ -11,6 +11,12 @@
      * @type {Object}
      */
     refinery.admin = {
+        /**
+         * Namespace for loading modules to ui
+         *
+         * @expose
+         * @type {Object}
+         */
         ui: {},
 
         /**
@@ -50,28 +56,60 @@
          * @return {undefined}
          */
         switch_frontend_locale: function (anchor) {
-            var buttons = {},
+            var that = this,
                 url = anchor.attr('href'),
-                that = this;
+                /** @type {jquery_ui_button} */
+                save_and_continue_btn,
+                /** @type {jquery_ui_button} */
+                continue_btn,
+                /** @type {jquery_ui_button} */
+                cancel_btn;
 
-            buttons[t('refinery.admin.form_unsaved_save_and_continue')] = function () {
-                var form = that.holder,
-                    dialog = $(this),
-                    param = url.match(/\?[^\?]+$/)[0];
+            save_and_continue_btn = {
+                text: t('refinery.admin.form_unsaved_save_and_continue'),
+                'class': 'submit-button',
+                click: function () {
+                    var form = that.holder,
+                        dialog = $(this),
 
-                $.ajax({
-                    url: form.attr('action'),
-                    method: form.attr('method'),
-                    data: form.serialize(),
-                    dataType: 'JSON',
-                    success: function (response, status, xhr) {
-                        var param_re = /frontend_locale=[\w\-]+/,
-                            redirected = xhr.getResponseHeader('X-XHR-Redirected-To');
+                        /**
+                         * Regexp for test if url contain question mark,
+                         * Example: /something/with?a=1
+                         *
+                         * @type {RegExp}
+                         */
+                        params_re = /\?[^\?]+$/,
 
-                        dialog.dialog('close');
+                        /**
+                         * @type {string}
+                         */
+                        param = params_re.test(url) ? url.match(params_re)[0] : '';
+
+                    /**
+                     * Process ajax response
+                     *
+                     * @param  {json_response} response
+                     * @param  {string} status
+                     * @param  {jQuery.jqXHR} xhr
+                     * @return {undefined}
+                     */
+                    function save_success (response, status, xhr) {
+                        var redirected = xhr.getResponseHeader('X-XHR-Redirected-To'),
+
+                            /**
+                             * @type {RegExp}
+                             */
+                            frontend_locale_param_re = /frontend_locale=[\w\-]+/,
+
+                            url_amendment = frontend_locale_param_re.test(param) ?
+                                                param.match(frontend_locale_param_re)[0] :
+                                                '';
+
                         dialog.dialog('destroy');
 
                         if (redirected) {
+                            url = redirected;
+
                             /**
                              * This is requried in case that user has defined other locale than default.
                              * In that case this scenario is happen:
@@ -85,13 +123,20 @@
                              * GET /refinery/pages/12/edit?frontend_locale=sk // Locale switch request
                              * 200 OK
                              */
-                            if (param_re.test(redirected) && param_re.test(param)) {
-                                url = redirected.replace(param_re, param.match(param_re)[0]);
-                            } else if (/\?/.test(redirected)) {
-                                url = redirected + '&' + param.match(param_re)[0];
-                            } else {
-                                url = redirected + param;
+                            if (frontend_locale_param_re.test(url)) {
+                                // replace frontend_locale
+                                url = url.replace(
+                                    frontend_locale_param_re,
+                                    url_amendment
+                                );
+                            } else if (params_re.test(url) && url_amendment !== '') {
+                                // append frontend_locale
+                                url = url + '&' + url_amendment;
+                            } else if (url_amendment !== '') {
+                                // include frontend_locale
+                                url = url + '?' + url_amendment;
                             }
+
                             Turbolinks.visit(url);
                         } else if (status === 'error') {
                             refinery.xhr.success(response, status, xhr, form, true);
@@ -99,17 +144,31 @@
                             Turbolinks.visit(url);
                         }
                     }
-                });
+
+                    form.trigger('before-submit');
+
+                    $.ajax({
+                        url: form.attr('action'),
+                        method: form.attr('method'),
+                        data: form.serialize(),
+                        dataType: 'JSON'
+                    }).done(save_success);
+                }
             };
 
-            buttons[t('refinery.admin.form_unsaved_continue')] = function () {
-                $(this).dialog('destroy');
-                Turbolinks.visit(url);
+            continue_btn = {
+                text: t('refinery.admin.form_unsaved_continue'),
+                click: function () {
+                    $(this).dialog('destroy');
+                    Turbolinks.visit(url);
+                }
             };
 
-            buttons[t('refinery.admin.form_unsaved_cancel')] = function () {
-                $(this).dialog('close');
-                $(this).dialog('destroy');
+            cancel_btn = {
+                text: t('refinery.admin.form_unsaved_cancel'),
+                click: function () {
+                    $(this).dialog('destroy');
+                }
             };
 
             $('<div/>', { html: t('refinery.admin.form_unsaved_html')} ).dialog({
@@ -117,7 +176,7 @@
                 'height': 140,
                 'modal': true,
                 'title': t('refinery.admin.form_unsaved_title'),
-                'buttons': buttons
+                'buttons': [save_and_continue_btn, continue_btn, cancel_btn]
             });
         },
 
@@ -172,6 +231,8 @@
                             'value': $('meta[name=csrf-token]').attr('content')
                         }).appendTo(form);
                     }
+
+                    form.trigger('before-submit');
 
                     $.ajax(this.action, {
                             'data': form.serializeArray(),
@@ -239,6 +300,9 @@
                         'target': preview_btn.attr('href')
                     });
 
+                    // trigger before-submit for listeners
+                    form.trigger('before-submit');
+
                     // disable other events on form submit (jquery_ujs etc..)
                     form.on('submit', stop_event_propagation);
 
@@ -258,6 +322,9 @@
                         form.attr('data-remote', prev_remote);
                         form.data('remote', prev_remote);
                     }
+                } else {
+                    // @todo
+                    alert('Preview is not possible because form is not filled properly!');
                 }
             }
 
@@ -496,10 +563,14 @@
                 'stop': update_parts
             });
 
-            dialog_buttons[t('refinery.admin.button_done')] = function () {
-                update_parts();
-                dialog_holder.dialog('close');
-            };
+            dialog_buttons = [{
+                'text': t('refinery.admin.button_done'),
+                'class': 'submit-button',
+                'click': function () {
+                    update_parts();
+                    dialog_holder.dialog('close');
+                }
+            }];
 
             dialog_holder.dialog({
                 'title': t('refinery.admin.form_page_parts_manage'),

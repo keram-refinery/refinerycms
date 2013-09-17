@@ -234,34 +234,8 @@
      * @type {Object}
      */
     refinery.xhr = {
-
         /**
-         * Create and return jquery ajax object (promise) with default refinery
-         * processing of request fail or success
          *
-         * @expose
-         * @param {string}   url
-         * @param {(Object.<string,*>|function (string,string,jQuery.jqXHR))=} data
-         * @param {jQuery=} holder
-         *
-         * @return {jQuery.jqXHR}
-         */
-        make: function (url, data, holder) {
-            return $.ajax({
-                url: url,
-                data: data,
-                dataType: 'JSON'
-            })
-            .fail(function (xhr, status) {
-                refinery.xhr.error(xhr, status);
-            })
-            .done(function (response, status, xhr) {
-                refinery.xhr.success(response, status, xhr, holder);
-            });
-        },
-
-        /**
-         * todo
          *
          * @expose
          * @param {Object|string} html

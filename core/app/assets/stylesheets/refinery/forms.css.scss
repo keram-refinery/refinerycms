@@ -123,14 +123,10 @@ input.larger {
     height: 31px;
 }
 
-input.button,
-a.button,
-.ui-widget-content button,
-.ui-widget-content .button {
+.button {
     cursor:pointer;
-    background: #22a7f2;
     color: #fff;
-    padding: 0px 14px 0px 14px;
+    padding: 0px 14px;
     font-size: 14px;
     line-height: 25px;
     height: 25px;
@@ -139,57 +135,49 @@ a.button,
     text-decoration: none;
     margin: 0px;
     border-radius: 6px;
+    background: #a7a7a7;
+}
+
+.button:hover,
+.button:focus {
+    background: #bbb;
+}
+
+.button:active {
+    background: #808080;
 }
 
 input.button {
     padding-bottom: 3px;
 }
 
-input.button:hover,
-a.button:hover,
-input.button:focus,
-a.button:focus {
-    background: #62bef2;
+.submit-button {
+    background: #22a7f2 !important;
 }
 
-input.button:active,
-a.button:active {
-    background: #004a8f;
+.submit-button:hover {
+    background: #30b3ff !important;
 }
 
-input.secondary-button,
-a.secondary-button,
-.ui-widget-content .secondary-button {
-    background: #bcbcbc;
+.submit-button:focus {
+    background: #62bef2 !important;
 }
 
-input.secondary-button:hover,
-a.secondary-button:hover,
-input.secondary-button:focus,
-a.secondary-button:focus {
-    background: #cdcdcd;
+.submit-button:active {
+    background: #004a8f !important;
 }
 
-input.secondary-button:active,
-a.secondary-button:active {
-    background: #aaa;
+.danger-button {
+    background: #ee1100 !important;
 }
 
-input.danger-button,
-a.danger-button {
-    background: #ee1100;
+.danger-button:hover
+.danger-button:focus {
+    background: #f32 !important;
 }
 
-input.danger-button:hover,
-a.danger-button:hover
-input.danger-button:focus,
-a.danger-button:focus {
-    background: #f32;
-}
-
-input.danger-button:active,
-a.danger-button:active {
-    background: #b00;
+.danger-button:active {
+    background: #b00 !important;
 }
 
 #more-options-field {

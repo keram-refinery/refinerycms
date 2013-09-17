@@ -1,6 +1,5 @@
 form {
     .locale-picker {
-        background-color: #f0f0f0;
         float: right;
     }
 
@@ -22,20 +21,18 @@ form {
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
+        border-bottom: solid 2px transparent;
     }
 
     .locale-picker a:hover {
-        background-color: #ccc;
-        color: transparent;
+        border-bottom-color: #ccc;
     }
 
     .locale-picker a:active {
-        background-color: #aaa;
+        border-bottom-color: #999;
     }
 
-    .locale-picker .selected,
-    .locale-picker .selected a:hover,
-    .locale-picker .selected a:active {
-        background-color: #fff;
+    .locale-picker .selected a {
+        border-bottom-color: #22A7F2;
     }
 }
