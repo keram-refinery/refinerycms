@@ -1603,6 +1603,19 @@
         },
 
         /**
+         *
+         * @expose
+         * @return {Object} self
+         */
+        destroy: function () {
+            if (this.dialog) {
+                this.dialog.destroy();
+            }
+
+            return this._destroy();
+        },
+
+        /**
          * Bind events
          *
          * @protected
