@@ -67,10 +67,11 @@ en:
           layout_template_help: You can choose a different layout template for this page
           view_template: View template
           view_template_help: You can choose a different view template for this page
-          content_part_title: Custom content title
-          content_part_title_placeholder: Leave empty and will be used default page title
+          page_type_help: Select type which best describes intentions of page. More informations about types you can find at http://www.schema.org/WebPage .
         form_advanced_options_seo:
           custom_slug_help: A slug is a human-readable ID used to create a page&apos;s full URL, for example &apos;about-us&apos;. To override the slug that is automatically created by Refinery, enter your custom slug here.
+          content_part_title: Custom content title
+          content_part_title_placeholder: Leave empty and will be used default page title
         actions:
           create_new_page: Add new page
           edit_page: Edit page
@@ -91,3 +92,4 @@ en:
       refinery/page:
         title: Title
         custom_slug: Custom slug
+        page_type: Page type

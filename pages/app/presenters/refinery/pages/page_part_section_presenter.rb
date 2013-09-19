@@ -10,6 +10,12 @@ module Refinery
         self.hide unless page_part.active
       end
 
+      private
+
+      def wrap_content_in_tag(content)
+        content_tag(:section, content_tag(:div, content, class: 'inner'), id: id, itemprop: Pages.part_to_item_property[self.id])
+      end
+
     end
   end
 end

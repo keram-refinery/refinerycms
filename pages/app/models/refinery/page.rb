@@ -11,6 +11,9 @@ module Refinery
     PATH_SEPARATOR = ' - '
     STATES = %w(draft review live)
 
+    # http://schema.org/docs
+    PAGE_TYPES = %w(WebPage AboutPage CheckoutPage CollectionPage ImageGallery VideoGallery ContactPage ItemPage MedicalWebPage ProfilePage SearchResultsPage)
+
     translates :title, :custom_slug, :slug, :signature, :status, include: :seo_meta
 
     class Translation
@@ -37,6 +40,7 @@ module Refinery
     validates :slug, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :link_url, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :status, allow_blank: true, inclusion: { in: STATES }
+    validates :page_type, allow_blank: false, inclusion: { in: PAGE_TYPES }
 
     # Docs for acts_as_nested_set https://github.com/collectiveidea/awesome_nested_set
     # rather than :delete_all we want :destroy

@@ -34,9 +34,10 @@ module Refinery
       end
 
       def to_html(can_use_fallback = true)
-        content_tag :section, sections_html(can_use_fallback),
-                    :id => 'content',
-                    :class => blank_section_css_classes(can_use_fallback).join(' ')
+        content_tag :section, sections_html(can_use_fallback), {
+                    id: 'content',
+                    class: blank_section_css_classes(can_use_fallback).join(' ')
+                  }.merge!(item_type)
       end
 
     private
@@ -48,6 +49,11 @@ module Refinery
       def has_section?(id)
         @sections.detect {|section| section.id == id}
       end
+
+      def item_type
+        @item_type ||= {}
+      end
+
     end
   end
 end

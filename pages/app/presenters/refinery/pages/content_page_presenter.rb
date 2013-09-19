@@ -7,7 +7,13 @@ module Refinery
     class ContentPagePresenter < ContentPresenter
       def initialize(page)
         super()
-        add_page_parts(page.parts) if page
+        if page
+          add_page_parts(page.parts)
+          @item_type = {
+            itemscope: :itemscope,
+            itemtype: "http://schema.org/#{page.page_type}"
+          }
+        end
       end
 
     private
@@ -19,6 +25,10 @@ module Refinery
 
           add_section presenter.new(part)
         end
+      end
+
+      def item_type
+        @item_type ||= { }
       end
     end
   end

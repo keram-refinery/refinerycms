@@ -8,7 +8,8 @@ module Refinery
                     :layout_template_whitelist,
                     :use_layout_templates,
                     :page_title,
-                    :auto_expand_admin_tree
+                    :auto_expand_admin_tree,
+                    :part_to_item_property
 
     self.per_dialog_page = 20
     self.per_admin_page = 20
@@ -17,6 +18,12 @@ module Refinery
     self.default_parts = [:title, :body, :side_body]
     self.scope_slug_by_parent = true
     self.layout_template_whitelist = ['application']
+    self.part_to_item_property = {
+      title: 'name',
+      perex: 'description',
+      body: 'mainContentOfPage',
+      featured_image: 'primaryImageOfPage'
+    }
 
     class << self
       def layout_template_whitelist

@@ -11,7 +11,7 @@ module Refinery
       private
 
       def wrap_content_in_tag(content)
-        content_tag(:h1, content, id: id)
+        content_tag(:h1, content, id: id, itemprop: Pages.part_to_item_property[self.id])
       end
 
       def content_renderer

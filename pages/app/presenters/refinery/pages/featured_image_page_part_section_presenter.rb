@@ -7,7 +7,7 @@ module Refinery
         super()
 
         if page_part.page.featured_image_id.present?
-          self.fallback_html = image_tag(page_part.page.featured_image.url, role: 'banner')
+          self.fallback_html = image_tag(page_part.page.featured_image.url, role: 'banner', itemprop: Pages.part_to_item_property[self.id])
         end
 
         self.id = page_part.title
