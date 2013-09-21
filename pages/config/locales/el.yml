@@ -5,32 +5,6 @@ el:
         title: Σελίδες
         description: Διαχείριση στατικών σελιδών
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Σύνδεσμος στη σελίδα
-        link_to:
-          insert: Εισαγωγή
-          your_page:
-            tab_name: Η σελίδα σας
-          web_address:
-            tab_name: Ιστοσελίδα
-            location: Τοποθεσία
-            new_window: Νέο παράθυρο
-            new_window_label: Κάντε κλικ εδώ για να ανοίγει ο σύνδεσμος σε νέο παράθυρο.
-            not_sure: Δεν είστε σίγουροι τι να γράψετε;
-            step1: Βρείτε τη σελίδα στον Ιστό που θέλετε να βάλετε σύνδεσμο.
-            step2: Αντιγράψτε τη διεύθυνση από το φυλλομετρητή σας και αντιγράψτε τη στο πιο πάνω πεδίο.
-          email_address:
-            tab_name: Διεύθυνση Email
-            subject_line_optional: Προαιρετικό θέμα
-            body_optional: Προαιρετικό σώμα
-            not_sure: Δεν είστε σίγουροι τι να γράψετε;
-            step1_html: Write or copy and paste (e.g. from your address book) the email address to link to into the '<strong>Email Address</strong>' box above.
-            step2_html: Use the '<strong>Subject Line</strong>' box above if you want the message to be composed with a <strong>pre-written subject line</strong>.
-            step3_html: Use the <strong>Email Body</strong> box above if you want the message to be composed with a <strong>pre-written message</strong>.
-          your_resource:
-            tab_name: Το αρχείο σας
-            link_to_this_resource: Σύνδεσμος σε αυτό το αρχείο
       pages:
         delete: Διαγραφή σελίδας
         edit: Επεξεργασία σελίδας

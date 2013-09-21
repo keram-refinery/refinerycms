@@ -5,32 +5,6 @@ tr:
         title: Sayfalar
         description: Icerik Sayfalarini Yonet
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Bu sayfaya baglanti ekle
-        link_to:
-          insert: Cikart
-          your_page:
-            tab_name: Senin sayfan
-          web_address:
-            tab_name: Website
-            location: Konum
-            new_window: Yeni Pencere
-            new_window_label: Baglantiyi yeni pencerede acmak icin  kutuyu tiklayiniz.
-            not_sure: Yukaridaki kutuya ne yerlestirdiginden emin degil misin ?
-            step1: Web'de baglanti kurmak istediginiz sayfayi bulun
-            step2: Web tarayicinizin adres cubugundaki adresi kopyalayin ve yukaridaki  kutu alanina giriniz.
-          email_address:
-            tab_name: E-Posta Adresi
-            subject_line_optional: Istege bagli konu
-            body_optional: Istege bagli govde
-            not_sure: Yukaridaki kutucuklara ne konacagina emin degil misin ?
-            step1_html: Lutfen  '<strong>E-posta Adresi</strong>' bolumune bir e-posta adresi kopyalayip veya yapistirin. Adres defterinizden de e-posta ekleyebilirsiniz
-            step2_html: <strong>Konu Basligi</strong> kutusu bolumune mesajda gondereceginiz konunun basligini yazabilir  <strong>Satir ici konu basligi</strong> seklinde yapabilirsiniz.
-            step3_html: Eger mesajinizin <string> Satirbasi yazi </strong> gibi olarak gozukmesini istiyorsaniz Yukaridaki  <strong>E-posta Govde</strong> kutucugunu kullaniniz.
-          your_resource:
-            tab_name: Senin Dosyan
-            link_to_this_resource: bu dosyaya baglanti olustur
       pages:
         delete: Bu sayfayi sonsuza dek sil
         edit: Bu sayfayi duzenle

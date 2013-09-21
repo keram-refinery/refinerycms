@@ -5,32 +5,6 @@ it:
         title: Pagine
         description: Gestione dei contenuti del sito
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Link a questa pagina
-        link_to:
-          insert: Inserire
-          your_page:
-            tab_name: La tua pagina
-          web_address:
-            tab_name: Website
-            location: URL
-            new_window: Nuova finestra
-            new_window_label: Seleziona questa casella per fare in modo che la pagina linkata si apra in una nuova finestra/scheda del browser.
-            not_sure: Se non sei sicuro di cosa sia corretto inserire...
-            step1: Apri la pagina che desideri linkare.
-            step2: "Copia l'URL dalla barra degli indirizzi del browser ed incollalo nella casella."
-          email_address:
-            tab_name: Indirizzo e-mail
-            subject_line_optional: Oggetto del messaggio (facoltativo)
-            body_optional: Testo del messaggio (facoltativo)
-            not_sure: Se non sei sicuro di cosa sia corretto inserire...
-            step1_html: "Inserisci l'indirizzo e-mail da linkare nella casella di testo '<strong>Indirizzo e-mail</strong>'."
-            step2_html: "Utilizzare la casella '<strong>Oggetto del messaggio</strong>' se si desidera che il messaggio abbia un <strong>oggetto predefinito</strong>."
-            step3_html: "Utilizzare la casella <strong>Testo del messaggio</strong> se si desidera che il messaggio sia composto con un <strong>messaggio predefinito </strong>."
-          your_resource:
-            tab_name: File
-            link_to_this_resource: Link a questo file
       pages:
         delete: Eliminare per sempre questa pagina
         edit: Modificare questa pagina

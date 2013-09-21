@@ -5,32 +5,6 @@ fr:
         title: Pages
         description: Gestion du contenu des pages
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Créer un lien vers cette page
-        link_to:
-          insert: Insérer
-          your_page:
-            tab_name: Votre page
-          web_address:
-            tab_name: Website
-            location: Location
-            new_window: Nouvelle fenêtre
-            new_window_label: Cocher cette case si vous souhaitez que la destination du lien s'ouvre dans une nouvelle fenêtre.
-            not_sure: Vous n'êtes pas certain de ce qu'il faut entrer dans le champ ci-dessus ?
-            step1: Trouvez sur le net la page vers laquelle vous voulez créer un lien.
-            step2: "Copiez l'adresse de cette page dans la barre d'adresse de votre navigateur, et collez-la dans ce champ."
-          email_address:
-            tab_name: Adresse e-mail
-            subject_line_optional: Sujet optionnel
-            body_optional: Corps de texte optionnel
-            not_sure: Vous n'êtes pas certain de ce qu'il faut entrer dans les champs ci-dessus ?
-            step1_html: "Ecrivez, ou copiez-collez (par exemple à partir de votre carnet d'adresses) l'adresse e-mail à mettre en lien dans le champ '<strong>Adresse e-mail</strong>'."
-            step2_html: Utilisez le champ '<strong>Sujet optionnel</strong>' si vous souhaitez que le message possède un <strong>sujet pré-défini</strong>.
-            step3_html: Utilisez le champ '<strong>Corps de texte optionnel</strong>' si vous souhaitez que le message possède un <strong>texte pré-défini</strong>.
-          your_resource:
-            tab_name: Votre fichier
-            link_to_this_resource: Lien vers ce fichier
       pages:
         delete: Supprimer définitivement cette page
         edit: Modifier cette page

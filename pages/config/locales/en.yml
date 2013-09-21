@@ -5,32 +5,6 @@ en:
         title: Pages
         description: Manage content pages
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Link to this page
-        link_to:
-          insert: Insert
-          your_page:
-            tab_name: Your page
-          web_address:
-            tab_name: Website
-            location: Location
-            new_window: New window
-            new_window_label: Check this box to have the link open in a new browser window.
-            not_sure: Not sure what to put in the box above?
-            step1: Find the page on the web you want to link to.
-            step2: Copy the web address from your browser's address bar and paste it into the box above.
-          email_address:
-            tab_name: Email address
-            subject_line_optional: Optional subject
-            body_optional: Optional body
-            not_sure: Not sure what to put in the boxes above?
-            step1_html: Write or copy and paste (e.g. from your address book) the email address.
-            step2_html: Use if you want the message to be composed with a <strong>pre-written subject line</strong>.
-            step3_html: Use if you want the message to be composed with a <strong>pre-written message</strong>.
-          your_resource:
-            tab_name: Your file
-            link_to_this_resource: Link to this file
       pages:
         delete: Remove this page forever
         edit: Edit this page

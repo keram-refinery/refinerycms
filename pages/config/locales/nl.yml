@@ -5,32 +5,6 @@ nl:
         title: Pagina's
         description: Inhoud van pagina's beheren
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Link naar deze pagina
-        link_to:
-          insert: Invoegen
-          your_page:
-            tab_name: Uw pagina
-          web_address:
-            tab_name: Website
-            location: Locatie
-            new_window: Nieuw venster
-            new_window_label: Aanvinken om de link in een nieuw venster te laten openen.
-            not_sure: Niet zeker wat u in het veld hierboven moet invullen?
-            step1: Zoek de pagina op het internet, waar u naar wilt linken.
-            step2: Kopieer het adres uit de adresbalk van de browser, en plak het in het veld hierboven.
-          email_address:
-            tab_name: E-mailadres
-            subject_line_optional: Optioneel onderwerp
-            body_optional: Optionele inhoud
-            not_sure: Niet zeker wat u in het veld hierboven moet invullen?
-            step1_html: Typ, of kopieer en plak (bijv. uit uw adresboek), het e-mailadres waar u naar wilt linken, en vul het in het veld '<strong>E-mailadres</strong>' hierboven.
-            step2_html: Gebruik het invoerveld '<strong>Onderwerp</strong>' hierboven, als u het bericht met een <strong>vooraf bepaald onderwerp</strong> wilt versturen.
-            step3_html: Gebruik het invoerveld <strong>E-mailinhoud</strong> hierboven, als u het bericht met een <strong>vooraf bepaalde inhoud</strong> wilt versturen.
-          your_resource:
-            tab_name: Uw bestand
-            link_to_this_resource: Naar dit bestand linken
       pages:
         delete: Deze pagina definitief verwijderen
         edit: Deze pagina bewerken

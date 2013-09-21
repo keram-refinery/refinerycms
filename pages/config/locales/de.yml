@@ -5,32 +5,6 @@ de:
         title: Seiten
         description: Verwaltet Inhaltsseiten
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Link zu dieser Seite
-        link_to:
-          insert: Einfügen
-          your_page:
-            tab_name: Ihre Seite
-          web_address:
-            tab_name: Webseite
-            location: Zieladresse
-            new_window: Neues Fenster
-            new_window_label: Setzen Sie dieses Häkchen, damit sich der Link in einem neuen Browserfenster öffnet.
-            not_sure: Nicht sicher, was Sie in das obrige Feld eingeben sollen?
-            step1: Finden Sie die Seite im Web, die Sie verlinken möchten.
-            step2: Kopieren Sie die Adresse aus der Adressleiste ihres Browsers und fügen Sie diese in das Feld oben ein.
-          email_address:
-            tab_name: E-Mail-Adresse
-            subject_line_optional: Optionaler Betreff
-            body_optional: Optionaler Inhaltstext
-            not_sure: Nicht sicher, was in Felder oben rein soll?
-            step1_html: Schreiben oder kopieren Sie die E-Mail-Adresse (z.B. aus Ihrem Adressbuch), die verlinkt werden soll, in das obrige Feld <strong>E-Mail-Adresse</strong>.
-            step2_html: Verwenden Sie das Feld '<strong>Optionaler Betreff</strong>', wenn der Betreff schon <strong>vorher mit einer Zeile verfasst</strong> werden soll.
-            step3_html: Verwenden Sie das Feld '<strong>Optionaler Inhaltstext</strong>', wenn die E-Mail bereits <strong>mit einem Text verfasst</strong> werden soll.
-          your_resource:
-            tab_name: Ihre Datei
-            link_to_this_resource: Link zu dieser Datei
       pages:
         delete: Diese Seite dauerhaft entfernen
         edit: Diese Seite bearbeiten

@@ -5,32 +5,6 @@ hu:
         title: Oldalak
         description: 'Tartalmi oldalak kezelése'
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: 'Link erre az oldalra'
-        link_to:
-          insert: 'Beszúrás'
-          your_page:
-            tab_name: 'Saját oldalak'
-          web_address:
-            tab_name: Weboldal
-            location: "Elhelyezkedés"
-            new_window: "Új ablak"
-            new_window_label: 'Válaszd ki ezt a jelölőt, ha azt szeretnéd, hogy a link új ablakban nyíljon meg.'
-            not_sure: 'Nem vagy biztos benne, hogy mit kell tenni a fenti mezőbe?'
-            step1: 'Válaszd ki az oldalt a weben, amire linkelni akarsz'
-            step2: 'Másold ki a webcímet a böngésző címsorából és illeszd be a fenti dobozba.'
-          email_address:
-            tab_name: "Email cím"
-            subject_line_optional: "Opcionális tárgy"
-            body_optional: "Opcionális törzs"
-            not_sure: 'Nem vagy biztos benne, hogy mit kell tenni a fenti mezőbe?'
-            step1_html: "Írd vagy másold (pl. a címtáradból) az email címet a fenti '<strong>Email Cím</strong>' dobozokba."
-            step2_html: "Használd a fenti '<strong>Opcionális tárgy</strong>' sort ha azt szeretnéd hogy az üzenet tárgya egy <strong>előre megyírt sor legyen</strong>."
-            step3_html: "Használd a fenti '<strong>Opcionális törzs</strong>' dobozt, ha szeretnéd, hogy üzenet kitöltődjön egy <strong>előre megyírt tartalommal</strong>."
-          your_resource:
-            tab_name: 'Saját fájlok'
-            link_to_this_resource: 'Link erre a fájlra'
       pages:
         delete: 'Oldal végleges eltávolítása'
         edit: 'Oldal szerkesztése'

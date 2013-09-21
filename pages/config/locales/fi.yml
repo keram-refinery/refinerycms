@@ -5,32 +5,6 @@ fi:
         title: Sivut
         description: Hallitse sivuja
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Linkki tälle sivulle
-        link_to:
-          insert: Lisää
-          your_page:
-            tab_name: Sivu
-          web_address:
-            tab_name: Nettisivu
-            location: Sijainti
-            new_window: Uusi ikkuna
-            new_window_label: "Rastita tämä laatikko, jos haluat linkin aukeavan uudessa ikkunassa"
-            not_sure: "Etkö tiedä, mitä laittaa yllä olevaan kenttään?"
-            step1: "Etsi nettisivu, jolle haluat linkittää"
-            step2: "Kopioi nettisivun osoite selaimesi osoitepalkista ja liitä se yllä olevaan laatikkoon."
-          email_address:
-            tab_name: Sähköposti
-            subject_line_optional: Vapaaehtoinen aihe
-            body_optional: Vapaaehtoinen teksti
-            not_sure: "Etkö tiedä, mitä laittaa yllä oleviin kenttiin?"
-            step1_html: "Kirjoita tai kopioi ja liitä sähköpostiosoite (esim. osoitekirjastasi) johon linkittää '<strong>Sähköpostiosoite-</strong>' kenttään yläpuolella."
-            step2_html: "Täytä <strong>aihekenttä</strong> yläpuolella, jos haluat että viestissä on <strong>valmiiksi kirjoitettu otsikko</strong>."
-            step3_html: "Täytä <strong>tekstikenttä</strong> yläpuolella, jos haluat että viestissä on <strong>valmiiksi kirjoitettu sisältö</strong>."
-          your_resource:
-            tab_name: Tiedosto
-            link_to_this_resource: Linkki tähän tiedostoon
       pages:
         delete: Poista tämä sivu ikuisesti
         edit: Muokkaa tätä sivua

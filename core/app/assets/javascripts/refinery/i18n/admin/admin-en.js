@@ -9,7 +9,7 @@ i18n.register({
 
     'images_dialog_title': 'Images',
     'image_dialog_title': 'Image',
-    'pages_dialog_title': 'Link',
+    'links_dialog_title': 'Link',
     'resources_dialog_title': 'File',
     'settings_dialog_title' : 'New Setting',
     'dialog_content_load_fail': 'Dialog content load fail',

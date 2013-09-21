@@ -5,32 +5,6 @@ rs:
         title: Strane
         description: Menjaj strane
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Linkuj ka ovoj strani
-        link_to:
-          insert: Unesi
-          your_page:
-            tab_name: Tvoja strana
-          web_address:
-            tab_name: Websajt
-            location: Lokacija
-            new_window: Nov prozor
-            new_window_label: Čekiraj ovo polje da otvoriš link u novom prozoru.
-            not_sure: Nisi siguran šta da upišeš u polje iznad?
-            step1: Pronađi stranu na web-u do koje želiš da linkuješ.
-            step2: Iskopiraj sadržaj adrese tvog brauzera u polje iznad.
-          email_address:
-            tab_name: Email adresa
-            subject_line_optional: Opcioni naslov
-            body_optional: Opcioni sadržaj
-            not_sure: Nisi siguran šta da upišeš u polja iznad?
-            step1_html: Napiši ili kopiraj (npr. iz tvog adresara) email adrese, da linkuješ na polje '<strong>Email adresa</strong>' iznad.
-            step2_html: Koristi '<strong>Naslov</strong>' polje iznad ako želiš da poruka bude sastavljena sa <strong>predefinisanim naslovom</strong>.
-            step3_html: Korsiti <strong>Sadržaj</strong> polje iznad ako želiš da poruka bude sastavljena sa <strong>predefinisanom porukom</strong>.
-          your_resource:
-            tab_name: Tvoj fajl
-            link_to_this_resource: Linkuj na ovaj fajl
       pages:
         delete: Ukloni ovu stranu zauvek
         edit: Izmeni stranu

@@ -1287,6 +1287,8 @@
                     fnc = tab.attr('id').replace(/-/g, '_');
                     if (typeof this[fnc] === 'function') {
                         obj = this[fnc](elm);
+                    } else if (elm.hasClass('ui-selected')) {
+                        obj = this.selectable_area(elm);
                     }
                 }
 
@@ -1461,10 +1463,24 @@
             /**
              * Handle uploaded resource
              *
+             * abstract
              * @expose
              * @return {undefined}
              */
             upload_area: function () { },
+
+            /**
+             * Handle default behavior on selecting element on dialog
+             *
+             * @param {!jQuery} element
+             * @return {!Object}
+             */
+            selectable_area: function (element) {
+                element.removeClass('ui-selected');
+
+                return /** @type {!Object} */(element.data('dialog'));
+            },
+
 
             /**
              *
@@ -1561,7 +1577,7 @@
          *
          * @expose
          *
-         * @type {?refinery.Object}
+         * @type {?refinery.admin.Dialog}
          */
         dialog: null,
 
@@ -1573,7 +1589,7 @@
          * @return {Object} self
          */
         open: function () {
-            this.dialog.open();
+            this.getDialog().open();
             return this;
         },
 
@@ -1585,7 +1601,7 @@
          * @return {Object} self
          */
         close: function () {
-            this.dialog.close();
+            this.getDialog().close();
             return this;
         },
 
@@ -1627,10 +1643,6 @@
             var that = this,
                 holder = that.holder;
 
-            that.dialog.on('insert', function (record) {
-                that.insert(record);
-            });
-
             holder.find('.current-record-link').on('click', function (e) {
                 e.preventDefault();
                 that.open();
@@ -1652,8 +1664,16 @@
          * abstract
          * @expose
          */
-        init_dialog: function () {
+        init_dialog: function () { },
 
+        /**
+         * Returns dialog, if it doesn't exists yet, create one.
+         *
+         * @expose
+         * @return {refinery.admin.Dialog}
+         */
+        getDialog: function () {
+            return (this.dialog ? this.dialog : this.init_dialog());
         },
 
         /**
@@ -1671,10 +1691,8 @@
                 this.elm_record_holder = holder.find('.record-holder');
                 this.elm_no_picked_record = holder.find('.no-picked-record-selected');
                 this.elm_remove_picked_record = holder.find('.remove-picked-record');
-                this.init_dialog();
                 this.bind_events();
-                this.is({'initialised': true, 'initialising': false});
-                this.is({'initialising' : false, 'initialised': true });
+                this.is({ 'initialised': true, 'initialising': false });
                 this.trigger('init');
             }
 
@@ -1695,7 +1713,6 @@
     refinery.Object.create({
 
         /**
-         * test
          * @param {image_dialog_options} options
          */
         objectConstructor: function (options) {
@@ -1717,22 +1734,15 @@
          * @return {Object} self
          */
         insert: function (form) {
-            var alt = form.find('#image-alt').val(),
-                id = form.find('#image-id').val(),
-                size_elm = form.find('#image-size .ui-selected a'),
-                size = size_elm.data('size'),
-                geometry = size_elm.data('geometry'),
-                sizes = form.find('#image-preview').data();
+            var size_elm = form.find('#image-size .ui-selected a');
 
-            this.trigger('insert', {
-                'id': id,
-                'alt': alt,
-                'size': size,
-                'geometry': geometry,
-                'sizes': sizes
+            return this.trigger('insert', {
+                'id': form.find('#image-id').val(),
+                'alt': form.find('#image-alt').val(),
+                'size': size_elm.data('size'),
+                'geometry': size_elm.data('geometry'),
+                'sizes': form.find('#image-preview').data()
             });
-
-            return this;
         }
     });
 
@@ -1747,26 +1757,12 @@
      * @param {Object=} options
      */
     refinery.Object.create({
-
         objectPrototype: refinery('admin.Dialog', {
             title: t('refinery.admin.images_dialog_title'),
             url: refinery.admin.backend_path + '/dialogs/images'
         }, true),
 
         name: 'ImagesDialog',
-
-        /**
-         * Handle image linked from library
-         *
-         * @expose
-         * @param {!jQuery} li selected row
-         * @return {images_dialog_object}
-         */
-        existing_image_area: function (li) {
-            li.removeClass('ui-selected');
-
-            return /** @type {images_dialog_object} */(li.data('dialog'));
-        },
 
         /**
          * Handle image linked by url
@@ -1779,20 +1775,17 @@
             var url_input = form.find('input[type="url"]:valid'),
                 alt_input = form.find('input[type="text"]:valid'),
                 url = /** @type {string} */(url_input.val()),
-                alt = /** @type {string} */(alt_input.val()),
-                obj;
+                alt = /** @type {string} */(alt_input.val());
 
             if (url) {
-                obj = {
+                url_input.val('');
+                alt_input.val('');
+
+                return {
                     url: url,
                     alt: alt
                 };
-
-                url_input.val('');
-                alt_input.val('');
             }
-
-            return obj;
         },
 
         /**
@@ -1803,21 +1796,17 @@
          * @return {undefined}
          */
         upload_area: function (json_response) {
-            var that = this,
-                image = /** @type {images_dialog_object} */(json_response.image),
-                holder = that.holder;
-
-            if (image) {
-                that.trigger('insert', image);
-                holder.find('li.ui-selected').removeClass('ui-selected');
-                holder.find('.ui-tabs').tabs({ 'active': 0 });
+            if (json_response.image) {
+                this.trigger('insert', json_response.image);
+                this.holder.find('li.ui-selected').removeClass('ui-selected');
+                this.holder.find('.ui-tabs').tabs({ 'active': 0 });
             }
         }
     });
 
 }(refinery));
 
-// Source: refinerycms-clientside/scripts/admin/dialogs/pages_dialog.js
+// Source: refinerycms-clientside/scripts/admin/dialogs/links_dialog.js
 (function (refinery) {
 
     /**
@@ -1827,11 +1816,11 @@
      */
     refinery.Object.create({
         objectPrototype: refinery('admin.Dialog', {
-            title: t('refinery.admin.pages_dialog_title'),
-            url: refinery.admin.backend_path + '/dialogs/pages'
+            title: t('refinery.admin.links_dialog_title'),
+            url: refinery.admin.backend_path + '/dialogs/links'
         }, true),
 
-        name: 'PagesDialog',
+        name: 'LinksDialog',
 
         /**
          * Dialog email tab action processing
@@ -1839,7 +1828,7 @@
          * @param {!jQuery} form
          * @expose
          *
-         * @return {undefined|pages_dialog_object}
+         * @return {undefined|links_dialog_object}
          */
         email_link_area: function (form) {
             var email_input = form.find('#email_address_text:valid'),
@@ -1849,8 +1838,7 @@
                 subject = /** @type {string} */(subject_input.val()),
                 body = /** @type {string} */(body_input.val()),
                 modifier = '?',
-                additional = '',
-                result;
+                additional = '';
 
             if (recipient) {
                 if (subject.length > 0) {
@@ -1863,18 +1851,16 @@
                     modifier = '&';
                 }
 
-                result = {
+                email_input.val('');
+                subject_input.val('');
+                body_input.val('');
+
+                return {
                     type: 'email',
                     title: recipient,
                     url: 'mailto:' + encodeURIComponent(recipient) + additional
                 };
-
-                email_input.val('');
-                subject_input.val('');
-                body_input.val('');
             }
-
-            return result;
         },
 
         /**
@@ -1883,45 +1869,25 @@
          * @param {!jQuery} form
          * @expose
          *
-         * @return {undefined|pages_dialog_object}
+         * @return {undefined|links_dialog_object}
          */
         website_link_area: function (form) {
             var url_input = form.find('#web_address_text:valid'),
                 blank_input = form.find('#web_address_target_blank'),
                 url = /** @type {string} */(url_input.val()),
-                blank = /** @type {boolean} */(blank_input.prop('checked')),
-                result;
+                blank = /** @type {boolean} */(blank_input.prop('checked'));
 
             if (url) {
-                result = {
+                url_input.val('http://');
+                blank_input.prop('checked', false);
+
+                return {
                     type: 'website',
                     title: url.replace(/^https?:\/\//, ''),
                     url: url,
                     blank: blank
                 };
-
-                url_input.val('http://');
-                blank_input.prop('checked', false);
             }
-
-            return result;
-        },
-
-        /**
-         * Dialog Url tab action processing
-         *
-         * @expose
-         * @param {!jQuery} li
-         *
-         * @return {pages_dialog_object}
-         */
-        pages_link_area: function (li) {
-            var result = /** @type {pages_dialog_object} */(li.data('dialog'));
-
-            result.type = 'page';
-            li.removeClass('ui-selected');
-
-            return result;
         }
     });
 
@@ -1934,7 +1900,6 @@
      * @constructor
      * @extends {refinery.admin.Dialog}
      * @param {Object=} options
-     * @return {refinery.admin.ResourcesDialog}
      */
     refinery.Object.create({
         objectPrototype: refinery('admin.Dialog', {
@@ -1945,34 +1910,17 @@
         name: 'ResourcesDialog',
 
         /**
-         * Handle resource linked from library
-         *
-         * @expose
-         * @param {!jQuery} li
-         * @return {file_dialog_object}
-         */
-        existing_resource_area: function (li) {
-            li.removeClass('ui-selected');
-
-            return /** @type {file_dialog_object} */(li.data('dialog'));
-        },
-
-        /**
          * Handle uploaded file
          *
          * @param {json_response} json_response
          * @return {undefined}
          */
         upload_area: function (json_response) {
-            var that = this,
-                file = json_response.file,
-                holder = that.holder;
+            if (json_response.file) {
+                this.trigger('insert', json_response.file);
 
-            if (file) {
-                that.trigger('insert', file);
-
-                holder.find('li.ui-selected').removeClass('ui-selected');
-                holder.find('.ui-tabs').tabs({ 'active': 0 });
+                this.holder.find('li.ui-selected').removeClass('ui-selected');
+                this.holder.find('.ui-tabs').tabs({ 'active': 0 });
             }
         }
     });
@@ -1996,23 +1944,28 @@
          * Initialize Images Dialog
          */
         init_dialog: function () {
+            var that = this;
+
             /**
              * refinery.admin.ImagesDialog
              */
-            var dialog = refinery('admin.ImagesDialog').init();
+            that.dialog = refinery('admin.ImagesDialog')
+                .init()
+                .on('load', function () {
+                    /**
+                     * Hide url tab as we can insert in picker only images from our library.
+                     * When it will be implemented functionality upload external image to server
+                     * then this can disappear
+                     *
+                     */
+                    that.dialog.holder.find('li[aria-controls="external-image-area"]').hide();
+                })
+                .on('insert', function (record) {
+                    that.insert(record);
+                    that.dialog.close();
+                });
 
-            /**
-             * Hide url tab as we can insert in picker only images from our library.
-             * When it will be implemented functionality upload external image to server
-             * then this can disappear
-             *
-             * @return {undefined}
-             */
-            dialog.on('load', function () {
-                dialog.holder.find('a[href="#external-image-area"]').parent().hide();
-            });
-
-            this.dialog = dialog;
+            return that.dialog;
         },
 
         /**
@@ -2032,7 +1985,6 @@
 
             this.elm_no_picked_record.addClass('hide');
             this.elm_remove_picked_record.removeClass('hide');
-            this.dialog.close();
             this.trigger('insert');
 
             return this;
@@ -2056,15 +2008,22 @@
 
         /**
          * Initialize Resources Dialog
-         *
          */
         init_dialog: function () {
+            var that = this;
+
             /**
              * refinery.admin.ResourcesDialog
              */
-            this.dialog = refinery('admin.ResourcesDialog').init();
-        },
+            that.dialog = refinery('admin.ResourcesDialog')
+                .init()
+                .on('insert', function (record) {
+                    that.insert(record);
+                    that.dialog.close();
+                });
 
+            return that.dialog;
+        },
 
         /**
          * Attach resource - file to form
@@ -2091,7 +2050,6 @@
 
             this.elm_no_picked_record.addClass('hide');
             this.elm_remove_picked_record.removeClass('hide');
-            this.dialog.close();
             this.trigger('insert');
 
             return this;

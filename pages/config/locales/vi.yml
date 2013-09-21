@@ -5,32 +5,6 @@ vi:
         title: Trang
         description: Quản lý các trang nội dung
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Liên kết tới trang này
-        link_to:
-          insert: Chèn
-          your_page:
-            tab_name: Trang nội dung
-          web_address:
-            tab_name: Địa chỉ Website
-            location: Địa chỉ
-            new_window: Cửa sổ mới
-            new_window_label: Đánh dấu ô này để liên kết được mở trong một cửa sổ mới
-            not_sure: Bạn không chắc cần nhập gì vào ô trên?
-            step1: Tìm trang web mà bạn muốn liên kết tới.
-            step2: Sao chép địa chỉ trang web từ thanh địa chỉ trình duyệt của bạn và dán vào ô trên.
-          email_address:
-            tab_name: Địa chỉ email
-            subject_line_optional: Tiêu đề (không bắt buộc)
-            body_optional: Nội dung (không bắt buộc)
-            not_sure: Bạn không chắc cần nhập gì vào các ô trên?
-            step1_html: Hãy viết (hoặc sao chép rồi dán, từ sổ điạ chỉ của bạn chẳng hạn) địa chỉ email để liên kết tới vào ô '<strong>Địa chỉ Email</strong>' ở trên.
-            step2_html: Nhập dữ liệu vào ô '<strong>Tiêu đề</strong>' ở trên nếu bạn muốn email sẽ được <strong>soạn sẵn tiêu đề</strong>.
-            step3_html: Nhập dữ liệu vào ô '<strong>Nội dung</strong>' ở trên nếu bạn muốn email sẽ được <strong>soạn sẵn nội dung</strong>.
-          your_resource:
-            tab_name: File của bạn
-            link_to_this_resource: Liên kết tới file này.
       pages:
         delete: Xóa trang này vĩnh viễn
         edit: Sửa trang

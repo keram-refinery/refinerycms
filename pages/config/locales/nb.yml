@@ -5,32 +5,6 @@ nb:
         title: Sider
         description: Behandle sider
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Link til denne siden
-        link_to:
-          insert: Sett inn
-          your_page:
-            tab_name: Din side
-          web_address:
-            tab_name: Webside
-            location: Plassing
-            new_window: Nytt vindu
-            new_window_label: Huk av i denne boksen for å åpne lenken i et nytt nettleservindu.
-            not_sure: Usikker på hva du skal fylle inn i boksen over?
-            step1: Finn websiden du ønsker å lenke til.
-            step2: "Kopier adressen fra adressefeltet i nettleseren din, og lim den inn i boksen over."
-          email_address:
-            tab_name: E-post adresse
-            subject_line_optional: Valgfritt emne
-            body_optional: Valgfri melding
-            not_sure: Usikker på hva du skal fylle inn i boksene over?
-            step1_html: "Skriv eller copier og lim inn (f.eks. fra din adressebok) e-post adressen du ønsker å lenke til i '<strong>E-post Adresse</strong>' boksen over."
-            step2_html: "Bruk '<strong>Emne</strong>' boksen over om du ønsker at meldingen skal sendes med et <strong>forhåndsskrevet emne</strong>."
-            step3_html: "Bruk '<strong>Melding</strong>' boksen over om du ønsker at meldingen skal sendes med en <strong>forhåndsskrevet melding</strong>."
-          your_resource:
-            tab_name: Din fil
-            link_to_this_resource: Link til denne filen
       pages:
         delete: Fjern denne siden permanent
         edit: Rediger denne siden

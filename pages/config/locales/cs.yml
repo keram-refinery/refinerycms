@@ -5,32 +5,6 @@ cs:
         title: Stránky
         description: Spravovat obsahové stránky
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Odkaz na tuto stránku
-        link_to:
-          insert: Vložit
-          your_page:
-            tab_name: Vaše stránka
-          web_address:
-            tab_name: Web
-            location: Umístění
-            new_window: Nové okno
-            new_window_label: Zatrhněte pokud chcete odkaz otevřít v novém okně prohlížeče.
-            not_sure: Nejste si jisti co zadat do tohoto pole?
-            step1: Najděte na webu stránku na kterou chcete odkázat.
-            step2: Zkopírujte adresu z adresní řádky vašeho prohlížeče a vložte jí to tohoto pole.
-          email_address:
-            tab_name: Emailová adresa
-            subject_line_optional: Volitelný předmět
-            body_optional: Volitelný obsah zprávy
-            not_sure: Nejste si jisti co zadat do těchto polí?
-            step1_html: Napište nebo zkopírujte a vložte (např. z vašeho seznamu kontaktů) emailovou adresu to pole '<strong>Emailová adresa</strong>'
-            step2_html: Použijte '<strong>Volitelný předmět</strong>' pokud chcete aby mailová zpráva obsahovala <strong>předdefinovaný předmět</strong>.
-            step3_html: Použijte <strong>Volitelný obsah zprávy</strong> pokud chcete aby mailová zpráva obsahovala <strong>předdefinovaný obsah zprávy</strong>.
-          your_resource:
-            tab_name: Váš soubor
-            link_to_this_resource: Odkaz na tento soubor
       pages:
         delete: Smazat tuto stránku
         edit: Upravit tuto stránku

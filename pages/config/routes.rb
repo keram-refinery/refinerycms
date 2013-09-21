@@ -13,7 +13,5 @@ Refinery::Core::Engine.routes.draw do
       get :children, on: :member
       post :update_positions, on: :collection
     end
-
-    get '/dialogs/pages', to: 'pages_dialog#index'
   end
 end

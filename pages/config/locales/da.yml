@@ -5,32 +5,6 @@ da:
         title: Sider
         description: Vedligehold indhold
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Link til denne side
-        link_to:
-          insert: Indsæt
-          your_page:
-            tab_name: Side
-          web_address:
-            tab_name: Website
-            location: URL
-            new_window: Nyt vindue
-            new_window_label: Afkryds hvis linket skal åbne i et nyt browser vindue.
-            not_sure: Usikker på hvad der skal stå i feltet ovenfor?
-            step1: Find den side du vil linke til.
-            step2: Kopier adressen fra din browsers adresselinje og indsæt den i feltet ovenfor.
-          email_address:
-            tab_name: Email-adresse
-            subject_line_optional: Emne (ikke obligatorisk)
-            body_optional: Indhold (ikke obligatorisk)
-            not_sure: Usikker på hvad der skal stå i felterne ovenfor?
-            step1_html: Skriv eller kopier og indsæt (fx fra din adressebog) den email-adresse du vil linke til i feltet '<strong>Email-adresse</strong>'.
-            step2_html: Brug '<strong>Emne</strong>' feltet hvis du vil åbne beskeden med en præudfyldt emnelinje.
-            step3_html: Brug '<strong>Indhold</strong>' feltet hvis du vil åbne beskeden med et præudfyldt indhold.
-          your_resource:
-            tab_name: Fil
-            link_to_this_resource: Link til denne fil
       pages:
         delete: Slet siden permanent
         edit: Redigér siden

@@ -1,0 +1,8 @@
+<% pages = Refinery::Page.live.roots.with_globalize.includes(:translations).page(paginate_page) %>
+<ul class="records ui-selectable">
+  <%= render partial: 'page_link', collection: pages,
+             locals: {
+               child: 0
+             } %>
+</ul>
+<%= will_paginate pages, params: frontend_locale_param %>

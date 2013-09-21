@@ -6,32 +6,6 @@ lv:
         description: Lapu satura pārvaldīšana
         article: s
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Iesaitēt šo lapu
-        link_to:
-          insert: Ievietot
-          your_page:
-            tab_name: Jūsu lapa
-          web_address:
-            tab_name: Interneta saits
-            location: Saite
-            new_window: Jauns logs
-            new_window_label: Atķeksējiet šo opciju, lai saite atvērtos jaunā logā.
-            not_sure: Neesat drošs, ko rakstīt augšējā laukā?
-            step1: Atrodiet saiti, kuru vēlaties iesaitēt.
-            step2: Nokopējiet saiti no jūsu pārlūka adrešu lauka un ievietojiet to augšējā laukā.
-          email_address:
-            tab_name: Epasta adrese
-            subject_line_optional: Tēma (nav obligāti)
-            body_optional: Saturs (nav obligāti)
-            not_sure: Neesat drošs, ko rakstīt augšējos laukos?
-            step1_html: Ierakstiet vai iekopējiet (piemēram, no adrešu grāmatas) epasta adresi laukā '<strong>Epasta adrese</strong>'.
-            step2_html: Aizpildiet '<strong>Tēmas</strong>' lauku, ja vēlaties, lai epasts tiktu sastādīts ar norādīto tēmu.
-            step3_html: Aizplidiet '<strong>Satura</strong>' lauku, ja vēlaties, lai epasts tiktu sastādīts ar norādīto saturu.
-          your_resource:
-            tab_name: Jūsu fails
-            link_to_this_resource: Iesaitēt šo failu
       pages:
         delete: Dzēst šo lapu
         edit: Labot šo lapu

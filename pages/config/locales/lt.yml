@@ -5,33 +5,6 @@ lt:
         title: Puslapiai
         description: Tvarkyti puslapių turinį
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Nuoroda į šį puslapį
-        link_to:
-          insert: Įterpti
-          your_page:
-            tab_name: Jūsų puslapis
-          web_address:
-            tab_name: Svetainė
-            location: Vieta
-            new_window: Naujame lange
-            new_window_label: Check this box to have the link open in a new browser window.
-            new_window_label: "Pažymėkite, jei norite, kad nuoroda atsidarytų naujame naršyklės lange."
-            not_sure: Nesate tikri ką įrašyti į aukščiau esanti laukelį?
-            step1: Suraskite puslapį internete į kurį norite nukreipti
-            step2: Nukopijuokite puslapio adresą iš naršyklės adreso laukelio ir įterpkite į aukščiau esantį laukelį.
-          email_address:
-            tab_name: El. pašto adresas
-            subject_line_optional: Neprivaloma antraštė
-            body_optional: Neprivalomas tekstas
-            not_sure: Nesate tikri ką įvesti į aukščiau esančius laukelius?
-            step1_html: "Įrašykite arba nukopijuokite (pvz. iš savo adresų knygelės) el. pašto adresą į kurį bus nurodomą '<strong>El. pašto adresas</strong>' laukelyje aukščiau."
-            step2_html: "Naudokite '<strong>Antraštė</strong> laukelį aukščiau, jeigu norite, kad jūsų žinutė būtų kuriame su <strong>iš anksto numatyta antrašte</strong>."
-            step3_html: "Naudokite '<strong>Laiško tekstas</strong> laukelį aukščiau jei norite, kad žinutė būtų kuriama su <strong>iš anksto numatytu tekstu</strong>."
-          your_resource:
-            tab_name: Jūsų failas
-            link_to_this_resource: Nuoroda į šį failą
       pages:
         delete: Visiškai pašalinti puslapį
         edit: Redaguoti puslapį

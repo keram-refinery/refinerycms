@@ -5,32 +5,6 @@ sv:
         title: Sidor
         description: Hantera sidor och dess innehåll
     admin:
-      pages_dialog:
-        page_link:
-          link_to_this_page: Länk till den här sidan
-        link_to:
-          insert: Lägg in
-          your_page:
-            tab_name: Din sida
-          web_address:
-            tab_name: Webbplats
-            location: Plats
-            new_window: Nytt fönster
-            new_window_label: Markera den här rutan om du vill att länken öppnar i ett nytt fönster.
-            not_sure: Inte säker på vad du ska skriva i rutan ovanför?
-            step1: Hitta sidan på nätet som du vill länka till.
-            step2: Kopiera adressen från adressfältet i din webbläsare. Klistra sedan in i rutan ovanför.
-          email_address:
-            tab_name: E-postadress
-            subject_line_optional: Valfritt ämne
-            body_optional: Valfritt innehåll
-            not_sure: Inte säker på vad du ska skriva i rutan ovanför?
-            step1_html: Skriv eller kopiera och klistra in (tex. från din adressbok) den e-postadress i '<strong>E-postadress</strong>'-fältet ovanför.
-            step2_html: Använd '<strong>Ämne</strong>'-rutan ovanför om du vill att meddelandet ska skrivas med en <strong>fördefinerad ämnesrad</strong>.
-            step3_html: Använd <strong>Innehåll</strong>-rutan ovanför om du vill att meddelandet ska skrivas med ett<strong>fördefinerat innehåll</strong>.
-          your_resource:
-            tab_name: Din fil
-            link_to_this_resource: Länk till den här filen
       pages:
         delete: Ta bort den här sidan för alltid
         edit: Redigera den här sidan
