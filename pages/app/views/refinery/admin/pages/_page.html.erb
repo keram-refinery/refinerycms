@@ -25,7 +25,7 @@
     <span class="actions">
 
       <%= link_to t('delete', scope: 'refinery.admin.record'),
-                  refinery.admin_page_path(page.relative_path),
+                  refinery.admin_page_path(page.relative_path, frontend_locale_param),
                   class: 'delete confirm-delete nojs-hide icon-small delete-icon',
                   title: t('delete', scope: 'refinery.admin.pages'),
                   data: {
@@ -38,7 +38,7 @@
                   method: :delete if page.deletable? %>
 
       <%= link_to t('edit', scope: 'refinery.admin.record'),
-                  refinery.edit_admin_page_url(page.relative_path, frontend_locale: Globalize.locale),
+                  refinery.edit_admin_page_url(page.relative_path, frontend_locale_param),
                   class: 'icon-small edit-icon',
                   title: t('edit', scope: 'refinery.admin.pages') %>
 
