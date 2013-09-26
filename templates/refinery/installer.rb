@@ -17,6 +17,8 @@ gem 'globalize3', github: 'keram-refinery/globalize3', branch: 'rails4'
 gem 'routing-filter', github: 'svenfuchs/routing-filter', branch: 'master'
 gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set', branch: 'master'
+gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
+gem 'jquery-ui-rails', '~> 4.0.4'
 
 # Refinery CMS
 gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms', branch: 'refinery_light'
