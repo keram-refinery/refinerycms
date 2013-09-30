@@ -34,6 +34,9 @@ sl:
           create_new_page: Dodaj novo stran
         records:
           no_pages_yet: Trenutno še ni nobene strani. Za dodajanje prve strani kliknite "Dodaj novo stran".
+      links_dialog:
+        index:
+          pages: Strani
   activerecord:
     models:
       refinery/page: stran

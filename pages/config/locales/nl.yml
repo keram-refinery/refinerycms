@@ -46,6 +46,9 @@ nl:
         records:
           no_pages_yet: Er zijn nog geen pagina's. Druk op 'Nieuwe pagina toevoegen' om de eerste aan te maken.
         translator_access: U heeft niet de benodigde permissies om pagina's in deze taal te wijzigen.
+      links_dialog:
+        index:
+          pages: Pagina's
   activerecord:
     models:
       refinery/page: pagina

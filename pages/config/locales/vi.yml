@@ -35,6 +35,9 @@ vi:
           create_new_page: Tạo trang mới
         records:
           no_pages_yet: Hiện chưa có trang nào. Ấn vào "Tạo trang mới" để tạo trang.
+      links_dialog:
+        index:
+          pages: Trang
   activerecord:
     models:
       refinery/page: trang

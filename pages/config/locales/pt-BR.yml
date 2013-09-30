@@ -36,6 +36,9 @@ pt-BR:
           create_new_page: Criar uma nova página
         records:
           no_pages_yet: Ainda não existem páginas. Clique em "Criar Nova Página" para adicionar sua primeira página.
+      links_dialog:
+        index:
+          pages: Páginas
   activerecord:
     models:
       refinery/page: Página

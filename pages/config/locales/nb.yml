@@ -35,6 +35,9 @@ nb:
           create_new_page: Legg til ny side
         records:
           no_pages_yet: Det er ingen sider her enda. Klikk på "Legg til ny side" for å legge til din første side.
+      links_dialog:
+        index:
+          pages: Sider
   activerecord:
     models:
       refinery/page: side

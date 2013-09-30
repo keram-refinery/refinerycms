@@ -40,6 +40,9 @@ es:
           create_new_page: Crear nueva página
         records:
           no_pages_yet: "Aún no hay páginas. Pulsa \"Crear nueva página\" para añadir tu primera página."
+      links_dialog:
+        index:
+          pages: Páginas
   activerecord:
     models:
       refinery/page: página

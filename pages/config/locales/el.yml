@@ -36,6 +36,9 @@ el:
           create_new_page: Προσθήκη νέας σελίδας
         records:
           no_pages_yet: There are no pages yet. Click "Add new page" to add your first page.
+      links_dialog:
+        index:
+          pages: Σελίδες
   activerecord:
     models:
       refinery/page: σελίδα

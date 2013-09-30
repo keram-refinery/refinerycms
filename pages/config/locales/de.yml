@@ -35,6 +35,9 @@ de:
           create_new_page: Neue Seite anlegen
         records:
           no_pages_yet: Es sind noch keine Seiten vorhanden. Klicken Sie auf "Neue Seite anlegen", um Ihre erste Seite zu erstellen.
+      links_dialog:
+        index:
+          pages: Seiten
   activerecord:
     models:
       refinery/page: Seite

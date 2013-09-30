@@ -35,6 +35,9 @@ ja:
           create_new_page: 新規ページを追加
         records:
           no_pages_yet: まだページはありません。"新規ページを追加"をクリックして下さい。
+      links_dialog:
+        index:
+          pages: ページ
   activerecord:
     models:
       refinery/page: ページ

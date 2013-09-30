@@ -36,6 +36,9 @@ fi:
         records:
           no_pages_yet: Sivuja ei ole vielä. Paina "Lisää uusi sivu-" painiketta lisätäksesi ensimmäisen sivun.
         translator_access: Sinulla ei ole lupaa muokata sivuja tällä kielellä.
+      links_dialog:
+        index:
+          pages: Sivut
   activerecord:
     models:
       refinery/page: sivu

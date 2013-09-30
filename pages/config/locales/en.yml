@@ -59,6 +59,9 @@ en:
           side_body: Side Body
           perex: Perex
           featured_image: Featured image
+      links_dialog:
+        index:
+          pages: Pages
   activerecord:
     models:
       refinery/page: Page

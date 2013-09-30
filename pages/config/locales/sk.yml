@@ -49,6 +49,9 @@ sk:
           create_new_page: Pridať novú stránku
         records:
           no_pages_yet: Zatiaľ neboli vytvorené žiadne stránky. Kliknite na "Pridať novú stránku" pre pridanie prvej.
+      links_dialog:
+        index:
+          pages: Stránky
   activerecord:
     models:
       refinery/page: stránka

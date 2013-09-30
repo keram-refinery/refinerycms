@@ -49,6 +49,9 @@ pt:
         records:
           no_pages_yet: Não existem páginas de momento. Clique em 'Adicionar nova página' para criar a primeira.
         translator_access: Não tem as permissões necessárias para modificar esta página.
+      links_dialog:
+        index:
+          pages: Páginas
   activerecord:
     models:
       refinery/page: página

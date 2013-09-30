@@ -36,6 +36,9 @@ lt:
           create_new_page: Pridėti naują puslapį
         records:
           no_pages_yet: Dar nėra puslapių. Paspauskite "Pridėti naują puslapį" norėdami sukurti pirmą puslapį.
+      links_dialog:
+        index:
+          pages: Puslapiai
   activerecord:
     models:
       refinery/page: puslapis

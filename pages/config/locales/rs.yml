@@ -35,6 +35,9 @@ rs:
           create_new_page: Dodaj novu stranu
         records:
           no_pages_yet: Ne postoji nijedna strana. Klinki na "Dodaj novu stranu" da dodaš prvu stranu.
+      links_dialog:
+        index:
+          pages: Strane
   activerecord:
     models:
       refinery/page: strana

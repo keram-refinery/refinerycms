@@ -40,6 +40,9 @@ cs:
           create_new_page: Přidat novou stránku
         records:
           no_pages_yet: Zatím nebyly vytvořeny žádné stránky.
+      links_dialog:
+        index:
+          pages: Stránky
   activerecord:
     models:
       refinery/page: stránka

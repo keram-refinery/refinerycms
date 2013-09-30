@@ -39,6 +39,9 @@ bg:
         records:
           no_pages_yet: Все още няма страници. Натиснете "Добавяне на нова страница", за да въведете нова.
         translator_access: Нямате нужните права да променяте страници на този език.
+      links_dialog:
+        index:
+          pages: Страници
   activerecord:
     models:
       refinery/page: страница

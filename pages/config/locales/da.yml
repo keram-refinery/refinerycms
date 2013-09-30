@@ -48,6 +48,9 @@ da:
         records:
           no_pages_yet: Der er ingen sider endnu. Klik på "Tilføj en ny side" for at oprette den første."
           translator_access: Du har ikke tilstrækkelige rettigheder til at ændre siden på det valgte sprog.
+      links_dialog:
+        index:
+          pages: Sider
   activerecord:
     models:
       refinery/page: side

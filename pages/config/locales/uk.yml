@@ -46,6 +46,9 @@ uk:
         records:
           no_pages_yet: Сторінок ще немає.
         translator_access: У вас немає дозволу на редагування сторінок цією мовою
+      links_dialog:
+        index:
+          pages: Cторінки
   activerecord:
     models:
       refinery/page: сторінка

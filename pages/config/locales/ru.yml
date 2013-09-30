@@ -53,6 +53,9 @@ ru:
         records:
           no_pages_yet: Страниц ещё нет.
         translator_access: У вас нет разрешения на редактирование страниц на этом языке
+      links_dialog:
+        index:
+          pages: Страницы
   activerecord:
     models:
       refinery/page: страница
