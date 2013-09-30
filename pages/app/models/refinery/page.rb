@@ -12,7 +12,7 @@ module Refinery
     STATES = %w(draft review live)
 
     # http://schema.org/docs
-    PAGE_TYPES = %w(WebPage AboutPage CheckoutPage CollectionPage ImageGallery VideoGallery ContactPage ItemPage MedicalWebPage ProfilePage SearchResultsPage)
+    PAGE_TYPES = %w(WebPage AboutPage CheckoutPage CollectionPage ImageGallery VideoGallery ContactPage ItemPage MedicalWebPage ProfilePage SearchResultsPage Blog)
 
     translates :title, :custom_slug, :slug, :signature, :status, include: :seo_meta
 
