@@ -366,6 +366,72 @@
                     }
                 });
             }
+
+            function split( val ) {
+                return val.split( /,\s*/ );
+            }
+
+            /**
+             * @todo support for remote source
+             * @return {undefined}
+             */
+            form.find('input.autocomplete').each(function () {
+                var input = $(this),
+                    data,
+
+                    /**
+                     *
+                     * @type {jquery_ui_autocomplete_options}
+                     */
+                    options = input.data('autocomplete');
+
+                if (options.multiple) {
+                    data = /** Array */(options.source);
+
+                    input.bind( 'keydown', function( event ) {
+                        if ( event.keyCode === $.ui.keyCode.TAB &&
+                                $( this ).data('ui-autocomplete').menu.active ) {
+                            event.preventDefault();
+                        }
+                    });
+
+                    $.extend(options, {
+                        select: function ( event, ui ) {
+                            var terms = split( this.value );
+                            // remove the current input
+                            terms.pop();
+                            // add the selected item
+                            terms.push( ui.item.value );
+                            // add placeholder to get the comma-and-space at the end
+                            terms.push( '' );
+                            this.value = terms.join( ', ' );
+
+                            return false;
+                        },
+
+                        /**
+                         *
+                         * @param {jquery_ui_autocomplete_request} request
+                         * @param {Function} response
+                         */
+                        source: function ( request, response ) {
+                            var terms = split(request.term),
+                                term = terms.pop(),
+                                filtered_data = data.filter(function (term) {
+                                    return terms.indexOf(term) === -1;
+                                });
+
+                            response( $.ui.autocomplete.filter( filtered_data, term ) );
+                        },
+
+                        focus: function () {
+                            return false;
+                        }
+                    });
+                }
+
+                input.autocomplete(options);
+            });
         },
 
         /**
