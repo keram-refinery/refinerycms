@@ -26,6 +26,9 @@ vi:
         existing_resource:
           link_to_file: Liên kết đến tập tin này.
           button_text: Chèn
+      links_dialog:
+        index:
+          resources: Các tập tin
   activerecord:
     models:
       refinery/resource: tập tin

@@ -26,6 +26,9 @@ zh-TW:
         existing_resource:
           link_to_file: 此檔案連結
           button_text: 插入
+      links_dialog:
+        index:
+          resources: Resources
   activerecord:
     models:
       refinery/resource: 檔案

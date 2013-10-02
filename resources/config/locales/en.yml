@@ -35,6 +35,9 @@ en:
           external_resource: Url
           upload_resource: Upload
         no_resources_yet: There are no files yet.
+      links_dialog:
+        index:
+          resources: Files
   activerecord:
     models:
       refinery/resource: File

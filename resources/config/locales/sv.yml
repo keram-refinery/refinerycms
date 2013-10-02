@@ -26,6 +26,9 @@ sv:
         existing_resource:
           link_to_file: Länk till den här filen
           button_text: Lägg till
+      links_dialog:
+        index:
+          resources: Filer
   activerecord:
     models:
       refinery/resource: fil

@@ -26,6 +26,9 @@ lt:
         existing_resource:
           link_to_file: Nuoroda į šį failą
           button_text: Įterpti
+      links_dialog:
+        index:
+          resources: Failai
   activerecord:
     models:
       refinery/resource: failas

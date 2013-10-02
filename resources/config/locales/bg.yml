@@ -26,6 +26,9 @@ bg:
         existing_resource:
           link_to_file: Връзка към този файл
           button_text: Вмъкване
+      links_dialog:
+        index:
+          resources: Файлове
   activerecord:
     models:
       refinery/resource: файл

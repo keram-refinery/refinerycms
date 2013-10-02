@@ -26,6 +26,9 @@ ru:
         existing_resource:
           link_to_file: Поставить ссылку на этот файл
           button_text: Вставить
+      links_dialog:
+        index:
+          resources: Файлы
   activerecord:
     models:
       refinery/resource: файл

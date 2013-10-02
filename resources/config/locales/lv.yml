@@ -26,6 +26,9 @@ lv:
         existing_resource:
           link_to_file: Saite uz šo failu
           button_text: Ievietot
+      links_dialog:
+        index:
+          resources: Faili
   activerecord:
     models:
       refinery/resource: fails

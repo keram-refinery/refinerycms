@@ -26,6 +26,9 @@ tr:
         existing_resource:
           link_to_file: Bunu dosyaya baglanti yap
           button_text: Cikart
+      links_dialog:
+        index:
+          resources: Dosyalar
   activerecord:
     models:
       refinery/resource: "file"

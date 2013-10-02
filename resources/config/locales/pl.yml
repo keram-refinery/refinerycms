@@ -27,6 +27,9 @@ pl:
         existing_resource:
           link_to_file: Linkuj do tego pliku
           button_text: Wstaw
+      links_dialog:
+        index:
+          resources: Pliki
   activerecord:
     models:
       refinery/resource: plik

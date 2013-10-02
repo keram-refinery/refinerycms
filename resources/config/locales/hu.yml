@@ -26,6 +26,9 @@ hu:
         existing_resource:
           link_to_file: Link erre a fájlra
           button_text: Beszúrás
+      links_dialog:
+        index:
+          resources: Fájlok
   activerecord:
     models:
       refinery/resource: fájl

@@ -17,7 +17,7 @@ it:
           download: Scarica il file corrente (%{size})
           edit: Modifica il file corrente
           delete:
-            message: Sei sicuro di voler eliminare '%{title}'?
+            message: "Sei sicuro di voler eliminare '%{title}'?"
             title: Elimina il file corrente
         actions:
           upload_new: Carica un nuovo file
@@ -37,6 +37,9 @@ it:
         existing_resource:
           link_to_file: Collegamento a questo file
           button_text: Inserisci
+      links_dialog:
+        index:
+          resources: Risorse
   activerecord:
     errors:
       models:

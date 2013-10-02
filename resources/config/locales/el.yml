@@ -26,6 +26,9 @@ el:
         existing_resource:
           link_to_file: Σύνδεσμος σε αυτό το αρχείο
           button_text: Εισαγωγή
+      links_dialog:
+        index:
+          resources: Αρχεία
   activerecord:
     models:
       refinery/resource: αρχείο

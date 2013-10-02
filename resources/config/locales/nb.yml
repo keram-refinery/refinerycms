@@ -26,6 +26,9 @@ nb:
         existing_resource:
           link_to_file: Link til denne filen
           button_text: Legg inn
+      links_dialog:
+        index:
+          resources: Filer
   activerecord:
     models:
       refinery/resource: fil

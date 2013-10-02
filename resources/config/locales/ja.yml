@@ -26,6 +26,9 @@ ja:
         existing_resource:
           link_to_file: このファイルにリンクする
           button_text: 挿入
+      links_dialog:
+        index:
+          resources: ファイル
   activerecord:
     models:
       refinery/resource: ファイル

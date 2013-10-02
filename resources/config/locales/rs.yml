@@ -26,6 +26,9 @@ rs:
         existing_resource:
           link_to_file: Linkuj na ovaj fajl
           button_text: Unesi
+      links_dialog:
+        index:
+          resources: Fajlovi
   activerecord:
     models:
       refinery/resource: fajl

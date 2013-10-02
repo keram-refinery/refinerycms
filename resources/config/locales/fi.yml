@@ -26,6 +26,9 @@ fi:
         existing_resource:
           link_to_file: Linkki tähän tiedostoon
           button_text: Lisää
+      links_dialog:
+        index:
+          resources: Tiedostot
   activerecord:
     models:
       refinery/resource: tiedosto

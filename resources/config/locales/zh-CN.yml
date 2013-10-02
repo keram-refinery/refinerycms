@@ -26,6 +26,9 @@ zh-CN:
         existing_resource:
           link_to_file: 链接到此文件
           button_text: 插入
+      links_dialog:
+        index:
+          resources: 文件
   activerecord:
     models:
       refinery/resource: 文件

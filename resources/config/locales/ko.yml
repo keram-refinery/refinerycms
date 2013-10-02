@@ -26,6 +26,9 @@ ko:
         existing_resource:
           link_to_file: 이 파일로 링크
           button_text: 삽입
+      links_dialog:
+        index:
+          resources: 파일
   activerecord:
     models:
       refinery/resource: 파일

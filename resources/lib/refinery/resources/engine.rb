@@ -22,6 +22,8 @@ module Refinery
         end
 
         Refinery::Dashboard.sidebar_actions << '/refinery/admin/resources/dashboard_actions'
+
+        Refinery::Links.tabs.push('resources') if defined? Refinery::Links
       end
 
       config.after_initialize do

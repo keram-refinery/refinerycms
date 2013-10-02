@@ -26,6 +26,9 @@ de:
         existing_resource:
           link_to_file: Link zu dieser Datei
           button_text: Einfügen
+      links_dialog:
+        index:
+          resources: Dateien
   activerecord:
     models:
       refinery/resource: Datei

@@ -26,6 +26,9 @@ nl:
         existing_resource:
           link_to_file: Link naar dit bestand
           button_text: Invoegen
+      links_dialog:
+        index:
+          resources: Bestanden
   activerecord:
     models:
       refinery/resource: bestand

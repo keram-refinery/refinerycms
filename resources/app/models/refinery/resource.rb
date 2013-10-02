@@ -36,6 +36,7 @@ module Refinery
       {
         id: id,
         name: file_name,
+        title: title,
         size: number_to_human_size(file_size),
         url: url,
         ext: ext.to_s.downcase,

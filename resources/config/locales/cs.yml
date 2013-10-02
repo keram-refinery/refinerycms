@@ -26,6 +26,9 @@ cs:
         existing_resource:
           link_to_file: Odkaz na tento soubor
           button_text: Vložit
+      links_dialog:
+        index:
+          resources: Soubory
   activerecord:
     models:
       refinery/resource: soubor

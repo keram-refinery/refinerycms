@@ -26,6 +26,9 @@ pt-BR:
         existing_resource:
           link_to_file: Link para este Arquivo
           button_text: Inserir
+      links_dialog:
+        index:
+          resources: Arquivos
   activerecord:
     models:
       refinery/resource: Arquivo

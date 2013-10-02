@@ -25,6 +25,9 @@ sl:
         existing_resource:
           link_to_file: Povezava do te datoteke
           button_text: Vstavi
+      links_dialog:
+        index:
+          resources: Datoteke
   activerecord:
     models:
       refinery/resource: datoteka

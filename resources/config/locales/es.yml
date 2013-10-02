@@ -27,6 +27,9 @@ es:
         existing_resource:
           link_to_file: Enlazar este archivo
           button_text: Insertar
+      links_dialog:
+        index:
+          resources: Archivos
   activerecord:
     models:
       refinery/resource: archivo
