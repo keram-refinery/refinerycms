@@ -20,14 +20,6 @@ module Refinery
     describe 'Pages' do
       refinery_login_with :refinery_user
 
-      before do
-        # Refinery::Page.all.each { |page| page.destroy! if page && page.persisted? }
-      end
-
-      after do
-        #Refinery::Page.all.each { |page| page.destroy! if page && page.persisted? }
-      end
-
       describe 'Previewing' do
         context "an existing page" do
           before { Page.create title: 'Preview me' }
