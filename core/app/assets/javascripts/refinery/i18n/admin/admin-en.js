@@ -17,5 +17,6 @@ i18n.register({
     'button_create': 'Create',
     'button_cancel': 'Cancel',
     'button_done': 'Done',
-    'button_move': 'Move'
+    'button_move': 'Move',
+    'toggle_editor': 'Toggle editor'
 }, 'refinery.admin');
