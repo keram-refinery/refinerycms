@@ -68,7 +68,7 @@ module Refinery
       end
 
       it 'contains its filename at the end' do
-        created_image.url.split('/').last.should == created_image.image_name
+        created_image.url.split('/').last.should =~ /\A#{created_image.image_name}/
       end
 
       it 'becomes different when supplying geometry' do

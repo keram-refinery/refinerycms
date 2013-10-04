@@ -10,6 +10,7 @@ module Refinery
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
                     :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts,
+                    :dragonfly_protect_from_dos_attacks,
                     :extern_javascripts, :admin_extern_javascripts,
                     :wysiwyg_editor
 
@@ -37,6 +38,7 @@ module Refinery
     self.backend_route = 'refinery'
     self.dragonfly_custom_backend_class = ''
     self.dragonfly_custom_backend_opts = {}
+    self.dragonfly_protect_from_dos_attacks = true
 
     def config.register_javascript(name)
       self.javascripts |= Array(name)

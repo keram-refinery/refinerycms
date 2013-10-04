@@ -42,4 +42,6 @@ Refinery::Images.configure do |config|
   # config.custom_backend_class = <%= Refinery::Images.custom_backend_class.inspect %>
   # config.custom_backend_opts = <%= Refinery::Images.custom_backend_opts.inspect %>
 
+  # Prevent Symbol DOS vulnerability in dragonfly
+  # config.protect_from_dos_attacks = <%= Refinery::Images.protect_from_dos_attacks.inspect %>
 end

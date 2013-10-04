@@ -22,6 +22,7 @@ module Refinery
             c.url_format = Refinery::Resources.dragonfly_url_format
             c.url_host = Refinery::Resources.dragonfly_url_host
             c.secret = Refinery.find_or_set_secret_token('dragonfly')
+            c.protect_from_dos_attacks = Refinery::Resources.protect_from_dos_attacks
           end
 
           if ::Refinery::Resources.s3_backend

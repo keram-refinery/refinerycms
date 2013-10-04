@@ -9,7 +9,8 @@ module Refinery
                     :s3_backend, :s3_bucket_name, :s3_region,
                     :s3_access_key_id, :s3_secret_access_key, :trust_file_extensions,
                     :whitelisted_mime_types,
-                    :custom_backend_class, :custom_backend_opts
+                    :custom_backend_class, :custom_backend_opts,
+                    :protect_from_dos_attacks
 
     # If you decide to trust file extensions replace :ext below with :format
     self.dragonfly_url_format = '/system/images/:job/:basename.:ext'
@@ -67,6 +68,10 @@ module Refinery
 
       def custom_backend_opts
         config.custom_backend_opts.presence || Core.dragonfly_custom_backend_opts
+      end
+
+      def protect_from_dos_attacks
+        config.protect_from_dos_attacks.presence || Core.dragonfly_protect_from_dos_attacks
       end
 
     end

@@ -7,7 +7,8 @@ module Refinery
                     :s3_backend, :s3_bucket_name, :s3_region,
                     :s3_access_key_id, :s3_secret_access_key,
                     :datastore_root_path, :content_disposition,
-                    :custom_backend_class, :custom_backend_opts
+                    :custom_backend_class, :custom_backend_opts,
+                    :protect_from_dos_attacks
 
     self.dragonfly_url_format = '/system/resources/:job/:basename.:format'
     self.dragonfly_url_host = ''
@@ -56,6 +57,9 @@ module Refinery
         config.custom_backend_opts.presence || Core.dragonfly_custom_backend_opts
       end
 
+      def protect_from_dos_attacks
+        config.protect_from_dos_attacks.presence || Core.dragonfly_protect_from_dos_attacks
+      end
     end
   end
 end

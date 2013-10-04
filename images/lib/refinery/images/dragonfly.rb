@@ -22,6 +22,7 @@ module Refinery
             c.url_format = Refinery::Images.dragonfly_url_format
             c.url_host = Refinery::Images.dragonfly_url_host
             c.secret = Refinery.find_or_set_secret_token('dragonfly')
+            c.protect_from_dos_attacks = Refinery::Images.protect_from_dos_attacks
             c.trust_file_extensions = Refinery::Images.trust_file_extensions
           end
 
