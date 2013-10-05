@@ -15,7 +15,7 @@ gem 'friendly_id-globalize', github: 'norman/friendly_id-globalize', branch: 'ma
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'master'
 gem 'globalize3', github: 'keram-refinery/globalize3', branch: 'rails4'
 gem 'routing-filter', github: 'svenfuchs/routing-filter', branch: 'master'
-gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
+gem 'seo_meta', github: 'parndt/seo_meta', branch: 'rails4'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set', branch: 'master'
 gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
 gem 'jquery-ui-rails', '~> 4.0.4'
@@ -23,6 +23,7 @@ gem 'jquery-ui-rails', '~> 4.0.4'
 # Refinery CMS
 gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms', branch: 'refinery_light'
 gem 'refinerycms-i18n', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms-i18n', branch: 'refinery_light'
+gem 'refinerycms-links', '~> 0.0.1', github: 'keram/refinerycms-links', branch: 'master'
 
 # Specify your preferred WYSIWYG editor
 gem 'refinerycms-epiceditor', github: 'keram-refinery/refinerycms-epiceditor', branch: 'master'

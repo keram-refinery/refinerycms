@@ -5,6 +5,9 @@ gemspec
 # Add i18n support.
 gem 'refinerycms-i18n', '~> 2.718.0.dev', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
 
+# Links dialog
+gem 'refinerycms-links', '~> 0.0.1', github: 'keram/refinerycms-links', branch: 'master'
+
 gem 'quiet_assets', :group => :development
 
 # Database Configuration

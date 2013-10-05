@@ -7,6 +7,7 @@ append_file 'Gemfile' do
 
 gem 'refinerycms', github: 'keram-refinery/refinerycms', :branch => 'refinery_light'
 gem 'refinerycms-i18n', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
+gem 'refinerycms-links', '~> 0.0.1', github: 'keram/refinerycms-links', branch: 'master'
 
 # USER DEFINED
 
