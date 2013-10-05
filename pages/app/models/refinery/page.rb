@@ -182,7 +182,7 @@ module Refinery
     # The canonical slug for this particular page.
     # This is the slug for the default frontend locale.
     def canonical_slug
-      Globalize.with_locale(::Refinery::I18n.default_frontend_locale) { slug }
+      @canonical_slug ||= Globalize.with_locale(::Refinery::I18n.default_frontend_locale) { reload.slug }.presence || slug
     end
 
     def should_generate_new_friendly_id?
