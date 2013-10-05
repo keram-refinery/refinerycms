@@ -11,7 +11,9 @@
       <span class="<%= locale %>"><%= I18n.with_locale locale do lang(locale) end %></span>
     <% end %>
   <% else %>
-    <span class="<%= locale %>"><%= I18n.with_locale locale do lang(locale) end %></span>
+    <b>
+      <span class="<%= locale %>"><%= I18n.with_locale locale do lang(locale) end %></span>
+    </b>
   <% end -%>
 <% end -%>
 </div>
