@@ -23,7 +23,7 @@ module Refinery
 
           it 'has body part hidden' do
             content = ContentPagePresenter.new(page_with_one_part)
-            content.hidden_sections.map(&:id).should == [:perex, :featured_image, :body]
+            content.hidden_sections.map(&:id).should == [:perex, :body]
           end
         end
 

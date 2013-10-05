@@ -30,8 +30,6 @@ module Refinery
 
     accepts_nested_attributes_for :parts, allow_destroy: true
 
-    belongs_to :featured_image, class_name: '::Refinery::Image'
-
     attr_readonly :plugin_page_id
 
     validates :title, presence: true, length: { maximum: Refinery::STRING_MAX_LENGTH }

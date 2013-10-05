@@ -58,7 +58,7 @@ module Refinery
         params[:page][:status] = 'live' if params[:publish].present?
         params.require(:page).permit(
           :title, :status, :parent_id, :skip_to_first_child,
-          :featured_image_id, :link_url, :show_in_menu,
+          :link_url, :show_in_menu,
           :browser_title, :meta_description, :custom_slug, :page_type,
           parts_attributes: [:id, :title, :body, :position, :active]
         )

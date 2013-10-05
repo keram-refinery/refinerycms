@@ -23,7 +23,6 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       t.integer :rgt,       null: false
       t.integer :depth,     null: false, default: 0
       t.string  :plugin_page_id
-      t.integer :featured_image_id
 
       t.timestamps null: false
     end

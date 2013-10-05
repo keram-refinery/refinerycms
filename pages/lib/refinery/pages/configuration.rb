@@ -14,15 +14,14 @@ module Refinery
     self.per_dialog_page = 20
     self.per_admin_page = 20
     self.marketable_urls = true
-    self.parts = [:title, :perex, :featured_image, :body, :side_body]
+    self.parts = [:title, :perex, :body, :side_body]
     self.default_parts = [:title, :body, :side_body]
     self.scope_slug_by_parent = true
     self.layout_template_whitelist = ['application']
     self.part_to_item_property = {
       title: 'name',
       perex: 'description',
-      body: 'mainContentOfPage',
-      featured_image: 'primaryImageOfPage'
+      body: 'mainContentOfPage'
     }
 
     class << self
