@@ -39,14 +39,14 @@ module Refinery
 
           it 'adds a section for each page part' do
             content = ContentPagePresenter.new(page)
-            content.get_section(3).fallback_html.should == 'A Wonderful Page Part'
-            content.get_section(4).fallback_html.should == 'Another Wonderful Page Part'
+            content.get_section(2).fallback_html.should == 'A Wonderful Page Part'
+            content.get_section(3).fallback_html.should == 'Another Wonderful Page Part'
           end
 
           it 'adds body content left and right after page parts' do
             content = ContentPagePresenter.new(page)
-            content.get_section(3).id.should == :body
-            content.get_section(4).id.should == :side_body
+            content.get_section(2).id.should == :body
+            content.get_section(3).id.should == :side_body
           end
 
           it 'doesnt add title if it is blank' do

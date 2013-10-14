@@ -26,7 +26,7 @@ module Refinery
 
     protected
       def render_with_presenters(*args)
-        present @page unless admin? || @meta
+        present @page unless @meta
         render_without_presenters(*args)
       end
 

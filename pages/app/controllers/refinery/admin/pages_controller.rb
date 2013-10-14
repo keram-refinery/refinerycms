@@ -56,12 +56,13 @@ module Refinery
 
       def page_params
         params[:page][:status] = 'live' if params[:publish].present?
-        params.require(:page).permit(
-          :title, :status, :parent_id, :skip_to_first_child,
-          :link_url, :show_in_menu,
-          :browser_title, :meta_description, :custom_slug, :page_type,
-          parts_attributes: [:id, :title, :body, :position, :active]
-        )
+        params.require(:page).permit(permitted_page_params)
+      end
+
+      def permitted_page_params
+        @permitted_page_params ||= [:title, :status, :parent_id, :skip_to_first_child,
+          :link_url, :show_in_menu, :browser_title, :meta_description, :custom_slug, :page_type,
+          parts_attributes: [:id, :title, :body, :position, :active]]
       end
 
       def move_allowed?(page, new_parent=nil)

@@ -16,15 +16,15 @@
                 } %>
   </div>
   <ul class="nojs-hide ui-tabs-nav">
-    <% @page.parts.reject {|p| p.title == :title }.each_with_index do |part, part_index| %>
-      <% cls = "#{'ui-state-active' if part.title == :body}#{' js-hide' if !part.active}" %>
+    <% @page.parts.reject {|p| p.title == :title }.each do |part| %>
+      <% cls = "#{'ui-state-actives' if part.title == :body}#{' js-hide' if !part.active}" %>
       <li class="<%= cls %>">
         <%= link_to t(part.title, scope: 'refinery.admin.pages.parts'), "##{part.to_param}" %>
       </li>
     <% end %>
 
     <% ::Refinery::Pages.tabs.each_with_index do |tab, tab_index| %>
-      <li id="custom_<%= tab.name %>_tab">
+      <li id="custom_<%= tab.name %>_tab" class="ui-state-active">
         <%= link_to t(tab.name, scope: 'refinery.admin.pages.tabs'), "#custom_tab_#{tab_index}" %>
       </li>
     <% end %>
