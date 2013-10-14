@@ -215,17 +215,17 @@ module Refinery
                   if (db_item = model.find_by(id: item['id'].to_i) if item['id']).present?
                     case
                     when item['prev_id'].present?
-                      prev_item = model.find_by(id: item['prev_id'].to_i) if item['prev_id'].present?
+                      prev_item = model.find_by(id: item['prev_id'].to_i)
                       if prev_item && move_allowed?(db_item, prev_item.parent)
                         updated = db_item.move_to_right_of(prev_item)
                       end
                     when item['next_id'].present?
-                      next_item = model.find_by(id: item['next_id'].to_i) if item['next_id'].present?
+                      next_item = model.find_by(id: item['next_id'].to_i)
                       if next_item && move_allowed?(db_item, next_item.parent)
                         updated = db_item.move_to_left_of(next_item)
                       end
                     when item['parent_id'].present?
-                      parent_item = model.find_by(id: item['parent_id'].to_i) if item['parent_id'].present?
+                      parent_item = model.find_by(id: item['parent_id'].to_i)
                       if parent_item && move_allowed?(db_item, parent_item)
                         updated = db_item.move_to_child_of(parent_item)
                       end
