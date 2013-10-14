@@ -49,7 +49,7 @@ module Refinery
     end
 
     def canonical_id(page)
-      "#{page.canonical_slug}-page" if page
+      "#{page.canonical_slug}-page" if page && !page.new_record?
     end
 
   end
