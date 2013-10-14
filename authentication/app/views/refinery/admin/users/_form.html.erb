@@ -86,7 +86,7 @@
         <div class="label_with_help">
           <%= f.label :plugin_access, t('.plugin_access') %>
         </div>
-        <ul id="plugins" class="checkboxes sortable-list">
+        <ul id="plugins" class="checkboxes ui-sortable">
           <% if @available_plugins.any? %>
             <% @available_plugins.each do |plugin| %>
                 <li>

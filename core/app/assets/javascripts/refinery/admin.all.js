@@ -180,30 +180,16 @@
             });
         },
 
-        init_pickers: function () {
+        init_locale_picker: function () {
             var that = this,
                 form = that.holder;
 
-            form.find('.image-picker').each(function () {
-                var picker = refinery('admin.ImagePicker');
-                picker.init($(this));
-            });
-
-            form.find('.resource-picker').each(function () {
-                var picker = refinery('admin.ResourcePicker');
-                picker.init($(this));
-            });
-
             form.on('click', '.locale-picker a', function (e) {
-                var a = $(this);
-                if (that.initial_values === form.serialize()) {
-                    return true;
+                if (that.initial_values !== form.serialize()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    that.switch_frontend_locale($(this));
                 }
-
-                e.preventDefault();
-                e.stopPropagation();
-                that.switch_frontend_locale(a);
-                return false;
             });
         },
 
@@ -480,8 +466,8 @@
 
             if (that.is('initialisable')) {
                 that.is('initialising', true);
-                that.attach_holder(holder);
-                that.init_pickers();
+                that.holder = holder;
+                that.init_locale_picker();
                 that.init_inputs();
                 that.init_upload();
                 that.init_preview();
@@ -501,11 +487,12 @@
      *
      * @expose
      * @param  {jQuery} holder
+     * @param  {refinery.UserInterface} ui
      * @return {undefined}
      */
-    refinery.admin.ui.form = function (holder) {
+    refinery.admin.ui.form = function (holder, ui) {
         holder.find('form').each(function () {
-            refinery('admin.Form').init($(this));
+            ui.addObject( refinery('admin.Form').init($(this)) );
         });
     };
 
@@ -562,17 +549,15 @@
         init_configuration_dialog: function () {
             var that = this,
                 holder = that.holder,
-                nav = that.nav,
-                dialog_holder,
-                dialog_buttons = {},
-                parts_tabs = nav.find('li');
+                nav = holder.find('.ui-tabs-nav'),
+                parts_tabs = nav.find('li'),
+                dialog_holder = $('<div/>'),
+                dialog_buttons;
 
-            dialog_holder = $('<div/>', {
-                html: that.get_dialog_content()
-            });
+            dialog_holder.html( that.get_dialog_content() );
 
             function update_parts () {
-                var list = [], i, l, active_tab;
+                var list = [], i, l;
 
                 dialog_holder.find('li').each(function (j) {
                     var li = $(this),
@@ -615,10 +600,8 @@
                  * will be activated other, first visible tab.
                  */
                 if (nav.find('.ui-tabs-active').length === 0) {
-                    active_tab = /** @type {number} */(parts_tabs.index(nav.find('li:visible').first()));
-
                     holder.tabs({
-                        'active': active_tab
+                        'active': /** @type {number} */(parts_tabs.index(nav.find('li:visible').first()))
                     });
                 }
             }
@@ -661,8 +644,6 @@
          */
         destroy: function () {
             if (this.is('initialised')) {
-                this.nav = null;
-
                 if (this.dialog_holder) {
                     this.dialog_holder.dialog('destroy');
                     this.dialog_holder.off();
@@ -683,8 +664,7 @@
         init: function (holder) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
-                this.attach_holder(holder);
-                this.nav = holder.find('.ui-tabs-nav');
+                this.holder = holder;
                 this.init_configuration_dialog();
                 this.is({'initialised': true, 'initialising': false});
                 this.trigger('init');
@@ -699,11 +679,12 @@
      *
      * @expose
      * @param  {jQuery} holder
+     * @param  {refinery.UserInterface} ui
      * @return {undefined}
      */
-    refinery.admin.ui.formPageParts = function (holder) {
+    refinery.admin.ui.formPageParts = function (holder, ui) {
         holder.find('#page-parts').each(function () {
-            refinery('admin.FormPageParts').init($(this));
+            ui.addObject( refinery('admin.FormPageParts').init($(this)) );
         });
     };
 
@@ -726,7 +707,7 @@
         /**
          * Configurable options
          *
-         * @param {{update_url: ?string, redraw: Boolean, nested_sortable: Object}} options
+         * @param {{nested_sortable: Object}} options
          */
         objectConstructor: function (options, is_prototype) {
             var that = this;
@@ -744,9 +725,7 @@
                  * @return {undefined}
                  */
                 that.options.nested_sortable.stop = function (event, ui) {
-                    if (that.options.update_url) {
-                        that.update(ui.item);
-                    }
+                    that.update(ui.item);
                 };
             }
         },
@@ -761,19 +740,6 @@
          * @type {Object}
          */
         options: {
-
-            /**
-             * @expose
-             * @type {?string}
-             */
-            update_url: null,
-
-            /**
-             * @expose
-             * @type {?boolean}
-             */
-            redraw: true,
-
             /**
              * @expose
              * @type {{items: string, listType: string, maxLevels: number}}
@@ -825,6 +791,7 @@
         update: function (item) {
             var that = this,
                 list = that.holder,
+                update_url = list.data('update_positions_url'),
                 set = list.nestedSortable('toArray'),
                 post_data = {
                     'item': {
@@ -840,7 +807,7 @@
                 list.nestedSortable('disable');
                 refinery.spinner.on();
 
-                $.post(that.options.update_url, post_data, function (response, status, xhr) {
+                $.post(update_url, post_data, function (response, status, xhr) {
                     if (status === 'error') {
                         list.html(that.html);
                     } else {
@@ -851,7 +818,7 @@
                     refinery.xhr.success(response, status, xhr, list);
                     that.is('updated', true);
                     that.trigger('update');
-                }, that.options.redraw ? 'JSON' : 'HTML')
+                }, 'JSON')
                     .fail(function (response) {
                         list.html(that.html);
                         refinery.xhr.error(response);
@@ -876,8 +843,9 @@
         init: function (holder) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
+
                 holder.nestedSortable(this.options.nested_sortable);
-                this.attach_holder(holder);
+                this.holder = holder;
                 this.set = holder.nestedSortable('toArray');
                 this.html = holder.html();
                 this.is({'initialised': true, 'initialising': false});
@@ -890,6 +858,22 @@
 
 
     /**
+     * Sortable list initialization
+     *
+     * @expose
+     * @param  {jQuery} holder
+     * @param  {refinery.UserInterface} ui
+     * @return {undefined}
+     */
+    refinery.admin.ui.sortableList = function (holder, ui) {
+        holder.find('.sortable-list').each(function () {
+            ui.addObject(
+                refinery('admin.SortableList').init($(this))
+            );
+        });
+    };
+
+    /**
      * Sortable Tree
      *
      * @constructor
@@ -900,7 +884,12 @@
      */
     refinery.Object.create({
 
-        objectConstructor:  function (options, is_prototype) {
+        /**
+         * Configurable options
+         *
+         * @param {{nested_sortable: Object}} options
+         */
+        objectConstructor: function (options, is_prototype) {
             var that = this;
 
             refinery.Object.apply(that, arguments);
@@ -916,10 +905,7 @@
                  * @return {undefined}
                  */
                 that.options.nested_sortable.stop = function (event, ui) {
-                    that.update_tree(ui.item);
-                    if (that.options.update_url) {
-                        that.update(ui.item);
-                    }
+                    that.update(ui.item);
                 };
             }
         },
@@ -947,24 +933,25 @@
             }
         }, true),
 
-        name: 'SortableTree',
-
-        update_tree: function (item) {
-            var ul = item.parent();
-
-            this.holder.find('.toggle').each(function () {
-                var elm = $(this);
-                if (elm.parent().parent().find('li').length === 0) {
-                    elm.removeClass('toggle expanded');
-                }
-            });
-
-            if (ul.attr('id') !== this.holder.attr('id')) {
-                ul.addClass('nested data-loaded');
-                ul.parent().find('.icon').first().addClass('toggle expanded');
-            }
-        }
+        name: 'SortableTree'
     });
+
+    /**
+     * Sortable tree initialization
+     *
+     * @expose
+     * @param  {jQuery} holder
+     * @param  {refinery.UserInterface} ui
+     * @return {undefined}
+     */
+    refinery.admin.ui.sortableTree = function (holder, ui) {
+        holder.find('.sortable-tree').each(function () {
+            console.log($(this), ui, 'sortableTree');
+            ui.addObject(
+                refinery('admin.SortableTree').init($(this))
+            );
+        });
+    };
 
 }(refinery));
 
@@ -973,252 +960,18 @@
 
     /**
      * @constructor
-     * @extends {refinery.Object}
+     * @extends {refinery.UserInterface}
      * @param {Object=} options
      * @return {refinery.admin.UserInterface}
      */
     refinery.Object.create({
-
-        name: 'UserInterface',
+        objectPrototype: refinery('UserInterface', {
+            'ui_modules': refinery.admin.ui
+        }, true),
 
         module: 'admin',
 
-        options: {
-            /**
-             * When Ajax request receive partial without id,
-             * content of $(main_content_selector) will be replaced.
-             *
-             * @expose
-             * @type {!string}
-             */
-            main_content_selector: '#content'
-        },
-
-        init_checkboxes: function () {
-            this.holder.find('div.checkboxes').each(function () {
-                var holder = $(this),
-                    chboxs = holder.find('input:checkbox').not('[readonly]');
-
-                if (chboxs.length > 1) {
-                    holder.find('.checkboxes-cmd.' +
-                            ((chboxs.length === chboxs.filter(':checked').length) ? 'none' : 'all')
-                    ).removeClass('hide');
-                }
-            });
-
-            this.holder.on('click', '.checkboxes-cmd', function (e) {
-                e.preventDefault();
-                var a = $(this),
-                    parent = a.parent(),
-                    checkboxes = parent.find('input:checkbox'),
-                    checked = a.hasClass('all');
-
-                checkboxes.prop('checked', checked);
-                parent.find('.checkboxes-cmd').toggleClass('hide');
-            });
-
-        },
-
-        init_collapsible_lists: function () {
-            this.holder.find('.collapsible-list').each(function () {
-                var list = $(this),
-                    options = /** Object */(list.data('ui-accordion-options'));
-
-                list.accordion(options);
-            });
-        },
-
-        init_sortable: function () {
-            this.holder.find('.sortable-list').each(function () {
-                var list = $(this),
-                    options = list.data('sortable-options');
-
-                if (list.hasClass('records')) {
-                    if (list.hasClass('tree')) {
-                        refinery('admin.SortableTree', options).init(list);
-                    } else {
-                        refinery('admin.SortableList', options).init(list);
-                    }
-                } else {
-                    list.sortable(options);
-                }
-            });
-        },
-
-        toggle_tree_branch: function (li) {
-            var elm = li.find('.toggle').first(),
-                nested = li.find('.nested').first();
-
-            if (elm.hasClass('expanded')) {
-                elm.removeClass('expanded');
-                nested.slideUp();
-            } else {
-
-                if (nested.hasClass('data-loaded')) {
-                    elm.addClass('expanded');
-                    nested.slideDown();
-                } else {
-                    li.addClass('loading');
-                    nested.load(nested.data('ajax-content'), function () {
-                        elm.addClass('expanded');
-                        nested.slideDown();
-                        li.removeClass('loading');
-
-                        if (nested.hasClass('data-cache')) {
-                            nested.addClass('data-loaded');
-                        }
-                    });
-                }
-            }
-        },
-
-        init_tabs: function () {
-            this.holder.find('.ui-tabs').each(function () {
-                var elm = $(this),
-                    index = elm.find('.ui-tabs-nav .ui-state-active').index();
-
-                elm.tabs({
-                    'active': (index > -1 ? index : 0),
-                    'activate': function (event, ui) {
-                        ui.newPanel.find('input.text, textarea').first().focus();
-                    }
-                });
-            });
-        },
-
-        bind_events: function () {
-            var that = this,
-                holder = that.holder;
-
-            /**
-             * Process ajax response
-             *
-             * @param  {jQuery.event} event
-             * @param  {json_response} response
-             * @param  {string} status
-             * @param  {jQuery.jqXHR} xhr
-             * @return {undefined}
-             */
-            function ajax_success (event, response, status, xhr) {
-                var redirected_to = xhr.getResponseHeader('X-XHR-Redirected-To'),
-                    replace_target = true,
-                    target = event.target;
-
-                if (response.redirect_to) {
-                    Turbolinks.visit(response.redirect_to);
-                } else {
-                    if (redirected_to || target.tagName.toLowerCase() === 'a') {
-                        target = holder.find(that.options.main_content_selector);
-                        replace_target = false;
-                    } else {
-                        target = $(target);
-                    }
-
-                    that.destroy();
-                    refinery.xhr.success(response, status, xhr, target, replace_target);
-                    that.trigger('ui:change');
-                }
-            }
-
-            holder.on('click', '.flash-close', function (e) {
-                e.preventDefault();
-                $(this).parent().fadeOut();
-                return false;
-            });
-
-            holder.on('click', '.tree .toggle', function (e) {
-                e.preventDefault();
-                that.toggle_tree_branch($(this).parents('li:first'));
-            });
-
-            holder.on('ajax:success', ajax_success);
-
-            holder.on('ajax:error',
-                /**
-                 * @param {jQuery.event} event
-                 * @param {jQuery.jqXHR} xhr
-                 * @param {string} status
-                 * @return {undefined}
-                 */
-                function (event, xhr, status) {
-                    refinery.xhr.error(xhr, status);
-                });
-
-            holder.find('.ui-selectable').selectable({ 'filter': 'li' });
-        },
-
-        init_toggle_hide: function () {
-            this.holder.on('click', '.toggle-hide', function () {
-                var elm = $(this);
-                $(elm.attr('href')).toggleClass('js-hide');
-                elm.toggleClass('toggle-on');
-            });
-        },
-
-        initialize_elements: function () {
-            var that = this,
-                holder = that.holder,
-                ui = refinery.admin.ui,
-                fnc;
-
-            that.init_sortable();
-            that.init_tabs();
-            that.init_checkboxes();
-            that.init_collapsible_lists();
-            that.init_toggle_hide();
-
-            for (fnc in ui) {
-                if (ui.hasOwnProperty(fnc) && typeof ui[fnc] === 'function') {
-                    ui[fnc](holder, that);
-                }
-            }
-        },
-
-        /**
-         * Destroy self and also all refinery, jquery ui instances under holder
-         *
-         * @return {Object} self
-         */
-        destroy: function () {
-            var holder = this.holder,
-                holders;
-
-            if (holder) {
-                holders = holder.find('.refinery-instance');
-
-                try {
-                    holders.each(function () {
-                        var instances = $(this).data('refinery-instances'),
-                            instance;
-
-                        for (var i = instances.length - 1; i >= 0; i--) {
-                            instance = refinery.Object.instances.get(instances[i]);
-                            instance.destroy();
-                        }
-                    });
-                } catch (e) {
-                    refinery.log(e);
-                    refinery.log(holders);
-                }
-            }
-
-            return this._destroy();
-        },
-
-        init: function (holder) {
-            var that = this;
-
-            if (that.is('initialisable')) {
-                that.is('initialising', true);
-                that.attach_holder(holder);
-                that.bind_events();
-                that.initialize_elements();
-                that.is({'initialised': true, 'initialising': false});
-                that.trigger('init');
-            }
-
-            return that;
-        }
+        name: 'UserInterface'
     });
 
 }(refinery));
@@ -1455,10 +1208,9 @@
                 function ui_change () {
                     if (that.ui) {
                         that.ui.destroy();
-                        that.ui.unsubscribe('ui:change', ui_change);
                     }
 
-                    that.ui = refinery('admin.UserInterface', {
+                    that.ui = refinery('UserInterface', {
                         'main_content_selector': '.dialog-content-wrapper'
                     }).init(that.ui_holder);
 
@@ -1556,7 +1308,6 @@
             destroy: function () {
                 if (this.ui) {
                     this.ui.destroy();
-                    this.ui.unsubscribe('ui:change', this.ui_change);
                     this.ui = null;
                 }
 
@@ -1586,7 +1337,7 @@
                     });
 
                     holder.dialog(this.options);
-                    this.attach_holder(holder);
+                    this.holder = holder;
 
                     this.bind_events();
                     this.init_buttons();
@@ -1752,7 +1503,7 @@
         init: function (holder) {
             if (this.is('initialisable')) {
                 this.is('initialising', true);
-                this.attach_holder(holder);
+                this.holder = holder;
                 this.elm_current_record_id = holder.find('.current-record-id');
                 this.elm_record_holder = holder.find('.record-holder');
                 this.elm_no_picked_record = holder.find('.no-picked-record-selected');
@@ -2057,6 +1808,19 @@
         }
     });
 
+    /**
+     *
+     * @expose
+     * @param  {jQuery} holder
+     * @param  {refinery.UserInterface} ui
+     * @return {undefined}
+     */
+    refinery.admin.ui.imagePicker = function (holder, ui) {
+        holder.find('.image-picker').each(function () {
+            ui.addObject( refinery('admin.ImagePicker').init($(this)) );
+        });
+    };
+
 }(refinery));
 
 // Source: refinerycms-clientside/scripts/admin/pickers/resource_picker.js
@@ -2122,6 +1886,19 @@
         }
 
     });
+
+    /**
+     *
+     * @expose
+     * @param  {jQuery} holder
+     * @param  {refinery.UserInterface} ui
+     * @return {undefined}
+     */
+    refinery.admin.ui.resourcePicker = function (holder, ui) {
+        holder.find('.resource-picker').each(function () {
+            ui.addObject( refinery('admin.ResourcePicker').init($(this)) );
+        });
+    };
 
 }(refinery));
 }(window, jQuery));
