@@ -6,7 +6,7 @@ require 'babosa'
 
 ActiveSupport.on_load(:active_record) do
   require 'awesome_nested_set'
-  require 'globalize3'
+  require 'globalize'
 end
 
 

@@ -13,7 +13,7 @@ append_file 'Gemfile', <<-GEMFILE
 gem 'friendly_id', github: 'norman/friendly_id', branch: 'master'
 gem 'friendly_id-globalize', github: 'norman/friendly_id-globalize', branch: 'master'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'master'
-gem 'globalize3', github: 'keram-refinery/globalize3', branch: 'rails4'
+gem 'globalize', github: 'github.com/globalize/globalize', branch: 'master'
 gem 'routing-filter', github: 'svenfuchs/routing-filter', branch: 'master'
 gem 'seo_meta', github: 'parndt/seo_meta', branch: 'rails4'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set', branch: 'master'
