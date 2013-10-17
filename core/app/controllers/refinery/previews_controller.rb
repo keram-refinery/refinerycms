@@ -7,9 +7,7 @@ module Refinery
 
     def verify_authenticity_token
       unless verified_request?
-        if logger
-          logger.warn "[SECURITY]: CSRF detected! REFERRER: #{request.referrer} REMOTE_IP: #{request.remote_ip}"
-        end
+        logger.warn "[SECURITY]: CSRF detected! REFERRER: #{request.referrer} REMOTE_IP: #{request.remote_ip}"
 
         error_403
       end
