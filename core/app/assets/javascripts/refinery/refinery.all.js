@@ -1083,11 +1083,21 @@
             init_jquery_ui_tabs: function () {
                 this.holder.find('.ui-tabs').each(function () {
                     var elm = $(this),
+                        nav_li = elm.find('.ui-tabs-nav li'),
+                        index_stored = $.cookie('tab_' + elm.attr('id')),
                         index = elm.find('.ui-tabs-nav .ui-state-active').index();
 
+                    if (index_stored && $(nav_li.get(index_stored)).is(':visible')) {
+                        index = index_stored;
+                    } else if (index === -1) {
+                        index = elm.find('.ui-tabs-nav li:visible').first().index();
+                    }
+
                     elm.tabs({
-                        'active': (index > -1 ? index : 0),
+                        'active': index,
                         'activate': function (event, ui) {
+                            $.cookie('tab_' + elm.attr('id'), ui.newTab.index(), {'path': '/'});
+
                             ui.newPanel.find('input.text, textarea').first().focus();
                         }
                     });

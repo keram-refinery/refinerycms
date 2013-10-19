@@ -1,8 +1,6 @@
 module Refinery
   module Admin
     class PagesController < Refinery::AdminController
-      include Pages::InstanceMethods
-
       crudify :'refinery/page',
               include: [:translations, :children],
               paging: false

@@ -36,9 +36,5 @@ module Refinery
         }.flatten.uniq
       end
     end
-
-    module Admin
-      autoload :InstanceMethods, 'refinery/pages/admin/instance_methods'
-    end
   end
 end

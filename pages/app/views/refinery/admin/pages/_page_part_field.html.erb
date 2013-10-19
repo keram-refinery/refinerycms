@@ -1,5 +1,5 @@
 <% unless part.title == :title %>
-  <div class="page-part" id="<%= part.to_param %>">
+  <div class="page-part <%= 'js-hide' if part.inactive %>" id="<%= part.to_param %>">
     <div class="js-hide">
       <%= ff.label :body, t(part.title, scope: 'refinery.admin.pages.parts') %>
       <%= ff.check_box :active, class: 'part-active' %>

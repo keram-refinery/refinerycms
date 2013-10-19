@@ -85,6 +85,7 @@
                          */
                         param = params_re.test(url) ? url.match(params_re)[0] : '';
 
+
                     /**
                      * Process ajax response
                      *
@@ -518,7 +519,7 @@
          * @return {string} dialog content
          */
         get_dialog_content: function () {
-            var data = this.holder.find('#page-parts-options').data('page-parts'),
+            var data = this.holder.find('#page_parts-options').data('page-parts'),
                 list,
                 part;
 
@@ -557,7 +558,7 @@
             dialog_holder.html( that.get_dialog_content() );
 
             function update_parts () {
-                var list = [], i, l;
+                var list = [], i;
 
                 dialog_holder.find('li').each(function (j) {
                     var li = $(this),
@@ -591,8 +592,8 @@
                  * Reordeting tabs by parts position
                  *
                  */
-                for (i = 0, l = list.length; i < l; i++) {
-                    nav.append(list[i]);
+                for (i = list.length; i >= 0; i--) {
+                    nav.prepend(list[i]);
                 }
 
                 /**
@@ -630,7 +631,7 @@
                 'buttons': dialog_buttons
             });
 
-            holder.on('click', '#page-parts-options', function (e) {
+            holder.on('click', '#page_parts-options', function (e) {
                 e.preventDefault();
                 dialog_holder.dialog('open');
             });
@@ -683,7 +684,7 @@
      * @return {undefined}
      */
     refinery.admin.ui.formPageParts = function (holder, ui) {
-        holder.find('#page-parts').each(function () {
+        holder.find('#page_parts').each(function () {
             ui.addObject( refinery('admin.FormPageParts').init($(this)) );
         });
     };
@@ -946,7 +947,6 @@
      */
     refinery.admin.ui.sortableTree = function (holder, ui) {
         holder.find('.sortable-tree').each(function () {
-            console.log($(this), ui, 'sortableTree');
             ui.addObject(
                 refinery('admin.SortableTree').init($(this))
             );
@@ -954,6 +954,9 @@
     };
 
 }(refinery));
+
+// Source: refinerycms-clientside/scripts/admin/sortable_tree.js
+
 
 // Source: refinerycms-clientside/scripts/admin/user_interface.js
 (function (refinery) {
@@ -1210,7 +1213,7 @@
                         that.ui.destroy();
                     }
 
-                    that.ui = refinery('UserInterface', {
+                    that.ui = refinery('admin.UserInterface', {
                         'main_content_selector': '.dialog-content-wrapper'
                     }).init(that.ui_holder);
 

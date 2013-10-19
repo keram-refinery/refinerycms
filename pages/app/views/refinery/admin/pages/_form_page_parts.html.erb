@@ -1,12 +1,12 @@
-<div id="page-parts" class="ui-tabs clearfix" >
-
+<% parts = @page.parts %>
+<div id="page_parts" class="ui-tabs clearfix" >
   <div class="nojs-hide ui-tabs-settings">
     <%= link_to t('.configure'), '#',
-                id: 'page-parts-options',
+                id: 'page_parts-options',
                 class: 'icon-small page-add-icon',
                 title: t('.manage_page_parts'),
                 data: {
-                  page_parts: @page.parts.map do |part|
+                  page_parts: parts.map do |part|
                     {
                       name: part.title,
                       title: t(part.title, scope: 'refinery.admin.pages.parts'),
@@ -16,15 +16,14 @@
                 } %>
   </div>
   <ul class="nojs-hide ui-tabs-nav">
-    <% @page.parts.reject {|p| p.title == :title }.each do |part| %>
-      <% cls = "#{'ui-state-actives' if part.title == :body}#{' js-hide' if !part.active}" %>
-      <li class="<%= cls %>">
+    <% parts.reject {|p| p.title == :title }.each do |part| %>
+      <li class="<%= 'js-hide' if part.inactive %>">
         <%= link_to t(part.title, scope: 'refinery.admin.pages.parts'), "##{part.to_param}" %>
       </li>
     <% end %>
 
     <% ::Refinery::Pages.tabs.each_with_index do |tab, tab_index| %>
-      <li id="custom_<%= tab.name %>_tab" class="ui-state-active">
+      <li id="custom_<%= tab.name %>_tab" class="page-tab">
         <%= link_to t(tab.name, scope: 'refinery.admin.pages.tabs'), "#custom_tab_#{tab_index}" %>
       </li>
     <% end %>
@@ -36,7 +35,7 @@
     <% end %>
 
     <% ::Refinery::Pages.tabs.each_with_index do |tab, tab_index| %>
-      <div class="ui-tabs-panel" id="custom_tab_<%= tab_index %>">
+      <div class="ui-tabs-panel page-tab" id="custom_tab_<%= tab_index %>">
         <%= render tab.partial, f: f %>
       </div>
     <% end %>

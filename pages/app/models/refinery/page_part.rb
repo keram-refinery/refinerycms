@@ -20,5 +20,9 @@ module Refinery
       self[:title].to_sym if self[:title]
     end
 
+    def inactive
+      !active
+    end
+
   end
 end

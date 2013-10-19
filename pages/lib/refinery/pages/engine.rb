@@ -10,7 +10,6 @@ module Refinery
 
       after_inclusion do
         Refinery.include_once(::ApplicationController, Refinery::Pages::InstanceMethods)
-        Refinery.include_once(Refinery::AdminController, Refinery::Pages::Admin::InstanceMethods)
       end
 
       initializer 'register pages plugin' do
