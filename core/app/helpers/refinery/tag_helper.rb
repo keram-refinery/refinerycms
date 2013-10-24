@@ -35,13 +35,15 @@ module Refinery
     def refinery_form_field form, field_type, field_name, options={}
       buffer = ActiveSupport::SafeBuffer.new
       field_options = {}.merge!(options.fetch(:html){{}})
+      # id = #{dom_id form.object}_#{sanitize_for_key(field_name)}
       if options[:label]
         label_options = {}
         label_options[:label] = options[:label] if options[:label].is_a?(String)
-        field_options[:'aria-labelledby'] = "label_for_#{form.object_name}_#{sanitize_for_key(field_name)}"
+        # doesn't work properly for nested attributes
+        # field_options[:'aria-labelledby'] = "label_for_#{id}"
         if options[:help]
           label_options[:help] = options[:help] if options[:help].is_a?(String)
-          field_options[:'aria-describedby'] = "help_for_#{form.object_name}_#{sanitize_for_key(field_name)}"
+          #field_options[:'aria-describedby'] = "help_for_#{id}"
           buffer << label_with_help(form, field_name, label_options)
         else
           buffer << form.label(field_name, label_options)
