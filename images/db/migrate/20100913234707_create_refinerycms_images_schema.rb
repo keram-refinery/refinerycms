@@ -13,5 +13,10 @@ class CreateRefinerycmsImagesSchema < ActiveRecord::Migration
 
     add_index :refinery_images, :image_name, unique: true
     add_index :refinery_images, :updated_at
+
+    Refinery::Image.create_translation_table!({
+      alt: :string,
+      caption: :string
+    })
   end
 end

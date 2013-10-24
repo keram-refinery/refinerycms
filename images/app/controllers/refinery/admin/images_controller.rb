@@ -46,7 +46,7 @@ module Refinery
       end
 
       def update
-        if @image.update(params.require(:image).permit(:image))
+        if @image.update(params.require(:image).permit(:image, :alt, :caption))
           flash.notice = t(
             'refinery.crudify.updated',
             kind: t(Image.model_name.i18n_key, scope: 'activerecord.models'),

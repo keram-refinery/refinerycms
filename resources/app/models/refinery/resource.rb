@@ -11,8 +11,6 @@ module Refinery
 
     resource_accessor :file
 
-    default_scope { order updated_at: :desc }
-
     validates :file, presence: true
     validates_with FileNameValidator, on: :create
     validates_with FileSizeValidator

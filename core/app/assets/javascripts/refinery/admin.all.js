@@ -85,7 +85,6 @@
                          */
                         param = params_re.test(url) ? url.match(params_re)[0] : '';
 
-
                     /**
                      * Process ajax response
                      *

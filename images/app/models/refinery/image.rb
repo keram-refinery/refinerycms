@@ -8,22 +8,22 @@ module Refinery
 
     image_accessor :image
 
-    default_scope { order updated_at: :desc }
+    translates :alt, :caption
 
-    validates :image, :presence => true
-    validates_with ImageNameValidator, :on => :create
+    validates :image, presence: true
+    validates_with ImageNameValidator, on: :create
     validates_with ImageSizeValidator
-    validates_with ImageUpdateValidator, :on => :update
+    validates_with ImageUpdateValidator, on: :update
     validates_property :mime_type,
-                       :of => :image,
-                       :in => ::Refinery::Images.whitelisted_mime_types,
-                       :message => :incorrect_format
+                       of: :image,
+                       in: ::Refinery::Images.whitelisted_mime_types,
+                       message: :incorrect_format
 
-    delegate :size, :mime_type, :url, :width, :height, :name, :to => :image
+    delegate :size, :mime_type, :url, :width, :height, :name, to: :image
 
     # Get a thumbnail job object given a geometry and whether to strip image profiles and comments.
     def thumbnail(options = {})
-      options = { :geometry => :no_geometry, :strip => true }.merge(options)
+      options = { geometry: :no_geometry, strip: true }.merge(options)
       geometry = convert_to_geometry(options[:geometry])
       thumbnail = image
       thumbnail = thumbnail.thumb(geometry) unless geometry.is_a?(Symbol)
@@ -74,19 +74,21 @@ module Refinery
         end
       end
 
-      { :width => width.to_i, :height => height.to_i }
+      { width: width.to_i, height: height.to_i }
     end
 
     # Returns a titleized version of the filename
     # my_file.jpg returns My File
     def title
-      CGI::unescape(image_name.to_s).gsub(/\.\w+$/, '').titleize
+      alt.presence || CGI::unescape(image_name.to_s).gsub(/\.\w+$/, '').titleize
     end
 
     def to_images_dialog
       {
         id: id,
-        thumbnail: thumbnail(geometry: :medium).url
+        thumbnail: thumbnail(geometry: :medium).url,
+        alt: title,
+        caption: caption.to_s
       }
     end
 

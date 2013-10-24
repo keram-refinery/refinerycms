@@ -5,7 +5,7 @@
   <div class="clearfix">
     <div class="form-title">
       <h1>
-        <% if @image.new_record? %>
+        <% if new_record %>
           <%= t('create_new_image', scope: 'refinery.admin.images.actions') %>
         <% else %>
           <%= t('edit_image', scope: 'refinery.admin.images.actions') %>:
@@ -16,29 +16,48 @@
         <%= link_to refinery_plugin.title, refinery.admin_images_path %>
       </p>
     </div>
+
+    <%= render '/refinery/admin/locale_picker', url: refinery.edit_admin_image_path(@image) unless new_record %>
+
   </div>
 
   <%= render '/refinery/admin/error_messages',
              object: @image,
              include_object_name: false %>
 
-  <div class="field clearfix">
-    <% unless new_record %>
-      <div id="existing-image">
-        <label><%=t('.current_image') %></label>
-        <%= image_fu @thumbnail || @image, '225x255>' %>
+  <div class="clearfix">
+    <div class="block-main">
+      <div class="field">
+        <% # we must only hint at multiple when it's a new record otherwise update fails. %>
+        <%= f.file_field :image, required: new_record, multiple: new_record %>
+        <p class="note">
+          <%= t('.maximum_image_size', bytes: number_to_human_size(Refinery::Images.max_image_size)) %>
+        </p>
       </div>
+
+    <% unless new_record %>
+      <div class="field">
+        <%= refinery_form_field f, :text_field, :alt,
+                    label: true, html: { class: 'widest' } -%>
+      </div>
+
+      <div class="field">
+        <%= refinery_form_field f, :text_field, :caption,
+                    label: true, html: { class: 'widest' } -%>
+      </div>
+    <% end -%>
+    </div>
+
+  <% unless new_record %>
+    <div class="block-aside right-side">
+      <label><%=t('.current_image') %></label>
       <p>
-        <%= t('.use_current_image') %>
-        <em><%= t('.or') %></em><%= t('.replace_image') %>
+        <%= image_fu @thumbnail || @image, '225x255>' %>
       </p>
-    <% end %>
-    <% # we must only hint at multiple when it's a new record otherwise update fails. %>
-    <%= f.file_field :image, required: true, multiple: new_record %>
-    <label id="maximum-image-size">
-      <%= t('.maximum_image_size', bytes: number_to_human_size(Refinery::Images.max_image_size)) %>
-    </label>
+    </div>
+  <% end -%>
   </div>
+
 
   <%= render '/refinery/admin/form_actions', f: f,
              hide_cancel: false,
