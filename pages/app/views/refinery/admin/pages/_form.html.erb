@@ -43,8 +43,7 @@
 
   <div class="form-actions clearfix">
     <div class="form-actions-left">
-      <%= submit_tag(t('save_draft', scope: 'refinery.admin.form_actions'),
-                  name: 'draft',
+      <%= submit_tag(t('save', scope: 'refinery.admin.form_actions'),
                   class: 'button submit-button',
                   data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
                 ) %>
@@ -54,16 +53,19 @@
                   class: 'button preview-button secondary-button nojs-hide',
                   title: t('.preview_changes') %>
 
-      <%= submit_tag(t('publish', scope: 'refinery.admin.form_actions'),
-                  name: 'publish',
-                  class: 'button secondary-button publish-button',
-                  data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
-                ) %>
     </div>
 
     <div class="form-actions-right">
 
-     <%= submit_tag(t('delete', scope: 'refinery.admin.form_actions'),
+      <%= link_to(t("#{'un' if @page.live?}publish", scope: 'refinery.admin.form_actions'),
+                  refinery.toggle_publish_admin_page_path(id: @page.id, locale: Globalize.locale),
+                  class: 'button secondary-button publish-button',
+                  data: {
+                    remote: true,
+                    disable_with: t('processing', scope: 'refinery.admin.form_actions')
+                  }) if @page.persisted? %>
+
+      <%= submit_tag(t('delete', scope: 'refinery.admin.form_actions'),
                   name: 'delete',
                   method: :delete,
                   data: {

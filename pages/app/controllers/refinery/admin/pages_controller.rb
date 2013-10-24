@@ -21,7 +21,7 @@ module Refinery
       def update
         if @page.update_attributes(page_params)
           flash.notice = t(
-            "refinery.crudify.#{@page.live? ? 'published' : 'updated'}",
+            'refinery.crudify.updated',
             kind: t(Page.model_name.i18n_key, scope: 'activerecord.models'),
             what: @page.title
           )
@@ -30,6 +30,24 @@ module Refinery
         else
           create_or_update_unsuccessful 'edit'
         end
+      end
+
+      def toggle_publish
+        find_page
+
+        if @page.live?
+          @page.unpublish
+        else
+          @page.publish
+        end
+
+        flash.notice = t(
+          "refinery.crudify.#{@page.live? ? 'published' : 'unpublished'}",
+          kind: t(Page.model_name.i18n_key, scope: 'activerecord.models'),
+          what: @page.title
+        )
+
+        render :edit
       end
 
       def children
@@ -53,7 +71,6 @@ module Refinery
     private
 
       def page_params
-        params[:page][:status] = 'live' if params[:publish].present?
         params.require(:page).permit(permitted_page_params)
       end
 

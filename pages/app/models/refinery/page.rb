@@ -205,6 +205,14 @@ module Refinery
       destroy
     end
 
+    def publish
+      translation.update_attribute(:status, 'live')
+    end
+
+    def unpublish
+      translation.update_attribute(:status, 'draft')
+    end
+
     # Used for the browser title to get the full path to this page
     # It automatically prints out this page title and all of it's parent page titles joined by a PATH_SEPARATOR
     def path(options = {})
