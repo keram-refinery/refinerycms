@@ -60,6 +60,7 @@
       <%= link_to(t("#{'un' if @page.live?}publish", scope: 'refinery.admin.form_actions'),
                   refinery.toggle_publish_admin_page_path(id: @page.id, locale: Globalize.locale),
                   class: 'button secondary-button publish-button',
+                  method: :post,
                   data: {
                     remote: true,
                     disable_with: t('processing', scope: 'refinery.admin.form_actions')

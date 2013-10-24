@@ -11,7 +11,7 @@ Refinery::Core::Engine.routes.draw do
 
     resources :pages, except: :show do
       get :children, on: :member
-      get :toggle_publish, on: :member
+      post :toggle_publish, on: :member
       post :update_positions, on: :collection
     end
   end
