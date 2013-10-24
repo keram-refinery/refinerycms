@@ -17,7 +17,7 @@
   </div>
   <ul class="nojs-hide ui-tabs-nav">
     <% parts.reject {|p| p.title == :title }.each do |part| %>
-      <li class="<%= 'js-hide' if part.inactive %>">
+      <li class="page-part <%= 'js-hide' if part.inactive %>">
         <%= link_to t(part.title, scope: 'refinery.admin.pages.parts'), "##{part.to_param}" %>
       </li>
     <% end %>
