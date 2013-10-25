@@ -39,8 +39,6 @@
 
   <%= render 'form_advanced_options', f: f %>
 
-  <%= f.hidden_field :status, value: 'draft' %>
-
   <div class="form-actions clearfix">
     <div class="form-actions-left">
       <%= submit_tag(t('save', scope: 'refinery.admin.form_actions'),

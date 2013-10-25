@@ -11,7 +11,7 @@ module Refinery
       end
 
       def redirect_url
-        if @page && @page.draft?
+        if @page
           refinery.edit_admin_page_path(@page.relative_path, frontend_locale_param)
         else
           refinery.admin_pages_path(frontend_locale_param)
@@ -75,7 +75,7 @@ module Refinery
       end
 
       def permitted_page_params
-        @permitted_page_params ||= [:title, :status, :parent_id, :skip_to_first_child,
+        @permitted_page_params ||= [:title, :parent_id, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description, :custom_slug, :page_type,
           parts_attributes: [:id, :title, :body, :position, :active]]
       end
