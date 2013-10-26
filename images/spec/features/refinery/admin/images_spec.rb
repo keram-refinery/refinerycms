@@ -114,7 +114,7 @@ module Refinery
 
           click_link ::I18n.t('edit', :scope => 'refinery.admin.images')
 
-          page.should have_content('Use current image or replace it with this one...')
+          page.should have_content('Edit image')
           page.should have_selector("a[href*='#{refinery.admin_images_path}']")
 
           attach_file 'image_image', Refinery.roots(:'refinery/images').join('spec/fixtures/beach.jpeg')
