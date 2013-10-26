@@ -22,11 +22,7 @@ module Refinery
       this_class = class_name.constantize.base_class
       singular_name = ActiveModel::Naming.param_key(this_class)
       plural_name = singular_name.pluralize
-      order = if this_class.column_names.include?('position')
-                'position ASC'
-              elsif this_class.column_names.include?('updated_at')
-                'updated_at DESC'
-              end if this_class.table_exists?
+      order = 'position ASC' if this_class.table_exists? && this_class.column_names.include?('position')
 
       {
         :conditions => '',
