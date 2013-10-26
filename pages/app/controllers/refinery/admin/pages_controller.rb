@@ -11,7 +11,7 @@ module Refinery
       end
 
       def redirect_url
-        if @page
+        if @page && @page.persisted?
           refinery.edit_admin_page_path(@page.relative_path, frontend_locale_param)
         else
           refinery.admin_pages_path(frontend_locale_param)
