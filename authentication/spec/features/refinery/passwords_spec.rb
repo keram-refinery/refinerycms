@@ -33,16 +33,18 @@ module Refinery
       context "when good reset code" do
         before do
           visit refinery.new_refinery_user_password_path
+
+          Devise.stub(:friendly_token).and_return("abcdef")
           fill_in "refinery_user_email", :with => user.email
           click_button "Reset password"
-          user.reload
         end
 
-        # TODO
-        # in Devise 3.1 > isn't send reset_password_token but only digest of
-        # reset_password_token which we currently don't know how to properly test ;(
+        after do
+          Devise.unstub(:friendly_token)
+        end
+
         it "allows to change password" do
-          visit refinery.edit_refinery_user_password_path(:reset_password_token => user.reset_password_token)
+          visit refinery.edit_refinery_user_password_path(:reset_password_token => "abcdef")
           page.should have_content("Pick a new password for #{user.email}")
 
           fill_in "refinery_user_password", :with => "123456"
@@ -68,19 +70,27 @@ module Refinery
 
       context "when expired reset code" do
         before do
+          Devise.stub(:friendly_token).and_return("abcdef")
+
+          visit refinery.new_refinery_user_password_path
+          fill_in "refinery_user_email", :with => user.email
+          click_button "Reset password"
           user.reset_password_sent_at = 1.day.ago
-          user.reset_password_token = "refinerycms"
           user.save
         end
 
+        after do
+          Devise.unstub(:friendly_token)
+        end
+
         it "shows error message" do
-          visit refinery.edit_refinery_user_password_path(:reset_password_token => "refinerycms")
+          visit refinery.edit_refinery_user_password_path(:reset_password_token => "abcdef")
 
           fill_in "refinery_user_password", :with => "123456"
           fill_in "refinery_user_password_confirmation", :with => "123456"
           click_button "Reset password"
 
-          page.should have_content("Reset password token is invalid")
+          page.should have_content("Reset password token has expired, please request a new one")
         end
       end
     end
