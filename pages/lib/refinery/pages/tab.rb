@@ -5,14 +5,6 @@ module Refinery
       @tabs ||= []
     end
 
-    def self.tabs_for_template(template)
-      return tabs unless template
-
-      tabs.select do |tab|
-        tab.templates.include?('all') || tab.templates.include?(template)
-      end
-    end
-
     class Tab
       attr_accessor :name, :partial, :templates
 
