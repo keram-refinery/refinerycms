@@ -39,15 +39,10 @@ module Refinery
         :desc => 'presenter',
       },
       :javascript => {
-        :glob => '*.js{,.*}',
+        :glob => '*.{js,erb}',
         :dir => 'assets/javascripts',
         :desc => 'javascript',
-      },
-      :stylesheet => {
-        :glob => '*.css{,.scss}',
-        :dir => 'assets/stylesheets',
-        :desc => 'stylesheet',
-      },
+      }
     }
 
     desc "override", "copies files from any Refinery extension that you are using into your application"
@@ -61,8 +56,7 @@ module Refinery
       puts "You didn't specify anything valid to override. Here are some examples:"
       {
         :view => ['pages/home', 'refinery/pages/home', '**/*menu', '_menu_branch'],
-        :javascript => %w(admin refinery/site_bar **/{**/}*),
-        :stylesheet => %w(home refinery/site_bar),
+        :javascript => %w(refinery),
         :controller => %w(pages),
         :model => %w(page refinery/page),
         :helper => %w(site_bar refinery/site_bar_helper),

@@ -4,6 +4,7 @@ gemspec
 
 # Add i18n support.
 gem 'refinerycms-i18n', '~> 2.718.0.dev', github: 'keram-refinery/refinerycms-i18n', :branch => 'refinery_light'
+gem 'refinerycms-clientside', '~> 0.0.1', github: 'keram-refinery/refinerycms-clientside', branch: 'master'
 
 # Links dialog
 gem 'refinerycms-links', '~> 0.0.1', github: 'keram/refinerycms-links', branch: 'master'
@@ -32,7 +33,7 @@ gem 'jruby-openssl', :platform => :jruby
 group :test do
   gem 'refinerycms-testing', '~> 2.718.0.dev'
   gem 'rspec'
-  gem 'generator_spec', '~> 0.9.0'
+  gem 'generator_spec', '~> 0.9.0', github: 'stevehodgkiss/generator_spec', branch: 'master'
 end
 
 
@@ -42,7 +43,7 @@ gem 'sass-rails', '~> 4.0.1'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', :branch => 'master'
+gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', branch: 'master'
 
 gem 'jquery-rails', '~> 3.0.4'
 

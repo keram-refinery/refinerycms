@@ -19,10 +19,7 @@ describe 'CLI' do
       msg.should match("rake refinery:override view=refinery/pages/home")
       msg.should match(%r{rake refinery:override view=\*\*/\*menu})
       msg.should match("rake refinery:override view=_menu_branch")
-      msg.should match("rake refinery:override javascript=admin")
-      msg.should match("rake refinery:override javascript=refinery/site_bar")
-      msg.should match("rake refinery:override stylesheet=home")
-      msg.should match("rake refinery:override stylesheet=refinery/site_bar")
+      msg.should match("rake refinery:override javascript=refinery")
       msg.should match("rake refinery:override controller=pages")
       msg.should match("rake refinery:override model=page")
       msg.should match("rake refinery:override model=refinery/page")
@@ -120,14 +117,4 @@ describe 'CLI' do
     end
   end
 
-  describe 'overriding stylesheets' do
-    it_behaves_like "refinery:override" do
-      let(:env) { "stylesheet" }
-      let(:not_found_message) { "Couldn't match any stylesheet files in any extensions like non-existent\n" }
-      let(:spec_success_message) { %W(create app/assets/stylesheets/refinery/#{file_name}) }
-      let!(:file_location) { File.expand_path('../../../../app/assets/stylesheets/refinery', __FILE__) }
-      let(:env_file_location) { "refinery/#{file_name.sub(%r{\..+}, "")}" }
-      let(:copied_file_location) { "app/assets/stylesheets/refinery/#{file_name}" }
-    end
-  end
 end
