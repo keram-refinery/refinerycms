@@ -31,6 +31,7 @@ gem 'jruby-openssl', :platform => :jruby
 
 group :test do
   gem 'refinerycms-testing', '~> 2.718.0.dev'
+  gem 'rspec'
   gem 'generator_spec', '~> 0.9.0'
 end
 
@@ -44,7 +45,6 @@ gem 'uglifier'
 gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', :branch => 'master'
 
 gem 'jquery-rails', '~> 3.0.4'
-gem 'jquery-ui-rails', '~> 4.0.5'
 
 gem 'will_paginate', '~> 3.0.5'
 gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
