@@ -49,41 +49,6 @@ module Refinery
         end
       end
 
-      initializer 'register javascripts' do
-
-        Refinery::Core.config.register_javascript "refinery/refinery.min.js"
-
-        ::Refinery::I18n.frontend_locales.each do |locale|
-          file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/refinery-#{locale}.js"
-          if File.exists?(file_path)
-            Refinery::Core.config.register_I18n_javascript locale, "refinery/i18n/refinery-#{locale}.js"
-          end
-        end
-
-        Refinery::Core.config.register_admin_javascript "refinery/refinery.min.js"
-        Refinery::Core.config.register_admin_javascript "refinery/admin.min.js"
-
-        ::Refinery::I18n.locales.each do |locale|
-          file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/refinery-#{locale}.js"
-          if File.exists?(file_path)
-            Refinery::Core.config.register_admin_I18n_javascript locale, "refinery/i18n/refinery-#{locale}.js"
-          end
-        end
-
-        ::Refinery::I18n.locales.each do |locale|
-          file_path = "#{config.root}/app/assets/javascripts/refinery/i18n/admin/admin-#{locale}.js"
-          if File.exists?(file_path)
-            Refinery::Core.config.register_admin_I18n_javascript locale, "refinery/i18n/admin/admin-#{locale}.js"
-          end
-        end
-      end
-
-      initializer 'refinery.routes', after: :set_routes_reloader_hook do |app|
-        Refinery::Core::Engine.routes.append do
-          get '/refinery/*path' => 'admin#error_404'
-        end
-      end
-
       initializer 'refinery.autoload_paths' do |app|
         app.config.autoload_paths += [
           Rails.root.join('app', 'presenters'),

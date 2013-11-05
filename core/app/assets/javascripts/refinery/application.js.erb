@@ -1,10 +1,8 @@
 //= require jquery
 //= require jquery_ujs
-//= require vendor/jquery-ui.min
-//= require vendor/jquery.cookie
-//= require vendor/jquery.iframe-transport
 //= require turbolinks
-//= require vendor/nestedsortables
+//= require refinery/refinery.min
+//= require refinery/admin.min
 
 <% ::Refinery::Core.admin_javascripts.each do |js| %>
 <%= require_asset js %>
