@@ -10,7 +10,7 @@ module Refinery
 
       def run
         @pages.each do |key, attributes|
-          page = find_page_by_title(attributes[:title])
+          page = find_page(attributes)
 
           if page.blank?
             page = create_page attributes
@@ -34,12 +34,23 @@ module Refinery
 
       private
 
-      def find_page_by_title title
+      def find_page page_attrs
+        from = Page
+
+        if page_attrs[:parent] && @pages[page_attrs[:parent]]
+          parent = Page.find_by(id: @pages[page_attrs[:parent]][:id])
+          from = parent.children if parent.present?
+        end
+
+        find_page_by_title(page_attrs[:title], from)
+      end
+
+      def find_page_by_title title, from
         if title.is_a?(String)
-          Page::by_title(title).first
+          from::by_title(title).first
         else
           title.each do |title|
-            page = Page::by_title(title).first
+            page = from::by_title(title).first
             return page if page
           end
 
