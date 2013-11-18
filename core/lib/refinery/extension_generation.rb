@@ -397,7 +397,7 @@ module Refinery
         # merge translation files together.
         when %r{.yml$} then merge_yaml
         # append any routes from the new file to the current one.
-        when %r{/routes.rb$} then merge_rb
+        when %r{/routes.rb$} then merge_routes_rb
         # simply append the file contents
         else @source.read + @destination.read
         end
@@ -413,6 +413,10 @@ module Refinery
 
       def merge_rb
         (source_lines[0..-2] + destination_lines[1..-2] + [source_lines.last]).join "\n"
+      end
+
+      def merge_routes_rb
+        (source_lines[0..-2] + destination_lines[2..-2] + [source_lines.last]).join "\n"
       end
 
       def merge_yaml
