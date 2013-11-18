@@ -11,18 +11,24 @@ if plugin
   end
 
   if defined?(Refinery::Page) && plugin.page.blank?
-    page = Refinery::Page.create(
-      title: '<%= class_name.pluralize.underscore.titleize %>',
-      plugin_page_id: plugin.name,
-      deletable: false
-    )
+    if defined?(Refinery::Page) && plugin.page.nil?
+      pages = {
+        <%= extension_name -%>: {
+          title: '<%= class_name.pluralize.underscore.titleize %>',
+          deletable: false,
+          status: 'live',
+          plugin_page_id: plugin.name
+        },
+        thank_you: {
+          title: 'Thank You',
+          plugin_page_id: '<%= extension_name -%>_thank_you',
+          deletable: false,
+          show_in_menu: false,
+          parent: :<%= extension_name -%>
+        }
+      }
 
-    thank_you_page = page.children.create(
-      title: 'Thank You',
-      plugin_page_id: '<%= extension_name -%>_thank_you',
-      deletable: false,
-      show_in_menu: false
-    )
-
+      Refinery::Pages::Import.new(plugin, pages, false).run
+    end
   end
 end
