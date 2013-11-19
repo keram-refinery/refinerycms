@@ -16,7 +16,7 @@ tr:
           draft: Taslak
         form:
           preview: Onizleme
-          preview_changes: Yaptiklarinizi canli olarak kaydetmeden once degisikliklere goz at.
+          preview_title: Yaptiklarinizi canli olarak kaydetmeden once degisikliklere goz at.
         form_new_page_parts:
           title: Baslik
         form_page_parts:

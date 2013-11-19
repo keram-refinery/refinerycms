@@ -16,7 +16,7 @@ sk:
           draft: pracovná verzia
         form:
           preview: Náhľad
-          preview_changes: Zobraziť náhľad s vykonanými zmenami
+          preview_title: Zobraziť náhľad s vykonanými zmenami
         form_new_page_parts:
           title: Názov
         form_page_parts:

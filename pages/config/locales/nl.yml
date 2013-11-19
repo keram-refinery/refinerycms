@@ -16,7 +16,7 @@ nl:
           draft: concept
         form:
           preview: Voorbeeld
-          preview_changes: Bewerkingen bekijken ter controle
+          preview_title: Bewerkingen bekijken ter controle
         form_new_page_parts:
           title: Titel
         form_page_parts:

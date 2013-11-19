@@ -19,7 +19,7 @@ uk:
           draft: чернетку
         form:
           preview: Переглянути
-          preview_changes: Переглянути свої зміни перед збереженням
+          preview_title: Переглянути свої зміни перед збереженням
         form_new_page_parts:
           title: Заголовок
         form_page_parts:

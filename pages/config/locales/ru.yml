@@ -20,7 +20,7 @@ ru:
           draft: черновик
         form:
           preview: Посмотреть
-          preview_changes: Посмотреть свои изменения перед сохранением
+          preview_title: Посмотреть свои изменения перед сохранением
         form_new_page_parts:
           title: Заголовок
         form_page_parts:

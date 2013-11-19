@@ -16,7 +16,7 @@ da:
           draft: kladde
         form:
           preview: Preview
-          preview_changes: Se dine ændringer før du udgiver dem
+          preview_title: Se dine ændringer før du udgiver dem
         form_new_page_parts:
           title: Titel
         form_page_parts:

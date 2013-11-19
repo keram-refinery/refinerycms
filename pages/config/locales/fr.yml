@@ -16,7 +16,7 @@ fr:
           draft: brouillon
         form:
           preview: Prévisualiser
-          preview_changes: Prévisualiser vos changements avant de les appliquer
+          preview_title: Prévisualiser vos changements avant de les appliquer
         form_new_page_parts:
           title: Titre
         form_page_parts:

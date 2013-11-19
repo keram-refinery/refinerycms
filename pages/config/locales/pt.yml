@@ -16,7 +16,7 @@ pt:
           draft: rascunho
         form:
           preview: Pré-visualizar
-          preview_changes: Pré-visualizar as alterações antes de publicar
+          preview_title: Pré-visualizar as alterações antes de publicar
         form_new_page_parts:
           title: Título
         form_page_parts:

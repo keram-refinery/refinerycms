@@ -15,7 +15,7 @@ es:
           draft: borrador
         form:
           preview: Previsualizar
-          preview_changes: Previsualizar cambios antes de guardarlos
+          preview_title: Previsualizar cambios antes de guardarlos
         form_new_page_parts:
           title: Título
         form_page_parts:

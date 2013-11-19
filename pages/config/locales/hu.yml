@@ -16,7 +16,7 @@ hu:
           draft: piszkozat
         form:
           preview: 'Előnézet'
-          preview_changes: 'Változások előnézete élesítés előtt'
+          preview_title: 'Változások előnézete élesítés előtt'
         form_new_page_parts:
           title: Title
         form_page_parts:
