@@ -42,7 +42,7 @@ pt-BR:
             date: Data
             message: Mensagem
         settings:
-          notification_recipients_form:
+          notification_email_recipients_form:
             settings_value_name: Enviar notificações para
             explanation: "Toda vez que alguém contactar você no seu website, enviamos um email para notificar a essa pessoa o recebimento de uma mensagem."
             hint: "Digite um endereço de email acima. Deseja que a notificação vá para mais de uma pessoa? Digite vários endereços de email separados por vírgulas."

@@ -42,7 +42,7 @@ zh-CN:
             date: 日期
             message: 信息
         settings:
-          notification_recipients_form:
+          notification_email_recipients_form:
             settings_value_name: 发通知给
             explanation: 每当有人联系您时， Refinery都会发邮件给您.
             hint: 当有新的 <%= singular_name.humanize.downcase %> 被提交时， Refinery 会发邮件告知您。

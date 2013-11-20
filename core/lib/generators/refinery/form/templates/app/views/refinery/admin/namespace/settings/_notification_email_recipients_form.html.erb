@@ -2,15 +2,28 @@
               url: refinery.admin_<%= namespacing.underscore %>_setting_path,
               html: { data: { remote: true }} do |f| %>
 
+  <div class="clearfix">
+    <div class="form-title">
+      <h1>
+        <%%= t('edit_setting', scope: 'refinery.admin.settings.actions') %>:
+        <%%= t('notification_recipients', scope: 'refinery.admin.settings') %>
+      </h1>
+      <p class="less-important">
+        <%%= link_to refinery_plugin.title, refinery_plugin.url %>
+      </p>
+    </div>
+  </div>
+
+  <%%= render '/refinery/admin/error_messages', object: @setting, include_object_name: true %>
+
   <div class="field">
-      <%%= f.label :value, t('.settings_value_name') %>
+    <%%= f.label :value, t('.settings_value_name') %>
     <%%= f.text_field :value, value: @setting.value, class: 'larger widest' %>
   </div>
 
   <p>
     <%%= t('.hint') %>
-  </p>
-  <p>
+    <br/>
     <%%= t('.example') %>
   </p>
 

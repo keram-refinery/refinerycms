@@ -42,7 +42,7 @@ cs:
             date: Datum
             message: Zpráva
         settings:
-          notification_recipients_form:
+          notification_email_recipients_form:
             settings_value_name: Zaslat upozornění pro
             explanation: Pokaždé, když Vás někdo kontaktuje přes vaše webové stránky, Refinery odešle e-mail s upozorněním na nový <%= singular_name.humanize.downcase %>.
             hint: Když je odeslán nový <%= singular_name.humanize.downcase %>, Refinery pošle upozornení na Váš e-mail.

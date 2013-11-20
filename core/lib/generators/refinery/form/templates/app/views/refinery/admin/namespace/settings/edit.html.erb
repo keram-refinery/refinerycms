@@ -1,5 +1,1 @@
-<%% if @setting.name.to_s.titleize =~ /[rR]ecipients$/ %>
-  <%%= render 'notification_recipients_form', edit: true -%>
-<%% else %>
-  <%%= render 'confirmation_email_form', edit: true -%>
-<%% end %>
+<%%= render "#{@setting.name}_form" -%>

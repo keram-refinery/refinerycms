@@ -42,7 +42,7 @@ tr:
             date: Tarih
             message: Mesaj
         settings:
-          notification_recipients_form:
+          notification_email_recipients_form:
             settings_value_name: Bildirimleri gonderecegin  adres
             explanation: Her kim olursa seninle web sitesi uzerinden iletisime gecen, Refinery yeni bir <%= singular_name.humanize.downcase %>  diye e-posta atar.
             hint: Yeni Bir <%= singular_name.humanize.downcase %> teslim edildiginde, Refinery bir e-posta bildirisi yollayacak sana.

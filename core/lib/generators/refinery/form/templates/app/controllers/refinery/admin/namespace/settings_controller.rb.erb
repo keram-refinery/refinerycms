@@ -1,40 +1,59 @@
 module Refinery
-  module <%= class_name.pluralize %>
-    module Admin
+  module Admin
+    module <%= class_name.pluralize %>
       class SettingsController < Refinery::AdminController
 
-        before_action :check_setting, only: [:edit, :update]
-        after_action :save_subject_for_confirmation, :save_message_for_confirmation, only: :update
-
-        def edit
-          @setting = Refinery::Setting.find(params[:id].to_s)
-        end
+        before_action :find_setting, only: [:edit, :update]
 
         def update
-          @setting = Refinery::Setting.find(params[:id].to_s)
+          if params[:id] == 'confirmation_email'
+            updated = update_confirmation_email
+          else
+            updated = @setting.update_attributes(setting_params)
+          end
 
-          if @setting.update_attributes(params[:setting])
+          if updated
             flash[:notice] = t('refinery.crudify.updated',
               kind: t('setting', scope: 'refinery.crudify'),
-              what: @setting.name.gsub("<%= singular_name %>_", "").titleize)
+              what: t("#{@setting.name}"))
 
             redirect_back_or_default(refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path)
+          else
+            render :edit
           end
         end
 
       protected
-        def check_setting
-          setting = params[:id].gsub('<%= singular_name %>_', '')
 
-          Refinery::<%= namespacing %>::Setting.send(setting) if Refinery::<%= namespacing %>::Setting.respond_to?(setting)
+        def update_confirmation_email
+          %w(subject message).each do |key|
+            setting = Refinery::Setting.find_by(
+              name: "confirmation_email_#{key}_#{Globalize.locale}",
+              scoping: '<%= extension_name %>'
+            )
+
+            setting.update_attributes(value: params[:setting][:confirmation_email][key].to_s)
+            setting.errors[:value].each do |error|
+              @setting.errors[key] << error
+            end if setting.errors.any?
+          end
+
+          !@setting.errors.any?
         end
 
-        def save_subject_for_confirmation
-          Refinery::<%= namespacing %>::Setting.confirmation_subject = params[:subject] if params.keys.include?('subject')
+        def find_setting
+          case (id = params[:id].to_s)
+          when 'confirmation_email'
+            @setting = Refinery::Setting.new(name: id, slug: id, scoping: '<%= extension_name %>')
+          else
+            @setting = Refinery::Setting.find_by(name: id, scoping: '<%= extension_name %>')
+          end
+
+          @setting || error_404
         end
 
-        def save_message_for_confirmation
-          Refinery::<%= namespacing %>::Setting.confirmation_message = params[:message] if params.keys.include?('message')
+        def setting_params
+          params.require(:setting).permit(:value)
         end
 
       end

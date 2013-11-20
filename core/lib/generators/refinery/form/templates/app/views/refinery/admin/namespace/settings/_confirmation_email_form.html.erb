@@ -1,44 +1,66 @@
 <%%= form_for @setting,
               url: refinery.admin_<%= namespacing.underscore %>_setting_path,
-              html: { data: { remote: true }} do |f| %> do |f| %>
+              html: { data: { remote: true }} do |f| %>
+
+  <div class="clearfix">
+    <div class="form-title">
+      <h1>
+        <%%= t('edit_setting', scope: 'refinery.admin.settings.actions') %>:
+        <%%= t('confirmation_email', scope: 'refinery.admin.settings') %>
+      </h1>
+      <p class="less-important">
+        <%%= link_to refinery_plugin.title, refinery_plugin.url %>
+      </p>
+    </div>
+
+    <%%= render '/refinery/admin/locale_picker',
+                url: refinery.edit_admin_<%= namespacing.underscore %>_setting_path(@setting.slug) %>
+  </div>
+
+  <%%= render '/refinery/admin/error_messages', object: @setting, include_object_name: true %>
+
   <p>
     <%%= t('.explanation') %>
-  </p>
-  <p>
+    <br/>
     <%%= t('.below_edit_email_sent') %>
   </p>
+
   <table id="<%= singular_name %>">
     <tr>
-      <td>
+      <th>
         <label class="stripped"><%%= t('.to') %></label>
-      </td>
+      </th>
       <td>
         <%%= t('.the_customer_making_<%= singular_name %>') %>
       </td>
     </tr>
     <tr>
-      <td>
+      <th>
         <label class="stripped"><%%= t('.from') %></label>
-      </td>
+      </th>
       <td>
-        <%%= "#{Refinery::Core.site_name} &lt;no-reply@#{request.domain}&gt;".html_safe %>
+        <%%= "#{Refinery::Core.site_name} &lt;#{Refinery::Core.site_emails_emitter}&gt;".html_safe %>
       </td>
     </tr>
     <tr>
+      <th>
+        <%%= label_tag 'setting[confirmation_email][subject]', t('.subject'), class: 'stripped' %>
+      </th>
       <td>
-        <label class="stripped"><%%= t('.subject') %></label>
-      </td>
-      <td>
-        <%%= text_field_tag 'subject', Refinery::<%= namespacing %>::Setting.confirmation_subject,
-                           class: 'widest' %>
+        <%%= text_field 'setting[confirmation_email]', :subject,
+                    value: Refinery::<%= namespacing %>::Setting.confirmation_subject,
+                    class: 'widest' %>
       </td>
     </tr>
     <tr>
-      <td valign="top">
-        <%%= f.label :value, t('.message'), class: 'stripped' %>
-      </td>
+      <th valign="top">
+        <%%= label_tag 'setting[confirmation_email][subject]', t('.message'), class: 'stripped' %>
+      </th>
       <td>
-        <%%= f.text_area :value, value: @setting.value, rows: '7', class: 'widest' %>
+        <%%= text_area 'setting[confirmation_email]', :message,
+                    value: Refinery::<%= namespacing %>::Setting.confirmation_message,
+                    rows: 7,
+                    class: 'widest' %>
         <br/>
         <em><%%= t('.note') %>
       </td>
@@ -46,6 +68,6 @@
   </table>
 
   <%%= render '/refinery/admin/form_actions', f: f,
-             cancel_url: refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_url,
-             hide_delete: true %>
+              cancel_url: refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_url,
+              hide_delete: true %>
 <%% end %>

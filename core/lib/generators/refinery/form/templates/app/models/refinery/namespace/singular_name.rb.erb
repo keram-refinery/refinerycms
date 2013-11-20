@@ -42,6 +42,12 @@ module Refinery
 <% attributes.select{ |a| /radio|select/ === a.type.to_s }.uniq.each do |a| -%>
       <%= a.name.pluralize.upcase %> = []
 <% end -%>
+
+<% if includes_spam? -%>
+      def ham?
+        !spam?
+      end
+<% end -%>
     end
   end
 end

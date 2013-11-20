@@ -1,22 +1,28 @@
 <ul>
   <li <%%= 'class="selected"'.html_safe if action_name == 'index' %>>
-    <%%= link_to t('.inbox'), refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path, class: 'email_icon' %>
-  </li><% if @includes_spam %>
+    <%%= link_to t('.inbox'),
+                  refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
+                  class: 'icon-small icon-with-text email-icon' %>
+  </li><% if includes_spam? %>
   <li <%%= 'class="selected"'.html_safe if action_name == 'spam' %>>
     <%% if @spam_count.any?  %>
-      <%%= link_to "#{t('.spam')} (#{@spam_count})", refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path, class: 'spam_icon' %>
+      <%%= link_to "#{t('.spam')} (#{@spam_count})",
+                    refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
+                    class: 'icon-small icon-with-text spam-icon' %>
     <%% else %>
-      <%%= link_to t('.spam'), refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path, class: 'spam_empty_icon' %>
+      <%%= link_to t('.spam'),
+                  refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
+                  class: 'icon-small icon-with-text spam-empty-icon' %>
     <%% end %>
   </li><% end %>
   <li>
     <%%= link_to t('.update_notified'),
-                  refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:<%= singular_name %>_notification_recipients),
-                  class: 'user_comment_icon' %>
+                  refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:notification_email_recipients),
+                  class: 'icon-small icon-with-text setting-edit-icon' %>
   </li>
   <li>
     <%%= link_to t('.edit_confirmation_email'),
-                refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:<%= singular_name %>_confirmation_body),
-                class: 'edit_email_icon' %>
+                refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:confirmation_email),
+                class: 'icon-small icon-with-text setting-edit-icon' %>
   </li>
 </ul>

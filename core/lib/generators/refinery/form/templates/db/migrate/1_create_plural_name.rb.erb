@@ -17,6 +17,9 @@ class Create<%= class_name.pluralize %> < ActiveRecord::Migration
 -%>
       t.<%= attribute.type %> :<%= attribute.name %>
 <% end -%>
+<% if includes_spam? -%>
+      t.boolean :spam, null: false, default: false
+<% end -%>
 
       t.timestamps null: false
     end

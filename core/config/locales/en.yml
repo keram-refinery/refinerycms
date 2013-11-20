@@ -87,6 +87,9 @@ en:
         add_child: Add Child
         archive: Archive
         download: Download
+      settings:
+        confirmation_email: Confirmation email
+        notification_recipients: Notification recipients
     message:
       close: Close
       close_this_message: Close this message
