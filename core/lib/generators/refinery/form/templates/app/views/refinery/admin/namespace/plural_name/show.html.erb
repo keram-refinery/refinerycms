@@ -41,7 +41,7 @@
                    class: 'icon-small icon-with-text back-icon' %>
     </li>
     <li>
-      <%%= link_to t('delete', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),
+      <%%= link_to t('delete', scope: 'refinery.admin.record'),
                   refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(@<%= singular_name %>),
                   class: 'icon-small icon-with-text delete-icon confirm-delete',
                   title: t('delete', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),

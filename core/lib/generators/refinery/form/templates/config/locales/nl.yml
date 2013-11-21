@@ -15,7 +15,6 @@ nl:
           delete: Deze <%= singular_name.humanize.downcase %> definitief verwijderen
           <%= singular_name %>:
             read_<%= singular_name %>: Lees de <%= singular_name.humanize.downcase %>
-            said: zei
             mark_as_spam: Als spam markeren
             mark_as_ham: Naar de inbox verplaatsen
           actions:
@@ -71,7 +70,7 @@ nl:
           ps_html: P.S. Alle <%= plural_name.humanize.downcase %> worden opgeslagen in de sectie <%= plural_name.titleize %> van Refinery.
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

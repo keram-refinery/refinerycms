@@ -1,29 +1,38 @@
 <li class="record">
   <div class="detail">
     <span class="title">
-      <%%= link_to <%= singular_name %>.name, refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>) %> <%%= t('.said') %>
+      <%%= link_to <%= singular_name %>.name, refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>) %>
     </span>
     <span class="preview"><%%= strip_tags(sanitize(<%= singular_name %>.message)) %></span>
   </div>
   <span class="actions">
-    <%%= link_to refinery_icon_tag('delete.png'), refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                class: 'delete confirm-delete',
-                title: t('admin.<%= plural_name %>.delete'),
+    <%%= link_to t('delete', scope: 'refinery.admin.record'),
+                refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                class: 'delete confirm-delete nojs-hide icon-small delete-icon',
+                title: t('delete', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>'),
                 data: {
-                  confirm: t('shared.admin.delete.message', title: <%= singular_name %>.name),
-                  method: 'delete'
-                } %>
+                  remote: true,
+                  confirm: t('message', scope: 'refinery.admin.delete', title: <%= singular_name %>.<%= title_attribute_name %>)
+                },
+                method: :delete %>
 
-    <%%= link_to refinery_icon_tag('zoom.png'), refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                title: t('.read_<%= singular_name %>') %>
-<% if includes_spam? %>
+    <%%= link_to t('detail', scope: 'refinery.admin.record'),
+                refinery.admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                class: 'icon-small detail-icon',
+                title: t('.detail') %>
+
+<% if includes_spam? -%>
     <%% if <%= singular_name %>.spam? %>
-      <%%= link_to refinery_icon_tag('email.png'), refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  title: t('.mark_as_ham') %>
-    <%% else %>
-      <%%= link_to refinery_icon_tag('bin_closed.png'), refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  title: t('.mark_as_spam') %>
-    <%% end %>
+      <%%= link_to t('.mark_as_ham'),
+                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                  :class => 'icon-small email-icon',
+                  :title => t('.mark_as_ham') -%>
+    <%% else -%>
+      <%%= link_to t('.mark_as_spam'),
+                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                  :class => 'icon-small spam-icon',
+                  :title => t('.mark_as_spam') -%>
+    <%% end -%>
 <% end %>
   </span>
 </li>

@@ -15,7 +15,6 @@ tr:
           delete: Sonsuza dek <%= singular_name.humanize.downcase %> sil
           <%= singular_name %>:
             read_<%= singular_name %>: Read the <%= singular_name.humanize.downcase %>
-            said: dedi
             mark_as_spam: Spam olarak isaretle
             mark_as_ham: Gelen kutusuna tasi
           actions:
@@ -71,7 +70,7 @@ tr:
           ps_html: Senin butun <%= plural_name.humanize.downcase %> kayitli oldugu yer "<%= plural_name.titleize %>" burasidir eger ileride kullanmak istersen
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

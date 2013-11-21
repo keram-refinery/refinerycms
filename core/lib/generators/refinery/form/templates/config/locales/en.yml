@@ -14,8 +14,7 @@ en:
         <%= plural_name %>:
           delete: Remove this <%= singular_name.humanize.downcase %> forever
           <%= singular_name %>:
-            read_<%= singular_name %>: Read the <%= singular_name.humanize.downcase %>
-            said: said
+            detail: See detail of the <%= singular_name.humanize.downcase %>
             mark_as_spam: Mark as spam
             mark_as_ham: Move to inbox
           actions:
@@ -71,7 +70,7 @@ en:
           ps_html: P.S. All your <%= plural_name.humanize.downcase %> are stored in the "<%= plural_name.titleize %>" section of Refinery should you ever want to view it later there.
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

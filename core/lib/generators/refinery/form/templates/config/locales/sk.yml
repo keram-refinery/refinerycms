@@ -15,7 +15,6 @@ sk:
           delete: Trvalo odstrániť <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
             read_<%= singular_name %>: Prečítať <%= singular_name.humanize.downcase %>
-            said: povedal
             mark_as_spam: Označiť ako spam
             mark_as_ham: Označiť ako prečítané
           actions:
@@ -71,7 +70,7 @@ sk:
           ps_html: P.S. Všetky vaše <%= plural_name.humanize.downcase %> sú uložené v "<%= plural_name.titleize %>" sekcii v Refinery, ak by ste ich chceli zobraziť neskôr.
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

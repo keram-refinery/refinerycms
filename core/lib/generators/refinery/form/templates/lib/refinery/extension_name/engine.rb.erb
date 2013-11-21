@@ -6,15 +6,22 @@ module Refinery
 
       engine_name :refinery_<%= extension_name %>
 
-      initializer 'register refinerycms_<%= plural_name %> plugin' do
+      initializer 'register <%= plural_name %> plugin' do
         Refinery::Plugin.register do |plugin|
           plugin.name = '<%= plural_name %>'
-          plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_<%= namespacing.underscore %>_<%= plural_name %>_path }
+          plugin.url = proc {
+            Refinery::Core::Engine.routes.url_helpers.admin_<%= namespacing.underscore %>_<%= plural_name %>_path
+          }
           plugin.pathname = root
           plugin.activity = {
-            class_name: :'refinery/<%= namespacing.underscore %>/<%= singular_name %>'
+            class_name: :'refinery/<%= namespacing.underscore %>/<%= singular_name %>',
+            url_prefix: ''
           }
         end
+      end
+
+      initializer "reload routes" do
+        Rails.application.routes_reloader.reload!
       end
 
       config.after_initialize do

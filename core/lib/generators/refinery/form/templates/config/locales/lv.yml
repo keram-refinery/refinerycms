@@ -14,7 +14,6 @@ lv:
           delete: Dzēst šo pieprasījumu
           <%= singular_name %>:
             read_<%= singular_name %>: Lasīt pieprasījumu
-            said: sacīja
             mark_as_spam: Atzīmēt kā spamu
             mark_as_ham: Pārvietot uz ienākošajiem
           actions:
@@ -70,7 +69,7 @@ lv:
           ps_html: P.S. Ja vēlaties skatīt šo un citus pieprasījumus vēlāk, tad tos var atrast zem sadaļas "Pieprasījumi".
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

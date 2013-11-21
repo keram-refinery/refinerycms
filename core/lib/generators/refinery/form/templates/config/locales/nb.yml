@@ -19,7 +19,6 @@ nb:
             read_<%= singular_name %>: Les forespørselen
             remove_<%= singular_name %>: "Er du sikker på at du ønsker å slette denne forespørselen fra '%{name}'?"
             title: <%= plural_name.titleize %>
-            said: sa
             mark_as_spam: Merk som søppel
             mark_as_ham: Flytt til innboksen
           toggle_status:
@@ -67,7 +66,7 @@ nb:
             subject_value_name: Enme
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
       setting: Innstillinger for Forespørsler
     attributes:
       <%= singular_name %>:

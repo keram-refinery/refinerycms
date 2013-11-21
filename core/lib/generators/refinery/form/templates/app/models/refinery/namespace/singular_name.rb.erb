@@ -18,6 +18,9 @@ module Refinery
 <% unless (string_fields = attributes.map { |a| a.name if a.type == :string }.compact.uniq).empty? || string_fields.detect { |f| f.to_s == 'name' } -%>
       alias_attribute :name, :<%= string_fields.first %>
 <% end -%>
+<% unless string_fields.empty? || string_fields.detect { |f| f.to_s == 'title' } -%>
+      alias_attribute :title, :name
+<% end -%>
 
       # Add some validation here if you want to validate the user's input
 <% if string_fields.any? -%>

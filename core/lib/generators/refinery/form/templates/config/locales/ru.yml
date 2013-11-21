@@ -19,7 +19,6 @@ ru:
             read_<%= singular_name %>: "Прочитать запрос"
             remove_<%= singular_name %>: "Вы уверены, что хотите удалить запрос от '%{name}'?"
             title: <%= plural_name.titleize %>
-            said: "пишет"
             mark_as_spam: "Пометить как спам"
             mark_as_ham: "Переместить во Входящие"
           toggle_status:
@@ -69,7 +68,7 @@ ru:
             subject_value_name: "Тема сообщения"
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
       setting: "Настройки запроса"
     attributes:
       <%= singular_name %>:

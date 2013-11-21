@@ -36,7 +36,7 @@ module Refinery
             logger.warn "Please add an 'email' field to <%= class_name %> if you wish to send confirmation emails when forms are submitted."
           end
 
-          redirect_to refinery.thank_you_<%= namespacing.underscore %>_<%= plural_name %>_path, status: :see_other
+          redirect_to refinery.url_for((thank_you_page || page).url), status: :see_other
         else
           render action: :new
         end
@@ -46,6 +46,11 @@ module Refinery
 
       def find_page
         @page = Page.includes(:parts).find_by(plugin_page_id: '<%= extension_name %>')
+      end
+      alias_method :page, :find_page
+
+      def thank_you_page
+        @thank_you_page ||= refinery_plugin.thank_you_page
       end
 
     private

@@ -35,7 +35,7 @@ module Refinery
         end
 <% else %>
         def index
-           find_all_<%= plural_name %>
+          find_all_<%= plural_name %>
 
           @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
         end

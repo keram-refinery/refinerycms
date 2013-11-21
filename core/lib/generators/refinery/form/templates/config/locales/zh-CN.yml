@@ -15,7 +15,6 @@ zh-CN:
           delete: 永久删除 <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
             read_<%= singular_name %>: 阅读这个 <%= singular_name.humanize.downcase %>
-            said: 说
             mark_as_spam: 标记为垃圾邮件
             mark_as_ham:  移动到收件箱
           actions:
@@ -71,7 +70,7 @@ zh-CN:
           ps_html:  注：所有您的<%= plural_name.humanize.downcase %>都会保存在"<%= plural_name.titleize %>"里。这样您可以在任何时间查看它们。
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

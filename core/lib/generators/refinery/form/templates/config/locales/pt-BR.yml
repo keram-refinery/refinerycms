@@ -15,7 +15,6 @@ pt-BR:
           delete: Remover esta mensagem para sempre
           <%= singular_name %>:
             read_<%= singular_name %>: Ler a mensagem
-            said: disse
             mark_as_spam: Marcar como spam
             mark_as_ham: Marcar como segura
           actions:
@@ -71,7 +70,7 @@ pt-BR:
           ps_html: OBS. Todos os contatos são armazenados na seção 'Contatos' do website.
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

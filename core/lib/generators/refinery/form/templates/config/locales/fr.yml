@@ -15,7 +15,6 @@ fr:
           delete: Supprimer définitivement cette requête
           <%= singular_name %>:
             read_<%= singular_name %>: Lire la requête
-            said: a dit
             mark_as_spam: Marquer comme spam
             mark_as_ham: Déplacer dans la boîte de réception
           actions:
@@ -54,7 +53,7 @@ fr:
             click_to_edit_subject: Cliquez ici pour modifier le sujet
             explanation: Chaque fois qu'une demande de contact est rédigée sur votre site, Refinery envoie un e-mail pour le signaler.
             below_edit_email_sent: Ci-dessous vous pouvez modifier l'e-mail qui sera envoyé.
-            the_customer_making_<%= singular_name %>: Le client à l'origine de la requête
+            the_customer_making_<%= singular_name %>: "Le client à l'origine de la requête"
             message: Message
             note: "Note: Utilisez %name% à l'endroit où vous souhaitez voir apparaître le nom du client dans l'e-mail"
       mailer:
@@ -71,7 +70,7 @@ fr:
           ps_html: P.S. Toutes les requêtes sont stockées dans la section 'Requêtes' afin que vous puissiez les consulter ultérieurement.
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>

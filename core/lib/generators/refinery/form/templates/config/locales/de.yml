@@ -15,7 +15,6 @@ de:
           delete: Diese Kontaktanfrage für immer löschen
           <%= singular_name %>:
             read_<%= singular_name %>: Kontaktanfrage lesen
-            said: schrieb
             mark_as_spam: Als Spam markieren
             mark_as_ham: In den Posteingang verschieben
           actions:
@@ -71,7 +70,7 @@ de:
           ps_html: P.S. All Ihre Kontaktanfragen werden im Bereich "Kontaktanfragen" von Refinery gespeichert, sollten Sie diese zu einem späteren Zeitpunkt wieder ansehen wollen.
   activerecord:
     models:
-      <%= singular_name %>: <%= class_name.underscore.titleize %>
+      refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
     attributes:
       <%= singular_name %>:
 <% attributes.each do |a| -%>
