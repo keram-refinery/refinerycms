@@ -33,24 +33,22 @@ module Refinery
     #
     # Example:
     #   To override the limit and title of the activity:
-    #   Activity.new(:limit => 10, :title => 'Newest Activity!')
+    #   Activity.new(limit: 10, title: 'Newest Activity!')
     #
     # Warning:
     #  for the nested_with option, pass in the reverse order of ancestry
     #  e.g. [parent.parent_of_parent, parent]
     def initialize(options = {})
       {
-        :class_name => nil,
-        :conditions => nil,
-        :created_image => 'add.png',
-        :limit => 7,
-        :nested_with => [],
-        :order => 'updated_at DESC',
-        :title => 'title',
-        :updated_image => 'edit.png',
-        :url => nil,
-        :url_prefix => 'edit',
-        :use_record_in_nesting => true
+        class_name: nil,
+        conditions: nil,
+        limit: 7,
+        nested_with: [],
+        order: 'updated_at DESC',
+        title: 'title',
+        url: nil,
+        url_prefix: 'edit',
+        use_record_in_nesting: true
       }.merge(options).each { |key, value| self.send(:"#{key}=", value) }
     end
 
@@ -71,7 +69,7 @@ module Refinery
     # of the Class this instance is recording
     #
     # Example:
-    #   Given: Activity.new(:class_name => 'Refinery::Image')
+    #   Given: Activity.new(class_name: 'Refinery::Image')
     #
     #   activity.base_class_name => 'Image'
     def base_class_name

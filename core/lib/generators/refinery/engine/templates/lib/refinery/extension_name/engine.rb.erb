@@ -6,7 +6,7 @@ module Refinery
 
       engine_name :refinery_<%= extension_name %>
 
-      initializer "register refinerycms_<%= extension_name %> plugin" do
+      initializer "register <%= extension_name %> plugin" do
         Refinery::Plugin.register do |plugin|
           plugin.name = '<%= extension_name %>'
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_<%= namespacing.underscore %>_<%= plural_name %>_path }
