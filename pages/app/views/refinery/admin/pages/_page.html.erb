@@ -43,7 +43,7 @@
                   title: t('edit', scope: 'refinery.admin.pages') %>
 
       <%= link_to t('add_child', scope: 'refinery.admin.record'),
-                  refinery.new_admin_page_path(parent_id: page.id),
+                  refinery.new_admin_page_path(frontend_locale_param.merge(parent_id: page.id)),
                   class: 'icon-small page-add-icon',
                   title: t('new', scope: 'refinery.admin.pages') %>
 
