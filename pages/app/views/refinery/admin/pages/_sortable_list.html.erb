@@ -1,5 +1,5 @@
 <%
-  update_url = refinery.url_for(action: 'update_positions', frontend_locale: Globalize.locale)
+  update_url = refinery.url_for(action: 'update_positions')
 %>
 <ul class="records tree sortable-tree" data-update_positions_url="<%= update_url %>">
   <%= render partial: 'page', collection: @pages.roots %>

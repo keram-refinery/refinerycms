@@ -156,9 +156,9 @@ module Refinery
           def redirect_url
             if paginate_page > 1
               page = [paginate_page, #{class_name}.page(1).total_pages].min
-              #{options[:redirect_to_url]}(frontend_locale_param.merge!(page: page))
+              #{options[:redirect_to_url]}(page: page)
             else
-              #{options[:redirect_to_url]}(frontend_locale_param)
+              #{options[:redirect_to_url]}
             end
           end
 

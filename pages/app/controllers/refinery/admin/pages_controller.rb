@@ -12,9 +12,9 @@ module Refinery
 
       def redirect_url
         if @page && @page.persisted?
-          refinery.edit_admin_page_path(@page.relative_path, frontend_locale_param)
+          refinery.edit_admin_page_path(@page.relative_path)
         else
-          refinery.admin_pages_path(frontend_locale_param)
+          refinery.admin_pages_path
         end
       end
 

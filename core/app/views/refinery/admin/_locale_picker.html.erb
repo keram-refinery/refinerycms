@@ -1,14 +1,15 @@
+<% url_options ||= {} %>
 <% locales ||= Refinery::I18n.frontend_locales %>
 <% if locales.many? %>
   <ul class="locale-picker clearfix">
     <% locales.each do |locale| %>
+
       <li<%= ' class="selected" aria-selected="true"'.html_safe if locale == Globalize.locale %>>
         <%= link_to lang(locale),
-                    (current_refinery_user.frontend_locale.to_sym == locale ? url : "#{url}?frontend_locale=#{locale}"),
+                    refinery.send(url, url_options.merge!(locale: locale)),
                     title: lang(locale),
                     class: "locale flag-#{locale}" %>
       </li>
     <% end %>
   </ul>
 <% end %>
-<%= hidden_field_tag 'frontend_locale', Globalize.locale %>

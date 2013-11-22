@@ -377,14 +377,14 @@ module Refinery
           end
 
           it 'uses id if page has not translation (slug) for current frontend locale' do
-            visit "#{refinery.admin_pages_path}?frontend_locale=en"
+            visit "/en/#{refinery.admin_pages_path}"
             within "#page_#{ru_page_id}" do
               page.find_link('Edit this page')[:href].should include("#{ru_page_id}/edit")
             end
           end
 
           it 'uses slug if page has translation' do
-            visit "#{refinery.admin_pages_path}?frontend_locale=ru"
+            visit "/ru/#{refinery.admin_pages_path}"
             within "#page_#{ru_page_id}" do
               page.find_link('Edit this page')[:href].should include("#{ru_page_slug_encoded}/edit")
             end

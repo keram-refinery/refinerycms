@@ -158,7 +158,7 @@ module Refinery
         params.require(:user).permit(
           :username, :email, :about, :image_id,
           :password, :password_confirmation,
-          :locale, :frontend_locale, :full_name)
+          :locale, :full_name)
       end
     end
   end

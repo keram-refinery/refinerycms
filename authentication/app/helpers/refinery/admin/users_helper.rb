@@ -14,12 +14,6 @@ module Refinery
         end
       end
 
-      def options_for_frontend_locale
-        Refinery::I18n.frontend_locales.map do |locale|
-          [lang(locale), locale]
-        end
-      end
-
     end
   end
 end

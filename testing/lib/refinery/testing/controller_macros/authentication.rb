@@ -19,7 +19,7 @@ module Refinery
           roles = handle_deprecated_roles! roles
           plugins ||= Refinery::Plugins.registered.in_menu.names
           let(:logged_in_user) do
-            user = double 'Refinery::User', :username => 'Joe Fake', :locale => :en, :frontend_locale => :en, :plugins => plugins
+            user = double 'Refinery::User', :username => 'Joe Fake', :locale => :en, :plugins => plugins
 
             roles.each do |role|
               user.stub(:has_role?).with(role).and_return true

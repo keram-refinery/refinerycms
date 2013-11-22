@@ -37,8 +37,7 @@ describe Refinery::Admin::UsersController do
       :email => 'bob@bob.com',
       :password => 'password',
       :password_confirmation => 'password',
-      :locale => 'en',
-      :frontend_locale => 'en' }}
+      :locale => 'en' }}
     let(:user) { Refinery::User.new(user_params)}
 
     it 'redirect when new user is created' do

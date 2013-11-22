@@ -33,7 +33,6 @@ module Refinery
     validates :full_name, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :slug, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :locale, presence: true, inclusion: { in: Refinery::I18n::LOCALES_KEYS }
-    validates :frontend_locale, presence: true, inclusion: { in: Refinery::I18n::FRONTEND_LOCALES_KEYS }
 
     before_validation :downcase_username, :strip_username
 

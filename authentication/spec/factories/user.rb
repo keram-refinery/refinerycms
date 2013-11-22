@@ -11,7 +11,6 @@ FactoryGirl.define do
     sequence(:username) { |n| "refinery#{n}#{rand(10000000)}" }
     sequence(:email) { |n| "refinery#{n}#{rand(10000000)}@refinerycms.com" }
     locale 'en'
-    frontend_locale 'en'
     password  "refinerycms"
     password_confirmation "refinerycms"
   end

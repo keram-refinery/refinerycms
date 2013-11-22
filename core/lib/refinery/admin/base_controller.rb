@@ -13,7 +13,7 @@ module Refinery
 
         base.after_action :store_location?, only: [:index] # for redirect_back_or_default
 
-        base.helper_method :iframe?, :group_by_date, :frontend_locale_param
+        base.helper_method :iframe?, :group_by_date
       end
 
       def admin?
@@ -55,10 +55,6 @@ module Refinery
           logger.warn "User '#{current_refinery_user.username}' tried to access plugin '#{refinery_plugin.name}' via '#{params[:controller]}' but was rejected."
           return error_403
         end
-      end
-
-      def frontend_locale_param
-        Globalize.locale != current_refinery_user.frontend_locale.to_sym ? { frontend_locale: Globalize.locale } : {}
       end
 
     private
