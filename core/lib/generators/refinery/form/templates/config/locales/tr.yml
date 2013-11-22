@@ -9,6 +9,18 @@ tr:
         new:
           send: Mesaj Gonder
           privacy_policy: Mahremiyetinize onem veriyoruz.
+      mailer:
+        notification:
+          greeting: Selamlar
+          you_recieved_new_<%= singular_name %>: You just received a new <%= singular_name.humanize.downcase %> on your website.
+          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> starts ---
+          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> ends ---
+          from: Kimden
+          email: E-posta
+          phone: Telefon
+          message: Mesaj
+          closing_line: Saygilarimizla
+          ps_html: Senin butun <%= plural_name.humanize.downcase %> kayitli oldugu yer "<%= plural_name.titleize %>" burasidir eger ileride kullanmak istersen
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ tr:
             the_customer_making_<%= singular_name %>: Musteri <%= singular_name.humanize.downcase %> yapiyor
             message: Mesaj
             note: "Not: metini hizala %name% nerede musterinizin e-posta adresi gibi gozukmesini istiyorsan"
-      mailer:
-        notification:
-          greeting: Selamlar
-          you_recieved_new_<%= singular_name %>: You just received a new <%= singular_name.humanize.downcase %> on your website.
-          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> starts ---
-          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> ends ---
-          from: Kimden
-          email: E-posta
-          phone: Telefon
-          message: Mesaj
-          closing_line: Saygilarimizla
-          ps_html: Senin butun <%= plural_name.humanize.downcase %> kayitli oldugu yer "<%= plural_name.titleize %>" burasidir eger ileride kullanmak istersen
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

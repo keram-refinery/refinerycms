@@ -1,9 +1,8 @@
-<%%= render 'actions' %>
 <section id="records">
   <%% if @grouped_<%= plural_name %>.any? %>
     <%% @grouped_<%= plural_name %>.each do |container| %>
       <h3><%%= l((<%= singular_name %>_group = container.last).first.created_at) %></h3>
-      <ul>
+      <ul class="records">
         <%%= render partial: '<%= singular_name %>', collection: <%= singular_name %>_group %>
       </ul>
     <%% end %>
@@ -12,4 +11,7 @@
       <strong><%%= t('.no_spam') %></strong>
     </p>
   <%% end %>
+</section>
+<section id="actions">
+  <%%= render 'actions' %>
 </section>

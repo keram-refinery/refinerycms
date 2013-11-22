@@ -9,6 +9,18 @@ pt-BR:
         new:
           send: Enviar mensagem
           privacy_policy: "Nós valorizamos sua privacidade"
+      mailer:
+        notification:
+          greeting: Olá
+          you_recieved_new_<%= singular_name %>: Você recebeu um novo contato pelo website.
+          <%= singular_name %>_starts: --- começo da mensagem ---
+          <%= singular_name %>_ends: --- fim da mensagem ---
+          from: De
+          email: Email
+          phone: Telefone
+          message: Mensagem
+          closing_line: Atenciosamente
+          ps_html: OBS. Todos os contatos são armazenados na seção 'Contatos' do website.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ pt-BR:
             the_customer_making_<%= singular_name %>: O cliente fazendo o contato
             message: Mensagem
             note: "Nota: posicione o texto %name% onde você desejar que o nome do cliente apareça no email."
-      mailer:
-        notification:
-          greeting: Olá
-          you_recieved_new_<%= singular_name %>: Você recebeu um novo contato pelo website.
-          <%= singular_name %>_starts: --- começo da mensagem ---
-          <%= singular_name %>_ends: --- fim da mensagem ---
-          from: De
-          email: Email
-          phone: Telefone
-          message: Mensagem
-          closing_line: Atenciosamente
-          ps_html: OBS. Todos os contatos são armazenados na seção 'Contatos' do website.
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

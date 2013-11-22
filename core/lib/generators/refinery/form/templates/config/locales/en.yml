@@ -9,6 +9,18 @@ en:
         new:
           send: Send message
           privacy_policy: We value your privacy
+      mailer:
+        notification:
+          greeting: Hi there
+          you_recieved_new_<%= singular_name %>: You just received a new <%= singular_name.humanize.downcase %> on your website.
+          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> starts ---
+          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> ends ---
+          from: From
+          email: Email
+          phone: Phone
+          message: Message
+          closing_line: Kind Regards
+          ps_html: P.S. All your <%= plural_name.humanize.downcase %> are stored in the "<%= plural_name.titleize %>" section of Refinery should you ever want to view it later there.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ en:
             the_customer_making_<%= singular_name %>: The customer making the <%= singular_name.humanize.downcase %>
             message: Message
             note: "Note: place the text %name% where you'd like the customer's name to appear in the email"
-      mailer:
-        notification:
-          greeting: Hi there
-          you_recieved_new_<%= singular_name %>: You just received a new <%= singular_name.humanize.downcase %> on your website.
-          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> starts ---
-          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> ends ---
-          from: From
-          email: Email
-          phone: Phone
-          message: Message
-          closing_line: Kind Regards
-          ps_html: P.S. All your <%= plural_name.humanize.downcase %> are stored in the "<%= plural_name.titleize %>" section of Refinery should you ever want to view it later there.
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

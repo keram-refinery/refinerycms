@@ -9,6 +9,18 @@ nl:
         new:
           send: Bericht verzenden
           privacy_policy: Wij respecteren uw privacy
+      mailer:
+        notification:
+          greeting: Hallo
+          you_recieved_new_<%= singular_name %>: U hebt een nieuwe <%= singular_name.humanize.downcase %> ontvangen via de website.
+          <%= singular_name %>_starts: --- begin van de <%= singular_name.humanize.downcase %> ---
+          <%= singular_name %>_ends: --- einde van de <%= singular_name.humanize.downcase %> ---
+          from: Van
+          email: E-mail
+          phone: Telefoon
+          message: Bericht
+          closing_line: Met vriendelijke groet,
+          ps_html: P.S. Alle <%= plural_name.humanize.downcase %> worden opgeslagen in de sectie <%= plural_name.titleize %> van Refinery.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ nl:
             the_customer_making_<%= singular_name %>: De persoon die de <%= singular_name.humanize.downcase %> heeft ingezonden
             message: Bericht
             note: "N.B.: plaats de tekst %name% overal in de email waar u de naam van de klant persoon wilt invoegen"
-      mailer:
-        notification:
-          greeting: Hallo
-          you_recieved_new_<%= singular_name %>: U hebt een nieuwe <%= singular_name.humanize.downcase %> ontvangen via de website.
-          <%= singular_name %>_starts: --- begin van de <%= singular_name.humanize.downcase %> ---
-          <%= singular_name %>_ends: --- einde van de <%= singular_name.humanize.downcase %> ---
-          from: Van
-          email: E-mail
-          phone: Telefoon
-          message: Bericht
-          closing_line: Met vriendelijke groet,
-          ps_html: P.S. Alle <%= plural_name.humanize.downcase %> worden opgeslagen in de sectie <%= plural_name.titleize %> van Refinery.
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

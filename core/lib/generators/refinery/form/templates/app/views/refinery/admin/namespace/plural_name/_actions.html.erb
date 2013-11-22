@@ -1,18 +1,16 @@
 <ul>
   <li <%%= 'class="selected"'.html_safe if action_name == 'index' %>>
-    <%%= link_to t('.inbox'),
-                  refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
-                  class: 'icon-small icon-with-text email-icon' %>
+    <%%= link_to refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
+                class: 'icon-small icon-with-text email-icon' do %>
+      <%%= t('.inbox') %>
+      <i class="items-count"><%%= "(#{@inbox_count})" if @inbox_count > 0 -%></i>
+    <%% end -%>
   </li><% if includes_spam? %>
   <li <%%= 'class="selected"'.html_safe if action_name == 'spam' %>>
-    <%% if @spam_count.any?  %>
-      <%%= link_to "#{t('.spam')} (#{@spam_count})",
-                    refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
-                    class: 'icon-small icon-with-text spam-icon' %>
-    <%% else %>
-      <%%= link_to t('.spam'),
-                  refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
-                  class: 'icon-small icon-with-text spam-empty-icon' %>
+    <%%= link_to refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
+                class: 'icon-small icon-with-text spam-icon' do %>
+      <%%= t('.spam') -%>
+      <i class="items-count" ><%%= "(#{@spam_count})" if @spam_count > 0 -%></i>
     <%% end %>
   </li><% end %>
   <li>

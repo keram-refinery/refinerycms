@@ -90,7 +90,7 @@ en:
         download: Download
       settings:
         confirmation_email: Confirmation email
-        notification_recipients: Notification recipients
+        notification_email_recipients: Notification recipients
     message:
       close: Close
       close_this_message: Close this message

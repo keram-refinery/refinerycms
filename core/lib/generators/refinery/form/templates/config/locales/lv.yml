@@ -8,6 +8,18 @@ lv:
         new:
           send: Sūtīt ziņu
           privacy_policy: Mēs cienam Jūsu privātumu
+      mailer:
+        notification:
+          greeting: Sveicināts(-a)
+          you_recieved_new_<%= singular_name %>: Jūs nupat saņēmāt jaunu piperasījumu Jūsu saitā.
+          <%= singular_name %>_starts: --- pieprasījuma sākums ---
+          <%= singular_name %>_ends: --- pieprasījuma beigas ---
+          from: 'No'
+          email: Epasts
+          phone: Tālrunis
+          message: Ziņa
+          closing_line: Ar cieņu
+          ps_html: P.S. Ja vēlaties skatīt šo un citus pieprasījumus vēlāk, tad tos var atrast zem sadaļas "Pieprasījumi".
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -55,18 +67,6 @@ lv:
             the_customer_making_<%= singular_name %>: Klients, kurš izveidoja pieprasījumu
             message: Ziņa
             note: "Piezīme: ievieto šo tektstu %name% tur, kur tu epastā vēlies norādīt klienta vārdu"
-      mailer:
-        notification:
-          greeting: Sveicināts(-a)
-          you_recieved_new_<%= singular_name %>: Jūs nupat saņēmāt jaunu piperasījumu Jūsu saitā.
-          <%= singular_name %>_starts: --- pieprasījuma sākums ---
-          <%= singular_name %>_ends: --- pieprasījuma beigas ---
-          from: 'No'
-          email: Epasts
-          phone: Tālrunis
-          message: Ziņa
-          closing_line: Ar cieņu
-          ps_html: P.S. Ja vēlaties skatīt šo un citus pieprasījumus vēlāk, tad tos var atrast zem sadaļas "Pieprasījumi".
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

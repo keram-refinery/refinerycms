@@ -9,6 +9,18 @@ de:
         new:
           send: Nachricht senden
           privacy_policy: Ihre Privatsphäre ist uns wichtig
+      mailer:
+        notification:
+          greeting: Hallo
+          you_recieved_new_<%= singular_name %>: Sie haben eine neue Kontaktanfrage über Ihre Webseite erhalten.
+          <%= singular_name %>_starts: --- Anfang der Kontaktanfrage ---
+          <%= singular_name %>_ends: --- Ende der Kontaktanfrage ---
+          from: Von
+          email: E-Mail
+          phone: Telefon
+          message: Nachricht
+          closing_line: Mit freundlichen Grüßen
+          ps_html: P.S. All Ihre Kontaktanfragen werden im Bereich "Kontaktanfragen" von Refinery gespeichert, sollten Sie diese zu einem späteren Zeitpunkt wieder ansehen wollen.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ de:
             the_customer_making_<%= singular_name %>: Der Kunde, der die Kontaktanfrage gestellt hat
             message: Nachricht
             note: "Hinweis: Um den Namen des Kunden in der E-Mail einzufügen, verwenden Sie den Platzhalter %name%"
-      mailer:
-        notification:
-          greeting: Hallo
-          you_recieved_new_<%= singular_name %>: Sie haben eine neue Kontaktanfrage über Ihre Webseite erhalten.
-          <%= singular_name %>_starts: --- Anfang der Kontaktanfrage ---
-          <%= singular_name %>_ends: --- Ende der Kontaktanfrage ---
-          from: Von
-          email: E-Mail
-          phone: Telefon
-          message: Nachricht
-          closing_line: Mit freundlichen Grüßen
-          ps_html: P.S. All Ihre Kontaktanfragen werden im Bereich "Kontaktanfragen" von Refinery gespeichert, sollten Sie diese zu einem späteren Zeitpunkt wieder ansehen wollen.
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

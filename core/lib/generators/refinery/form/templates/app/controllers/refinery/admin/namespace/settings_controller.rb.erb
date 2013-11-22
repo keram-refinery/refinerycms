@@ -6,16 +6,10 @@ module Refinery
         before_action :find_setting, only: [:edit, :update]
 
         def update
-          if params[:id] == 'confirmation_email'
-            updated = update_confirmation_email
-          else
-            updated = @setting.update_attributes(setting_params)
-          end
-
-          if updated
+          if @setting.update_attributes(setting_params)
             flash[:notice] = t('refinery.crudify.updated',
-              kind: t('setting', scope: 'refinery.crudify'),
-              what: t("#{@setting.name}"))
+              kind: t(Refinery::Setting.model_name.i18n_key, scope: 'activerecord.models'),
+              what: t(@setting.name, scope: 'refinery.admin.settings'))
 
             redirect_back_or_default(refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path)
           else
@@ -25,26 +19,10 @@ module Refinery
 
       protected
 
-        def update_confirmation_email
-          %w(subject message).each do |key|
-            setting = Refinery::Setting.find_by(
-              name: "confirmation_email_#{key}_#{Globalize.locale}",
-              scoping: '<%= extension_name %>'
-            )
-
-            setting.update_attributes(value: params[:setting][:confirmation_email][key].to_s)
-            setting.errors[:value].each do |error|
-              @setting.errors[key] << error
-            end if setting.errors.any?
-          end
-
-          !@setting.errors.any?
-        end
-
         def find_setting
           case (id = params[:id].to_s)
           when 'confirmation_email'
-            @setting = Refinery::Setting.new(name: id, slug: id, scoping: '<%= extension_name %>')
+            @setting = Refinery::<%= namespacing %>::ConfirmationEmailSetting.new
           else
             @setting = Refinery::Setting.find_by(name: id, scoping: '<%= extension_name %>')
           end
@@ -53,7 +31,7 @@ module Refinery
         end
 
         def setting_params
-          params.require(:setting).permit(:value)
+          params.require(:setting).permit(:value, confirmation_email: [:subject, :message])
         end
 
       end

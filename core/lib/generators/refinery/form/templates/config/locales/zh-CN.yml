@@ -9,6 +9,18 @@ zh-CN:
         new:
           send: 发送邮件
           privacy_policy: 我们重视您的隐私
+      mailer:
+        notification:
+          greeting: 你好
+          you_recieved_new_<%= singular_name %>: 您刚刚收到了一封新 <%= singular_name.humanize.downcase %>.
+          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> 开始---
+          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> 结束---
+          from: 发件人
+          email: Email
+          phone: 电话
+          message: 正文
+          closing_line: 此致，
+          ps_html:  注：所有您的<%= plural_name.humanize.downcase %>都会保存在"<%= plural_name.titleize %>"里。这样您可以在任何时间查看它们。
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ zh-CN:
             the_customer_making_<%= singular_name %>:  建立 <%= singular_name.humanize.downcase %> 的顾客
             message: 邮件
             note: "提示: 您可以在希望出现对方姓名的地方，使用%name%"
-      mailer:
-        notification:
-          greeting: 你好
-          you_recieved_new_<%= singular_name %>: 您刚刚收到了一封新 <%= singular_name.humanize.downcase %>.
-          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> 开始---
-          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> 结束---
-          from: 发件人
-          email: Email
-          phone: 电话
-          message: 正文
-          closing_line: 此致，
-          ps_html:  注：所有您的<%= plural_name.humanize.downcase %>都会保存在"<%= plural_name.titleize %>"里。这样您可以在任何时间查看它们。
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

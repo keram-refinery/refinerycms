@@ -9,6 +9,18 @@ sk:
         new:
           send: Odoslať správu
           privacy_policy: Chránime vaše súkromie
+      mailer:
+        notification:
+          greeting: Ahoj
+          you_recieved_new_<%= singular_name %>: Práve ste obdržali nový <%= singular_name.humanize.downcase %> na vašej webové stránke.
+          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> začiatok ---
+          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> koniec ---
+          from: Od
+          email: E-mail
+          phone: Telefón
+          message: Správa
+          closing_line: S pozdravom
+          ps_html: P.S. Všetky vaše <%= plural_name.humanize.downcase %> sú uložené v "<%= plural_name.titleize %>" sekcii v Refinery, ak by ste ich chceli zobraziť neskôr.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -56,18 +68,6 @@ sk:
             the_customer_making_<%= singular_name %>: Klient robiť <%= singular_name.humanize.downcase %>
             message: Správa
             note: "Poznámka: umiestniťe text %name%, pre určenie pozície mena klienta v e-maile"
-      mailer:
-        notification:
-          greeting: Ahoj
-          you_recieved_new_<%= singular_name %>: Práve ste obdržali nový <%= singular_name.humanize.downcase %> na vašej webové stránke.
-          <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> začiatok ---
-          <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> koniec ---
-          from: Od
-          email: E-mail
-          phone: Telefón
-          message: Správa
-          closing_line: S pozdravom
-          ps_html: P.S. Všetky vaše <%= plural_name.humanize.downcase %> sú uložené v "<%= plural_name.titleize %>" sekcii v Refinery, ak by ste ich chceli zobraziť neskôr.
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>
