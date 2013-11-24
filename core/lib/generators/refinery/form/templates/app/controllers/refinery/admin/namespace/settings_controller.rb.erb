@@ -11,7 +11,8 @@ module Refinery
               kind: t(Refinery::Setting.model_name.i18n_key, scope: 'activerecord.models'),
               what: t(@setting.name, scope: 'refinery.admin.settings'))
 
-            redirect_back_or_default(refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path)
+            redirect_to refinery.edit_admin_<%= namespacing.underscore %>_setting_path(@setting.slug,
+              locale: params[:switch_frontend_locale].presence || Globalize.locale)
           else
             render :edit
           end
