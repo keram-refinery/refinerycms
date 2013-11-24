@@ -1,0 +1,4 @@
+<%%= link_to t('ham', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+            refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+            class: 'icon-small email-icon',
+            title: t('mark_as_ham', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>') -%>

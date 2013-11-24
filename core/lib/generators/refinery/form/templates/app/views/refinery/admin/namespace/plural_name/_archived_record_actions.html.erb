@@ -1,0 +1,4 @@
+<%%= link_to t('fresh', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+            refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+            class: 'icon-small email-icon',
+            title: t('mark_as_fresh', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>') -%>

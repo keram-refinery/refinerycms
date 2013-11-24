@@ -20,6 +20,9 @@ class Create<%= class_name.pluralize %> < ActiveRecord::Migration
 <% if includes_spam? -%>
       t.boolean :spam, null: false, default: false
 <% end -%>
+<% if includes_archived? -%>
+      t.boolean :archived, null: false, default: false
+<% end -%>
 
       t.timestamps null: false
     end

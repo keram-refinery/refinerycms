@@ -28,12 +28,21 @@
   <h2><%%= t('.details')%></h2>
   <p>
     <strong><%%= t('.age') %>:</strong> <%%= time_ago_in_words(@<%= singular_name %>.created_at) %>
-  </p><% if includes_spam? %>
+  </p>
+<% if includes_spam? -%>
   <%% if @<%= singular_name %>.spam? %>
     <p>
       <strong><%%= t('.spam') %>:</strong> <%%= t('.spam_yes') %>
     </p>
-  <%% end %><% end %>
+  <%% end %>
+<% end -%>
+<% if includes_archived? -%>
+  <%% if @<%= singular_name %>.archived? %>
+    <p>
+      <strong><%%= t('.archived') %>:</strong> <%%= t('.archived_yes') %>
+    </p>
+  <%% end %>
+<% end -%>
   <h2><%%= t('.actions') %></h2>
   <ul>
     <li>
@@ -50,5 +59,50 @@
                     method: 'delete'
                   } %>
     </li>
+
+<% if includes_spam? -%>
+<% if includes_archived? -%>
+  <%% if <%= singular_name %>.fresh? %>
+<% end -%>
+    <li>
+    <%% if <%= singular_name %>.spam? %>
+      <%%= link_to t('.ham'),
+                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                  :class => 'icon-small email-icon',
+                  :title => t('.mark_as_ham') -%>
+    <%% else -%>
+      <%%= link_to t('.spam'),
+                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                  :class => 'icon-small spam-icon',
+                  :title => t('.mark_as_spam') -%>
+    <%% end -%>
+    </li>
+<% if includes_archived? -%>
+  <%% end %>
+<% end -%>
+<% end %>
+
+<% if includes_archived? -%>
+<% if includes_spam? -%>
+  <%% if <%= singular_name %>.ham? %>
+<% end -%>
+    <li>
+    <%% if <%= singular_name %>.spam? %>
+      <%%= link_to t('.archive'),
+                  refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                  :class => 'icon-small folder-icon',
+                  :title => t('.mark_as_archived') -%>
+    <%% else -%>
+      <%%= link_to t('.fresh'),
+                  refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+                  :class => 'icon-small folder-icon',
+                  :title => t('.mark_as_fresh') -%>
+    <%% end -%>
+    </li>
+<% if includes_spam? -%>
+  <%% end %>
+<% end -%>
+<% end -%>
+
   </ul>
 </aside>

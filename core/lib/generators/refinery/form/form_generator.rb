@@ -13,8 +13,18 @@ module Refinery
                  default: false,
                  required: false
 
+    class_option :archived,
+                 desc: 'Generate extension with archive logic',
+                 type: :boolean,
+                 default: false,
+                 required: false
+
     def includes_spam?
       options[:spam]
+    end
+
+    def includes_archived?
+      options[:archived]
     end
 
     def description
@@ -31,9 +41,12 @@ module Refinery
       'rails generate refinery:form'
     end
 
-    def reject_file_with_exclude_spam?(file)
-      (!includes_spam? && file.to_s.include?('spam')) || reject_file_without_exclude_spam?(file)
+    def reject_file_with_exclude_spam_or_archived?(file)
+      (!includes_spam? && file.to_s.include?('spam')) ||
+      (!includes_archived? && file.to_s.include?('archived')) ||
+      reject_file_without_exclude_spam_or_archived?(file)
     end
-    alias_method_chain :reject_file?, :exclude_spam
+    alias_method_chain :reject_file?, :exclude_spam_or_archived
+
   end
 end

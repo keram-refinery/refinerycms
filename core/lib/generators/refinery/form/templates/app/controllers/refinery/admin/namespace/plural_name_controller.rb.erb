@@ -7,16 +7,18 @@ module Refinery
                 order: 'id ASC'
 
         def index
-          @<%= plural_name %> = find_all_<%= plural_name %><% if includes_spam? -%>.ham<% end -%>
+          @<%= plural_name %> = find_all_<%= plural_name %><% if includes_archived? -%>.fresh<% end -%><% if includes_spam? -%>.ham<% end -%>
 
           @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
         end
-
 <% if includes_spam? -%>
+
         def spam
           @<%= plural_name %> = find_all_<%= plural_name %>.spam
 
           @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
+
+          render action: :index
         end
 
         def toggle_spam
@@ -26,6 +28,29 @@ module Refinery
           redirect_to :back
         end
 <% end -%>
+<% if includes_archived? -%>
+
+        def archived
+          @<%= plural_name %> = find_all_<%= plural_name %>.archived
+
+          @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
+
+          render action: :index
+        end
+
+        def toggle_archived
+          find_<%= singular_name %>
+          @<%= singular_name %>.toggle!(:archived)
+
+          redirect_to :back
+        end
+<% end -%>
+
+        protected
+
+        def record_actions_template
+          @record_actions_template ||= action
+        end
       end
     end
   end

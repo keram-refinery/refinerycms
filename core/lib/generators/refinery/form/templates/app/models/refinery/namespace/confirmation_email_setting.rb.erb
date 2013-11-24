@@ -42,6 +42,15 @@ module Refinery
         !persisted?
       end
 
+      def restricted?
+        Refinery::Setting.where(
+            name: ["confirmation_email_body_#{Globalize.locale}",
+                    "confirmation_email_subject_#{Globalize.locale}"],
+            scoping: '<%= extension_name %>',
+            restricted: true
+          ).any?
+      end
+
       def update_attributes(attrs)
         attrs[:confirmation_email].each do |key, val|
           setting = Refinery::Setting.find_by(

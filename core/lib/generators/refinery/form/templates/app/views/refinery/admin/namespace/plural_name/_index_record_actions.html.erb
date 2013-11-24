@@ -1,0 +1,15 @@
+
+<% if includes_spam? -%>
+
+<%%= link_to t('spam', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+            refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+            class: 'icon-small spam-icon',
+            title: t('mark_as_spam', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>') -%>
+<% end -%>
+<% if includes_archived? -%>
+
+<%%= link_to t('archive', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+            refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
+            class: 'icon-small folder-icon',
+            title: t('mark_as_archived', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>') -%>
+<% end -%>

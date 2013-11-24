@@ -54,6 +54,15 @@ module Refinery
         !spam?
       end
 <% end -%>
+<% if includes_archived? -%>
+
+      scope :fresh, -> { where(archived: false) }
+      scope :archived, -> { where(archived: true) }
+
+      def fresh?
+        !archived?
+      end
+<% end -%>
     end
   end
 end

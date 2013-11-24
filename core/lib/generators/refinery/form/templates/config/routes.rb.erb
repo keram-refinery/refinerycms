@@ -24,14 +24,24 @@ if plugin
     # Admin routes
     namespace :admin, path: Refinery::Core.backend_route do
       namespace :<%= plural_name %> do
-        resources :<%= plural_name %>, only: [:index, :show, :destroy] <% if includes_spam? %> do
+        resources :<%= plural_name %>, only: [:index, :show, :destroy]<% if includes_spam? || includes_archived? -%> do
           collection do
+<% if includes_spam? -%>
             get :spam
+<% end -%>
+<% if includes_archived? -%>
+            get :archived
+<% end -%>
           end
           member do
+<% if includes_spam? -%>
             get :toggle_spam
+<% end -%>
+<% if includes_archived? -%>
+            get :toggle_archived
+<% end -%>
           end
-        end<% end %>
+        end<% end -%>
 
         resources :settings, only: [:edit, :update]
       end

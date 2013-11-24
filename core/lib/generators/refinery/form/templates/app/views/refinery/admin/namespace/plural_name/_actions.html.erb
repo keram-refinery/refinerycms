@@ -1,18 +1,29 @@
 <ul>
-  <li <%%= 'class="selected"'.html_safe if action_name == 'index' %>>
+  <li <%%= 'class="active"'.html_safe if action_name == 'index' %>>
     <%%= link_to refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
                 class: 'icon-small icon-with-text email-icon' do %>
       <%%= t('.inbox') %>
       <i class="items-count"><%%= "(#{inbox_count})" if inbox_count > 0 -%></i>
     <%% end -%>
-  </li><% if includes_spam? %>
-  <li <%%= 'class="selected"'.html_safe if action_name == 'spam' %>>
+  </li>
+<% if includes_archived? -%>
+  <li <%%= 'class="active"'.html_safe if action_name == 'archived' %>>
+    <%%= link_to refinery.archived_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
+                class: 'icon-small icon-with-text folder-icon' do %>
+      <%%= t('.archived') -%>
+      <i class="items-count"><%%= "(#{archived_count})" if archived_count > 0 -%></i>
+    <%% end %>
+  </li>
+<% end -%>
+<% if includes_spam? -%>
+  <li <%%= 'class="active"'.html_safe if action_name == 'spam' %>>
     <%%= link_to refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path,
                 class: 'icon-small icon-with-text spam-icon' do %>
       <%%= t('.spam') -%>
       <i class="items-count" ><%%= "(#{spam_count})" if spam_count > 0 -%></i>
     <%% end %>
-  </li><% end %>
+  </li>
+<% end -%>
   <li>
     <%%= link_to t('.update_notified'),
                   refinery.edit_admin_<%= namespacing.underscore %>_setting_path(:notification_email_recipients),
