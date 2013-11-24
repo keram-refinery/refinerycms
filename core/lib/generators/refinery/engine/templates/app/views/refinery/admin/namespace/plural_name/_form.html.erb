@@ -5,8 +5,12 @@
               include_object_name: true %>
 
 <% if localized? -%>
-  <%%= render '/refinery/admin/locale_picker',
-              url: @<%= singular_name %>.new_record? ? refinery.new_admin_<%= namespacing.underscore %>_<%= singular_name %>_path : refinery.edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>) %>
+  <%%= render('/refinery/admin/locale_picker',
+              (@<%= singular_name %>.new_record? ?
+                { url: 'new_admin_<%= namespacing.underscore %>_<%= singular_name %>_path' } :
+                { url: 'edit_admin_<%= namespacing.underscore %>_<%= singular_name %>_path',
+                  url_options: { id: @<%= singular_name %>.id } })
+            ) if Refinery::I18n.frontend_locales.many? %>
 <% end -%>
 
 <% attributes.each_with_index do |attribute, index| -%>

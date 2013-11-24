@@ -3,7 +3,6 @@
 <% if locales.many? %>
   <ul class="locale-picker clearfix">
     <% locales.each do |locale| %>
-
       <li<%= ' class="selected" aria-selected="true"'.html_safe if locale == Globalize.locale %>>
         <%= link_to lang(locale),
                     refinery.send(url, url_options.merge!(locale: locale)),

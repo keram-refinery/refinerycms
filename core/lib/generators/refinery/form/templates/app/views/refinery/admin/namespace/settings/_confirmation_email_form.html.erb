@@ -13,8 +13,10 @@
       </p>
     </div>
 
-    <%%= render '/refinery/admin/locale_picker',
-                url: refinery.edit_admin_<%= namespacing.underscore %>_setting_path(@setting.slug) %>
+    <%%= render('/refinery/admin/locale_picker',
+                url: 'edit_admin_<%= namespacing.underscore %>_setting_path',
+                url_options: { id: @setting.slug }) %>
+
   </div>
 
   <%%= render '/refinery/admin/error_messages', object: @setting, include_object_name: true %>
