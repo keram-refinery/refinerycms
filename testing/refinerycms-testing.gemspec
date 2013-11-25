@@ -22,6 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'database_cleaner',        '~> 1.2.0'
   s.add_dependency 'factory_girl_rails',      '~> 4.3.0'
   s.add_dependency 'rspec-rails',             '~> 2.14'
-  s.add_dependency 'capybara',                '~> 2.1.0'
+  s.add_dependency 'capybara',                '~> 2.2.0'
   s.add_dependency 'selenium-webdriver',      '~> 2.37.0'
 end

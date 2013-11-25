@@ -40,7 +40,7 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 gem 'sass-rails', '~> 4.0.1'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.1'
 gem 'uglifier'
 
 gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', branch: 'master'
