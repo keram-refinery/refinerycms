@@ -32,9 +32,5 @@ module Refinery
         end
       end
     end
-
-    def best_locale_for(record)
-      record.translated_locales.include?(Globalize.locale) ? Globalize.locale : record.translated_locales.first
-    end
   end
 end
