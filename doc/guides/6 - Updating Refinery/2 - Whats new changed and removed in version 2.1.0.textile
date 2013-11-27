@@ -98,4 +98,4 @@ h3. View related changes
 
 * Search header logic was extracted into shared partial. See "#1974":https://github.com/refinery/refinerycms/pull/1974.
 
-* Replaced menu partials with +Refinery::Pages::MenuPresenter+. See "#2068":https://github.com/refinery/refinerycms/pull/2068 and "#2069":https://github.com/refinery/refinerycms/pull/2069 and the "MenuPresenter guide":http://refinerycms.com/guides/menu-presenter.
+* Replaced menu partials with +Refinery::MenuPresenter+. See "#2068":https://github.com/refinery/refinerycms/pull/2068 and "#2069":https://github.com/refinery/refinerycms/pull/2069 and the "MenuPresenter guide":http://refinerycms.com/guides/menu-presenter.
