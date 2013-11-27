@@ -3,6 +3,13 @@
               html: { data: { remote: true }} do |f| %>
 
   <div class="clearfix">
+
+    <%= render('/refinery/admin/locale_picker',
+                (@page.new_record? ?
+                  { url: 'new_admin_page_path' } :
+                  { url: 'edit_admin_page_path', url_options: { id: @page.nested_url } })
+              ) if Refinery::I18n.frontend_locales.many? %>
+
     <div class="form-title">
       <h1>
         <% if @page.new_record? %>
@@ -10,20 +17,22 @@
         <% else %>
           <%= t('edit_page', scope: 'refinery.admin.pages.actions') %>:
           <%= link_to_if @page.translation.persisted?, @page.title, @page.url, target: '_blank' %>
-          <sup>
-          <%= page_meta_information @page %>
-          </sup>
         <% end %>
       </h1>
-      <p class="less-important">
-        <%= link_to refinery_plugin.title, refinery.admin_pages_path %>
-      </p>
+      <div class="clearfix">
+        <div class="meta-informations right-side">
+          <%= page_meta_information @page %>
+        </div>
+        <div class="breadcrumbs less-important">
+          <%= link_to refinery_plugin.title, refinery.admin_pages_path %>
+          <% @page.ancestors.each do |parent| %>
+            &nbsp;/&nbsp;
+            <%= link_to parent.title,
+                  refinery.edit_admin_page_url(parent.relative_path) %>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <%= render('/refinery/admin/locale_picker',
-                (@page.new_record? ?
-                  { url: 'new_admin_page_path' } :
-                  { url: 'edit_admin_page_path', url_options: { id: @page.nested_url } })
-              ) if Refinery::I18n.frontend_locales.many? %>
   </div>
 
   <%= render '/refinery/admin/error_messages', object: @page, include_object_name: true %>

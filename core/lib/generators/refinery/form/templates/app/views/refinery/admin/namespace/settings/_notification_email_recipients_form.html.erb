@@ -8,9 +8,11 @@
         <%%= t('edit_setting', scope: 'refinery.admin.settings.actions') %>:
         <%%= t('notification_email_recipients', scope: 'refinery.admin.settings') %>
       </h1>
-      <p class="less-important">
-        <%%= link_to refinery_plugin.title, refinery_plugin.url %>
-      </p>
+      <div>
+        <p class="breadcrumbs less-important">
+          <%= link_to refinery_plugin.title, refinery_plugin.url %>
+        </p>
+      </div>
     </div>
   </div>
 

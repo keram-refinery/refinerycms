@@ -13,9 +13,11 @@
           <%= link_to @resource.name, @resource.url, target: '_blank' %>
         <% end %>
       </h1>
-      <p class="less-important">
-        <%= link_to refinery_plugin.title, refinery.admin_resources_path %>
-      </p>
+      <div>
+        <p class="breadcrumbs less-important">
+          <%= link_to refinery_plugin.title, refinery_plugin.url %>
+        </p>
+      </div>
     </div>
   </div>
 

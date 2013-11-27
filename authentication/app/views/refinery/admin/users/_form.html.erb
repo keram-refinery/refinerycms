@@ -15,9 +15,11 @@
           <%= @user %>
         <% end %>
       </h1>
-      <p class="less-important">
-        <%= link_to refinery_plugin.title, refinery.admin_users_path %>
-      </p>
+      <div>
+        <p class="breadcrumbs less-important">
+          <%= link_to refinery_plugin.title, refinery_plugin.url %>
+        </p>
+      </div>
     </div>
   </div>
 

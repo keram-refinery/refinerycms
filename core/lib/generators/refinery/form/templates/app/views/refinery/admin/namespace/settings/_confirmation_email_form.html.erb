@@ -3,19 +3,22 @@
               html: { data: { remote: true }} do |f| %>
 
   <div class="clearfix">
+
+    <%%= render('/refinery/admin/locale_picker',
+                url: 'edit_admin_<%= namespacing.underscore %>_setting_path',
+                url_options: { id: @setting.slug }) %>
+
     <div class="form-title">
       <h1>
         <%%= t('edit_setting', scope: 'refinery.admin.settings.actions') %>:
         <%%= t('confirmation_email', scope: 'refinery.admin.settings') %>
       </h1>
-      <p class="less-important">
-        <%%= link_to refinery_plugin.title, refinery_plugin.url %>
-      </p>
+      <div>
+        <p class="breadcrumbs less-important">
+          <%= link_to refinery_plugin.title, refinery_plugin.url %>
+        </p>
+      </div>
     </div>
-
-    <%%= render('/refinery/admin/locale_picker',
-                url: 'edit_admin_<%= namespacing.underscore %>_setting_path',
-                url_options: { id: @setting.slug }) %>
 
   </div>
 
