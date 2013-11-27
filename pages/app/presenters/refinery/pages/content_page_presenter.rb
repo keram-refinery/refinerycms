@@ -23,7 +23,15 @@ module Refinery
           presenter = "Refinery::Pages::#{part.title.to_s.classify}PagePartSectionPresenter".safe_constantize ||
                       PagePartSectionPresenter
 
+          Refinery::Pages.get_extras(:before, part.title).each do |key, proc|
+            add_section proc.call(part.page, :before, part.title)
+          end
+
           add_section presenter.new(part)
+
+          Refinery::Pages.get_extras(:after, part.title).each do |extra|
+            add_section extra.call(part.page, :after, part.title)
+          end
         end
       end
 
