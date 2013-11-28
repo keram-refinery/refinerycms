@@ -86,7 +86,6 @@
         </div>
         <ul id="plugins" class="checkboxes ui-sortable">
         <% always_allowed = Refinery::Plugins.always_allowed.names %>
-        <%= @selected_plugin_names %>-x-
         <% @available_plugins.each do |plugin| %>
           <li>
             <% if new_or_current_superuser %>
