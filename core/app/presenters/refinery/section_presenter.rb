@@ -30,36 +30,14 @@ module Refinery
         visible? && content_html(can_use_fallback).present?
       end
 
-#      def wrapped_html(can_use_fallback = true)
-#        return if hidden?
-#
-#        content = content_html(can_use_fallback)
-#        if content.present?
-#          wrap_content_in_tag(content)
-#        end
-#      end
-
       def wrapped_html(can_use_fallback = true)
         return if hidden?
 
         content = content_html(can_use_fallback)
         if content.present?
-          "".tap do |str|
-            str << before_content_html
-            str << wrap_content_in_tag(content)
-            str << after_content_html
-          end
+          wrap_content_in_tag(content)
         end
       end
-
-      def before_content_html
-        "before c h #{id}"
-      end
-
-      def after_content_html
-        "after c h"
-      end
-
 
       def hide
         self.hidden = true
