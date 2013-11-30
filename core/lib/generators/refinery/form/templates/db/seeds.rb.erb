@@ -1,64 +1,46 @@
+require 'refinery/user'
+require 'refinery/page'
+require 'refinery/setting'
+
 plugin = Refinery::Plugins['<%= extension_name -%>']
 if plugin
 
-  if defined?(Refinery::User)
-    Refinery::User.all.each do |user|
-      if user.plugins.find_by(name: plugin.name).nil?
-        user.plugins.create(name: plugin.name,
-                            position: (user.plugins.maximum(:position) || -1) +1)
-      end
+  Refinery::User.all.each do |user|
+    if user.plugins.find_by(name: plugin.name).nil?
+      user.plugins.create(name: plugin.name,
+                          position: (user.plugins.maximum(:position) || -1) +1)
     end
   end
 
-  if defined?(Refinery::Page)
-    pages = {
-      <%= extension_name -%>: {
-        title: '<%= class_name.pluralize.underscore.titleize %>',
-        deletable: false,
-        status: 'live',
-        show_in_menu: false,
-        plugin_page_id: plugin.name
-      },
-      <%= extension_name -%>_thank_you: {
-        title: 'Thank You',
-        plugin_page_id: '<%= extension_name -%>_thank_you',
-        deletable: false,
-        status: 'live',
-        show_in_menu: false,
-        parent: :<%= extension_name -%>
-      }
+  pages = {
+    <%= extension_name -%>: {
+      title: '<%= class_name.pluralize.underscore.titleize %>',
+      deletable: false,
+      status: 'live',
+      show_in_menu: false,
+      plugin_page_id: plugin.name
+    },
+    <%= extension_name -%>_thank_you: {
+      title: 'Thank You',
+      plugin_page_id: '<%= extension_name -%>_thank_you',
+      deletable: false,
+      status: 'live',
+      show_in_menu: false,
+      parent: :<%= extension_name -%>
     }
+  }
 
-    Refinery::Pages::Import.new(plugin, pages, false).run
-  end
+  Refinery::Pages::Import.new(plugin, pages, false).run
 
-  if defined?(Refinery::Setting)
-    confirmation_email = {
-      subject: "Thank you for your <%= singular_name.humanize.downcase %> - #{Refinery::Core.site_name}",
-      message: "Hello %name%,\n\nThis email is a receipt to confirm we have received your <%= singular_name.humanize.downcase %> and we'll be in touch shortly.\n\nThanks."
-    }
+  confirmation_email = {
+    subject: "Thank you for your <%= singular_name.humanize.downcase %> - #{Refinery::Core.site_name}",
+    message: "Hello %name%,\n\nThis email is a receipt to confirm we have received your <%= singular_name.humanize.downcase %> and we'll be in touch shortly.\n\nThanks."
+  }
 
-    Refinery::I18n.frontend_locales.each do |locale|
-      confirmation_email.each do |key, val|
-        setting = Refinery::Setting.where(
-          name: "confirmation_email_#{key}_#{locale}",
-          scoping: '<%= extension_name %>',
-          destroyable: false,
-          restricted: true
-        ).first_or_initialize
-
-        setting.update_attributes(value: val) if setting.value.blank?
-      end
-    end
-
-    notification_email = {
-      recipients: Refinery::Core.site_emails_receiver,
-      subject: "#{Refinery::Core.site_name} - New <%= singular_name.humanize.downcase %>"
-    }
-
-    notification_email.each do |key, val|
+  Refinery::I18n.frontend_locales.each do |locale|
+    confirmation_email.each do |key, val|
       setting = Refinery::Setting.where(
-        name: "notification_email_#{key}",
+        name: "confirmation_email_#{key}_#{locale}",
         scoping: '<%= extension_name %>',
         destroyable: false,
         restricted: true
@@ -66,5 +48,21 @@ if plugin
 
       setting.update_attributes(value: val) if setting.value.blank?
     end
+  end
+
+  notification_email = {
+    recipients: Refinery::Core.site_emails_receiver,
+    subject: "#{Refinery::Core.site_name} - New <%= singular_name.humanize.downcase %>"
+  }
+
+  notification_email.each do |key, val|
+    setting = Refinery::Setting.where(
+      name: "notification_email_#{key}",
+      scoping: '<%= extension_name %>',
+      destroyable: false,
+      restricted: true
+    ).first_or_initialize
+
+    setting.update_attributes(value: val) if setting.value.blank?
   end
 end

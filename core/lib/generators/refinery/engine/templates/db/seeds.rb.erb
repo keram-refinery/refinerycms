@@ -1,17 +1,17 @@
-plugin = Refinery::Plugins['<%= extension_name -%>']
+require 'refinery/user'
+require 'refinery/page'
 
+plugin = Refinery::Plugins['<%= extension_name -%>']
 if plugin
-  if defined?(Refinery::User)
-    Refinery::User.all.each do |user|
-      if user.plugins.where(name: plugin.name).blank?
-        user.plugins.create(name: plugin.name,
-                            position: (user.plugins.maximum(:position) || -1) +1)
-      end
+  Refinery::User.all.each do |user|
+    if user.plugins.where(name: plugin.name).blank?
+      user.plugins.create(name: plugin.name,
+                          position: (user.plugins.maximum(:position) || -1) +1)
     end
   end
 
 <% unless skip_frontend? -%>
-  if defined?(Refinery::Page) && plugin.page.nil?
+  if plugin.page.nil?
     pages = {
       <%= class_name.underscore -%>: {
         title: '<%= class_name.pluralize.underscore.titleize %>',
