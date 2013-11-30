@@ -4,7 +4,7 @@ require 'date'
 Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.name              = 'refinerycms-<%= extension_name %>'
-  s.version           = '1.0'
+  s.version           = '0.0.1'
   s.description       = 'Ruby on Rails <%= extension_name.titleize %> forms-extension for Refinery CMS'
   s.date              = Date.today.strftime("%Y-%m-%d")
   s.summary           = '<%= extension_name.titleize %> forms-extension for Refinery CMS'
