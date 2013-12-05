@@ -3,16 +3,16 @@ cs:
     plugins:
       <%= plural_name %>:
         title: <%= plural_name.titleize %>
-        description: Poskytuje kontaktní formulář a zaznamenáva <%= plural_name.humanize.downcase %>
+        description: Zajišťuje kontaktní formulář a uchovává <%= plural_name.humanize.downcase %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Odeslat zprávu
-          privacy_policy: Chráníme vaše soukromí
+          privacy_policy: Vážíme si Vaše soukromí
       mailer:
         notification:
-          greeting: Hi there
-          you_recieved_new_<%= singular_name %>: You just received a new <%= singular_name.humanize.downcase %> on your website.
+          greeting: Ahoj
+          you_recieved_new_<%= singular_name %>: Právě jsi obdržel nový <%= singular_name.humanize.downcase %> na webové stránce.
           <%= singular_name %>_starts: --- <%= singular_name.humanize.downcase %> starts ---
           <%= singular_name %>_ends: --- <%= singular_name.humanize.downcase %> ends ---
           from: Od
@@ -20,7 +20,7 @@ cs:
           phone: Telefon
           message: Zpráva
           closing_line: S pozdravem
-          ps_html: P.S. Všechny vaše <%= plural_name.humanize.downcase %> jsou uloženy pod záložkou "<%= plural_name.titleize %>" v Refinery, pokud by jste je chtěli zobrazit pozdeji.
+          ps: P.S. Všechny vaše <%= plural_name.humanize.downcase %> jsou uloženy pod záložkou "<%= plural_name.titleize %>" v Refinery, pokud by jste je chtěli zobrazit pozdeji.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
@@ -33,7 +33,7 @@ cs:
             inbox: Inbox
             spam: Spam
             update_notified: Upravit seznam notifikovaných
-            edit_confirmation_email: Upravit potvrzovací e-mail
+            edit_confirmation_email: Upravit potvrzující e-mail
           index:
             no_<%= plural_name %>: Zatím jste neobdrželi žádné <%= plural_name.humanize.downcase %>.
           spam:

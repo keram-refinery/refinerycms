@@ -25,13 +25,13 @@
     <%% if <%= singular_name %>.spam? %>
       <%%= link_to t('.mark_as_ham'),
                   refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  :class => 'icon-small email-icon',
-                  :title => t('.mark_as_ham') -%>
+                  class: 'icon-small email-icon',
+                  title: t('.mark_as_ham') -%>
     <%% else -%>
       <%%= link_to t('.mark_as_spam'),
                   refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  :class => 'icon-small spam-icon',
-                  :title => t('.mark_as_spam') -%>
+                  class: 'icon-small spam-icon',
+                  title: t('.mark_as_spam') -%>
     <%% end -%>
 <% end %>
   </span>

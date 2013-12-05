@@ -5,9 +5,7 @@ ru:
         title: <%= plural_name.titleize %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
-          header_message: "Упс. Возникла небольшая проблемка."
-          message: "Нужно исправить следующие ошибки:"
+        form:
           send: "Отправить сообщение"
           privacy_policy: "Мы относимся с уважением к вашим личным данным"
     admin:

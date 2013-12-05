@@ -5,7 +5,7 @@ lv:
         title: <%= plural_name.titleize %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Sūtīt ziņu
           privacy_policy: Mēs cienam Jūsu privātumu
       mailer:
@@ -19,7 +19,7 @@ lv:
           phone: Tālrunis
           message: Ziņa
           closing_line: Ar cieņu
-          ps_html: P.S. Ja vēlaties skatīt šo un citus pieprasījumus vēlāk, tad tos var atrast zem sadaļas "Pieprasījumi".
+          ps: P.S. Ja vēlaties skatīt šo un citus pieprasījumus vēlāk, tad tos var atrast zem sadaļas "Pieprasījumi".
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:

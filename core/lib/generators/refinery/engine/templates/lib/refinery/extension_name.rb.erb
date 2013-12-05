@@ -7,8 +7,6 @@ module Refinery
     require 'refinery/<%= extension_name %>/engine'
 
     class << self
-      attr_writer :root
-
       def root
         @root ||= Pathname.new(File.expand_path('../../../', __FILE__))
       end

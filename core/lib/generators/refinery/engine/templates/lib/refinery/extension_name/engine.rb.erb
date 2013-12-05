@@ -17,7 +17,7 @@ module Refinery
         end
       end
 
-      initializer "reload routes" do
+      initializer "reload routes", after: :set_routes_reloader_hook do
         Rails.application.routes_reloader.reload!
       end
 

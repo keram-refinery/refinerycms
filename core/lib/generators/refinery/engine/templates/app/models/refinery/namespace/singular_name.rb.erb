@@ -11,8 +11,8 @@ module Refinery
 
 <% if title_attribute.present? -%>
       validates :<%= title_attribute_name %>, presence: true, uniqueness: true
-
 <% end -%>
+
 
 <% if localized? || (title_attribute.present? && title_attribute_name != 'title') %>
       def title

@@ -5,9 +5,7 @@ da:
         title: <%= plural_name.titleize %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
-          header_message: "Der er et mindre problem"
-          message: "Følgende skal rettes:"
+        form:
           send: Send besked
           privacy_policy: "Vi værner om dine personlige oplysninger"
     admin:

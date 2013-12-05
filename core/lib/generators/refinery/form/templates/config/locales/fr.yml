@@ -6,7 +6,7 @@ fr:
         description: Fournit un formulaire de contact et gère les demandes de contacts.
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Envoyer un message
           privacy_policy: Nous respectons votre vie privée
     admin:
@@ -67,7 +67,7 @@ fr:
           phone: Téléphone
           message: Message
           closing_line: Cordialement
-          ps_html: P.S. Toutes les requêtes sont stockées dans la section 'Requêtes' afin que vous puissiez les consulter ultérieurement.
+          ps: P.S. Toutes les requêtes sont stockées dans la section 'Requêtes' afin que vous puissiez les consulter ultérieurement.
   activerecord:
     models:
       refinery/<%= namespacing.underscore %>/<%= singular_name %>: <%= class_name.underscore.titleize %>

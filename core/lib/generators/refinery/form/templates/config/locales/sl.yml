@@ -5,9 +5,7 @@ sl:
         title: <%= plural_name.titleize %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
-          header_message: "Ups prišlo je do majhnega problema"
-          message: "Prosimo odpravite sledeče napake:"
+        form:
           send: Pošlji sporočilo
           privacy_policy: "Cenimo vašo zasebnost"
     admin:

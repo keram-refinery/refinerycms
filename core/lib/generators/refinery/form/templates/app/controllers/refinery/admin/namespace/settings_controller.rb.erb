@@ -3,7 +3,7 @@ module Refinery
     module <%= class_name.pluralize %>
       class SettingsController < Refinery::AdminController
 
-        before_action :find_setting, only: [:edit, :update]
+        before_action :find_setting, :restrict_access, only: [:edit, :update]
 
         def update
           if @setting.update_attributes(setting_params)
@@ -33,6 +33,12 @@ module Refinery
 
         def setting_params
           params.require(:setting).permit(:value, confirmation_email: [:subject, :message])
+        end
+
+        def restrict_access
+          if @setting.restricted? && !current_refinery_user.has_role?(:superuser)
+            error_403
+          end
         end
 
       end

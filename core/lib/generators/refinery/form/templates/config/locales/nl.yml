@@ -6,7 +6,7 @@ nl:
         description: Contactformulier en beheer van <%= plural_name.humanize.downcase %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Bericht verzenden
           privacy_policy: Wij respecteren uw privacy
       mailer:
@@ -20,7 +20,7 @@ nl:
           phone: Telefoon
           message: Bericht
           closing_line: Met vriendelijke groet,
-          ps_html: P.S. Alle <%= plural_name.humanize.downcase %> worden opgeslagen in de sectie <%= plural_name.titleize %> van Refinery.
+          ps: P.S. Alle <%= plural_name.humanize.downcase %> worden opgeslagen in de sectie <%= plural_name.titleize %> van Refinery.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:

@@ -6,9 +6,9 @@ sk:
         description: Poskytuje kontaktný formulár a zaznamenáva <%= plural_name.humanize.downcase %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Odoslať správu
-          privacy_policy: Chránime vaše súkromie
+          privacy_policy: Vážime si Vaše súkromie
       mailer:
         notification:
           greeting: Ahoj
@@ -20,7 +20,7 @@ sk:
           phone: Telefón
           message: Správa
           closing_line: S pozdravom
-          ps_html: P.S. Všetky vaše <%= plural_name.humanize.downcase %> sú uložené v "<%= plural_name.titleize %>" sekcii v Refinery, ak by ste ich chceli zobraziť neskôr.
+          ps: P.S. Všetky vaše <%= plural_name.humanize.downcase %> sú uložené v "<%= plural_name.titleize %>" sekcii v Refinery, ak by ste ich chceli zobraziť neskôr.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:

@@ -6,7 +6,7 @@ zh-CN:
         description: 提供联系方式表格来存放 <%= plural_name.humanize.downcase %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: 发送邮件
           privacy_policy: 我们重视您的隐私
       mailer:
@@ -20,7 +20,7 @@ zh-CN:
           phone: 电话
           message: 正文
           closing_line: 此致，
-          ps_html:  注：所有您的<%= plural_name.humanize.downcase %>都会保存在"<%= plural_name.titleize %>"里。这样您可以在任何时间查看它们。
+          ps:  注：所有您的<%= plural_name.humanize.downcase %>都会保存在"<%= plural_name.titleize %>"里。这样您可以在任何时间查看它们。
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:

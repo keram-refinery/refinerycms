@@ -4,17 +4,18 @@ module Refinery
 
       def confirmation(<%= singular_name %>)
         @<%= singular_name %> = <%= singular_name %>
-        mail subject: Refinery::<%= namespacing %>::Setting.confirmation_subject,
-              to:     <%= singular_name %>.email,
-              from:   "#{Refinery::Core.site_name} <#{Refinery::Core.site_emails_emitter}>",
-              reply_to: Refinery::<%= namespacing %>::Setting.notification_recipients.split(',').first
+        mail subject:   Refinery::<%= namespacing %>::Setting.confirmation_subject,
+             to:        <%= singular_name %>.email,
+             from:      "#{Refinery::Core.site_name} <#{Refinery::Core.site_emails_emitter}>",
+             reply_to:  Refinery::<%= namespacing %>::Setting.notification_recipients.split(',').first
       end
 
       def notification(<%= singular_name %>)
         @<%= singular_name %> = <%= singular_name %>
-        mail subject: Refinery::<%= namespacing %>::Setting.notification_subject,
-              to:     Refinery::<%= namespacing %>::Setting.notification_recipients,
-              from:   "#{Refinery::Core.site_name} <#{Refinery::Core.site_emails_emitter}>"
+        mail subject:   Refinery::<%= namespacing %>::Setting.notification_subject,
+             to:        Refinery::<%= namespacing %>::Setting.notification_recipients,
+             from:      "#{Refinery::Core.site_name} <#{Refinery::Core.site_emails_emitter}>",
+             reply_to:  <%= singular_name %>.email
       end
 
     end

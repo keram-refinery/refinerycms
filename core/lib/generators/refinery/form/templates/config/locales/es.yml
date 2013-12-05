@@ -5,9 +5,7 @@ es:
         title: <%= plural_name.titleize %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
-          header_message: "Mil disculpas hay un pequeño problema."
-          message: "Los siguientes problemas necesitan ser corregidos:"
+        form:
           send: Enviar mensaje
           privacy_policy: "Nosotros valoramos tu privacidad"
     admin:

@@ -6,7 +6,7 @@ pt-BR:
         description: Gerenciar contatos
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Enviar mensagem
           privacy_policy: "Nós valorizamos sua privacidade"
       mailer:
@@ -20,7 +20,7 @@ pt-BR:
           phone: Telefone
           message: Mensagem
           closing_line: Atenciosamente
-          ps_html: OBS. Todos os contatos são armazenados na seção 'Contatos' do website.
+          ps: OBS. Todos os contatos são armazenados na seção 'Contatos' do website.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:

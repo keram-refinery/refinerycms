@@ -6,7 +6,7 @@ en:
         description: Provides a contact form and stores <%= plural_name.humanize.downcase %>
     <%= namespacing.underscore %>:
       <%= plural_name %>:
-        new:
+        form:
           send: Send message
           privacy_policy: We value your privacy
       mailer:
@@ -20,7 +20,7 @@ en:
           phone: Phone
           message: Message
           closing_line: Kind Regards
-          ps_html: P.S. All your <%= plural_name.humanize.downcase %> are stored in the "<%= plural_name.titleize %>" section of Refinery should you ever want to view it later there.
+          ps: P.S. All your <%= plural_name.humanize.downcase %> are stored in the "<%= plural_name.titleize %>" section of Refinery should you ever want to view it later there.
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
