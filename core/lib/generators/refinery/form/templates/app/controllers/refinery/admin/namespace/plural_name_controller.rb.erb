@@ -6,8 +6,6 @@ module Refinery
         crudify :'refinery/<%= namespacing.underscore %>/<%= singular_name %>',
                 order: 'id ASC'
 
-        after_action :inbox_count<% if includes_spam? -%>, :spam_count<% end -%>, only: [:index<% if includes_spam? -%>, :spam<% end -%>]
-
         def index
           @<%= plural_name %> = find_all_<%= plural_name %><% if includes_spam? -%>.ham<% end -%>
 
@@ -26,18 +24,6 @@ module Refinery
           @<%= singular_name %>.toggle!(:spam)
 
           redirect_to :back
-        end
-<% end -%>
-
-      protected
-
-        def inbox_count
-          @inbox_count = Refinery::<%= namespacing %>::<%= class_name %><% if includes_spam? -%>.ham<% end -%>.count
-        end
-
-<% if includes_spam? -%>
-        def spam_count
-          @spam_count = Refinery::<%= namespacing %>::<%= class_name %>.spam.count
         end
 <% end -%>
       end

@@ -1,0 +1,18 @@
+module Refinery
+  module Admin
+    module <%= namespacing %>
+      module <%= class_name.pluralize %>Helper
+
+        def inbox_count
+          @inbox_count ||= Refinery::<%= namespacing %>::<%= class_name %><% if includes_spam? -%>.ham<% end -%>.count
+        end
+
+<% if includes_spam? -%>
+        def spam_count
+          @spam_count ||= Refinery::<%= namespacing %>::<%= class_name %>.spam.count
+        end
+<% end -%>
+      end
+    end
+  end
+end
