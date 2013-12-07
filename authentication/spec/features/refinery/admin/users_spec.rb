@@ -15,12 +15,14 @@ describe 'User admin page' do
     end
 
     it 'can create a user' do
+      ::Refinery::Admin::UsersController.any_instance.stub(:authenticated_current_user_with_password?).and_return(true)
       visit_and_fill_form
 
       click_button "Save"
 
       page.should have_content("User 'test' was successfully added.")
       page.should have_content("test (test@refinerycms.com)")
+      ::Refinery::Admin::UsersController.any_instance.unstub(:authenticated_current_user_with_password?)
     end
 
     context 'when assigning roles config is enabled' do

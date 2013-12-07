@@ -85,24 +85,24 @@
           <%= f.label :plugin_access, t('.plugin_access') %>
         </div>
         <ul id="plugins" class="checkboxes ui-sortable">
-          <% if @available_plugins.any? %>
-            <% @available_plugins.each do |plugin| %>
-                <li>
-                  <% if new_or_current_superuser %>
-                    <%= check_box_tag 'user[plugins][]', plugin[:name],
-                                    @selected_plugin_names.include?(plugin[:name]) || @always_allowed_menu_plugins.include?(plugin[:name]) ,
-                                    readonly: @always_allowed_menu_plugins.include?(plugin[:name]) || !is_current_user_superuser,
-                                    id: "plugins_#{plugin[:name]}" %>
-                  <% else %>
-                    <%= hidden_field_tag 'user[plugins][]', plugin[:name], readonly: true, id: "plugins_#{plugin[:name]}" %>
-                  <% end %>
-                  <%= f.label 'user[plugins][]',
-                              t('title', scope: "refinery.plugins.#{plugin[:name].downcase}", default: plugin[:title]),
-                              class: 'stripped',
-                              for: "plugins_#{plugin[:name]}" %>
-                </li>
+        <% always_allowed = Refinery::Plugins.always_allowed.names %>
+        <%= @selected_plugin_names %>-x-
+        <% @available_plugins.each do |plugin| %>
+          <li>
+            <% if new_or_current_superuser %>
+              <%= check_box_tag 'user[plugins][]', plugin[:name],
+                              @selected_plugin_names.include?(plugin[:name]),
+                              readonly: (always_allowed.include?(plugin[:name]) || !is_current_user_superuser),
+                              id: "plugins_#{plugin[:name]}" %>
+            <% else %>
+              <%= hidden_field_tag 'user[plugins][]', plugin[:name], readonly: true, id: "plugins_#{plugin[:name]}" %>
             <% end %>
-          <% end %>
+            <%= f.label 'user[plugins][]',
+                        t('title', scope: "refinery.plugins.#{plugin[:name].downcase}", default: plugin[:title]),
+                        class: 'stripped',
+                        for: "plugins_#{plugin[:name]}" %>
+          </li>
+        <% end %>
         </ul>
       <% end %>
       </div>
@@ -135,14 +135,12 @@
     <% end %>
   </div>
 
-  <%# Protect against csrf by xss or by direct access to superuser browser by attacker -%>
-  <% if !@user.new_record? || (is_current_user_superuser && Refinery::Authentication.superuser_can_assign_roles) %>
-    <div class="field">
-      <%= f.label :current_user_password, t('your_current_password',
-            scope: 'refinery.admin.users.update') %>
-      <%= f.password_field :current_user_password, autocomplete: 'off', required: true %>
-    </div>
-  <% end %>
+  <%# protect against csrf by xss -%>
+  <div class="field">
+    <%= f.label :current_user_password, t('your_current_password',
+          scope: 'refinery.admin.users.update') %>
+    <%= f.password_field :current_user_password, autocomplete: 'off', required: true %>
+  </div>
 
   <%= render '/refinery/admin/form_actions', f: f,
              hide_delete: !current_refinery_user.can_delete?(@user),

@@ -3,156 +3,182 @@ module Refinery
     class UsersController < Refinery::AdminController
 
       crudify :'refinery/user',
-              :order => 'username ASC',
-              :sortable => false,
-              :title_attribute => 'username'
+              order: 'username ASC',
+              sortable: false,
+              title_attribute: 'username'
 
-      before_action :load_available_plugins_and_roles, :only => [:new, :create, :edit, :update]
+      before_action :available_plugins_for_new, :available_roles_for_new,
+                    only: [:new, :create]
+      before_action :find_user, only: [:edit, :update, :destroy]
+      before_action :restrict_user_editation, only: [:edit, :update, :destroy]
 
-      before_action :restrict_user_editation, :only => [:edit, :update]
+      before_action :available_plugins, :available_roles,
+                     :restrict_user_editation, only: [:edit, :update]
+
+      def new
+        @user = Refinery::User.new
+        @selected_plugin_names = current_refinery_user.plugins.map(&:name)
+      end
 
       def create
-        # ensure that user will have access only to plugins accesible by default or max by current user
-        @selected_plugin_names = params[:user][:plugins] & current_refinery_user.plugins.map(&:name)
-        @selected_role_names = params[:user].delete(:roles) || []
-        current_user_password = params[:user].delete(:current_user_password)
-
         @user = Refinery::User.new user_params
+        @selected_plugin_names = (params[:user][:plugins] & current_refinery_user.plugins.map(&:name)) || []
+        @selected_role_names = params[:user][:roles] || []
 
-        if superuser_and_can_assign_roles? &&
-                    !authenticated_current_user_with_password?(current_user_password)
-
-          flash.now[:error] = t('your_password_is_wrong_or_missing', :scope => 'refinery.admin.users.update')
+        unless authenticated_current_user_with_password?
+          flash.now[:error] = t('your_password_is_wrong_or_missing', scope: 'refinery.admin.users.update')
           @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
-
           render :new and return
         end
 
         if @user.save
-          @user.plugins = @selected_plugin_names
-
-          if superuser_and_can_assign_roles?
-            @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
-          else
-            @user.add_role(:refinery)
-          end
-
-          redirect_to refinery.admin_users_path,
-                      :status => :see_other,
-                      :notice => t('created',
-                        :kind => t(Refinery::User.model_name.i18n_key, scope: 'activerecord.models'),
-                        :what => @user.username,
-                        :scope => 'refinery.crudify')
+          create_successful
         else
-
-          if superuser_and_can_assign_roles?
-            @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
-          end
-
-          render :new
+          create_failed
         end
       end
 
       def edit
-        @selected_plugin_names = find_user.plugins.collect(&:name)
+        @selected_plugin_names = @user.plugins.map(&:name)
       end
 
       def update
-        @user = find_user
-        user_data = params[:user] || []
+        # Store what the user selected.
+        @selected_role_names = user_can_assign_roles? ?
+                                (params[:user].delete(:roles) || []) :
+                                @user.roles.pluck(:title)
+        @selected_plugin_names = params[:user][:plugins] & current_refinery_user.plugins.map(&:name)
+        user_data = params_with_excluded_password_assignment_when_blank
 
-        @previously_selected_plugin_names = @user.plugins.collect(&:name)
-        @selected_plugin_names = (user_data.delete(:plugins) || []) | @always_allowed_menu_plugins
-        @previously_selected_roles = @user.roles
-        @selected_role_names = user_data.delete(:roles) || []
-        @selected_role_names = @user.roles.select(:title).map(&:title) unless superuser_and_can_assign_roles?
-        current_user_password = user_data.delete(:current_user_password)
-
-        if superuser_and_can_assign_roles?
-          # Prevent the current user from locking themselves out of backend
-          if current_refinery_user.id == @user.id && # If editing self
-                      @selected_role_names.map!(&:downcase).exclude?('refinery') # And we're removing the refinery role
-
-            flash.now[:error] = t('cannot_remove_user_from_refinery_by_self', :scope => 'refinery.admin.users.update')
-            render :edit and return
-          end
-          @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
-        end
-
-        if !authenticated_current_user_with_password?(current_user_password)
-          flash.now[:error] = t('your_password_is_wrong_or_missing', :scope => 'refinery.admin.users.update')
-          #@user.update(user_data)
+        if user_is_locking_themselves_out?
+          flash.now[:error] = t('lockout_prevented', scope: 'refinery.admin.users.update')
           render :edit and return
         end
 
-        if user_data[:password].blank? && user_data[:password_confirmation].blank?
-          user_data.except!(:password, :password_confirmation)
+        store_user_memento
+
+        @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
+
+        unless authenticated_current_user_with_password?
+          flash.now[:error] = t('your_password_is_wrong_or_missing', scope: 'refinery.admin.users.update')
+          render :edit and return
         end
 
-        if current_refinery_user.has_role?(:superuser)
-          @user.plugins = @selected_plugin_names
-        end
-
-        if @user.update(user_params)
-          redirect_to refinery.admin_users_path,
-                      :status => :see_other,
-                      :notice => t('updated',
-                        :kind => t(Refinery::User.model_name.i18n_key, scope: 'activerecord.models'),
-                        :what => @user.username,
-                        :scope => 'refinery.crudify')
+        if @user.update_attributes user_data
+          update_successful
         else
-          @user.plugins = @previously_selected_plugin_names
-          @user.roles = @previously_selected_roles
-          @user.save
-          render :edit
+          update_failed
         end
       end
 
-    protected
+      protected
+
+      def create_successful
+        @user.plugins = @selected_plugin_names
+
+        # if the user is a superuser and can assign roles according to this site's
+        # settings then the roles are set with the POST data.
+        if user_can_assign_roles?
+          @user.roles = @selected_role_names.collect { |r| Refinery::Role[r] }
+        else
+          @user.add_role :refinery
+        end
+
+        redirect_to refinery.admin_users_path,
+                    status: :see_other,
+                    notice: t('created',
+                      kind: t(Refinery::User.model_name.i18n_key, scope: 'activerecord.models'),
+                      what: @user.username,
+                      scope: 'refinery.crudify')
+      end
+
+      def create_failed
+        render :new
+      end
+
+      def update_successful
+        redirect_to refinery.admin_users_path,
+                    status: :see_other,
+                    notice: t('updated',
+                      kind: t(Refinery::User.model_name.i18n_key, scope: 'activerecord.models'),
+                      what: @user.username,
+                      scope: 'refinery.crudify')
+      end
+
+      def update_failed
+        user_memento_rollback!
+
+        render :edit
+      end
 
       def find_user
         @user ||= User.friendly.find(params[:id].to_s) if params[:id].present?
+        @user || error_404 and return
       end
 
-      def load_available_plugins_and_roles
-        @user ||= Refinery::User.new
-        if current_refinery_user.has_role?(:superuser) && !@user.new_record? && current_refinery_user.id != @user.id
+      private
 
-          current_user_plugins = Hash[*current_refinery_user.plugins.collect { |plugin| [plugin.name, plugin.position] }.flatten]
-          edited_user_plugins = Hash[*@user.plugins.collect { |plugin| [plugin.name, plugin.position] }.flatten]
+      def available_plugins
+        current_user_plugins = Hash[*current_refinery_user.plugins.collect { |plugin| [plugin.name, plugin.position] }.flatten]
+        edited_user_plugins = Hash[*@user.plugins.collect { |plugin| [plugin.name, plugin.position] }.flatten]
 
-          @available_plugins = Refinery::Plugins.registered.in_menu.collect { |a|
-            { :name => a.name, :position => edited_user_plugins[a.name] || current_user_plugins[a.name] || 0 }
-          }.sort_by { |a| a[:position] }
-        else
-          tmp = Refinery::Plugins.registered.in_menu.names
-          @available_plugins = current_refinery_user.plugins.select { |a|
-            { :name => a.name, :position => a.position } if tmp.include?(a.name)
-          }
-        end
+        @available_plugins = Refinery::Plugins.registered.in_menu.collect { |a|
+          { name: a.name, position: edited_user_plugins[a.name] || current_user_plugins[a.name] || 0 }
+        }.sort_by { |a| a[:position] }
+      end
 
-        @selected_plugin_names = []
-        @always_allowed_menu_plugins = Refinery::Plugins.always_allowed.in_menu.names
-        @always_allowed_menu_plugins |= ['users'] if current_refinery_user.id == @user.id
+      def available_roles
+        @available_roles = Refinery::Role.all
+      end
 
-        @available_roles = current_refinery_user.has_role?(:superuser) ? Refinery::Role.all : current_refinery_user.roles
+      def available_plugins_for_new
+        @available_plugins = current_refinery_user.plugins.collect { |a| { name: a.name, position: a.position } }
+      end
+
+      def available_roles_for_new
+        @available_roles = Refinery::Role.all
       end
 
       def restrict_user_editation
-        unless current_refinery_user.can_edit? find_user
+        unless current_refinery_user.can_edit? @user
           error_403 and return
         end
       end
 
-      def authenticated_current_user_with_password? password=false
-        password && current_refinery_user.valid_password?(password)
+      def params_with_excluded_password_assignment_when_blank
+        user_params.tap do |a|
+          if a[:password].blank? && a[:password_confirmation].blank?
+            a.delete(:password)
+            a.delete(:password_confirmation)
+          end
+        end
       end
 
-      def superuser_and_can_assign_roles?
-        current_refinery_user.has_role?(:superuser) && Refinery::Authentication.superuser_can_assign_roles
+      def user_can_assign_roles?
+        Refinery::Authentication.superuser_can_assign_roles && current_refinery_user.has_role?(:superuser)
       end
 
-    private
+      def user_is_locking_themselves_out?
+        return false if current_refinery_user.id != @user.id || @selected_plugin_names.blank?
+        @selected_plugin_names.exclude?('users') || # removing user plugin access
+          @selected_role_names.exclude?('refinery') # Or we're removing the refinery role
+      end
+
+      def store_user_memento
+        # Store the current plugins and roles for this user.
+        @previously_selected_plugin_names = @user.plugins.map(&:name)
+        @previously_selected_roles = @user.roles
+      end
+
+      def user_memento_rollback!
+        @user.plugins = @previously_selected_plugin_names
+        @user.roles = @previously_selected_roles
+        @user.save
+      end
+
+      def authenticated_current_user_with_password?
+        current_refinery_user.valid_password?(params[:user].delete(:current_user_password))
+      end
 
       def user_params
         params.require(:user).permit(

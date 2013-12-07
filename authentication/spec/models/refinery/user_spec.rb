@@ -16,14 +16,14 @@ module Refinery
           proc {
             user.add_role(:new_role)
           }.should change(user.roles, :count).by(1)
-          user.roles.collect(&:title).should include('NewRole')
+          user.roles.collect(&:title).should include('new_role')
         end
 
         it 'does not add a Role to the User when this Role is already assigned to User' do
           proc {
             refinery_user.add_role(:refinery)
           }.should_not change(refinery_user.roles, :count).by(1)
-          refinery_user.roles.collect(&:title).should include('Refinery')
+          refinery_user.roles.collect(&:title).should include('refinery')
         end
       end
 
@@ -223,11 +223,11 @@ module Refinery
       end
 
       it 'adds refinery role' do
-        first_user.roles.collect(&:title).should include('Refinery')
+        first_user.roles.collect(&:title).should include('refinery')
       end
 
       it 'adds superuser role' do
-        first_user.roles.collect(&:title).should include('Superuser')
+        first_user.roles.collect(&:title).should include('superuser')
       end
 
       it 'adds registered plugins' do
