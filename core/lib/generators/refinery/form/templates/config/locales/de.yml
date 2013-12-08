@@ -26,12 +26,19 @@ de:
         <%= plural_name %>:
           delete: Diese Kontaktanfrage für immer löschen
           <%= singular_name %>:
-            read_<%= singular_name %>: Kontaktanfrage lesen
+            detail: Kontaktanfrage lesen
             mark_as_spam: Als Spam markieren
             mark_as_ham: In den Posteingang verschieben
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: Posteingang
             spam: Spam
+            archived: Archived
             update_notified: Wer wird benachrichtigt aktualisieren
             edit_confirmation_email: Bestätigungs-E-Mail bearbeiten
           index:
@@ -44,7 +51,7 @@ de:
             actions: Aktionen
             back_to_all_<%= plural_name %>: Zurück zu allen Kontaktanfragen
             spam: Spam
-            spam_yes: 'ja'
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: An
             from: Von

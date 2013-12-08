@@ -1,6 +1,29 @@
 <section id="records">
   <h2><%%= t('.<%= singular_name %>') %></h2>
   <table id="<%= singular_name %>" class="inquiry">
+    <thead>
+<% if includes_spam? || includes_archived? -%>
+      <tr>
+        <th></th>
+        <td>
+<% if includes_spam? -%>
+        <%% if @<%= singular_name %>.spam? %>
+          <%%= t('.spam') %>
+        <%% end %>
+<% end -%>
+<% if includes_archived? -%>
+        <%% if @<%= singular_name %>.archived? %>
+          <%%= t('.archived') %>
+        <%% end %>
+<% end -%>
+        </td>
+      </tr>
+<% end -%>
+      <tr>
+        <th><%%= t('.age') %></th>
+        <td><%%= time_ago_in_words(@<%= singular_name %>.created_at) %></td>
+      </tr>
+    </thead>
 <% attributes.each do |attribute| %>
       <tr>
         <td<%= ' valign="top"' if attribute.type.to_s == 'text' %>>
@@ -9,40 +32,22 @@
           </strong>
         </td>
         <td>
-<% if attribute.type.to_s == 'text' %>
+<% if attribute.type.to_s == 'text' -%>
           <p>
             <%% @<%= singular_name %>.message.to_s.gsub("\r\n\r\n", "\r\n").split("\r\n").each_with_index do |sentence, index| %>
               <%%=raw "</p><p>" unless index == 0 %>
               <%%= sentence %>
             <%% end %>
           </p>
-<% else %>
+<% else -%>
           <%%= @<%= singular_name %>.<%= attribute.name %> %>
-<% end %>
+<% end -%>
         </td>
       </tr>
-<% end %>
+<% end -%>
   </table>
 </section>
 <aside id="actions">
-  <h2><%%= t('.details')%></h2>
-  <p>
-    <strong><%%= t('.age') %>:</strong> <%%= time_ago_in_words(@<%= singular_name %>.created_at) %>
-  </p>
-<% if includes_spam? -%>
-  <%% if @<%= singular_name %>.spam? %>
-    <p>
-      <strong><%%= t('.spam') %>:</strong> <%%= t('.spam_yes') %>
-    </p>
-  <%% end %>
-<% end -%>
-<% if includes_archived? -%>
-  <%% if @<%= singular_name %>.archived? %>
-    <p>
-      <strong><%%= t('.archived') %>:</strong> <%%= t('.archived_yes') %>
-    </p>
-  <%% end %>
-<% end -%>
   <h2><%%= t('.actions') %></h2>
   <ul>
     <li>
@@ -62,41 +67,36 @@
 
 <% if includes_spam? -%>
 <% if includes_archived? -%>
-  <%% if <%= singular_name %>.fresh? %>
+  <%% if @<%= singular_name %>.fresh? %>
 <% end -%>
     <li>
-    <%% if <%= singular_name %>.spam? %>
-      <%%= link_to t('.ham'),
-                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  :class => 'icon-small email-icon',
-                  :title => t('.mark_as_ham') -%>
+    <%% if @<%= singular_name %>.spam? %>
+      <%%= link_to t('mark_as_ham', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(@<%= singular_name %>),
+                  class: 'icon-small icon-with-text email-icon' -%>
     <%% else -%>
-      <%%= link_to t('.spam'),
-                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  :class => 'icon-small spam-icon',
-                  :title => t('.mark_as_spam') -%>
+      <%%= link_to t('mark_as_spam', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+                  refinery.toggle_spam_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(@<%= singular_name %>),
+                  class: 'icon-small icon-with-text spam-icon' -%>
     <%% end -%>
     </li>
 <% if includes_archived? -%>
   <%% end %>
 <% end -%>
 <% end %>
-
 <% if includes_archived? -%>
 <% if includes_spam? -%>
-  <%% if <%= singular_name %>.ham? %>
+  <%% if @<%= singular_name %>.ham? %>
 <% end -%>
     <li>
-    <%% if <%= singular_name %>.spam? %>
-      <%%= link_to t('.archive'),
-                  refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  :class => 'icon-small folder-icon',
-                  :title => t('.mark_as_archived') -%>
+    <%% if @<%= singular_name %>.fresh? %>
+      <%%= link_to t('mark_as_archived', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+                  refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(@<%= singular_name %>),
+                  class: 'icon-small icon-with-text folder-icon' -%>
     <%% else -%>
-      <%%= link_to t('.fresh'),
-                  refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(<%= singular_name %>),
-                  :class => 'icon-small folder-icon',
-                  :title => t('.mark_as_fresh') -%>
+      <%%= link_to t('mark_as_fresh', scope: 'refinery.admin.<%= namespacing.underscore %>.<%= plural_name %>.<%= singular_name %>'),
+                  refinery.toggle_archived_admin_<%= namespacing.underscore %>_<%= singular_name %>_path(@<%= singular_name %>),
+                  class: 'icon-small icon-with-text email-icon' -%>
     <%% end -%>
     </li>
 <% if includes_spam? -%>

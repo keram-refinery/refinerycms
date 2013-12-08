@@ -14,25 +14,32 @@ fr:
         <%= plural_name %>:
           delete: Supprimer définitivement cette requête
           <%= singular_name %>:
-            read_<%= singular_name %>: Lire la requête
+            detail: Lire la requête
             mark_as_spam: Marquer comme spam
             mark_as_ham: Déplacer dans la boîte de réception
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: Boîte de réception
             spam: Spam
+            archived: Archived
             update_notified: Choisir qui reçoit les notifications
             edit_confirmation_email: Modifier l'e-mail de confirmation
           index:
-            no_<%= plural_name %>: Vous n'avez reçu aucune requête.
+            no_<%= plural_name %>: "Vous n'avez reçu aucune requête."
           spam:
-            no_spam: Vous n'avez aucun spam.
+            no_spam: "Vous n'avez aucun spam."
           show:
             details: Détails
             age: Age
             actions: Actions
             back_to_all_<%= plural_name %>: Retourner à la liste des requêtes
             spam: Spam
-            spam_yes: 'oui'
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: À
             from: De

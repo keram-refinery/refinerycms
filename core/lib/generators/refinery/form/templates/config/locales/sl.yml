@@ -12,17 +12,21 @@ sl:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
-            move_<%= singular_name %>_to_closed: Premakni povpraševanje v zaprto
-            move_<%= singular_name %>_to_open: Premakni povpraševanje v odprto
-            read_<%= singular_name %>: Preberi povpraševanje
-            remove_<%= singular_name %>: "Ali ste prepričani da želite odstraniti povpraševanje od '%{name}'?"
-            title: <%= plural_name.titleize %>
-          toggle_status:
-            closed: "Povpraševanje '%{<%= singular_name %>}' je zaprto"
-            reopened: "Povpraševanje '%{<%= singular_name %>}' je ponovno odprto"
+            detail: Preberi povpraševanje
+            mark_as_spam: Mark as spam
+            mark_as_ham: Move to inbox
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           index:
             no_<%= plural_name %>: Trenutno še ni nobenega povpraševanja.
           actions:
+            inbox: Inbox
+            spam: Spam
+            archived: Archived
             update_notified: Uredi prejemnike obvestila
             edit_confirmation_email: Uredni potrditveni email
           show:

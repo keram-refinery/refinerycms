@@ -1,6 +1,6 @@
 <%% content_for :body do %>
+  <%%=raw @page.content_for(:body) %>
   <div class="<%= plural_name %>">
-    <%%=raw @page.content_for(:body) %>
     <%%= render 'form' %>
   </div>
 <%% end %>

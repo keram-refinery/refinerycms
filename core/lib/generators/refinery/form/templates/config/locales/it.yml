@@ -12,14 +12,15 @@ it:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
           <%= singular_name %>:
-            move_<%= singular_name %>_to_closed: Spostare questa inchiesta chiusa
-            move_<%= singular_name %>_to_open: Spostare questa indagine per aprire
-            read_<%= singular_name %>: "Leggi l'inchiesta"
-            remove_<%= singular_name %>: "Sei sicuro di voler cancellare la richiesta di '%{name}'?"
-            title: <%= plural_name.titleize %>
-          toggle_status:
-            closed: "Inchiesta '%{<%= singular_name %>}' è chiuso"
-            reopened: "Inchiesta '%{<%= singular_name %>}' si riapre"
+            detail: "Leggi l'inchiesta"
+            mark_as_spam: Mark as spam
+            mark_as_ham: Move to inbox
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           index:
             no_<%= plural_name %>: Non hai ancora ricevuto alcuna richiesta in.
           show:
@@ -33,6 +34,9 @@ it:
             back_to_all_<%= plural_name %>: Torna a tutte le richieste
             <%= singular_name %>: <%= class_name.underscore.titleize %>
           actions:
+            inbox: Inbox
+            spam: Spam
+            archived: Archived
             update_notified: Aggiornamento chi viene notificata
             edit_confirmation_email: Modifica email di conferma
         settings:

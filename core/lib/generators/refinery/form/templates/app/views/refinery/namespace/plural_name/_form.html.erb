@@ -10,7 +10,7 @@
     <%%= f.<%= 'required_' if string_fields.any? && attribute.name == string_fields.first %>label :<%= attribute.name %> %>
 <% case attribute.field_type
    when :text_field -%>
-    <%%= f.text_field :<%= attribute.name %> %>
+    <%%= f.text_field :<%= attribute.name %><%= ', required: true' if string_fields.any? && attribute.name == string_fields.first %> %>
 <% when :text_area -%>
     <%%= f.text_area :<%= attribute.name %>, rows: 8 %>
 <% when :radio %>

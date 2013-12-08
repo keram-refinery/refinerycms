@@ -11,20 +11,21 @@ ru:
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
+          delete: "Вы уверены, что хотите удалить запрос от '%{name}'?"
           <%= singular_name %>:
-            move_<%= singular_name %>_to_closed: "Переместить этот запрос в закрытые"
-            move_<%= singular_name %>_to_open: "Переместить этот запрос в открытые"
-            read_<%= singular_name %>: "Прочитать запрос"
-            remove_<%= singular_name %>: "Вы уверены, что хотите удалить запрос от '%{name}'?"
-            title: <%= plural_name.titleize %>
+            detail: Прочитать запрос
             mark_as_spam: "Пометить как спам"
             mark_as_ham: "Переместить во Входящие"
-          toggle_status:
-            closed: "Запрос '%{<%= singular_name %>}' закрыт"
-            reopened: "Запрос '%{<%= singular_name %>}' открыт заново"
+            mark_as_archived: Move to archive
+            mark_as_fresh: "Переместить во Входящие"
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: "Входящие"
             spam: "Спам"
+            archived: Archived
             update_notified: Изменить получателей уведомлений
             edit_confirmation_email: "Редактировать письмо-подтверждение"
           index:
@@ -41,7 +42,7 @@ ru:
             actions: "Действия"
             back_to_all_<%= plural_name %>: "Назад ко всем запросам"
             spam: "Спам"
-            spam_yes: 'да'
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             title: <%= plural_name.titleize %>
         settings:

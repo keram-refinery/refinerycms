@@ -26,12 +26,19 @@ cs:
         <%= plural_name %>:
           delete: Trvale odstranit <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
-            read_<%= singular_name %>: Přečíst <%= singular_name.humanize.downcase %>
+            detail: Detail <%= singular_name.humanize.downcase %>
             mark_as_spam: Označit jako spam
-            mark_as_ham: Označit jako přečtené
+            mark_as_ham: Přesunout do inboxu
+            mark_as_archived: Přesunout do archívu
+            mark_as_fresh: Přesunout do inboxu
+            fresh: Nový
+            ham: Nový
+            spam: Spam
+            archive: Archivovat
           actions:
             inbox: Inbox
             spam: Spam
+            archived: Archivované
             update_notified: Upravit seznam notifikovaných
             edit_confirmation_email: Upravit potvrzující e-mail
           index:
@@ -44,7 +51,7 @@ cs:
             actions: Akce
             back_to_all_<%= plural_name %>: Zpět na všechny <%= plural_name.humanize.downcase %>
             spam: Spam
-            spam_yes: 'ano'
+            archived: Archivované
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: Komu
             from: Od

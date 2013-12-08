@@ -26,9 +26,15 @@ zh-CN:
         <%= plural_name %>:
           delete: 永久删除 <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
-            read_<%= singular_name %>: 阅读这个 <%= singular_name.humanize.downcase %>
+            detail: 阅读这个 <%= singular_name.humanize.downcase %>
             mark_as_spam: 标记为垃圾邮件
             mark_as_ham:  移动到收件箱
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: 收件箱
             spam: 垃圾邮件
@@ -44,7 +50,7 @@ zh-CN:
             actions: 操作
             back_to_all_<%= plural_name %>: 返回到全部 <%= plural_name.humanize.downcase %>
             spam: 垃圾信息
-            spam_yes: 是
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: 收件人(To)
             from: 发件人(From)

@@ -25,12 +25,19 @@ lv:
         <%= plural_name %>:
           delete: Dzēst šo pieprasījumu
           <%= singular_name %>:
-            read_<%= singular_name %>: Lasīt pieprasījumu
+            detail: Lasīt pieprasījumu
             mark_as_spam: Atzīmēt kā spamu
             mark_as_ham: Pārvietot uz ienākošajiem
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: Ienākošie
             spam: Spams
+            archived: Archived
             update_notified: Atjaunot paziņojumu saņēmēju
             edit_confirmation_email: Labot apstiprinājuma epastu
           index:
@@ -43,7 +50,7 @@ lv:
             actions: Darbības
             back_to_all_<%= plural_name %>: Atgriezties pie visiem pieprasījumiem
             spam: Spams
-            spam_yes: jā
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: Kam
             from: 'No'

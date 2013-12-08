@@ -26,12 +26,19 @@ sk:
         <%= plural_name %>:
           delete: Trvalo odstrániť <%= singular_name.humanize.downcase %>
           <%= singular_name %>:
-            read_<%= singular_name %>: Prečítať <%= singular_name.humanize.downcase %>
+            detail: Zobraziť detail
             mark_as_spam: Označiť ako spam
-            mark_as_ham: Označiť ako prečítané
+            mark_as_ham: Presunúť do inboxu
+            mark_as_archived: Presunúť do archívu
+            mark_as_fresh: Presunúť do inboxu
+            fresh: Nové
+            ham: Nové
+            spam: Spam
+            archive: Archivovať
           actions:
             inbox: Inbox
             spam: Spam
+            archived: Archivované
             update_notified: Upraviť zoznam notifikovaných
             edit_confirmation_email: Upraviť potvrdzovací e-mail
           index:
@@ -44,7 +51,7 @@ sk:
             actions: Akcie
             back_to_all_<%= plural_name %>: Späť na všetky <%= plural_name.humanize.downcase %>
             spam: Spam
-            spam_yes: 'áno'
+            archived: Archivované
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: Komu
             from: Od

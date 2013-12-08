@@ -26,9 +26,15 @@ tr:
         <%= plural_name %>:
           delete: Sonsuza dek <%= singular_name.humanize.downcase %> sil
           <%= singular_name %>:
-            read_<%= singular_name %>: Read the <%= singular_name.humanize.downcase %>
+            detail: See detail of the <%= singular_name.humanize.downcase %>
             mark_as_spam: Spam olarak isaretle
             mark_as_ham: Gelen kutusuna tasi
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: Gelen Kutusu
             spam: Istenmeyen E-posta
@@ -44,7 +50,7 @@ tr:
             actions: Eylemler
             back_to_all_<%= plural_name %>: Geri don tum <%= plural_name.humanize.downcase %>
             spam: Istenmeyen E-posta
-            spam_yes: 'evet'
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: Kime
             from: Kimden

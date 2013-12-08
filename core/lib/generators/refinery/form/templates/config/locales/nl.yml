@@ -26,12 +26,19 @@ nl:
         <%= plural_name %>:
           delete: Deze <%= singular_name.humanize.downcase %> definitief verwijderen
           <%= singular_name %>:
-            read_<%= singular_name %>: Lees de <%= singular_name.humanize.downcase %>
+            detail: Lees de <%= singular_name.humanize.downcase %>
             mark_as_spam: Als spam markeren
             mark_as_ham: Naar de inbox verplaatsen
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           actions:
             inbox: Inbox
             spam: Spam
+            archived: Archived
             update_notified: Wijzigen wie op de hoogte wordt gesteld
             edit_confirmation_email: Bevestigings-e-mail bewerken
           index:
@@ -44,7 +51,7 @@ nl:
             actions: Acties
             back_to_all_<%= plural_name %>: Terug naar alle <%= plural_name.humanize.downcase %>
             spam: Spam
-            spam_yes: 'ja'
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: Aan
             from: Van

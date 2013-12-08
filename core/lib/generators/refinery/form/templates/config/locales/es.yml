@@ -11,15 +11,17 @@ es:
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
+          delete: "Estas seguro que quieres borrar esta consulta de '%{name}'?"
           <%= singular_name %>:
-            move_<%= singular_name %>_to_closed: Cambiar esta consulta a cerrada
-            move_<%= singular_name %>_to_open: Cambiar esta consulta a abierta
-            read_<%= singular_name %>: Leer esta consulta
-            remove_<%= singular_name %>: "Estas seguro que quieres borrar esta consulta de '%{name}'?"
-            title: <%= plural_name.titleize %>
-          toggle_status:
-            closed: "La consulta '%{<%= singular_name %>}' esta cerrada"
-            reopened: "La consulta '%{<%= singular_name %>}' esta abierta"
+            detail: Leer esta consulta
+            mark_as_spam: Mark as spam
+            mark_as_ham: Move to inbox
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           index:
             no_<%= plural_name %>: No has recibido ninguna consulta aun.
           show:
@@ -33,6 +35,9 @@ es:
             back_to_all_<%= plural_name %>: Regresar a todas las consultas
             <%= singular_name %>: <%= class_name.underscore.titleize %>
           actions:
+            inbox: Inbox
+            spam: Spam
+            archived: Archived
             update_notified: "Actualizar a quien será notificado"
             edit_confirmation_email: "Editar email de confirmación"
         settings:

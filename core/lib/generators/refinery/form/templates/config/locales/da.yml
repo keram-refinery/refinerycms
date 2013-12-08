@@ -11,15 +11,17 @@ da:
     admin:
       <%= namespacing.underscore %>:
         <%= plural_name %>:
+          delete: "Er du sikker på du vil slette denne henvendelse fra '%{name}'?"
           <%= singular_name %>:
-            move_<%= singular_name %>_to_closed: Flyt til lukkede henvendelser
-            move_<%= singular_name %>_to_open: Flyt til åbne henvendelser
-            read_<%= singular_name %>: Læs henvendelse
-            remove_<%= singular_name %>: "Er du sikker på du vil slette denne henvendelse fra '%{name}'?"
-            title: <%= plural_name.titleize %>
-          toggle_status:
-            closed: "Henvendelsen '%{<%= singular_name %>}' er lukket"
-            reopened: "Henvendelsen '%{<%= singular_name %>}' er genåbnet"
+            detail: Læs henvendelse
+            mark_as_spam: Mark as spam
+            mark_as_ham: Move to inbox
+            mark_as_archived: Move to archive
+            mark_as_fresh: Move to inbox
+            fresh: Fresh
+            ham: Ham
+            spam: Spam
+            archive: Archive
           index:
             no_<%= plural_name %>: Du har endnu ikke modtaget nogen henvendelser.
           show:
@@ -33,6 +35,9 @@ da:
             back_to_all_<%= plural_name %>: Tilbage til alle henvendelser
             <%= singular_name %>: <%= class_name.underscore.titleize %>
           actions:
+            inbox: Inbox
+            spam: Spam
+            archived: Archived
             update_notified: Opdatér, hvem der får besked
             edit_confirmation_email: Redigér e-mailbekræftelse
         settings:

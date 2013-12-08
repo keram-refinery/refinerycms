@@ -53,7 +53,7 @@ en:
             actions: Actions
             back_to_all_<%= plural_name %>: Back to all <%= plural_name.humanize.downcase %>
             spam: Spam
-            spam_yes: 'yes'
+            archived: Archived
             <%= singular_name %>: <%= class_name.underscore.titleize %>
             to: To
             from: From
