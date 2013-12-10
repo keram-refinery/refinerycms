@@ -25,7 +25,7 @@ if !ENV['TRAVIS'] || ENV['DB'] == 'mysql'
 end
 
 if !ENV['TRAVIS'] || ENV['DB'] == 'postgresql'
-  group :postgres do
+  group :postgres, :postgresql do
     gem 'activerecord-jdbcpostgresql-adapter', '>= 1.3.0.rc1', :platform => :jruby
     gem 'pg', :platform => :ruby
   end
