@@ -73,7 +73,7 @@ module Refinery
     end
 
     def add_role(title)
-      raise ArgumentException, 'Role should be the title of the role not a role object.' if title.is_a?(::Refinery::Role)
+      raise ArgumentError, 'Role should be the title of the role not a role object.' if title.is_a?(::Refinery::Role)
       roles << ::Refinery::Role[title] unless has_role?(title)
     end
 
