@@ -3,6 +3,11 @@
              html: { multipart: true, remote: true } do |f| %>
 
   <div class="clearfix">
+
+    <%= render('/refinery/admin/locale_picker',
+                url: 'edit_admin_image_path',
+                url_options: { id: @image }) unless new_record %>
+
     <div class="form-title">
       <h1>
         <% if new_record %>
@@ -18,10 +23,6 @@
         </p>
       </div>
     </div>
-
-    <%= render('/refinery/admin/locale_picker',
-                url: 'edit_admin_image_path',
-                url_options: { id: @image }) unless new_record %>
 
   </div>
 
