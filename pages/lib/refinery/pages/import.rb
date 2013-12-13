@@ -35,14 +35,17 @@ module Refinery
       private
 
       def find_page page_attrs
-        from = Page
+        if page_attrs[:plugin_page_id].present?
+          Page.find_by(plugin_page_id: page_attrs[:plugin_page_id])
+        else
+          from = Page
+          if page_attrs[:parent] && @pages[page_attrs[:parent]]
+            parent = Page.find_by(id: @pages[page_attrs[:parent]][:id])
+            from = parent.children if parent.present?
+          end
 
-        if page_attrs[:parent] && @pages[page_attrs[:parent]]
-          parent = Page.find_by(id: @pages[page_attrs[:parent]][:id])
-          from = parent.children if parent.present?
+          find_page_by_title(page_attrs[:title], from)
         end
-
-        find_page_by_title(page_attrs[:title], from)
       end
 
       def find_page_by_title title, from
