@@ -34,7 +34,7 @@ module Refinery
         page.should have_selector 'form#new_image'
 
         within 'form#new_image' do
-          attach_file 'image_image', Refinery.roots(:'refinery/images').
+          attach_file 'image_image', Refinery.roots('refinery/images').
                                               join('spec/fixtures/image-with-dashes.jpg')
 
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
@@ -51,7 +51,7 @@ module Refinery
         page.should have_selector 'form#new_image'
 
         within 'form#new_image' do
-          attach_file 'image_image', Refinery.roots(:'refinery/images').
+          attach_file 'image_image', Refinery.roots('refinery/images').
                                               join('spec/fixtures/cape-town-tide-table.pdf')
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
         end
@@ -63,7 +63,7 @@ module Refinery
       end
 
       it 'is accessible via url' do
-        image = Refinery::Image.create(:image => Refinery.roots(:'refinery/images').join('spec/fixtures/image-with-dashes.jpg'))
+        image = Refinery::Image.create(:image => Refinery.roots('refinery/images').join('spec/fixtures/image-with-dashes.jpg'))
         lambda { visit image.url }.should_not raise_error
       end
     end
@@ -72,7 +72,7 @@ module Refinery
 #      it 'uploads image', :js => true do
 #        visit refinery.admin_insert_images_path
 #
-#        attach_file 'image_image', Refinery.roots(:'refinery/images').join('spec/fixtures/image-with-dashes.jpg')
+#        attach_file 'image_image', Refinery.roots('refinery/images').join('spec/fixtures/image-with-dashes.jpg')
 #        click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 #
 #        page.should have_selector('#existing-image-area', :visible => true)
@@ -82,7 +82,7 @@ module Refinery
 #      it 'gets error message when uploading non-image', :js => true do
 #        visit refinery.admin_insert_images_path
 #
-#        attach_file 'image_image', Refinery.roots(:'refinery/images').join('spec/fixtures/cape-town-tide-table.pdf')
+#        attach_file 'image_image', Refinery.roots('refinery/images').join('spec/fixtures/cape-town-tide-table.pdf')
 #        click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 #
 #        page.should have_selector('#upload_image_area', :visible => true)
@@ -95,7 +95,7 @@ module Refinery
 #        visit refinery.admin_insert_images_path
 #
 #        choose 'Upload'
-#        attach_file 'image_image', Refinery.roots(:'refinery/images').join('spec/fixtures/cape-town-tide-table.pdf')
+#        attach_file 'image_image', Refinery.roots('refinery/images').join('spec/fixtures/cape-town-tide-table.pdf')
 #        click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 #
 #        page.should have_selector('#upload_image_area', :visible => true)
@@ -116,7 +116,7 @@ module Refinery
 
           page.should have_content('Edit image')
           page.should have_selector("a[href*='#{refinery.admin_images_path}']")
-          attach_file "images_list_image_#{image.id}_image", Refinery.roots(:'refinery/images').join('spec/fixtures/beach.jpeg')
+          attach_file "images_list_image_#{image.id}_image", Refinery.roots('refinery/images').join('spec/fixtures/beach.jpeg')
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 
           page.should have_content(::I18n.t('updated', :scope => 'refinery.crudify', :kind => 'Image', :what => 'Beach'))
@@ -128,7 +128,7 @@ module Refinery
         it "doesn't allow updating if image has different file name" do
           visit refinery.edit_admin_image_path(image)
 
-          attach_file "images_list_image_#{image.id}_image", Refinery.roots(:'refinery/images').join('spec/fixtures/fathead.png')
+          attach_file "images_list_image_#{image.id}_image", Refinery.roots('refinery/images').join('spec/fixtures/fathead.png')
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 
           page.should have_content(::I18n.t('different_file_name',

@@ -50,8 +50,8 @@ module Refinery
         Resource.delete_all
       end
 
-      let(:file) { Refinery.roots(:'refinery/resources').join('spec/fixtures/refinery_is_awesome.txt') }
-      let(:file2) { Refinery.roots(:'refinery/resources').join('spec/fixtures/refinery_is_awesome2.txt') }
+      let(:file) { Refinery.roots('refinery/resources').join('spec/fixtures/refinery_is_awesome.txt') }
+      let(:file2) { Refinery.roots('refinery/resources').join('spec/fixtures/refinery_is_awesome2.txt') }
 
       context 'only one resource uploaded' do
         it 'returns an array containing one resource' do
@@ -71,7 +71,7 @@ module Refinery
     describe 'validations' do
       describe 'valid #file' do
         before do
-          @file = Refinery.roots(:'refinery/resources').join('spec/fixtures/refinery_is_awesome.txt')
+          @file = Refinery.roots('refinery/resources').join('spec/fixtures/refinery_is_awesome.txt')
           Resources.max_file_size = (File.read(@file).size + 10)
         end
 
@@ -82,7 +82,7 @@ module Refinery
 
       describe 'too large #file' do
         before do
-          @file = Refinery.roots(:'refinery/resources').join('spec/fixtures/refinery_is_awesome.txt')
+          @file = Refinery.roots('refinery/resources').join('spec/fixtures/refinery_is_awesome.txt')
           Resources.max_file_size = (File.read(@file).size - 10)
           @resource = Resource.new(:file => @file)
         end
