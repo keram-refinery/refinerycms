@@ -1,0 +1,88 @@
+<%= form_for @images_list, url: refinery.admin_image_path(@images_list),
+             html: { multipart: true, remote: false } do |f| %>
+
+  <div class="clearfix">
+
+    <%= render('/refinery/admin/locale_picker',
+                url: 'edit_admin_image_path',
+                url_options: { id: @images_list.id }) %>
+
+    <div class="form-title">
+      <h1>
+        <%= t('edit_images', scope: 'refinery.admin.images.actions') %>
+      </h1>
+      <div>
+        <p class="breadcrumbs less-important">
+          <%= link_to refinery_plugin.title, refinery_plugin.url %>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <%= render '/refinery/admin/error_messages',
+             object: @images_list,
+             include_object_name: false %>
+
+  <% @images_list.images.each do |img| %>
+    <%= f.fields_for "image[]", img do |ff| %>
+
+      <div class="clearfix">
+        <div class="block-main">
+          <div class="field">
+            <%= refinery_form_field ff, :text_field, :alt,
+                        label: true, html: { class: 'widest' } -%>
+          </div>
+
+          <div class="field">
+            <%= refinery_form_field ff, :text_field, :caption,
+                        label: true, html: { class: 'widest' } -%>
+          </div>
+
+          <div class="field">
+            <% # we must only hint at multiple when it's a new record otherwise update fails. %>
+            <%= ff.file_field :image %>
+            <br>
+            <%= link_to img.name, img.url,
+                        target: '_blank',
+                        title: t('view_live', scope: 'refinery.admin.images') %>
+          </div>
+        </div>
+
+        <div class="block-aside right-side">
+          <div>
+            <label><%=t('current_image', scope: 'refinery.admin.images.form') %></label>
+            <p>
+              <%= image_fu img, '225x255>' if img.url.present? %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+  <% end %>
+
+  <div class="form-actions clearfix">
+    <div class="form-actions-left">
+      <%= submit_tag(t('save', scope: 'refinery.admin.form_actions'),
+                  class: 'button submit-button',
+                  data: { disable_with: t('processing', scope: 'refinery.admin.form_actions') }
+                ) %>
+    </div>
+
+    <div class="form-actions-right">
+
+      <%= submit_tag(t('delete', scope: 'refinery.admin.form_actions'),
+                  name: 'delete',
+                  method: :delete,
+                  data: {
+                    remote: true,
+                    confirm: t('message', scope: 'refinery.admin.delete', title: @images_list.title)
+                  },
+                  title: t('delete', scope: 'refinery.admin.pages'),
+                  class: 'button confirm-delete danger-button nojs-hide'
+                ) %>
+    </div>
+  </div>
+
+<% end -%>

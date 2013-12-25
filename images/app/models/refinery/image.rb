@@ -2,11 +2,17 @@ require 'dragonfly'
 
 module Refinery
   class Image < Refinery::Core::BaseModel
-    ::Refinery::Images::Dragonfly.setup!
-
     include Images::Validators
+    extend Dragonfly::Model
+    extend Dragonfly::Model::Validations
 
-    image_accessor :image
+    RESIZE_GEOMETRY = Dragonfly::ImageMagick::Processors::Thumb::RESIZE_GEOMETRY
+    THUMB_GEOMETRY = Regexp.union(
+                Dragonfly::ImageMagick::Processors::Thumb::RESIZE_GEOMETRY,
+                Dragonfly::ImageMagick::Processors::Thumb::CROPPED_RESIZE_GEOMETRY,
+                Dragonfly::ImageMagick::Processors::Thumb::CROP_GEOMETRY )
+
+    dragonfly_accessor :image, app: :refinery_images
 
     translates :alt, :caption
 
@@ -27,7 +33,6 @@ module Refinery
       geometry = convert_to_geometry(options[:geometry])
       thumbnail = image
       thumbnail = thumbnail.thumb(geometry) if geometry
-      thumbnail = thumbnail.strip if options[:strip]
       thumbnail
     end
 
@@ -42,8 +47,11 @@ module Refinery
       width = original_width = self.image_width.to_f
       height = original_height = self.image_height.to_f
       geometry_width, geometry_height = geometry.split(%r{\#{1,2}|\+|>|!|x}im)[0..1].map(&:to_f)
-      if (original_width * original_height > 0) && ::Dragonfly::ImageMagick::Processor::THUMB_GEOMETRY === geometry
-        if ::Dragonfly::ImageMagick::Processor::RESIZE_GEOMETRY === geometry
+
+      # Geometry string patterns
+
+      if (original_width * original_height > 0) && THUMB_GEOMETRY === geometry
+        if RESIZE_GEOMETRY === geometry
           if geometry !~ %r{\d+x\d+>} || (%r{\d+x\d+>} === geometry && (width > geometry_width.to_f || height > geometry_height.to_f))
             # Try scaling with width factor first. (wf = width factor)
             wf_width = (original_width * geometry_width / width).round

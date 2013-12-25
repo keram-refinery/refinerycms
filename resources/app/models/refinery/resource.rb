@@ -2,20 +2,18 @@ require 'dragonfly'
 
 module Refinery
   class Resource < Refinery::Core::BaseModel
-    ::Refinery::Resources::Dragonfly.setup!
-
     include Resources::Validators
     include ActionView::Helpers::NumberHelper
 
-    MAX_FILE_MIME_TYPE_LENGTH = 128
+    extend Dragonfly::Model
+    extend Dragonfly::Model::Validations
 
-    resource_accessor :file
+    dragonfly_accessor :file, app: :refinery_resources
 
     validates :file, presence: true
     validates_with FileNameValidator, on: :create
     validates_with FileSizeValidator
     validates_with FileUpdateValidator, on: :update
-    validates :file_mime_type, allow_blank: true, length: { maximum: MAX_FILE_MIME_TYPE_LENGTH }
 
     delegate :ext, :size, :mime_type, :url, :name, to: :file
 
@@ -38,7 +36,7 @@ module Refinery
         size: number_to_human_size(file_size),
         url: url,
         ext: ext.to_s.downcase,
-        mime_type: file_mime_type
+        mime_type: mime_type
       }
     end
 

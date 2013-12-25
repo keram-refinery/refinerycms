@@ -7,7 +7,7 @@ module Refinery
                     :user_image_sizes,
                     :image_views, :preferred_image_view, :datastore_root_path,
                     :s3_backend, :s3_bucket_name, :s3_region,
-                    :s3_access_key_id, :s3_secret_access_key, :trust_file_extensions,
+                    :s3_access_key_id, :s3_secret_access_key,
                     :whitelisted_mime_types,
                     :custom_backend_class, :custom_backend_opts,
                     :protect_from_dos_attacks
@@ -15,7 +15,6 @@ module Refinery
     # If you decide to trust file extensions replace :ext below with :format
     self.dragonfly_url_format = '/system/images/:job/:basename.:ext'
     self.dragonfly_url_host = ''
-    self.trust_file_extensions = false
 
     self.max_image_size = 5242880
     self.per_dialog_page = 20

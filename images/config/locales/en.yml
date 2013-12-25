@@ -17,7 +17,7 @@ en:
           maximum_image_size: The maximum image size is %{bytes}.
         actions:
           create_new_image: Add new image
-          edit_image: Edit image
+          edit_images: Edit images
         records:
           no_images_yet: There are no images yet. Click "Add new image" to add your first image.
         index:

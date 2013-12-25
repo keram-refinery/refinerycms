@@ -8,9 +8,8 @@ module Refinery
 
       config.autoload_paths += %W( #{config.root}/lib )
 
-      initializer 'attach-refinery-images-with-dragonfly', :after => :load_config_initializers do |app|
+      initializer 'attach-refinery-images-with-dragonfly', after: :load_config_initializers do |app|
         ::Refinery::Images::Dragonfly.configure!
-        ::Refinery::Images::Dragonfly.attach!(config.middleware)
       end
 
       initializer 'register images plugin' do
@@ -18,8 +17,8 @@ module Refinery
           plugin.pathname = root
           plugin.name = 'images'
           plugin.activity = {
-            :class_name => :'refinery/image',
-            :title => :image_name
+            class_name: :'refinery/image',
+            title: :image_name
           }
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_images_path }
         end

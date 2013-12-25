@@ -23,9 +23,8 @@ module Refinery
               else
                 invalid_resources << @resource
               end
-            rescue Dragonfly::FunctionManager::UnableToHandle
+            rescue Dragonfly::Shell::CommandFailed
               logger.warn($!.message)
-              invalid_resources << @resource.file_name
             end
           end
         end
@@ -55,7 +54,7 @@ module Refinery
             redirect_back_or_default refinery.admin_resources_path
           end
         else
-          render action: 'edit'
+          render action: :edit
         end
       end
 
@@ -77,7 +76,7 @@ module Refinery
                         scope: 'refinery.admin.resources')
         end
 
-        render action: 'new'
+        render action: :new
       end
 
       def paginate_per_page

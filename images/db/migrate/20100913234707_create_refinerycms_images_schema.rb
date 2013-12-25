@@ -1,7 +1,8 @@
 class CreateRefinerycmsImagesSchema < ActiveRecord::Migration
   def change
     create_table :refinery_images do |t|
-      t.string   :image_mime_type, null: false
+      # It looks like dragonfly doesn't use this anymore
+      # t.string   :image_mime_type, null: false
       t.string   :image_name,     null: false
       t.integer  :image_size,     null: false
       t.integer  :image_width,    null: false

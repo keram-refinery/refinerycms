@@ -10,7 +10,6 @@ module Refinery
 
       initializer 'attach-refinery-resources-with-dragonfly', :after => :load_config_initializers do |app|
         ::Refinery::Resources::Dragonfly.configure!
-        ::Refinery::Resources::Dragonfly.attach!(app)
       end
 
       initializer 'register resources plugin' do

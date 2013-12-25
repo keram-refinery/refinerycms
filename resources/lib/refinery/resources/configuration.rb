@@ -10,7 +10,7 @@ module Refinery
                     :custom_backend_class, :custom_backend_opts,
                     :protect_from_dos_attacks
 
-    self.dragonfly_url_format = '/system/resources/:job/:basename.:format'
+    self.dragonfly_url_format = '/system/resources/:job/:basename.:ext'
     self.dragonfly_url_host = ''
 
     self.content_disposition = :attachment

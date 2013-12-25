@@ -116,8 +116,7 @@ module Refinery
 
           page.should have_content('Edit image')
           page.should have_selector("a[href*='#{refinery.admin_images_path}']")
-
-          attach_file 'image_image', Refinery.roots(:'refinery/images').join('spec/fixtures/beach.jpeg')
+          attach_file "images_list_image_#{image.id}_image", Refinery.roots(:'refinery/images').join('spec/fixtures/beach.jpeg')
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 
           page.should have_content(::I18n.t('updated', :scope => 'refinery.crudify', :kind => 'Image', :what => 'Beach'))
@@ -129,7 +128,7 @@ module Refinery
         it "doesn't allow updating if image has different file name" do
           visit refinery.edit_admin_image_path(image)
 
-          attach_file 'image_image', Refinery.roots(:'refinery/images').join('spec/fixtures/fathead.png')
+          attach_file "images_list_image_#{image.id}_image", Refinery.roots(:'refinery/images').join('spec/fixtures/fathead.png')
           click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
 
           page.should have_content(::I18n.t('different_file_name',

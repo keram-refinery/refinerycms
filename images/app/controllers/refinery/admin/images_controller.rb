@@ -7,6 +7,8 @@ module Refinery
 
       before_action :change_list_mode_if_specified, only: [:index]
 
+      before_action :images_list, only: [:edit, :update]
+
       IMAGES_VIEWS_RE = %r{^(#{::Refinery::Images.image_views.join('|')})}
 
       def new
@@ -27,9 +29,8 @@ module Refinery
               else
                 invalid_images << @image
               end
-            rescue Dragonfly::FunctionManager::UnableToHandle
-              logger.warn($!.message)
-              invalid_images << @image.image_name
+            rescue Dragonfly::Shell::CommandFailed
+              invalid_images << @image
             end
           end
         end
@@ -38,15 +39,15 @@ module Refinery
           create_unsuccessful invalid_images
         else
           if iframe?
-            json_response redirect_to: refinery.admin_images_path
+            json_response redirect_to: redirect_url
           else
-            redirect_to refinery.admin_images_path, status: :see_other
+            redirect_to redirect_url, status: :see_other
           end
         end
       end
 
       def update
-        if @image.update(params.require(:image).permit(:image, :alt, :caption))
+        if images_list.update(images_list_params)
           flash.notice = t(
             'refinery.crudify.updated',
             kind: t(Image.model_name.i18n_key, scope: 'activerecord.models'),
@@ -54,13 +55,12 @@ module Refinery
           )
 
           if iframe?
-            json_response redirect_to: refinery.admin_images_path
+            json_response redirect_to: redirect_url
           else
-            redirect_back_or_default refinery.admin_images_path
+            redirect_to redirect_url
           end
         else
-          @thumbnail = Image.find params[:id].to_s
-          render action: 'edit'
+          render action: :edit
         end
       end
 
@@ -90,10 +90,39 @@ module Refinery
                         scope: 'refinery.admin.images')
         end
 
-        render action: 'new'
+        render action: :new
       end
 
-    private
+      def redirect_url
+        if @images.any?
+          refinery.edit_admin_image_path(images_list,
+            locale: (params[:switch_frontend_locale].presence || Globalize.locale))
+        else
+          refinery.admin_images_path
+        end
+      end
+
+      def find_image
+        @image ||= find_images.first
+      end
+
+      def find_images
+        @images ||= [].tap do |arr|
+          params[:id].split('-').each do |id|
+            if (img = Refinery::Image.find_by(id: id))
+              arr << img
+            end
+          end
+        end
+      end
+
+      def images_list
+        @images_list ||= Refinery::ImagesList.new(find_images)
+      end
+
+      def images_list_params
+        params.require(:images_list).permit(image: [:alt, :caption, :image])
+      end
 
     end
   end
