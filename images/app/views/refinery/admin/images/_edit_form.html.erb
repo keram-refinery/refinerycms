@@ -42,10 +42,6 @@
           <div class="field">
             <% # we must only hint at multiple when it's a new record otherwise update fails. %>
             <%= ff.file_field :image %>
-            <br>
-            <%= link_to img.name, img.url,
-                        target: '_blank',
-                        title: t('view_live', scope: 'refinery.admin.images') %>
           </div>
         </div>
 
@@ -53,7 +49,12 @@
           <div>
             <label><%=t('current_image', scope: 'refinery.admin.images.form') %></label>
             <p>
-              <%= image_fu img, '225x255>' if img.url.present? %>
+              <%= link_to (img.url || img.reload.url), target: '_blank',
+                        title: t('view_live', scope: 'refinery.admin.images') do %>
+                <%= image_fu img, '225x255>' if img.url.present? %>
+                <br>
+                <%= img.name %>
+              <% end -%>
             </p>
           </div>
         </div>
@@ -72,16 +73,16 @@
 
     <div class="form-actions-right">
 
-      <%= submit_tag(t('delete', scope: 'refinery.admin.form_actions'),
+      <%= link_to t('delete', scope: 'refinery.admin.form_actions'),
+                  refinery.admin_image_path(@images_list),
                   name: 'delete',
                   method: :delete,
                   data: {
                     remote: true,
                     confirm: t('message', scope: 'refinery.admin.delete', title: @images_list.title)
                   },
-                  title: t('delete', scope: 'refinery.admin.pages'),
-                  class: 'button confirm-delete danger-button nojs-hide'
-                ) %>
+                  title: t('delete', scope: 'refinery.admin.images'),
+                  class: 'button confirm-delete danger-button nojs-hide' %>
     </div>
   </div>
 

@@ -7,6 +7,7 @@ module Refinery
 
       before_action :change_list_mode_if_specified, only: [:index]
 
+      before_action :find_images_or_error_not_found, only: [:edit, :update, :destroy]
       before_action :images_list, only: [:edit, :update]
 
       IMAGES_VIEWS_RE = %r{^(#{::Refinery::Images.image_views.join('|')})}
@@ -51,7 +52,7 @@ module Refinery
           flash.notice = t(
             'refinery.crudify.updated',
             kind: t(Image.model_name.i18n_key, scope: 'activerecord.models'),
-            what: "#{@image.title}"
+            what: images_list.title
           )
 
           if iframe?
@@ -62,6 +63,20 @@ module Refinery
         else
           render action: :edit
         end
+      end
+
+      def destroy
+        title = find_images.map(&:name).join("', '")
+
+        if @images.map(&:destroy)
+          flash.notice = t(
+            'refinery.crudify.destroyed',
+            kind: t(Image.model_name.i18n_key, scope: 'activerecord.models'),
+            what: title
+          )
+        end
+
+        redirect_to refinery.admin_images_path, status: :see_other
       end
 
     protected
@@ -122,6 +137,10 @@ module Refinery
 
       def images_list_params
         params.require(:images_list).permit(image: [:alt, :caption, :image])
+      end
+
+      def find_images_or_error_not_found
+        find_images.any? || error_404
       end
 
     end
