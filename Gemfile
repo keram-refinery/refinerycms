@@ -43,7 +43,7 @@ gem 'sass-rails', '~> 4.0.1'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 2.0.0', github: 'rails/turbolinks', branch: 'master'
+gem 'turbolinks', '~> 2.1.0', github: 'rails/turbolinks', branch: 'master'
 
 gem 'jquery-rails', '~> 3.0.4'
 
