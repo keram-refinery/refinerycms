@@ -41,7 +41,7 @@ module Refinery
       end
 
       def update
-        if @resource.update(params.require(:resource).permit(:file))
+        if @resource.update(resource_params)
           flash.notice = t(
             'refinery.crudify.updated',
             kind: t(Resource.model_name.i18n_key, scope: 'activerecord.models'),
@@ -54,6 +54,7 @@ module Refinery
             redirect_back_or_default refinery.admin_resources_path
           end
         else
+          restore_record_file_if_file_validation_fails
           render action: :edit
         end
       end
@@ -66,13 +67,14 @@ module Refinery
         if @resources.any?
           flash.now[:notice] = t('created', scope: 'refinery.crudify',
                       kind: t(Resource.model_name.i18n_key, scope: 'activerecord.models'),
-                      what: "#{@resources.map(&:title).join(", ")}")
+                      what: @resources.map(&:title).join(', '))
         end
 
-        unless invalid_resources.empty? ||
-                    (invalid_resources.size == 1 && @resource.errors.keys.first == :file_name)
+        resources_with_invalid_name = invalid_resources.collect { |r| r.errors.include?(:file_name) }
+
+        if resources_with_invalid_name.any?
           flash.now[:alert] = t('problem_create_resources',
-                         resources: invalid_resources.map(&:file_name).join(', '),
+                        resources: resources_with_invalid_name.map(&:file_name).join(', '),
                         scope: 'refinery.admin.resources')
         end
 
@@ -84,6 +86,18 @@ module Refinery
       end
 
     private
+
+      def restore_record_file_if_file_validation_fails
+        if @resource.errors.include?(:file_name)
+          errors = @resource.errors
+          @resource = Refinery::Resource.find(@resource.id)
+          errors.each { |k, v| @resource.errors.add(k, v) }
+        end
+      end
+
+      def resource_params
+        params.require(:resource).permit(:file)
+      end
 
     end
   end

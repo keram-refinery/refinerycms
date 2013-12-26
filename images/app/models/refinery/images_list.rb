@@ -26,6 +26,8 @@ module Refinery
         @errors.messages.merge!(img.errors.messages)
       end
 
+      restore_record_file_if_file_validation_fails
+
       @errors.empty?
     end
 
@@ -37,5 +39,20 @@ module Refinery
       @images.map(&:title).join("', '")
     end
 
+    def restore_record_file_if_file_validation_fails
+      @images = @images.map do |image|
+        if image.invalid? && image.errors.include?(:image_name)
+          errors = image.errors
+          new_alt = image.alt
+          new_caption = image.caption
+          image = Refinery::Image.find(image.id)
+          image.alt = new_alt
+          image.caption = new_caption
+          errors.each { |k,v| image.errors.add(k, v) }
+        end
+
+        image
+      end
+    end
   end
 end
