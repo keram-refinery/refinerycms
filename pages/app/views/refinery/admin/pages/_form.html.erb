@@ -1,18 +1,19 @@
+<% new_record = @page.new_record? %>
 <%= form_for [refinery, :admin, @page],
-              url: (refinery.admin_page_path(@page.relative_path) unless @page.new_record?),
+              url: (refinery.admin_page_path(@page.relative_path) unless new_record),
               html: { data: { remote: true }} do |f| %>
 
   <div class="clearfix">
 
     <%= render('/refinery/admin/locale_picker',
-                (@page.new_record? ?
-                  { url: 'new_admin_page_path' } :
+                (new_record ?
+                  { url: 'new_admin_page_path', url_options: { parent_id: params[:parent_id] } } :
                   { url: 'edit_admin_page_path', url_options: { id: @page.nested_url } })
               ) if Refinery::I18n.frontend_locales.many? %>
 
     <div class="form-title">
       <h1>
-        <% if @page.new_record? %>
+        <% if new_record %>
           <%= t('create_new_page', scope: 'refinery.admin.pages.actions') %>
         <% else %>
           <%= t('edit_page', scope: 'refinery.admin.pages.actions') %>:
@@ -25,11 +26,24 @@
         </div>
         <div class="breadcrumbs less-important">
           <%= link_to refinery_plugin.title, refinery.admin_pages_path %>
-          <% @page.ancestors.each do |parent| %>
-            &nbsp;/&nbsp;
-            <%= link_to parent.title,
-                  refinery.edit_admin_page_url(parent.relative_path) %>
-          <% end %>
+          <% if new_record %>
+            <% if @page.parent.present? %>
+              <% @page.parent.ancestors.each do |parent| %>
+                &nbsp;/&nbsp;
+                <%= link_to parent.title,
+                      refinery.edit_admin_page_url(parent.relative_path) %>
+              <% end %>
+              &nbsp;/&nbsp;
+              <%= link_to @page.parent.title,
+                    refinery.edit_admin_page_url(@page.parent.relative_path) %>
+            <% end %>
+          <% else %>
+            <% @page.ancestors.each do |parent| %>
+              &nbsp;/&nbsp;
+              <%= link_to parent.title,
+                    refinery.edit_admin_page_url(parent.relative_path) %>
+            <% end %>
+          <% end -%>
         </div>
       </div>
     </div>
