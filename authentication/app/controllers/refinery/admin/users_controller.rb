@@ -47,7 +47,7 @@ module Refinery
         @selected_role_names = user_can_assign_roles? ?
                                 (params[:user].delete(:roles) || []) :
                                 @user.roles.pluck(:title)
-        @selected_plugin_names = params[:user][:plugins] & current_refinery_user.plugins.map(&:name)
+        @selected_plugin_names = (params[:user][:plugins] & current_refinery_user.plugins.map(&:name)) || []
         user_data = params_with_excluded_password_assignment_when_blank
 
         if user_is_locking_themselves_out?
@@ -97,6 +97,8 @@ module Refinery
       end
 
       def update_successful
+        @user.plugins = @selected_plugin_names
+
         redirect_to refinery.admin_users_path,
                     status: :see_other,
                     notice: t('updated',
