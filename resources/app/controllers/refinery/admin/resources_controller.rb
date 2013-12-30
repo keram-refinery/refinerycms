@@ -32,11 +32,7 @@ module Refinery
         if invalid_resources.any?
           create_unsuccessful invalid_resources
         else
-          if iframe?
-            json_response redirect_to: refinery.admin_resources_path, status: :see_other
-          else
-            redirect_to refinery.admin_resources_path
-          end
+          create_successful
         end
       end
 
@@ -60,6 +56,18 @@ module Refinery
       end
 
     protected
+
+      def create_successful
+        flash.notice = t('created', scope: 'refinery.crudify',
+                    kind: t(Resource.model_name.i18n_key, scope: 'activerecord.models'),
+                    what: @resources.map(&:title).join(', '))
+
+        if iframe?
+          json_response redirect_to: refinery.admin_resources_path, status: :see_other
+        else
+          redirect_to refinery.admin_resources_path
+        end
+      end
 
       def create_unsuccessful invalid_resources
         @resource = invalid_resources.fetch(0) { Resource.new }
