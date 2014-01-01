@@ -2,6 +2,8 @@
 gem 'railties'
 require 'rails/generators'
 require 'rails/generators/rails/app/app_generator'
+require File.expand_path('../../core/lib/refinery/version.rb', __FILE__)
+
 template_path = File.expand_path('../../templates/refinery/installer.rb', __FILE__)
 
 def show_help_message

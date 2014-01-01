@@ -232,7 +232,8 @@ gem 'pg'
 
 }
 
-        inject_into_file 'config/routes.rb', mount, :after => "Application.routes.draw do\n"
+        # in rails 4.1 AppNme::Application.routes.draw changed to Rails.application.routes.draw
+        inject_into_file 'config/routes.rb', mount, after: "pplication.routes.draw do\n"
       end
     end
 

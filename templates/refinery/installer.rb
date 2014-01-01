@@ -1,11 +1,8 @@
 require 'rbconfig'
 
-ROOT_PATH = File.expand_path('../../../', __FILE__)
-require "#{ROOT_PATH}/core/lib/refinery/version.rb"
-
-VERSION_BAND = Refinery::Version.to_s
-
 check_dependencies
+
+VERSION_BAND = ::Refinery::Version.to_s
 
 append_file 'Gemfile', <<-GEMFILE
 
@@ -13,7 +10,7 @@ append_file 'Gemfile', <<-GEMFILE
 gem 'friendly_id', github: 'norman/friendly_id', branch: 'master'
 gem 'friendly_id-globalize', github: 'norman/friendly_id-globalize', branch: 'master'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'master'
-gem 'globalize', github: 'github.com/globalize/globalize', branch: 'master'
+gem 'globalize', github: 'globalize/globalize', branch: 'master'
 gem 'routing-filter', github: 'svenfuchs/routing-filter', branch: 'master'
 gem 'seo_meta', github: 'keram-refinerycms/seo_meta', branch: 'rails4'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set', branch: 'master'
@@ -40,7 +37,7 @@ GEMFILE
 run 'bundle install'
 
 rake 'db:create'
-generate "refinery:cms --fresh-installation #{ARGV.join(' ')}"
+generate "refinery:cms --fresh-installation #{::ARGV.join(' ')}"
 
 say <<-SAY
   ============================================================================
