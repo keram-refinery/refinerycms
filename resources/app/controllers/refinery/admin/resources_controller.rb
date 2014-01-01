@@ -3,6 +3,7 @@ module Refinery
     class ResourcesController < ::Refinery::AdminController
 
       crudify :'refinery/resource',
+              order: 'updated_at DESC',
               sortable: false
 
       def new
