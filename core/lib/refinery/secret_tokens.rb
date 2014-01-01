@@ -7,7 +7,8 @@ module Refinery
 
     token_file = '.secret'
     token_file << "-#{token_name.downcase}" if token_name
-    token_file_path = Rails.root.join('config', token_file)
+    token_file_path = "./config/#{token_file}"
+    token_file_path = (Rails.root || Pathname.new('')).join('config', token_file)
 
     if File.exist? token_file_path
       # Use the existing token.
@@ -16,6 +17,7 @@ module Refinery
       # Generate a new token of 64 random hexadecimal characters and store it in token_file.
       token = SecureRandom.hex(64)
       File.write(token_file_path, token)
+      File.chmod(0400, token_file_path)
       token
     end
   end
