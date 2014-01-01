@@ -18,7 +18,10 @@ module Refinery
             secret Refinery.find_or_set_secret_token('dragonfly')
             protect_from_dos_attacks Refinery::Resources.protect_from_dos_attacks
 
-            response_header 'Content-Disposition', Refinery::Resources.content_disposition
+            response_header 'Content-Type', 'application/octet-stream'
+            response_header 'X-Content-Type-Options', 'nosniff'
+            response_header 'X-Download-Options', 'noopen'
+            response_header 'Content-Disposition', Refinery::Resources.content_disposition.to_s
           end
 
 
