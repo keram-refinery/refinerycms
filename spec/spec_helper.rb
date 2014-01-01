@@ -12,6 +12,8 @@ require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 
+I18n.enforce_available_locales = false
+
 Rails.backtrace_cleaner.remove_silencers!
 
 RSpec.configure do |config|
