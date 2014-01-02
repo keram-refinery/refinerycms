@@ -13,7 +13,7 @@ module Refinery
     self.dragonfly_url_format = '/system/resources/:job/:basename.:ext'
     self.dragonfly_url_host = ''
 
-    self.content_disposition = :attachment
+    self.content_disposition = 'attachment'
     self.max_file_size = 52428800
     self.per_admin_page = 20
     self.per_dialog_page = 12

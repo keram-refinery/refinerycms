@@ -21,7 +21,7 @@ module Refinery
             response_header 'Content-Type', 'application/octet-stream'
             response_header 'X-Content-Type-Options', 'nosniff'
             response_header 'X-Download-Options', 'noopen'
-            response_header 'Content-Disposition', Refinery::Resources.content_disposition.to_s
+            response_header 'Content-Disposition', Refinery::Resources.content_disposition
           end
 
 
