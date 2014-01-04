@@ -12,8 +12,13 @@ gem 'refinerycms-clientside', '~> 0.0.1', github: 'keram-refinery/refinerycms-cl
 
 # USER DEFINED
 
-# Specify your preferred WYSIWYG editor
-gem 'refinerycms-epiceditor', github: 'keram-refinery/refinerycms-epiceditor', branch: 'master'
+# Uncomment your preferred WYSIWYG editor and check out instalation guide for more details
+#
+# Epiceditor Installation Guide https://github.com/keram-refinery/refinerycms-epiceditor
+# gem 'refinerycms-epiceditor', github: 'keram-refinery/refinerycms-epiceditor', branch: 'master'
+#
+# Tinymce Installation Guide https://github.com/keram/refinerycms-tinymce
+# gem 'refinerycms-tinymce', github: 'keram/refinerycms-tinymce', branch: 'master'
 
 # Specify additional Refinery CMS Engines here (all optional):
 #  gem 'refinerycms-acts-as-indexed', github: 'keram-refinery/refinerycms-acts-as-indexed',  branch: 'refinery_light'
