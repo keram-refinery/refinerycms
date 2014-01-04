@@ -15,7 +15,7 @@ module Refinery
 
             url_format Refinery::Resources.dragonfly_url_format
             url_host Refinery::Resources.dragonfly_url_host
-            secret Refinery.find_or_set_secret_token('dragonfly')
+            secret Refinery.secret('dragonfly_secret_key')
             protect_from_dos_attacks Refinery::Resources.protect_from_dos_attacks
 
             response_header 'Content-Type', 'application/octet-stream'

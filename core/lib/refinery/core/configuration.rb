@@ -2,12 +2,12 @@ module Refinery
   module Core
     include ActiveSupport::Configurable
 
-    config_accessor :rescue_not_found, :s3_backend, :base_cache_key,
+    config_accessor :rescue_not_found, :base_cache_key,
                     :site_name, :site_emails_emitter, :site_emails_receiver,
                     :google_analytics_page_code, :authenticity_token_on_frontend,
                     :javascripts, :I18n_javascripts, :stylesheets, :turbolinks_on_frontend,
                     :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
-                    :s3_bucket_name, :s3_region, :s3_access_key_id,
+                    :s3_backend, :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
                     :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts,
                     :dragonfly_protect_from_dos_attacks,
@@ -15,7 +15,6 @@ module Refinery
                     :wysiwyg_editor
 
     self.rescue_not_found = false
-    self.s3_backend = false
     self.base_cache_key = :refinery
     self.site_name = 'Site Name'
     self.site_emails_emitter = 'no-reply@localhost'
@@ -31,10 +30,11 @@ module Refinery
     self.admin_I18n_javascripts = {}
     self.admin_extern_javascripts = []
     self.admin_stylesheets = []
-    self.s3_bucket_name = ENV['S3_BUCKET']
-    self.s3_region = ENV['S3_REGION']
-    self.s3_access_key_id = ENV['S3_KEY']
-    self.s3_secret_access_key = ENV['S3_SECRET']
+    self.s3_backend = false
+    self.s3_bucket_name = Refinery.secret('s3_bucket_name')
+    self.s3_region = Refinery.secret('s3_region')
+    self.s3_access_key_id = Refinery.secret('s3_access_key_id')
+    self.s3_secret_access_key = Refinery.secret('s3_secret_access_key')
     self.force_ssl = false
     self.backend_route = 'refinery'
     self.dragonfly_custom_backend_class = ''

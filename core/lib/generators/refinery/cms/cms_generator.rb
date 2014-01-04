@@ -53,11 +53,43 @@ module Refinery
 
   protected
 
+    def secrets_yaml
+      <<-STRING
+development:
+  secret_key_base: #{SecureRandom.hex(64)}
+  dragonfly_secret_key: #{SecureRandom.hex(64)}
+  devise_secret_key: #{SecureRandom.hex(64)}
+  s3_bucket_name: <%= ENV['S3_BUCKET_NAME'] %>
+  s3_region: <%= ENV['S3_REGION'] %>
+  s3_access_key_id: <%= ENV['S3_KEY_ID'] %>
+  s3_secret_access_key: <%= ENV['S3_SECRET_ACCESS_KEY'] %>
+
+test:
+  secret_key_base: #{SecureRandom.hex(64)}
+  dragonfly_secret_key: #{SecureRandom.hex(64)}
+  devise_secret_key: #{SecureRandom.hex(64)}
+  s3_bucket_name: <%= ENV['S3_BUCKET_NAME'] %>
+  s3_region: <%= ENV['S3_REGION'] %>
+  s3_access_key_id: <%= ENV['S3_KEY_ID'] %>
+  s3_secret_access_key: <%= ENV['S3_SECRET_ACCESS_KEY'] %>
+
+production:
+  secret_key_base: <%= ENV['SECRET_KEY_BASE'] %>
+  dragonfly_secret_key: <%= ENV['DRAGONFLY_SECRET_KEY'] %>
+  devise_secret_key: <%= ENV['DEVICE_SECRET_KEY'] %>
+  s3_bucket_name: <%= ENV['S3_BUCKET_NAME'] %>
+  s3_region: <%= ENV['S3_REGION'] %>
+  s3_access_key_id: <%= ENV['S3_KEY_ID'] %>
+  s3_secret_access_key: <%= ENV['S3_SECRET_ACCESS_KEY'] %>
+
+      STRING
+    end
+
     def replace_default_rails_secret_token_config
-      file_path = 'config/initializers/secret_token.rb'
+      file_path = 'config/secrets.yml'
 
       if File.exists?(destination_path.join(file_path))
-        gsub_file file_path, %r{config.secret_key_base = ('|").+('|")}, 'config.secret_key_base = Refinery.find_or_set_secret_token'
+        gsub_file destination_path.join(file_path), /\ndevelopment:[\s\S]+\z/, secrets_yaml
       end
     end
 
