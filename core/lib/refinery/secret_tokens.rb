@@ -2,14 +2,13 @@ require 'securerandom'
 
 module Refinery
 
-  def self.secret token_name
+  def self.secret token_name, fallback=SecureRandom.hex(64)
     if Rails.application &&
-      Rails.application.secrets && Rails.application.secrets[token_name]
+      Rails.application.respond_to?(:secrets) && Rails.application.secrets[token_name]
 
       Rails.application.secrets[token_name]
     else
-      # this part here is only for making happy application when Rails.application is not present
-      ENV[token_name.upcase] || SecureRandom.hex(64)
+      ENV[token_name.upcase] || fallback
     end
   end
 
