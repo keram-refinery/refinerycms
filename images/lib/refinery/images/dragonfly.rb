@@ -21,7 +21,7 @@ module Refinery
             protect_from_dos_attacks Refinery::Images.protect_from_dos_attacks
           end
 
-          if Images.s3_backend
+          if Images.s3_backend?
             require 'dragonfly/s3_data_store'
             options = {
               bucket_name: Refinery::Images.s3_bucket_name,

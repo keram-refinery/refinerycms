@@ -30,6 +30,12 @@ module Refinery
     self.image_views = [:grid, :list]
     self.preferred_image_view = :grid
 
+    self.s3_backend = false
+    self.s3_bucket_name = Refinery.secret('s3_bucket_name', false)
+    self.s3_region = Refinery.secret('s3_region', false)
+    self.s3_access_key_id = Refinery.secret('s3_access_key_id', false)
+    self.s3_secret_access_key = Refinery.secret('s3_secret_access_key', false)
+
     # We have to configure these settings after Rails is available.
     # But a non-nil custom option can still be provided
     class << self
@@ -37,24 +43,8 @@ module Refinery
         config.datastore_root_path || (Rails.root.join('public', 'system', 'refinery', 'images').to_s if Rails.root)
       end
 
-      def s3_backend
-        config.s3_backend.presence || Core.s3_backend
-      end
-
-      def s3_bucket_name
-        config.s3_bucket_name.presence || Core.s3_bucket_name
-      end
-
-      def s3_access_key_id
-        config.s3_access_key_id.presence || Core.s3_access_key_id
-      end
-
-      def s3_secret_access_key
-        config.s3_secret_access_key.presence || Core.s3_secret_access_key
-      end
-
-      def s3_region
-        config.s3_region.presence || Core.s3_region
+      def s3_backend?
+        config.s3_backend || Core.s3_backend
       end
 
       def custom_backend?

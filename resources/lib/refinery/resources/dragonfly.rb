@@ -24,8 +24,7 @@ module Refinery
             response_header 'Content-Disposition', Refinery::Resources.content_disposition
           end
 
-
-          if Resources.s3_backend
+          if Resources.s3_backend?
             require 'dragonfly/s3_data_store'
             options = {
               bucket_name: Refinery::Resources.s3_bucket_name,
