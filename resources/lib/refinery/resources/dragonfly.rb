@@ -7,10 +7,9 @@ module Refinery
       class << self
         def configure!
           app_resources = ::Dragonfly.app(:refinery_resources)
-
           app_resources.configure do
             datastore :file,
-              root_path: Refinery::Resources.datastore_root_path,
+              root_path: Refinery::Resources.datastore_root_path + '/' + Refinery.secret('dragonfly_secret_path'),
               server_root: Rails.root.join('public')
 
             url_format Refinery::Resources.dragonfly_url_format

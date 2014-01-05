@@ -58,6 +58,7 @@ module Refinery
 development:
   secret_key_base: #{SecureRandom.hex(64)}
   dragonfly_secret_key: #{SecureRandom.hex(64)}
+  dragonfly_secret_path: #{SecureRandom.hex(16)}
   devise_secret_key: #{SecureRandom.hex(64)}
   s3_bucket_name: <%= ENV['S3_BUCKET_NAME'] %>
   s3_region: <%= ENV['S3_REGION'] %>
@@ -67,6 +68,7 @@ development:
 test:
   secret_key_base: #{SecureRandom.hex(64)}
   dragonfly_secret_key: #{SecureRandom.hex(64)}
+  dragonfly_secret_path: #{SecureRandom.hex(16)}
   devise_secret_key: #{SecureRandom.hex(64)}
   s3_bucket_name: <%= ENV['S3_BUCKET_NAME'] %>
   s3_region: <%= ENV['S3_REGION'] %>
@@ -76,6 +78,7 @@ test:
 production:
   secret_key_base: <%= ENV['SECRET_KEY_BASE'] %>
   dragonfly_secret_key: <%= ENV['DRAGONFLY_SECRET_KEY'] %>
+  dragonfly_secret_path: <%= ENV['DRAGONFLY_SECRET_PATH'] %>
   devise_secret_key: <%= ENV['DEVICE_SECRET_KEY'] %>
   s3_bucket_name: <%= ENV['S3_BUCKET_NAME'] %>
   s3_region: <%= ENV['S3_REGION'] %>
