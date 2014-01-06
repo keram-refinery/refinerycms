@@ -19,10 +19,10 @@ module Refinery
     self.per_dialog_page = 12
 
     self.s3_backend = false
-    self.s3_bucket_name = Refinery.secret('s3_bucket_name', false)
-    self.s3_region = Refinery.secret('s3_region', false)
-    self.s3_access_key_id = Refinery.secret('s3_access_key_id', false)
-    self.s3_secret_access_key = Refinery.secret('s3_secret_access_key', false)
+    self.s3_bucket_name = Refinery.secret(:s3_bucket_name)
+    self.s3_region = Refinery.secret(:s3_region)
+    self.s3_access_key_id = Refinery.secret(:s3_access_key_id)
+    self.s3_secret_access_key = Refinery.secret(:s3_secret_access_key)
 
     # We have to configure these settings after Rails is available.
     # But a non-nil custom option can still be provided

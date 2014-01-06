@@ -12,12 +12,12 @@ module Refinery
           app_images.configure do
             plugin :imagemagick
             datastore :file,
-              root_path: Refinery::Images.datastore_root_path + '/' + Refinery.secret('dragonfly_secret_path'),
+              root_path: Refinery::Images.datastore_root_path + '/' + Refinery.secret(:dragonfly_secret_path).to_s,
               server_root: Rails.root.join('public')
 
             url_format Refinery::Images.dragonfly_url_format
             url_host Refinery::Images.dragonfly_url_host
-            secret Refinery.secret('dragonfly_secret_key')
+            secret Refinery.secret(:dragonfly_secret_key)
             protect_from_dos_attacks Refinery::Images.protect_from_dos_attacks
           end
 

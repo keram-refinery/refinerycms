@@ -9,12 +9,12 @@ module Refinery
           app_resources = ::Dragonfly.app(:refinery_resources)
           app_resources.configure do
             datastore :file,
-              root_path: Refinery::Resources.datastore_root_path + '/' + Refinery.secret('dragonfly_secret_path'),
+              root_path: Refinery::Resources.datastore_root_path + '/' + Refinery.secret(:dragonfly_secret_path).to_s,
               server_root: Rails.root.join('public')
 
             url_format Refinery::Resources.dragonfly_url_format
             url_host Refinery::Resources.dragonfly_url_host
-            secret Refinery.secret('dragonfly_secret_key')
+            secret Refinery.secret(:dragonfly_secret_key)
             protect_from_dos_attacks Refinery::Resources.protect_from_dos_attacks
 
             response_header 'Content-Type', 'application/octet-stream'

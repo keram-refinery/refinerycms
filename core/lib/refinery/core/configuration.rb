@@ -31,10 +31,10 @@ module Refinery
     self.admin_extern_javascripts = []
     self.admin_stylesheets = []
     self.s3_backend = false
-    self.s3_bucket_name = Refinery.secret('s3_bucket_name', false)
-    self.s3_region = Refinery.secret('s3_region', false)
-    self.s3_access_key_id = Refinery.secret('s3_access_key_id', false)
-    self.s3_secret_access_key = Refinery.secret('s3_secret_access_key', false)
+    self.s3_bucket_name = Refinery.secret(:s3_bucket_name)
+    self.s3_region = Refinery.secret(:s3_region)
+    self.s3_access_key_id = Refinery.secret(:s3_access_key_id)
+    self.s3_secret_access_key = Refinery.secret(:s3_secret_access_key)
     self.force_ssl = false
     self.backend_route = 'refinery'
     self.dragonfly_custom_backend_class = ''

@@ -48,6 +48,8 @@ module Refinery
 
       seed_database!
 
+      mark_as_installed!
+
       deploy_to_hosting?
     end
 
@@ -329,6 +331,10 @@ gem 'pg'
         new_options[:pretend] = @old_pretend
         self.options = new_options
       end
+    end
+
+    def mark_as_installed!
+      File.write('config/refinerycms_installed', 'true') if File.directory?('config')
     end
   end
 end
