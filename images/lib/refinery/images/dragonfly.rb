@@ -35,6 +35,8 @@ module Refinery
           if Images.custom_backend?
             app_images.datastore = Images.custom_backend_class.new(Images.custom_backend_opts)
           end
+
+          ::Dragonfly.logger = Rails.logger
         end
 
       end
