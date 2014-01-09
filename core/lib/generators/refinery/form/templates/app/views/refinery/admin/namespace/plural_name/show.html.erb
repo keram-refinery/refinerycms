@@ -1,29 +1,44 @@
 <section id="records">
-  <h2><%%= t('.<%= singular_name %>') %></h2>
-  <table id="<%= singular_name %>" class="inquiry">
-    <thead>
-<% if includes_spam? || includes_archived? -%>
-      <tr>
-        <th></th>
-        <td>
-<% if includes_spam? -%>
-        <%% if @<%= singular_name %>.spam? %>
-          <%%= t('.spam') %>
+  <div class="form-title">
+    <h1><%%= t('.<%= singular_name %>') %></h1>
+    <div class="clearfix">
+      <div class="meta-informations right-side">
+      <% if includes_spam? -%>
+        <%%% if @<%= singular_name %>.spam? %>
+          <span class="label spam"><%%= t('.spam') %></span>
         <%% end %>
-<% end -%>
-<% if includes_archived? -%>
+      <% end -%>
+
+      <% if includes_archived? -%>
         <%% if @<%= singular_name %>.archived? %>
-          <%%= t('.archived') %>
+          <span class="label archived"><%= t('.archived') %></span>
         <%% end %>
-<% end -%>
-        </td>
-      </tr>
-<% end -%>
-      <tr>
-        <th><%%= t('.age') %></th>
-        <td><%%= time_ago_in_words(@<%= singular_name %>.created_at) %></td>
-      </tr>
-    </thead>
+      <% end -%>
+      </div>
+      <div class="breadcrumbs less-important">
+        <%%= link_to t('title', scope: 'refinery.plugins.<%= extension_name %>'),
+                    refinery.admin_<%= namespacing.underscore %>_<%= plural_name %>_path %>
+
+      <% if includes_spam? -%>
+        <%% if @<%= singular_name %>.spam? %>
+          &nbsp;/&nbsp;
+          <%%= link_to t('.spam'),
+                      refinery.spam_admin_<%= namespacing.underscore %>_<%= plural_name %>_path -%>
+        <%% end %>
+      <% end -%>
+
+      <% if includes_archived? -%>
+        <%% if @<%= singular_name %>.archived? %>
+          &nbsp;/&nbsp;
+          <%%= link_to t('.archived'),
+                      refinery.archived_admin_<%= namespacing.underscore %>_<%= plural_name %>_path -%>
+        <%% end %>
+      <% end -%>
+      </div>
+    </div>
+  </div>
+
+  <table id="<%= singular_name %>" class="<%= singular_name %>">
 <% attributes.each do |attribute| %>
       <tr>
         <td<%= ' valign="top"' if attribute.type.to_s == 'text' %>>
