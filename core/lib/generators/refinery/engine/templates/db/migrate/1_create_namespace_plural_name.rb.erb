@@ -25,11 +25,11 @@ class Create<%= namespacing %><%= class_name.pluralize %> < ActiveRecord::Migrat
 
   def down
     if defined?(::Refinery::UserPlugin)
-      ::Refinery::UserPlugin.destroy_all({name: '<%= extension_name %>'})
+      ::Refinery::UserPlugin.destroy_all name: '<%= extension_name %>'
     end
 <% unless skip_frontend? %>
     if defined?(::Refinery::Page)
-      ::Refinery::Page.delete_all({plugin_page_id: '<%= extension_name %>'})
+      ::Refinery::Page.delete_all plugin_page_id: '<%= extension_name %>'
     end
 <% end %>
     drop_table :refinery_<%= "#{namespacing.underscore}_" if table_name != namespacing.underscore.pluralize %><%= table_name %>
