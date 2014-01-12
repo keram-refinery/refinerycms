@@ -39,11 +39,7 @@ module Refinery
         if invalid_images.any?
           create_unsuccessful invalid_images
         else
-          if iframe?
-            json_response redirect_to: redirect_url
-          else
-            redirect_to redirect_url, status: :see_other
-          end
+          redirect_to redirect_url, status: :see_other
         end
       end
 
@@ -55,11 +51,7 @@ module Refinery
             what: images_list.title
           )
 
-          if iframe?
-            json_response redirect_to: redirect_url
-          else
-            redirect_to redirect_url
-          end
+          redirect_to redirect_url
         else
           render action: :edit
         end

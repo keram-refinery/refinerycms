@@ -45,11 +45,7 @@ module Refinery
             what: "#{@resource.title}"
           )
 
-          if iframe?
-            json_response redirect_to: refinery.admin_resources_path
-          else
-            redirect_back_or_default refinery.admin_resources_path
-          end
+          redirect_to refinery.admin_resources_path, status: :see_other
         else
           restore_record_file_if_file_validation_fails
           render action: :edit
@@ -63,11 +59,7 @@ module Refinery
                     kind: t(Resource.model_name.i18n_key, scope: 'activerecord.models'),
                     what: @resources.map(&:title).join(', '))
 
-        if iframe?
-          json_response redirect_to: refinery.admin_resources_path, status: :see_other
-        else
-          redirect_to refinery.admin_resources_path
-        end
+        redirect_to refinery.admin_resources_path, status: :see_other
       end
 
       def create_unsuccessful invalid_resources

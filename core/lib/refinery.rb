@@ -25,6 +25,7 @@ module Refinery
   require 'refinery/ext/action_view/helpers/form_tag_helper'
 
   require 'refinery/ext/action_dispatch/routing/routes_proxy'
+  require 'refinery/ext/action_controller/metal/redirecting'
 
   require 'refinery/content_renderer'
   require 'refinery/safe_html_content_renderer'
