@@ -27,6 +27,8 @@ module Refinery
 
     delegate :size, :mime_type, :url, :width, :height, :name, to: :image
 
+    default_scope -> { order(id: :desc) }
+
     # Get a thumbnail job object given a geometry and whether to strip image profiles and comments.
     def thumbnail(options = {})
       options = { geometry: nil, strip: true }.merge(options)

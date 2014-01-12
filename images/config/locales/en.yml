@@ -30,7 +30,7 @@ en:
           button_text: Insert
           resize_image: Resize the image?
           size: Size
-        problem_create_images: 'These images we was unable create: %{images}.'
+        problem_create_images: 'These images we was unable to create: %{images}.'
       images_dialog:
         index:
           existing_image: Library
