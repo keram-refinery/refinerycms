@@ -29,9 +29,10 @@ module Refinery
 
           add_section presenter.new(part)
 
-          Refinery::Pages.get_extras(:after, part.title).each do |extra|
-            add_section extra.call(part.page, :after, part.title)
+          Refinery::Pages.get_extras(:after, part.title).each do |key, proc|
+            add_section proc.call(part.page, :after, part.title)
           end
+
         end
       end
 
