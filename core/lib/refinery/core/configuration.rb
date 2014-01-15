@@ -4,7 +4,8 @@ module Refinery
 
     config_accessor :rescue_not_found, :base_cache_key,
                     :site_name, :site_emails_emitter, :site_emails_receiver,
-                    :google_analytics_page_code, :authenticity_token_on_frontend,
+                    :google_analytics_page_code, :google_tag_manager_id,
+                    :authenticity_token_on_frontend,
                     :javascripts, :I18n_javascripts, :stylesheets, :turbolinks_on_frontend,
                     :admin_javascripts, :admin_I18n_javascripts, :admin_stylesheets,
                     :s3_backend, :s3_bucket_name, :s3_region, :s3_access_key_id,
@@ -20,6 +21,7 @@ module Refinery
     self.site_emails_emitter = 'no-reply@localhost'
     self.site_emails_receiver = 'info@localhost'
     self.google_analytics_page_code = 'UA-xxxxxx-x'
+    self.google_tag_manager_id = 'GTM-XXXX'
     self.authenticity_token_on_frontend = false
     self.javascripts = []
     self.I18n_javascripts = {}

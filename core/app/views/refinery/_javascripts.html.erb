@@ -1,3 +1,6 @@
 <%= javascript_include_tag 'application' %>
 <%= yield :javascripts %>
-<%= render '/refinery/google_analytics' unless local_request? || refinery_user? %>
+<% unless local_request? || refinery_user? %>
+  <%= render '/refinery/google_analytics' %>
+  <%= render '/refinery/google_tag_manager' %>
+<% end %>
