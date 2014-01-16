@@ -1,6 +1,6 @@
 <nav>
   <% colophon_page = Refinery::Plugins['pages'].colophon_page %>
-  <%= link_to colophon_page.title, refinery.url_for(colophon_page.url) if colophon_page.present? %>
+  <%= link_to colophon_page.title, refinery.url_for(colophon_page.url) if colophon_page.present? && colophon_page.live? %>
   <a href="#top"><%= t('.top') %></a>
 </nav>
 <p>
