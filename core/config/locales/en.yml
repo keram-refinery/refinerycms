@@ -24,6 +24,8 @@ en:
       log_out: Log out
       switch_to_your_website: Switch to your website
       switch_to_your_website_editor: Switch to your website editor
+      administration: Administration
+      website: Website
     admin:
       menu:
         reorder_menu: Reorder menu

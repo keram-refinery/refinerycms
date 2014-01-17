@@ -15,13 +15,13 @@ module Refinery
       before { visit refinery.admin_root_path }
 
       it "have a 'switch to your website button'" do
-        page.should have_content("Switch to your website")
+        page.should have_content("Website")
         page.should have_selector("a[href='/']")
       end
 
       it 'switches to frontend' do
         page.current_path.should == refinery.admin_root_path
-        click_link "Switch to your website"
+        click_link "Website"
         page.current_path.should == refinery.root_path
       end
     end
@@ -35,13 +35,13 @@ module Refinery
       end
 
       it "have a 'switch to your website editor' button" do
-        page.should have_content("Switch to your website editor")
+        page.should have_content("Administration")
         page.should have_selector("a[href='/refinery']")
       end
 
       it 'switches to backend' do
         page.current_path.should == refinery.root_path
-        click_link "Switch to your website editor"
+        click_link "Administration"
         page.current_path.should == refinery.admin_root_path
       end
     end
