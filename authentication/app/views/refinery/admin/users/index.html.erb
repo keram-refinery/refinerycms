@@ -1,6 +1,7 @@
 <section id="records">
-  <%= render 'records' %>
+  <%= render searching? ? 'search_results' : 'records' %>
 </section>
 <aside id="actions">
+  <%= render '/refinery/admin/search', search_model: Refinery::User, url: refinery.admin_users_path %>
   <%= render 'actions' %>
 </aside>

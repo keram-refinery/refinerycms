@@ -5,7 +5,6 @@ module Refinery
               include: [:translations, :children],
               paging: false
 
-
       def new
         @page = Page.new parent_id: params[:parent_id].to_i
       end

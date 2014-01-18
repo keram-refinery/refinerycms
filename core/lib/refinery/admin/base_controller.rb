@@ -13,11 +13,15 @@ module Refinery
 
         base.after_action :store_location?, only: [:index] # for redirect_back_or_default
 
-        base.helper_method :iframe?, :group_by_date
+        base.helper_method :iframe?, :group_by_date, :searching?
       end
 
       def admin?
         true # we're in the admin base controller, so always true.
+      end
+
+      def searching?
+        params[:search].present?
       end
 
     protected

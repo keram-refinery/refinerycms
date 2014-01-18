@@ -13,7 +13,8 @@ module Refinery
                     :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts,
                     :dragonfly_protect_from_dos_attacks,
                     :extern_javascripts, :admin_extern_javascripts,
-                    :wysiwyg_editor
+                    :wysiwyg_editor,
+                    :admin_search
 
     self.rescue_not_found = false
     self.base_cache_key = :refinery
