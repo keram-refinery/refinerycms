@@ -21,7 +21,7 @@ module Refinery
       end
 
       def searching?
-        params[:search].present?
+        Refinery::Core.admin_search && params[:search].present?
       end
 
     protected

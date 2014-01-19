@@ -7,7 +7,7 @@ module Refinery
 
       before_action :change_list_mode_if_specified, only: [:index]
 
-      before_action :find_images_or_error_not_found, only: [:edit, :update, :destroy]
+      before_action :find_images_by_id_or_error_not_found, only: [:edit, :update, :destroy]
       before_action :images_list, only: [:edit, :update]
 
       IMAGES_VIEWS_RE = %r{^(#{::Refinery::Images.image_views.join('|')})}
@@ -58,7 +58,7 @@ module Refinery
       end
 
       def destroy
-        title = find_images.map(&:name).join("', '")
+        title = find_images_by_id.map(&:name).join("', '")
 
         if @images.map(&:destroy)
           flash.notice = t(
@@ -110,10 +110,10 @@ module Refinery
       end
 
       def find_image
-        @image ||= find_images.first
+        @image ||= find_images_by_id.first
       end
 
-      def find_images
+      def find_images_by_id
         @images ||= [].tap do |arr|
           params[:id].split('-').each do |id|
             if (img = Refinery::Image.find_by(id: id))
@@ -124,15 +124,15 @@ module Refinery
       end
 
       def images_list
-        @images_list ||= Refinery::ImagesList.new(find_images)
+        @images_list ||= Refinery::ImagesList.new(find_images_by_id)
       end
 
       def images_list_params
         params.require(:images_list).permit(image: [:alt, :caption, :image])
       end
 
-      def find_images_or_error_not_found
-        find_images.any? || error_404
+      def find_images_by_id_or_error_not_found
+        find_images_by_id.any? || error_404
       end
 
     end

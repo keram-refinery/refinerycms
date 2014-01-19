@@ -4,19 +4,20 @@ module Refinery
       class <%= class_name.pluralize %>Controller < Refinery::AdminController
 
         crudify :'refinery/<%= namespacing.underscore %>/<%= singular_name %>',
+                paging: true,
                 order: 'id ASC'
 
         def index
-          @<%= plural_name %> = find_all_<%= plural_name %><% if includes_archived? -%>.fresh<% end -%><% if includes_spam? -%>.ham<% end -%>
+          @<%= plural_name %> = @<%= plural_name %><% if includes_archived? -%>.fresh<% end -%><% if includes_spam? -%>.ham<% end -%>
 
           @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
         end
 <% if includes_spam? -%>
 
         def spam
-          @<%= plural_name %> = find_all_<%= plural_name %>.spam
+          @<%= plural_name %> = find_<%= plural_name %>.spam
 
-          @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
+          @grouped_<%= plural_name %> = @<%= plural_name %>.group_by_date(@<%= plural_name %>)
 
           render action: :index
         end
@@ -31,7 +32,7 @@ module Refinery
 <% if includes_archived? -%>
 
         def archived
-          @<%= plural_name %> = find_all_<%= plural_name %>.archived
+          @<%= plural_name %> = find_<%= plural_name %>.archived
 
           @grouped_<%= plural_name %> = group_by_date(@<%= plural_name %>)
 

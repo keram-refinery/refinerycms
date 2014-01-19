@@ -3,15 +3,15 @@
 # Don't forget to add:
 #   resources :plural_model_name_here
 # or for scoped:
-#   scope(:as => 'module_module', :module => 'module_name') do
+#   scope(as: 'module_module', module: 'module_name') do
 #      resources :plural_model_name_here
 #    end
 # to your routes.rb file.
 # Full documentation about CRUD and resources go here:
 # -> http://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
 # Example (add to your controller):
-# crudify :foo, :title_attribute => 'name' for CRUD on Foo model
-# crudify :'foo/bar', :title_attribute => 'name' for CRUD on Foo::Bar model
+# crudify :foo, title_attribute: 'name' for CRUD on Foo model
+# crudify :'foo/bar', title_attribute: 'name' for CRUD on Foo::Bar model
 # Note: @singular_name will result in @foo for :foo and @bar for :'foo/bar'
 
 module Refinery
@@ -25,16 +25,16 @@ module Refinery
       order = 'position ASC' if this_class.table_exists? && this_class.column_names.include?('position')
 
       {
-        :conditions => '',
-        :include => [],
-        :order => order,
-        :paging => true,
-        :per_page => false,
-        :redirect_to_url => "refinery.#{Refinery.route_for_model(class_name.constantize, :plural => true)}",
-        :sortable => true,
-        :class_name => class_name,
-        :singular_name => singular_name,
-        :plural_name => plural_name
+        conditions: '',
+        include: [],
+        order: order,
+        paging: true,
+        per_page: false,
+        redirect_to_url: "refinery.#{Refinery.route_for_model(class_name.constantize, plural: true)}",
+        sortable: true,
+        class_name: class_name,
+        singular_name: singular_name,
+        plural_name: plural_name
       }
     end
 
@@ -51,15 +51,42 @@ module Refinery
         singular_name = options[:singular_name]
         plural_name = options[:plural_name]
 
+        if options[:paging]
+          module_eval %(
+            def find_#{plural_name}
+              find_all_#{plural_name}
+
+              paginate_all_#{plural_name}
+              search_all_#{plural_name} if searching?
+            end
+          )
+        else
+          module_eval %(
+            def find_#{plural_name}
+              find_all_#{plural_name}
+
+              if searching?
+                paginate_all_#{plural_name}
+                search_all_#{plural_name}
+              end
+            end
+          )
+        end
+
         module_eval %(
           def self.crudify_options
             #{options.inspect}
           end
 
           prepend_before_action :find_#{singular_name},
-                                :only => [:update, :destroy, :edit, :show]
+                                only: [:update, :destroy, :edit, :show]
 
-          prepend_before_action :merge_position_into_params!, :only => :create
+          prepend_before_action :find_#{plural_name}, only: :index
+
+          prepend_before_action :merge_position_into_params!, only: :create
+
+          def index
+          end
 
           def new
             @#{singular_name} = #{class_name}.new
@@ -69,8 +96,8 @@ module Refinery
             if (@#{singular_name} = #{class_name}.create(#{singular_name}_params)).valid?
               flash.notice = t(
                 'refinery.crudify.created',
-                :kind => t('#{model_name}', scope: 'activerecord.models'),
-                :what => "\#{@#{singular_name}.title}"
+                kind: t('#{model_name}', scope: 'activerecord.models'),
+                what: "\#{@#{singular_name}.title}"
               )
               create_or_update_successful
             else
@@ -86,8 +113,8 @@ module Refinery
             if @#{singular_name}.update_attributes(#{singular_name}_params)
               flash.notice = t(
                 'refinery.crudify.updated',
-                :kind => t('#{model_name}', scope: 'activerecord.models'),
-                :what => "\#{@#{singular_name}.title}"
+                kind: t('#{model_name}', scope: 'activerecord.models'),
+                what: "\#{@#{singular_name}.title}"
               )
 
               create_or_update_successful
@@ -101,8 +128,8 @@ module Refinery
             if @#{singular_name}.destroy
               flash.notice = t(
                 'refinery.crudify.destroyed',
-                :kind => t('#{model_name}', scope: 'activerecord.models'),
-                :what => title
+                kind: t('#{model_name}', scope: 'activerecord.models'),
+                what: title
               )
             end
 
@@ -139,10 +166,7 @@ module Refinery
 
           # Paginate a set of @#{plural_name} that may/may not already exist.
           def paginate_all_#{plural_name}
-            # If we have already found a set then we don't need to again
-            find_all_#{plural_name} if @#{plural_name}.nil?
-
-            @#{plural_name} = @#{plural_name}.paginate(:page => paginate_page, :per_page => paginate_per_page)
+            @#{plural_name} = @#{plural_name}.paginate(page: paginate_page, per_page: paginate_per_page)
           end
 
           def paginate_per_page
@@ -169,12 +193,13 @@ module Refinery
           def create_or_update_unsuccessful(action)
             flash.now[:alert] = t('refinery.crudify.error')
 
-            render :action => action
+            render action: action
           end
 
           # Ensure all methods are protected so that they should only be called
           # from within the current controller.
           protected :find_#{singular_name},
+                    :find_#{plural_name},
                     :find_all_#{plural_name},
                     :paginate_all_#{plural_name},
                     :paginate_per_page,
@@ -183,20 +208,6 @@ module Refinery
                     :create_or_update_unsuccessful,
                     :merge_position_into_params!
         )
-
-        if options[:paging]
-          module_eval %(
-            def index
-              paginate_all_#{plural_name}
-            end
-          )
-        else
-          module_eval %(
-            def index
-              find_all_#{plural_name}
-            end
-          )
-        end
 
         if options[:sortable]
           module_eval %(
@@ -239,7 +250,7 @@ module Refinery
               logger.warn $!.message
             ensure
               flash.now[:alert] = t('refinery.crudify.update_positions_fail') unless updated || flash.now[:alert].present?
-              find_all_#{plural_name}
+              find_#{plural_name}
             end
 
             def move_allowed?(item, new_parent)
@@ -250,11 +261,6 @@ module Refinery
 
         module_eval %(
           class << self
-            def pageable?
-              #{options[:paging].to_s}
-            end
-            alias_method :paging?, :pageable?
-
             def sortable?
               #{options[:sortable].to_s}
             end

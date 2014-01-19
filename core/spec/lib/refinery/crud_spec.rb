@@ -16,6 +16,10 @@ module Refinery
 
   class CrudDummyController < ::ApplicationController
     crudify :'refinery/crud_dummy'
+
+    def searching?
+      false
+    end
   end
 end
 
