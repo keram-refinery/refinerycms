@@ -1,3 +1,3 @@
 <ul class="records image-grid clearfix ui-selectable">
-  <%= render partial: 'grid_view_image', collection: @images %>
+  <%= render partial: 'grid_view_image', collection: @images.includes(:translations) %>
 </ul>
