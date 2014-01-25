@@ -1,8 +1,9 @@
 <% view_partial = "#{Refinery::Images.preferred_image_view}_view" %>
 <% cache refinery_records_cache_key @images, view_partial do -%>
   <div>
-   <% if @images.any? %>
-    <%= render 'images', locals: { view_partial: view_partial } %>
+  <% if @images.any? %>
+    <%= will_paginate @images %>
+    <%= render view_partial %>
   <% else %>
     <p>
       <strong>
