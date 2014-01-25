@@ -17,6 +17,9 @@ module Refinery
     translates :alt, :caption
 
     validates :image, presence: true
+    validates :alt, length: { maximum: Refinery::STRING_MAX_LENGTH, message: :too_long }
+    validates :caption, length: { maximum: Refinery::STRING_MAX_LENGTH, message: :too_long }
+
     validates_with ImageNameValidator, on: :create
     validates_with ImageSizeValidator
     validates_with ImageUpdateValidator, on: :update

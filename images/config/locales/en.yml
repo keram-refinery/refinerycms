@@ -47,3 +47,8 @@ en:
           incorrect_format: 'Your image must be either a JPG, PNG or GIF'
           different_file_name: New image can't have different file name
           image_exists: 'Image with name %{name} already exists'
+          attributes:
+            alt:
+              too_long: Alt is too long (maximum is %{count} characters)
+            caption:
+              too_long: Caption is too long (maximum is %{count} characters)
