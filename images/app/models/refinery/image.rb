@@ -5,6 +5,7 @@ module Refinery
     include Images::Validators
     extend Dragonfly::Model
     extend Dragonfly::Model::Validations
+    extend GlobalizeFinder
 
     RESIZE_GEOMETRY = Dragonfly::ImageMagick::Processors::Thumb::RESIZE_GEOMETRY
     THUMB_GEOMETRY = Regexp.union(
