@@ -1,30 +1,39 @@
 <li>
   <div class="detail">
+    <%= link_to list_view_image.url, class: 'image' do %>
+      <%= image_fu list_view_image, '112x98#c', {
+               alt: list_view_image.title,
+             } %>
+    <% end %>
     <span class="title">
-      <%= list_view_image.title %>
+      <%= link_to refinery.edit_admin_image_path list_view_image do %>
+        <%= truncate(list_view_image.image_name, length: 50) %> <br>
+        <%= truncate(list_view_image.title, length: 50) %><br>
+        <%= truncate(list_view_image.caption, length: 50) %>
+      <% end -%>
     </span>
   </div>
   <span class="actions">
 
-    <%= link_to t('delete', :scope => 'refinery.admin.record'),
+    <%= link_to t('delete', scope: 'refinery.admin.record'),
                 refinery.admin_image_path(list_view_image),
-                :class => 'delete confirm-delete nojs-hide icon-small delete-icon',
-                :title => t('delete', :scope => 'refinery.admin.images'),
-                :data => {
-                  :remote => true,
-                  :confirm => t('message', :scope => 'refinery.admin.delete', :title => list_view_image.title)
+                class: 'delete confirm-delete nojs-hide icon-small delete-icon',
+                title: t('delete', scope: 'refinery.admin.images'),
+                data: {
+                  remote: true,
+                  confirm: t('message', scope: 'refinery.admin.delete', title: list_view_image.title)
                 },
-                :method => :delete %>
+                method: :delete %>
 
-    <%= link_to t('edit', :scope => 'refinery.admin.record'),
+    <%= link_to t('edit', scope: 'refinery.admin.record'),
                 refinery.edit_admin_image_path(list_view_image),
-                :class => 'icon-small edit-icon',
-                :title => t('edit', :scope => 'refinery.admin.images') %>
+                class: 'icon-small edit-icon',
+                title: t('edit', scope: 'refinery.admin.images') %>
 
-    <%= link_to t('live', :scope => 'refinery.admin.record'), list_view_image.url,
-                :class => 'icon-small live-icon',
-                :target => '_blank',
-                :title => t('view_live', :scope => 'refinery.admin.images') %>
+    <%= link_to t('live', scope: 'refinery.admin.record'), list_view_image.url,
+                class: 'icon-small live-icon',
+                target: '_blank',
+                title: t('view_live', scope: 'refinery.admin.images') %>
 
   </span>
 </li>
