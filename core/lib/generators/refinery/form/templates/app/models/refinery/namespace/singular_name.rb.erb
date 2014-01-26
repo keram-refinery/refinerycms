@@ -23,9 +23,13 @@ module Refinery
 <% end -%>
 
       # Add some validation here if you want to validate the user's input
-<% if string_fields.any? -%>
+<% if string_fields.any?
+  first_string_field, *rest_string_fields = *string_fields -%>
       # We have validated the first string field for you.
-      validates :<%= string_fields.first %>, presence: true
+      validates :<%= first_string_field %>, presence: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
+<% rest_string_fields.each do |string_field| -%>
+      validates :<%= string_field %>, length: { maximum: Refinery::STRING_MAX_LENGTH }
+<% end -%>
 <% else -%>
       # def name was created automatically because you didn't specify a string field
       # when you ran the refinery:form generator. <3 <3 Refinery CMS.
