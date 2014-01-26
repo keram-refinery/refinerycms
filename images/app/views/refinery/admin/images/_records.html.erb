@@ -4,6 +4,7 @@
   <% if @images.any? %>
     <%= will_paginate @images %>
     <%= render view_partial %>
+    <%= will_paginate @images %>
   <% else %>
     <p>
       <strong>
