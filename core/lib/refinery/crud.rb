@@ -81,7 +81,7 @@ module Refinery
           prepend_before_action :find_#{singular_name},
                                 only: [:update, :destroy, :edit, :show]
 
-          prepend_before_action :find_#{plural_name}, only: :index
+          before_action :find_#{plural_name}, only: :index
 
           prepend_before_action :merge_position_into_params!, only: :create
 
