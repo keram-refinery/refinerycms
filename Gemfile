@@ -46,9 +46,9 @@ gem 'sass-rails', '~> 4.0.1'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 2.1.0', github: 'rails/turbolinks', branch: 'master'
+gem 'turbolinks', '~> 2.2.1', github: 'rails/turbolinks', branch: 'master'
 
-gem 'jquery-rails', '~> 3.0.4'
+gem 'jquery-rails', '~> 3.1.0'
 
 gem 'will_paginate', '~> 3.0.5'
 gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
