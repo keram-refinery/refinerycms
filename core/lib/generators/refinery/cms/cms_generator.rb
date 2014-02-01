@@ -93,7 +93,7 @@ production:
     def replace_default_rails_secret_token_config
       file_path = 'config/secrets.yml'
 
-      if File.exists?(destination_path.join(file_path))
+      if File.exist?(destination_path.join(file_path))
         gsub_file destination_path.join(file_path), /\ndevelopment:[\s\S]+\z/, secrets_yaml
       end
     end

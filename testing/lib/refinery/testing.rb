@@ -15,7 +15,7 @@ module Refinery
       def load_factories
         Refinery.extensions.each do |extension_const|
           path = "#{extension_const.root}/spec/factories"
-          FactoryGirl.definition_file_paths << path if File.exists?(path)
+          FactoryGirl.definition_file_paths << path if File.exist?(path)
         end
 
         FactoryGirl.find_definitions

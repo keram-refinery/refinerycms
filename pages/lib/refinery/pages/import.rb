@@ -118,10 +118,10 @@ module Refinery
           Refinery::Pages.parts.each do |part_name|
             part_data = nil
             part_file = "#{page_key}_#{part_name}.html"
-            part_data = IO.read("#{dir}/#{part_file}") if File.exists?("#{dir}/#{part_file}")
-            part_data = IO.read("#{default_dir}/#{part_file}") if File.exists?("#{default_dir}/#{part_file}") && part_data.nil?
+            part_data = IO.read("#{dir}/#{part_file}") if File.exist?("#{dir}/#{part_file}")
+            part_data = IO.read("#{default_dir}/#{part_file}") if File.exist?("#{default_dir}/#{part_file}") && part_data.nil?
             page.part(part_name).update(body: part_data)
-          end if Dir.exists?(dir) || Dir.exists?(default_dir)
+          end if Dir.exist?(dir) || Dir.exist?(default_dir)
         end
       end
     end

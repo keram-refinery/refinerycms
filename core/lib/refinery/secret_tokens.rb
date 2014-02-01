@@ -15,7 +15,7 @@ module Refinery
     def secrets
       @secrets ||= if Rails.application && Rails.application.respond_to?(:secrets)
         Rails.application.secrets
-      elsif File.exists?(yaml = 'config/secrets.yml')
+      elsif File.exist?(yaml = 'config/secrets.yml')
         require 'erb'
         YAML.load(ERB.new(IO.read(yaml)).result)[Rails.env].symbolize_keys
       end
@@ -25,7 +25,7 @@ module Refinery
     # so in other situations we should have secrets presents
     # and throwing exception is ok
     def installed?
-      File.exists? 'config/refinerycms_installed'
+      File.exist? 'config/refinerycms_installed'
     end
   end
 
