@@ -22,7 +22,7 @@
       </h1>
       <div class="clearfix">
         <div class="meta-informations right-side">
-          <%= page_meta_information @page %>
+          <%= page_meta_information @page unless new_record %>
         </div>
         <div class="breadcrumbs less-important">
           <%= link_to refinery_plugin.title, refinery.admin_pages_path %>

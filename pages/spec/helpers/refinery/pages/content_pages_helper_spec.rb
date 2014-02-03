@@ -18,8 +18,8 @@ module Refinery
         end
 
         it "passes can_use_fallback option through to html rendering" do
-          content_presenter.should_receive(:to_html).with(true)
-          render_content_presenter(content_presenter, :can_use_fallback => true)
+          content_presenter.should_receive(:to_html)
+          render_content_presenter(content_presenter)
         end
       end
 

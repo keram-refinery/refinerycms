@@ -10,46 +10,19 @@ module Refinery
         let(:section) { double(SectionPresenter, :not_present_css_class => 'no_section1') }
 
         it "includes css class for any section which doesnt have content" do
-          section.stub(:has_content?).with(true).and_return(false)
+          section.stub(:has_content?).and_return(false)
           content = ContentPresenter.new
           content.add_section section
 
-          content.blank_section_css_classes(true).should == ['no_section1']
+          content.blank_section_css_classes.should == ['no_section1']
         end
 
         it "doesnt include sections which have content" do
-          section.stub(:has_content?).with(true).and_return(true)
+          section.stub(:has_content?).and_return(true)
           content = ContentPresenter.new
           content.add_section section
 
-          content.blank_section_css_classes(true).should be_empty
-        end
-      end
-
-      describe "when fetching template overrides" do
-        before do
-          @content = ContentPresenter.new
-        end
-
-        it "yields a section with an id and stores the result in its override html" do
-          section = double(SectionPresenter, :id => 'foo')
-          section.should_receive(:override_html=).with('some override')
-          @content.add_section section
-
-          @content.fetch_template_overrides do |section_id|
-            section_id.should == 'foo'
-            'some override'
-          end
-        end
-
-        it "doesnt yield a section without an id" do
-          section = double(SectionPresenter, :id => nil)
-          section.should_receive(:override_html=).never
-          @content.add_section section
-
-          @content.fetch_template_overrides do |section_id|
-            raise "this should not occur"
-          end
+          content.blank_section_css_classes.should be_empty
         end
       end
 
@@ -67,9 +40,9 @@ module Refinery
         end
 
         it "passes can_use_fallback option on to sections" do
-          section1.should_receive(:wrapped_html).with(false).and_return('foo')
+          section1.should_receive(:wrapped_html).and_return('foo')
           content = ContentPresenter.new([section1])
-          content.to_html(false)
+          content.to_html.should == "<section class=\"\" id=\"content\">foo</section>"
         end
 
         it "doesnt include sections with nil content" do

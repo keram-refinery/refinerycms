@@ -3,9 +3,9 @@ module Refinery
     class TitlePagePartSectionPresenter < SectionPresenter
       def initialize(page_part)
         super()
-        self.fallback_html = page_part.body.presence || page_part.page.title
-        self.id = page_part.title
-        self.hide unless page_part.active
+        @content = page_part.body.presence || page_part.page.title
+        @id = page_part.title
+        @hidden = !page_part.active
       end
 
       private

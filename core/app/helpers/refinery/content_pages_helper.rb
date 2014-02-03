@@ -5,8 +5,7 @@ module Refinery
     # to get its html. The options are passed to that method, so see render_content_presenter for
     # more details.
     def render_content_page(page, options = {})
-      content_page_presenter = Refinery::Pages::ContentPagePresenter.new(page)
-      render_content_presenter(content_page_presenter, options)
+      render_content_presenter(Refinery::Pages::ContentPagePresenter.new(page), options)
     end
 
     # Pass the options into a ContentPresenter object and return its html. For more
@@ -17,7 +16,7 @@ module Refinery
     # so avoid common layout names such as :header, :footer, etc.
     def render_content_presenter(content_page, options = {})
       content_page.fetch_template_overrides {|section_id| content_for(section_id)}
-      content_page.to_html(options[:can_use_fallback])
+      content_page.to_html
     end
 
     # Returns url with localized path by passed locale for page

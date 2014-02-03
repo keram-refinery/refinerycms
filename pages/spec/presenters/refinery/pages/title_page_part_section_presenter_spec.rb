@@ -8,14 +8,14 @@ module Refinery
 
         it "wraps a title section in a title element" do
           section = TitlePagePartSectionPresenter.new(part.new('foobar', '', true))
-          section.has_content?(true).should be_true
-          section.wrapped_html(true).should == '<h1 id="">foobar</h1>'
+          section.has_content?.should be_true
+          section.wrapped_html.should == '<h1 id="">foobar</h1>'
         end
 
         it "will use the specified id" do
           section = TitlePagePartSectionPresenter.new(part.new('foobar', 'mynode', true))
-          section.has_content?(true).should be_true
-          section.wrapped_html(true).should == '<h1 id="mynode">foobar</h1>'
+          section.has_content?.should be_true
+          section.wrapped_html.should == '<h1 id="mynode">foobar</h1>'
         end
       end
     end

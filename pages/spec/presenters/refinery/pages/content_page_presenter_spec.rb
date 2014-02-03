@@ -18,7 +18,7 @@ module Refinery
 
           it 'adds page title section before page parts' do
             content = ContentPagePresenter.new(page_with_one_part)
-            content.get_section(0).fallback_html.should == title
+            content.get_section(0).content.should == title
           end
 
           it 'has body part hidden' do
@@ -39,8 +39,8 @@ module Refinery
 
           it 'adds a section for each page part' do
             content = ContentPagePresenter.new(page)
-            content.get_section(2).fallback_html.should == 'A Wonderful Page Part'
-            content.get_section(3).fallback_html.should == 'Another Wonderful Page Part'
+            content.get_section(2).content.should == 'A Wonderful Page Part'
+            content.get_section(3).content.should == 'Another Wonderful Page Part'
           end
 
           it 'adds body content left and right after page parts' do

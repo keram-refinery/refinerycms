@@ -10,8 +10,8 @@ module Refinery
       @sections = initial_sections
     end
 
-    def blank_section_css_classes(can_use_fallback = true)
-      @sections.reject {|section| section.has_content?(can_use_fallback)}.map(&:not_present_css_class)
+    def blank_section_css_classes
+      @sections.reject {|section| section.has_content? }.map(&:not_present_css_class)
     end
 
     def hidden_sections
@@ -20,7 +20,8 @@ module Refinery
 
     def fetch_template_overrides
       @sections.each do |section|
-        section.override_html = yield section.id if section.id.present?
+        template_override = yield section.id
+        section.content = template_override if template_override
       end
     end
 
@@ -32,18 +33,18 @@ module Refinery
       @sections[index]
     end
 
-    def to_html(can_use_fallback = true)
-      content_tag :section, sections_html(can_use_fallback), {
+    def to_html
+      content_tag :section, sections_html, {
                   id: 'content',
-                  class: blank_section_css_classes(can_use_fallback).join(' ')
+                  class: blank_section_css_classes.join(' ')
                 }.merge!(item_type)
     end
 
   private
 
-    def sections_html(can_use_fallback)
+    def sections_html
       @sections.map { |section|
-        section.wrapped_html(can_use_fallback)
+        section.wrapped_html
       }.compact.join("\n").html_safe
     end
 
