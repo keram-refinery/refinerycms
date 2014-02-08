@@ -5,7 +5,7 @@ module Refinery
     # to get its html. The options are passed to that method, so see render_content_presenter for
     # more details.
     def render_content_page(page, options = {})
-      render_content_presenter(Refinery::Pages::ContentPagePresenter.new(page), options)
+      render_content_presenter(Refinery::Pages::ContentPagePresenter.new(page, self), options)
     end
 
     # Pass the options into a ContentPresenter object and return its html. For more

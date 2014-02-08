@@ -5,8 +5,11 @@ module Refinery
     # and it will build sections from the page's parts. The page is not retained
     # internally, so if the page changes, you need to rebuild this ContentPagePresenter.
     class ContentPagePresenter < ContentPresenter
-      def initialize(page)
+      def initialize(page, context=nil)
         super()
+
+        @context = context
+
         if page
           add_page_parts(page.parts)
           @item_type = {
@@ -23,16 +26,7 @@ module Refinery
           presenter = "Refinery::Pages::#{part.title.to_s.classify}PagePartSectionPresenter".safe_constantize ||
                       PagePartSectionPresenter
 
-          Refinery::Pages.get_extras(:before, part.title).each do |key, proc|
-            add_section proc.call(part.page, :before, part.title)
-          end
-
-          add_section presenter.new(part)
-
-          Refinery::Pages.get_extras(:after, part.title).each do |key, proc|
-            add_section proc.call(part.page, :after, part.title)
-          end
-
+          add_section presenter.new(part, @context)
         end
       end
 

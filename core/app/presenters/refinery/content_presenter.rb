@@ -6,8 +6,9 @@ module Refinery
   class ContentPresenter
     include ActionView::Helpers::TagHelper
 
-    def initialize(initial_sections = [])
+    def initialize(initial_sections = [], context=nil)
       @sections = initial_sections
+      @context = context
     end
 
     def blank_section_css_classes

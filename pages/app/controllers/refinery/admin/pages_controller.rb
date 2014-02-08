@@ -77,7 +77,11 @@ module Refinery
       def permitted_page_params
         @permitted_page_params ||= [:title, :parent_id, :skip_to_first_child,
           :link_url, :show_in_menu, :browser_title, :meta_description, :custom_slug, :page_type,
-          parts_attributes: [:id, :title, :body, :position, :active]]
+          parts_attributes: permitted_page_parts_params]
+      end
+
+      def permitted_page_parts_params
+        @permitted_page_parts_params ||= [:id, :title, :body, :position, :active]
       end
 
       def move_allowed?(page, new_parent=nil)

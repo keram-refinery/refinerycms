@@ -27,7 +27,7 @@ module Refinery
         let(:page) { double(Page) }
 
         it "builds a content page presenter and returns its html" do
-          Refinery::Pages::ContentPagePresenter.should_receive(:new).with(page).and_return(content_presenter)
+          Refinery::Pages::ContentPagePresenter.should_receive(:new).with(page, self).and_return(content_presenter)
           content_presenter.should_receive(:to_html).and_return('barfoo')
           render_content_page(page).should == 'barfoo'
         end

@@ -13,7 +13,7 @@ module Refinery
       it "marks the body as html safe" do
         part = double(PagePart, :body => '<p>part_body</p>', :title => nil, :active => true)
         section = PagePartSectionPresenter.new(part)
-        section.wrapped_html.should == '<section><div class="inner"><p>part_body</p></div></section>'
+        section.wrapped_html.should == "<div class=\"section-wrapper\"><div class=\"inner\"><section class=\"section\"><div class=\"inner\"><p>part_body</p></div></section></div></div>"
       end
 
       it "handles a nil page body" do

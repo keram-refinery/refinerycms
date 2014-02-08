@@ -26,27 +26,48 @@ module Refinery
     end
 
     def has_content?
-      visible? && content.present?
+      content.present?
     end
 
     def wrapped_html
-      wrap_content_in_tag(render_content(content)) if has_content?
+      content_tag(:div,
+        content_tag(:div, main_content, class: 'inner'),
+        id: wrapper_id,
+        class: wrapper_class
+      ) if visible? && has_content?
     end
 
     def not_present_css_class
       "no_#{id}"
     end
 
-  protected
-
   private
 
-    def wrap_content_in_tag(content)
-      content_tag(:section, content_tag(:div, content, class: 'inner'), id: id)
+    def wrapper_id
+      "#{id}-wrapper" if id.present?
+    end
+
+    def wrapper_class
+      'section-wrapper'
+    end
+
+    def content_class
+      'section'
+    end
+
+    def main_content
+      content_tag(:section,
+        content_tag(:div, render_content(content), class: 'inner'),
+        id: id,
+        class: content_class)
     end
 
     def render_content content
-      Refinery.content_renderer.render(content)
+      renderer.render content
+    end
+
+    def renderer
+      @renderer ||= Refinery.content_renderer
     end
   end
 end

@@ -28,14 +28,14 @@ module Refinery
       describe "when building html for a section" do
         it "wont show a hidden section" do
           section = SectionPresenter.new(:content => 'foobar', :hidden => true)
-          section.has_content?.should be_false
+          section.has_content?.should be_true
           section.wrapped_html.should be_nil
         end
 
         it "will use the specified id" do
           section = SectionPresenter.new(:content => 'foobar', :id => 'mynode')
           section.has_content?.should be_true
-          section.wrapped_html.should == '<section id="mynode"><div class="inner">foobar</div></section>'
+          section.wrapped_html.should == "<div class=\"section-wrapper\" id=\"mynode-wrapper\"><div class=\"inner\"><section class=\"section\" id=\"mynode\"><div class=\"inner\">foobar</div></section></div></div>"
         end
 
         describe "if allowed to use fallback html" do
@@ -48,7 +48,7 @@ module Refinery
           it "uses wrapped fallback html" do
             section = SectionPresenter.new(:content => 'foobar')
             section.has_content?.should be_true
-            section.wrapped_html.should == '<section><div class="inner">foobar</div></section>'
+            section.wrapped_html.should == "<div class=\"section-wrapper\"><div class=\"inner\"><section class=\"section\"><div class=\"inner\">foobar</div></section></div></div>"
           end
         end
       end

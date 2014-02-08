@@ -4,7 +4,7 @@ module Refinery
 
       private
 
-      def wrap_content_in_tag(content)
+      def main_content
         content_tag(:aside, content_tag(:div, content, class: 'inner'),
                     id: id,
                     role: 'complementary',
