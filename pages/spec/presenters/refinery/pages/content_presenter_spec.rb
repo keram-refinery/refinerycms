@@ -52,6 +52,33 @@ module Refinery
           content.to_html.should == "<section class=\"\" id=\"content\">foo</section>"
         end
       end
+
+      describe "when fetching template overrides" do
+        before do
+          @content = ContentPresenter.new
+        end
+
+        it "yields a section with an id and stores the result in its override html" do
+          section = double(SectionPresenter, :id => 'foo')
+          section.should_receive(:override_html=).with('some override')
+          @content.add_section section
+
+          @content.fetch_template_overrides do |section_id|
+            section_id.should == 'foo'
+            'some override'
+          end
+        end
+
+        it "doesnt yield a section without an id" do
+          section = double(SectionPresenter, :id => nil)
+          section.should_receive(:override_html=).never
+          @content.add_section section
+
+          @content.fetch_template_overrides do |section_id|
+            raise "this should not occur"
+          end
+        end
+      end
     end
   end
 end

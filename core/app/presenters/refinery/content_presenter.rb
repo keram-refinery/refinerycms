@@ -21,8 +21,7 @@ module Refinery
 
     def fetch_template_overrides
       @sections.each do |section|
-        template_override = yield section.id
-        section.content = template_override if template_override
+        section.override_html = yield section.id if section.id
       end
     end
 

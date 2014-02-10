@@ -12,7 +12,8 @@ module Refinery
     include ActionView::Helpers::TagHelper
 
     attr_reader :id, :hidden
-    attr_accessor :content
+    attr_reader :content
+    attr_accessor :override_html
     alias_method :hidden?, :hidden
 
     def initialize section={}
@@ -26,7 +27,7 @@ module Refinery
     end
 
     def has_content?
-      content.present?
+      override_html.present? || content.present?
     end
 
     def wrapped_html
@@ -57,7 +58,7 @@ module Refinery
 
     def main_content
       content_tag(:section,
-        content_tag(:div, render_content(content), class: 'inner'),
+        content_tag(:div, override_html.presence || render_content(content), class: 'inner'),
         id: id,
         class: content_class)
     end
