@@ -11,16 +11,18 @@ module Refinery
 
       def create
         begin
-          @image = Image.create(image_params)
+          image = Image.create(image_params)
         rescue Dragonfly::Shell::CommandFailed
           logger.warn($!.message)
         end
 
-        if @image.valid?
-          json_response image: @image.to_images_dialog
+        @image = image.valid? ? Image.new : image
+
+        if image.valid?
+          json_response image: image.to_images_dialog
         else
           flash.now[:alert] = t('problem_create_images',
-                      images: @image.image_name,
+                      images: image.image_name,
                       scope: 'refinery.admin.images')
         end
 
