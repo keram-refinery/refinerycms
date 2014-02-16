@@ -10,13 +10,14 @@ module Refinery
 
       def run
         @pages.each do |key, attributes|
+          page_parts_attrs = attributes.delete(:page_parts_attributes) || {}
           page = find_page(attributes)
 
           if page.blank?
             page = create_page attributes
             attributes.merge!(slug: page.slug) if attributes[:slug].nil?
             update_page page, key, attributes
-            update_page_parts page, key
+            update_page_parts page, key, page_parts_attrs
 
             puts %Q(Page "#{page.title}" created.)
           else
@@ -24,7 +25,7 @@ module Refinery
 
             if @update
               update_page page, key, attributes
-              update_page_parts page, key
+              update_page_parts page, key, page_parts_attrs
 
               puts %Q(Page "#{page.title}" updated.)
             end
@@ -111,16 +112,19 @@ module Refinery
         end
       end
 
-      def update_page_parts page, page_key
+      def update_page_parts page, page_key, page_parts_attrs
         Globalize.with_locales Refinery::I18n.frontend_locales do |locale|
           dir = Rails.root.join('db', 'pages', locale.to_s)
           default_dir = @plugin.pathname.join('db', 'pages', locale.to_s)
           Refinery::Pages.parts.each do |part_name|
-            part_data = nil
+            part_body = nil
             part_file = "#{page_key}_#{part_name}.html"
-            part_data = IO.read("#{dir}/#{part_file}") if File.exist?("#{dir}/#{part_file}")
-            part_data = IO.read("#{default_dir}/#{part_file}") if File.exist?("#{default_dir}/#{part_file}") && part_data.nil?
-            page.part(part_name).update(body: part_data)
+            part_body = IO.read("#{dir}/#{part_file}") if File.exist?("#{dir}/#{part_file}")
+            part_body = IO.read("#{default_dir}/#{part_file}") if File.exist?("#{default_dir}/#{part_file}") && part_body.nil?
+
+            page.part(part_name).update(
+              page_parts_attrs.fetch(part_name, {}).merge(body: part_body)
+            )
           end if Dir.exist?(dir) || Dir.exist?(default_dir)
         end
       end
