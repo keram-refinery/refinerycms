@@ -68,3 +68,7 @@ en:
         title: Title
         custom_slug: Custom slug
         page_type: Page type
+    errors:
+      models:
+        refinery/page:
+          only_alphabet_numbers_hyphen_and_underscore: 'may contain only alphabet characters, numbers, hyphen or underscore'

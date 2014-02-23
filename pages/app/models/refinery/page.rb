@@ -35,6 +35,8 @@ module Refinery
     validates :title, presence: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
 
     validates :custom_slug, uniqueness: { scope: :parent_id }, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
+    validate :custom_slug_can_contain_only_safe_characters
+
     validates :slug, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :link_url, allow_blank: true, length: { maximum: Refinery::STRING_MAX_LENGTH }
     validates :status, allow_blank: true, inclusion: { in: STATES }
@@ -362,6 +364,13 @@ module Refinery
 
     def reload_routes
       Rails.application.routes_reloader.reload!
+    end
+
+    def custom_slug_can_contain_only_safe_characters
+      unless custom_slug.blank? || custom_slug =~ /\A[a-zA-Z0-9\-\_]+\z/
+        errors.add(:custom_slug, ::I18n.t('only_alphabet_numbers_hyphen_and_underscore',
+                                          scope: 'activerecord.errors.models.refinery/page'))
+      end
     end
 
   end

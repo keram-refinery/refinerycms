@@ -59,3 +59,7 @@ sk:
       refinery/page:
         title: Názov
         custom_slug: Vlastný url identifikátor
+    errors:
+      models:
+        refinery/page:
+          only_alphabet_numbers_hyphen_and_underscore: 'môže obsahovať len písmená, čísla, čiarku a podčiarkovník'
