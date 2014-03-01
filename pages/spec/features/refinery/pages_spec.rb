@@ -106,12 +106,21 @@ module Refinery
       before do
         Page.stub(:menu).and_return([page_cs])
       end
-      
+
       describe 'canonical url' do
+        before do
+          Refinery::PagesController.class_eval do
+            before_action :set_canonical
+
+            def set_canonical
+              @canonical = '/this-is-canonical'
+            end
+          end
+        end
+
         it 'should have a canonical url' do
           visit '/about-us'
-
-          page.should have_selector('head link[rel="canonical"][href^="http://www.example.com/about-us"]', visible: false)
+          page.should have_selector(%Q{head link[rel="canonical"][href^="#{page.current_host}/this-is-canonical"]}, visible: false)
         end
       end
 
