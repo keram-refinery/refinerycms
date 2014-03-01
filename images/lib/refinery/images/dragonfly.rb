@@ -29,11 +29,11 @@ module Refinery
               secret_access_key: Refinery::Images.s3_secret_access_key
             }
             options.update(region: Refinery::Images.s3_region) if Refinery::Images.s3_region
-            app_images.datastore :s3, options
+            app_images.use_datastore :s3, options
           end
 
           if Images.custom_backend?
-            app_images.datastore = Images.custom_backend_class.new(Images.custom_backend_opts)
+            app_images.use_datastore = Images.custom_backend_class.new(Images.custom_backend_opts)
           end
 
           ::Dragonfly.logger = Rails.logger
