@@ -1,6 +1,7 @@
 require 'refinerycms-core'
 
 require 'friendly_id'
+require 'friendly_id/globalize'
 require 'seo_meta'
 require 'babosa'
 
