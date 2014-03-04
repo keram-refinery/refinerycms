@@ -31,17 +31,17 @@
               <% @page.parent.ancestors.each do |parent| %>
                 &nbsp;/&nbsp;
                 <%= link_to parent.title,
-                      refinery.edit_admin_page_url(parent.relative_path) %>
+                      refinery.edit_admin_page_path(parent.relative_path) %>
               <% end %>
               &nbsp;/&nbsp;
               <%= link_to @page.parent.title,
-                    refinery.edit_admin_page_url(@page.parent.relative_path) %>
+                    refinery.edit_admin_page_path(@page.parent.relative_path) %>
             <% end %>
           <% else %>
             <% @page.ancestors.each do |parent| %>
               &nbsp;/&nbsp;
               <%= link_to parent.title,
-                    refinery.edit_admin_page_url(parent.relative_path) %>
+                    refinery.edit_admin_page_path(parent.relative_path) %>
             <% end %>
           <% end -%>
         </div>

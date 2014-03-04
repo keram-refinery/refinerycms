@@ -23,7 +23,6 @@
       <%= page_meta_information page %>
     </div>
     <span class="actions">
-
       <%= link_to t('delete', scope: 'refinery.admin.record'),
                   refinery.admin_page_path(page.relative_path),
                   class: 'delete confirm-delete nojs-hide icon-small delete-icon',
@@ -38,7 +37,7 @@
                   method: :delete if page.deletable? %>
 
       <%= link_to t('edit', scope: 'refinery.admin.record'),
-                  refinery.edit_admin_page_url(page.relative_path),
+                  refinery.edit_admin_page_path(page.relative_path),
                   class: 'icon-small edit-icon',
                   title: t('edit', scope: 'refinery.admin.pages') %>
 
