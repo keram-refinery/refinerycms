@@ -41,7 +41,7 @@ da:
           layout_template_help: You can choose a different layout template for this page
           view_template: View template
           view_template_help: You can choose a different view template for this page
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: En slug er et letlæseligt id, som bruges til at lave en sides fulde internetadresse (URL), fx &apos;om-os&apos. For at overskrive den slug der automatisk bliver oprettet af Refinery, kan du skrive din brugerdefinerede slug her.
         actions:
           create_new_page: Tilføj en ny side

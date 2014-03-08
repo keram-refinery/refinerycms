@@ -42,7 +42,7 @@ pt:
           layout_template_help: Pode escolher um novo modelo de layout para esta página
           view_template: Ver modelo (template)
           view_template_help: Pode escolher um novo modelo para esta página.
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: "Uma slug (permalink) é um ID de fácil leitura para os humanos usado para criar o URL da página. Exemplo: &apos;about-us&apos;. Para alterar escreva o que pretende aqui."
         actions:
           create_new_page: Adicionar nova página

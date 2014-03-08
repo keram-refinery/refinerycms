@@ -9,7 +9,9 @@ module Refinery
                     :use_layout_templates,
                     :page_title,
                     :auto_expand_admin_tree,
-                    :part_to_item_property
+                    :part_to_item_property,
+                    :form_left_advanced_options,
+                    :form_right_advanced_options
 
     self.per_dialog_page = 20
     self.per_admin_page = 20
@@ -23,6 +25,9 @@ module Refinery
       perex: 'description',
       body: 'mainContentOfPage'
     }
+
+    self.form_left_advanced_options = []
+    self.form_right_advanced_options = ['/seo_meta/form', 'page_title_field', 'custom_slug_field']
 
     class << self
       def layout_template_whitelist

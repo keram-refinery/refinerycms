@@ -43,7 +43,7 @@ sk:
           layout_template_help: Pre túto stránku si môžete vybrať odlišnú šablónu rozmiestnenia.
           view_template: Šablóny vzhľadu
           view_template_help: Pre túto stránku si môžete vybrať odlišnú šablónu vzhľadu.
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: 'Url identifikátor je človekom čitateľný identifikátor, ktorý sa používa na vytvorenie celej url adresy stránky, napríklad &apos;o-nas&apos;. Ak chcete zmeniť url identifikátor, ktorý automaticky vytvorí Refinery, napíšte váš vlastný url identifikátor sem.'
         actions:
           create_new_page: Pridať novú stránku

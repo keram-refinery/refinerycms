@@ -42,7 +42,7 @@ hu:
           layout_template_help: 'Eltérő layout sablont választhatsz ennek az oldalnak'
           view_template: 'View sablon'
           view_template_help: 'Eltérő view sablont választhatsz ennek az oldalnak'
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: 'A slug egy ember számára jól olvasható azonosító, ami az URL-ben jelenik meg, pl: kapcsolat-velunk. Hogy felülírd a Refinery által generált értéket, add meg a saját slug-ot itt.'
         actions:
           create_new_page: 'Új oldal hozzáadása'

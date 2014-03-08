@@ -36,7 +36,14 @@
       <%= f.label :show_in_menu, t('.show_in_menu_description'), class: 'stripped' %>
     </div>
 
+    <% Refinery::Pages.form_left_advanced_options.each do |tpl| %>
+      <%= render tpl, f: f, form: f, page: @page %>
+    <% end -%>
   </div>
 
-  <%= render 'form_advanced_options_seo', f: f %>
+  <div class="hemisquare right-side">
+    <% Refinery::Pages.form_right_advanced_options.each do |tpl| %>
+      <%= render tpl, f: f, form: f, page: @page %>
+    <% end -%>
+  </div>
 </div>

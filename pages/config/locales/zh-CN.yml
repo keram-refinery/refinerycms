@@ -34,7 +34,7 @@ zh-CN:
           parent_page_help: 您可以在列表中让一个页面依附在另一个页面之下. 如果您想要让这个页面为第一层页面, 就不要填写.
           menu_title_help: 如果您想要菜单有一个不同于这个页面上的名称, 请输入
           custom_title_help: 如果您想要此页面在菜单里有个不一样的名称, 请选择 &apos;文字&apos; , 然后在这里输入.
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: slug是用来帮助创建一个页面完整URL的标示符，例如 &apos;about-up&apos;. 要覆盖掉Refinery自动创建的slug, 在此输入
         actions:
           create_new_page: 添加新页面

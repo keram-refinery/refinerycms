@@ -42,7 +42,7 @@ it:
           parent_page_help: "Si può fare in modo che questa pagina sia figlia di un'altra pagina selezionandola dalla lista; se invece si desidera che questa pagina sia una pagina di primo livello, lasciare in bianco."
           menu_title_help: Se si desidera che il menu mostri un titolo diverso da quello mostrato nella pagigna, inserirlo qui.
           custom_title_help: "Se si desidera che la pagina abbia un titolo diverso da quello mostrato nel menu, selezionare 'Testo' e inserirlo qui."
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: Uno slug è un identificatore leggibile usato per creare l'URL assoluto di una pagina. Per sovrascrivere lo slug che è automaticamente creato da Refinery, scrivere il proprio slug qui.
         actions:
           create_new_page: Crea una nuova pagina

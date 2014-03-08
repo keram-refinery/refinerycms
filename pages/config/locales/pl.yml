@@ -41,14 +41,7 @@ pl:
           layout_template_help: Możesz zmienić layout dla tej strony
           view_template: Szablon strony
           view_template_help: Możesz zmienić szablon dla tej strony
-        form_advanced_options_seo:
-          seo: Search Engine Optimization
-          seo_override_title: Tytuł w przeglądarce
-          seo_override_title_help: Wpisz tytuł (5-10 słów), który podsumowuje zawartość strony.
-          meta_keywords_title: Słowa kluczoww
-          meta_keywords_help: Wpisz 5-10 słów kluczowych, które charakteryzują stronę. Słowa oddziel przecinkiem.
-          meta_description_title: Meta opis
-          meta_description_help: Opisz w 2-3 zwięzłych zdaniach czego dotyczy strona.
+        custom_slug_field:
           custom_slug_help: Slug to czytelny identyfikator strony widoczny w URLu, np. &pos;o-nas&pos;. Aby nadpisać slug, który jest automatycznie generowany przez Refinery, wpisz go tutaj.
         actions:
           create_new_page: Dodaj nową stronę

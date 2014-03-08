@@ -39,7 +39,7 @@ nl:
           menu_title_help: Als u wilt dat de pagina in het menu een andere titel heeft dan op de pagina zelf, voer die dan hier in.
           view_template: Sjabloon bekijken
           view_template_help: U kunt een andere sjabloon voor deze pagina kiezen
-        form_advanced_options_seo:
+        custom_slug_field:
           custom_slug_help: Een 'slug' is een leesbare aanduiding die in het adres van de pagina gebruikt wordt, bijvoorbeeld 'over'. Refinery genereert automatisch slugs, hier kunt u een aangepaste slug instellen.
         actions:
           create_new_page: Nieuwe pagina toevoegen
