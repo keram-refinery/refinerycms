@@ -1,11 +1,9 @@
 <% site_bar = render '/refinery/site_bar' if refinery_user? %>
-<% cache refinery_record_cache_key(@page, 'head') do -%>
 <!DOCTYPE html>
 <%= render '/refinery/html_tag' %>
   <head>
     <%= render 'refinery/head' %>
   </head>
-<% end %>
   <body id="<%= canonical_id @page %>">
     <%= site_bar %>
     <div id="page-wrapper">
