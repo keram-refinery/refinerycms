@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'factory_girl_rails',      '~> 4.4.1'
   s.add_dependency 'rspec-rails',             '~> 2.14'
   s.add_dependency 'capybara',                '~> 2.2.1'
-  s.add_dependency 'selenium-webdriver',      '~> 2.40.0'
+  s.add_dependency 'selenium-webdriver',      '~> 2.41.0'
 end

@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
     s.add_dependency 'actionpack',                  rails_version
     s.add_dependency 'truncate_html',               '~> 0.9'
     s.add_dependency 'will_paginate',               '~> 3.0.5'
-    s.add_dependency 'sass-rails',                  '~> 4.0.1'
+    s.add_dependency 'sass-rails',                  '~> 4.0.2'
     s.add_dependency 'jquery-rails',                '~> 3.1.0'
     s.add_dependency 'decorators',                  '~> 1.0.3'
     s.add_dependency 'i18n-iso639matrix',           '~> 0.0.1'
