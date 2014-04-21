@@ -53,7 +53,14 @@ module Refinery
     end
 
     def item_type
-      @item_type ||= {}
+      if @item_type
+        {
+          itemscope: :itemscope,
+          itemtype: "http://schema.org/#{@item_type}"
+        }
+      else
+        {}
+      end
     end
 
   end

@@ -48,7 +48,7 @@ module Refinery
           it "uses wrapped fallback html" do
             section = SectionPresenter.new(:content => 'foobar')
             section.has_content?.should be_true
-            section.wrapped_html.should == "<div class=\"section-wrapper\"><div class=\"inner\"><section class=\"section\"><div class=\"inner\">foobar</div></section></div></div>"
+            section.wrapped_html.should == "<div class=\"section-wrapper\" id=\"-wrapper\"><div class=\"inner\"><section class=\"section\"><div class=\"inner\">foobar</div></section></div></div>"
           end
         end
       end

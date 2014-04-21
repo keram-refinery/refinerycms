@@ -2,13 +2,14 @@ module Refinery
   module Pages
     class SideBodyPagePartSectionPresenter < PagePartSectionPresenter
 
-      private
+      protected
 
-      def main_content
-        content_tag(:aside, content_tag(:div, content, class: 'inner'),
-                    id: id,
-                    role: 'complementary',
-                    itemprop: Pages.part_to_item_property[self.id])
+      def section_role
+        'complementary'
+      end
+
+      def section_tag
+        :aside
       end
     end
   end

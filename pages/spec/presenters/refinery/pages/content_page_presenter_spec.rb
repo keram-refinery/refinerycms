@@ -50,7 +50,7 @@ module Refinery
           end
 
           it 'doesnt add title if it is blank' do
-            content = ContentPagePresenter.new(nil)
+            content = ContentPagePresenter.new(OpenStruct.new(page_type: 'Page', parts: []))
             content.instance_variable_get(:@sections).should == []
           end
         end

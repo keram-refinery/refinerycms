@@ -6,10 +6,10 @@ module Refinery
         @content = page_part.body.presence || page_part.page.title
       end
 
-      private
+      protected
 
-      def main_content
-        content_tag(:h1, content, id: id, itemprop: Pages.part_to_item_property[self.id])
+      def section_tag
+        :h1
       end
 
     end

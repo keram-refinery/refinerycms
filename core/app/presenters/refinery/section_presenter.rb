@@ -42,25 +42,35 @@ module Refinery
       "no_#{id}"
     end
 
-  private
+  protected
 
     def wrapper_id
-      "#{id}-wrapper" if id.present?
+      "#{id}-wrapper"
     end
 
     def wrapper_class
       'section-wrapper'
     end
 
-    def content_class
+    def section_class
       'section'
     end
 
+    def section_tag
+      :section
+    end
+
+    def section_role
+    end
+
+  private
+
     def main_content
-      content_tag(:section,
+      content_tag(section_tag,
         content_tag(:div, override_html.presence || render_content(content), class: 'inner'),
         id: id,
-        class: content_class)
+        class: section_class,
+        role: section_role)
     end
 
     def render_content content

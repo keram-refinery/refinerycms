@@ -9,14 +9,9 @@ module Refinery
         super()
 
         @context = context
+        @item_type = page.page_type
 
-        if page
-          add_page_parts(page.parts)
-          @item_type = {
-            itemscope: :itemscope,
-            itemtype: "http://schema.org/#{page.page_type}"
-          }
-        end
+        add_page_parts(page.parts)
       end
 
     private
@@ -30,9 +25,6 @@ module Refinery
         end
       end
 
-      def item_type
-        @item_type ||= { }
-      end
     end
   end
 end
