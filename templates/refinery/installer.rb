@@ -14,6 +14,8 @@ gem 'refinerycms', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms', b
 gem 'refinerycms-i18n', '~> #{VERSION_BAND}', github: 'keram-refinery/refinerycms-i18n', branch: 'refinery_light'
 gem 'refinerycms-links', '~> 0.0.1', github: 'keram/refinerycms-links', branch: 'master'
 gem 'refinerycms-clientside', '~> 0.0.1', github: 'keram-refinery/refinerycms-clientside', branch: 'master'
+gem 'refinerycms-admin-search', '~> 1.0.0', github: 'keram/refinerycms-admin-search', branch: 'master'
+gem 'refinerycms-imageable', '~> 0.0.1', github: 'keram/refinerycms-imageable', branch: 'master'
 
 # Uncomment your preferred WYSIWYG editor and check out instalation guide for more details
 #
@@ -24,11 +26,10 @@ gem 'refinerycms-clientside', '~> 0.0.1', github: 'keram-refinery/refinerycms-cl
 # gem 'refinerycms-tinymce', github: 'keram/refinerycms-tinymce', branch: 'master'
 
 # Specify additional Refinery CMS Extensions here (all optional):
-#  gem 'refinerycms-blog', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-blog', branch: 'refinery_light'
-#  gem 'refinerycms-inquiries', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-inquiries', branch: 'refinery_light'
+#  gem 'refinerycms-blog2', '~> 1.0.0', github: 'keram/refinerycms-blog2', branch: 'refinery_light'
+#  gem 'refinerycms-inquiries2', '~> 1.0.0', github: 'keram-refinery/refinerycms-inquiries', branch: 'refinery_light'
 #  gem 'refinerycms-calendar', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-calendar', branch: 'refinery_light'
 #  gem 'refinerycms-search', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-search', branch: 'refinery_light'
-#  gem 'refinerycms-page-images', '~> #{VERSION_BAND}' # github: 'keram-refinery/refinerycms-page-images', branch: 'refinery_light'
 
 GEMFILE
 
