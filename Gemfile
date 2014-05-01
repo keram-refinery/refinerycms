@@ -35,8 +35,8 @@ gem 'jruby-openssl', :platform => :jruby
 
 group :test do
   gem 'refinerycms-testing', '~> 2.718.0.dev'
-  gem 'rspec'
-  gem 'generator_spec', '~> 0.9.2'#, github: 'stevehodgkiss/generator_spec', branch: 'master'
+  gem 'generator_spec', '~> 0.9.2'
+  gem 'launchy'
 end
 
 
