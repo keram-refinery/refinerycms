@@ -53,7 +53,7 @@ module Refinery
       deploy_to_hosting?
     end
 
-  protected
+    protected
 
     def secrets_yaml
       <<-STRING
@@ -265,12 +265,11 @@ gem 'pg'
   # If you would like to change where this extension is mounted, simply change the :at option to something different.
   #
   # We ask that you don't use the :as option here, as Refinery relies on it being the default of "refinery"
-  mount Refinery::Core::Engine, :at => '/'
+  mount Refinery::Core::Engine, at: '/'
 
 }
 
-        # in rails 4.1 AppNme::Application.routes.draw changed to Rails.application.routes.draw
-        inject_into_file 'config/routes.rb', mount, after: "pplication.routes.draw do\n"
+        inject_into_file 'config/routes.rb', mount, after: ".routes.draw do"
       end
     end
 
