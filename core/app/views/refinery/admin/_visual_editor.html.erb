@@ -1,0 +1,3 @@
+<div class="clearfix visual-editor-wrapper" data-editor-options="<%= Refinery::Core.visual_editor.options(self).to_json if Refinery::Core.visual_editor %>">
+  <%= f.text_area field, rows: 20, cols: 120, class: 'visual-editor widest' %>
+</div>

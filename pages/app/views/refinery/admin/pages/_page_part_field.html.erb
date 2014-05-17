@@ -6,7 +6,7 @@
       <%= ff.label :active, t('active', scope: 'refinery.admin.pages.parts'), class: 'stripped' %>
     </div>
 
-    <%= render '/refinery/admin/wysiwyg', f: ff, field: :body %>
+    <%= render '/refinery/admin/visual_editor', f: ff, field: :body %>
     <%= ff.hidden_field :position, class: 'part-position' %>
     <%= ff.hidden_field :title if part.new_record? %>
   </div>
