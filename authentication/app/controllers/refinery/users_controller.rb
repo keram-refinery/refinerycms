@@ -16,7 +16,7 @@ module Refinery
       @user = User.new user_params
 
       if @user.create_first
-        flash[:message] = "<b>#{t('welcome', :scope => 'refinery.users.create', :who => @user).gsub(/\.$/, '')}.</b>".html_safe
+        flash[:message] = "<b>#{t('welcome', scope: 'refinery.users.create', who: ERB::Util.html_escape(@user))}.</b>".html_safe
 
         sign_in @user
         redirect_back_or_default refinery.admin_root_path
