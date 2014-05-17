@@ -48,7 +48,7 @@ module Refinery
     def plugins=(plugin_names)
       return unless persisted?
       UserPlugin.transaction do
-        UserPlugin.delete_all(user_id: id)
+        plugins.delete_all
 
         plugin_names.each_with_index do |plugin_name, index|
           plugins.create(name: plugin_name, position: index)
