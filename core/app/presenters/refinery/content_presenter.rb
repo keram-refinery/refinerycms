@@ -12,11 +12,11 @@ module Refinery
     end
 
     def blank_section_css_classes
-      @sections.reject {|section| section.has_content? }.map(&:not_present_css_class)
+      @sections.reject(&:has_content?).map(&:not_present_css_class)
     end
 
     def hidden_sections
-      @sections.select {|section| section.hidden? }
+      @sections.select(&:hidden?)
     end
 
     def fetch_template_overrides
@@ -43,9 +43,7 @@ module Refinery
   private
 
     def sections_html
-      @sections.map { |section|
-        section.wrapped_html
-      }.compact.join("\n").html_safe
+      @sections.map(&:wrapped_html).compact.join("\n").html_safe
     end
 
     def has_section?(id)
