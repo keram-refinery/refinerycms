@@ -355,7 +355,7 @@ module Refinery
         it 'returns true' do
           page.stub(:live?).and_return(true)
           page.stub(:show_in_menu?).and_return(true)
-          page.in_menu?.should be_true
+          page.in_menu?.should be_truthy
         end
       end
 
@@ -363,11 +363,11 @@ module Refinery
         it 'returns false' do
           page.stub(:live?).and_return(true)
           page.stub(:show_in_menu?).and_return(false)
-          page.in_menu?.should be_false
+          page.in_menu?.should be_falsey
 
           page.stub(:live?).and_return(false)
           page.stub(:show_in_menu?).and_return(true)
-          page.in_menu?.should be_false
+          page.in_menu?.should be_falsey
         end
       end
     end
@@ -376,14 +376,14 @@ module Refinery
       context 'when in_menu? returns true' do
         it 'returns false' do
           page.stub(:in_menu?).and_return(true)
-          page.not_in_menu?.should be_false
+          page.not_in_menu?.should be_falsey
         end
       end
 
       context 'when in_menu? returns false' do
         it 'returns true' do
           page.stub(:in_menu?).and_return(false)
-          page.not_in_menu?.should be_true
+          page.not_in_menu?.should be_truthy
         end
       end
     end
@@ -454,14 +454,14 @@ module Refinery
 
       context 'when deletable is true' do
         it 'returns true' do
-          deletable_page.deletable?.should be_true
+          deletable_page.deletable?.should be_truthy
         end
       end
 
       context 'when deletable is false' do
         it 'returns false' do
           deletable_page.deletable = false
-          deletable_page.deletable?.should be_false
+          deletable_page.deletable?.should be_falsey
         end
       end
     end

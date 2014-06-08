@@ -33,11 +33,11 @@ module Refinery
         end
 
         it 'returns the true if user has Role' do
-          refinery_user.has_role?(:refinery).should be_true
+          refinery_user.has_role?(:refinery).should be_truthy
         end
 
         it 'returns false if user hasn\'t the Role' do
-          refinery_user.has_role?(:refinery_fail).should be_false
+          refinery_user.has_role?(:refinery_fail).should be_falsey
         end
       end
 
@@ -104,15 +104,15 @@ module Refinery
 
       context 'won\'t allow to delete' do
         it 'not persisted user record' do
-          refinery_user.can_delete?(user_not_persisted).should be_false
+          refinery_user.can_delete?(user_not_persisted).should be_falsey
         end
 
         it 'user with superuser role' do
-          refinery_user.can_delete?(super_user).should be_false
+          refinery_user.can_delete?(super_user).should be_falsey
         end
 
         it 'user himself' do
-          refinery_user.can_delete?(refinery_user).should be_false
+          refinery_user.can_delete?(refinery_user).should be_falsey
         end
 
         context 'none user with role refinery' do
@@ -125,7 +125,7 @@ module Refinery
           # for some reason delete users here not affect application counts
           # todo
           it 'if user count with refinery role < 1' do
-            super_user.can_delete?(refinery_user).should be_false
+            super_user.can_delete?(refinery_user).should be_falsey
           end
 
         end
@@ -134,11 +134,11 @@ module Refinery
       context 'allow to delete' do
         it 'if user count with refinery role = 1' do
           ::Refinery::Role[:refinery].users.delete(refinery_user)
-          super_user.can_delete?(refinery_user).should be_true
+          super_user.can_delete?(refinery_user).should be_truthy
         end
 
         it 'if all conditions return true' do
-          super_user.can_delete?(refinery_user).should be_true
+          super_user.can_delete?(refinery_user).should be_truthy
         end
       end
     end
@@ -154,21 +154,21 @@ module Refinery
 
       context 'won\'t allow to edit' do
         it 'non-persisted user record' do
-          refinery_user.can_edit?(user_not_persisted).should be_false
+          refinery_user.can_edit?(user_not_persisted).should be_falsey
         end
 
         it 'user is not a super user' do
-          refinery_user.can_edit?(user_persisted).should be_false
+          refinery_user.can_edit?(user_persisted).should be_falsey
         end
       end
 
       context 'allows to edit' do
         it 'when I am a user super' do
-          super_user.can_edit?(user_persisted).should be_true
+          super_user.can_edit?(user_persisted).should be_truthy
         end
 
         it 'if all conditions return true' do
-          super_user.can_edit?(refinery_user).should be_true
+          super_user.can_edit?(refinery_user).should be_truthy
         end
       end
     end

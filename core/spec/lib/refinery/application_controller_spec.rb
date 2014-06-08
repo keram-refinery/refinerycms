@@ -24,7 +24,7 @@ module Refinery
     describe ".home_page?" do
       it "matches root url" do
         controller.stub(:action_name).and_return("home")
-        controller.home_page?.should be_true
+        controller.home_page?.should be_truthy
       end
 
 # these tests are no more accurate, so I leave them here commented
@@ -33,13 +33,13 @@ module Refinery
 #      it "matches localised root url" do
 #        controller.refinery.stub(:root_path).and_return("/en/")
 #        request.stub(:path).and_return("/en")
-#        controller.home_page?.should be_true
+#        controller.home_page?.should be_truthy
 #      end
 #
 #      it "matches localised root url with trailing slash" do
 #        controller.refinery.stub(:root_path).and_return("/en/")
 #        request.stub(:path).and_return("/en/")
-#        controller.home_page?.should be_true
+#        controller.home_page?.should be_truthy
 #      end
 #
 #      it "escapes regexp" do

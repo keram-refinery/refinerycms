@@ -57,7 +57,7 @@ describe 'CLI' do
         Array(spec_success_message).each do |message_fragment|
           msg.should include(message_fragment)
         end
-        File.exist?(Rails.root.join(copied_file_location)).should be_true
+        File.exist?(Rails.root.join(copied_file_location)).should be_truthy
       end
     end
   end
