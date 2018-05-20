@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe 'AdminImages' do
+  describe 'AdminImages', type: :feature do
     refinery_login_with :refinery_user
 
     before do

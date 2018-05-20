@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe Page do
+  describe Page, type: :model do
 
     before do
       Refinery::Page.delete_all

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module Refinery
   module Admin
-    describe 'Resources' do
+    describe 'Resources', type: :feature do
 
       before do
         Refinery::Resource.delete_all

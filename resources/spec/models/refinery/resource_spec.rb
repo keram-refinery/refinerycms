@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe Resource do
+  describe Resource, type: :model do
 
     before do
       Refinery::Resource.delete_all

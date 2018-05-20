@@ -17,7 +17,7 @@ end
 
 module Refinery
   module Admin
-    describe 'Pages' do
+    describe 'Pages', type: :feature do
       refinery_login_with :refinery_user
 
       describe 'Previewing' do

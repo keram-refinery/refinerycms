@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe 'layout' do
+  describe 'layout', type: :feature do
     refinery_login_with :refinery_user
 
     let(:home_page) do

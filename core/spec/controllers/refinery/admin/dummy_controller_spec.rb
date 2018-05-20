@@ -12,7 +12,7 @@ end
 
 module Refinery
   module Admin
-    describe DummyController do
+    describe DummyController, type: :controller do
       context "as refinery user" do
         refinery_login_with :refinery
 

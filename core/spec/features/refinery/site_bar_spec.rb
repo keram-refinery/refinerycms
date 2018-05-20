@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Refinery
-  describe 'site bar' do
+  describe 'site bar', type: :feature do
     refinery_login_with :refinery_user
 
     it 'have logout link' do

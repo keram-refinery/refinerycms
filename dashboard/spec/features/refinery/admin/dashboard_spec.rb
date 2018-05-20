@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'dashboard' do
+describe 'dashboard', type: :feature do
   refinery_login_with :refinery_user
 
   describe 'quick tasks' do

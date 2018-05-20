@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Refinery
-  describe 'sign in' do
+  describe 'sign in', type: :feature do
     let(:login_path) { refinery.new_refinery_user_session_path }
     let(:login_retry_path) { refinery.refinery_user_session_path }
     let(:admin_path) { refinery.admin_root_path }
@@ -41,7 +41,7 @@ module Refinery
     end
   end
 
-  describe 'user sign up' do
+  describe 'user sign up', type: :feature do
     before do
       User.delete_all
     end
@@ -67,7 +67,7 @@ module Refinery
     end
   end
 
-  describe 'redirects' do
+  describe 'redirects', type: :feature do
     let(:protected_path) { refinery.new_admin_user_path }
     let(:login_path) { refinery.new_refinery_user_session_path }
 

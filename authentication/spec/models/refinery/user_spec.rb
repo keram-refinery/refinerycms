@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe User do
+  describe User, type: :model do
 
     let(:user) { FactoryGirl.create(:user) }
     let(:refinery_user) { FactoryGirl.create(:refinery_user) }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe SitemapController do
+  describe SitemapController, type: :controller do
     before (:each) do
       @request.env['HTTP_ACCEPT'] = 'application/xml'
     end

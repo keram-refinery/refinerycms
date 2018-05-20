@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Refinery::Admin::UsersController do
+describe Refinery::Admin::UsersController, type: :controller do
   refinery_login_with_factory :refinery_superuser
 
   shared_examples_for 'new, create, update, edit and update actions' do

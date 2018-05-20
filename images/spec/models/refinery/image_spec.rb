@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Refinery
-  describe Image do
+  describe Image, type: :model do
 
     let(:image) { FactoryGirl.build(:image) }
     let(:created_image) { FactoryGirl.create(:image) }

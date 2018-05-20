@@ -4,7 +4,7 @@ require 'spec_helper'
 module Refinery
   Page.delete_all
 
-  describe 'page frontend' do
+  describe 'page frontend', type: :feature do
     let(:home_page) { Page.create title: 'Home', link_url: '/', plugin_page_id: 'pages', status: 'live' }
     let(:about_page) { Page.create title: 'About', status: 'live' }
     let(:draft_page) { Page.create title: 'Draft' }

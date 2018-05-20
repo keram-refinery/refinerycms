@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe 'User admin page' do
+describe 'User admin page', type: :feature do
   refinery_login_with :refinery_superuser
 
   describe "new/create" do
