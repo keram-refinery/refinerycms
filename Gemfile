@@ -52,6 +52,11 @@ gem 'jquery-rails', '>= 3.1.0'
 gem 'will_paginate', '~> 3.1'
 gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
 
+# Lock rake in order to prevent
+# undefined method `last_comment' exception
+gem 'rake', '< 11.0'
+gem 'globalize', github: 'globalize/globalize', branch: '4-0-stable'
+
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
   eval File.read(local_gemfile)
