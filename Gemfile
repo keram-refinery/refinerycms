@@ -42,15 +42,14 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails', '~> 4.0.1'
-gem 'coffee-rails', '~> 4.0.1'
+gem 'sass-rails', '>= 4.0.5'
 gem 'uglifier'
 
-gem 'turbolinks', '~> 2.2.2'
+gem 'turbolinks', '~> 2.2'
 
-gem 'jquery-rails', '~> 3.1.0'
+gem 'jquery-rails', '>= 3.1.0'
 
-gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate', '~> 3.1'
 gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
 
 # Load local gems according to Refinery developer preference.

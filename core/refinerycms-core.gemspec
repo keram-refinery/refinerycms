@@ -2,7 +2,7 @@
 require File.expand_path('../../core/lib/refinery/version', __FILE__)
 
 version = Refinery::Version.to_s
-rails_version = ['>= 4.0.3', '< 4.2']
+rails_version = ['>= 4.0.3', '< 4.3']
 
 Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
@@ -28,9 +28,9 @@ Gem::Specification.new do |s|
     s.add_dependency 'activerecord',                rails_version
     s.add_dependency 'actionpack',                  rails_version
     s.add_dependency 'truncate_html',               '~> 0.9'
-    s.add_dependency 'will_paginate',               '~> 3.0.5'
-    s.add_dependency 'sass-rails',                  '~> 4.0.1'
-    s.add_dependency 'jquery-rails',                '~> 3.1.0'
+    s.add_dependency 'will_paginate',               '~> 3.1'
+    s.add_dependency 'sass-rails',                  '>= 4.0.5'
+    s.add_dependency 'jquery-rails',                '>= 3.1.0'
     s.add_dependency 'decorators',                  '~> 1.0.3'
     s.add_dependency 'i18n-iso639matrix',           '~> 0.0.1'
 end
