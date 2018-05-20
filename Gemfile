@@ -52,7 +52,7 @@ gem 'jquery-rails', '>= 3.1.0'
 gem 'will_paginate', '~> 3.1'
 gem 'i18n-iso639matrix', '~> 0.0.1', github: 'keram/i18n-iso639matrix', branch: 'master'
 
-gem 'globalize', github: 'globalize/globalize', branch: '4-0-stable'
+# gem 'globalize', github: 'globalize/globalize', branch: '4-0-stable'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)
