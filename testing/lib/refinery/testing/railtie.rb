@@ -24,7 +24,7 @@ module Refinery
 
       config.after_initialize do
         Refinery.register_extension(Refinery::Testing)
-        Testing.load_factories
+        # Testing.load_factories
       end
     end
   end
