@@ -23,11 +23,11 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
 
     s.add_dependency 'refinerycms-i18n',            '~> 2.718.0.dev'
-    s.add_dependency 'awesome_nested_set',          '~> 3.0.0.rc.5'
+    s.add_dependency 'awesome_nested_set',          '~> 3.0'
     s.add_dependency 'railties',                    rails_version
     s.add_dependency 'activerecord',                rails_version
     s.add_dependency 'actionpack',                  rails_version
-    s.add_dependency 'truncate_html',               '~> 0.9'
+    s.add_dependency 'truncate_html',               '>= 0.9'
     s.add_dependency 'will_paginate',               '~> 3.1'
     s.add_dependency 'sass-rails',                  '>= 4.0.5'
     s.add_dependency 'jquery-rails',                '>= 3.1.0'
