@@ -35,7 +35,7 @@ module Refinery
         it "will use the specified id" do
           section = SectionPresenter.new(:content => 'foobar', :id => 'mynode')
           section.has_content?.should be_truthy
-          section.wrapped_html.should == "<div class=\"section-wrapper\" id=\"mynode-wrapper\"><div class=\"inner\"><section class=\"section\" id=\"mynode\"><div class=\"inner\">foobar</div></section></div></div>"
+          section.wrapped_html.should == "<div id=\"mynode-wrapper\" class=\"section-wrapper\"><div class=\"inner\"><section id=\"mynode\" class=\"section\"><div class=\"inner\">foobar</div></section></div></div>"
         end
 
         describe "if allowed to use fallback html" do
@@ -48,7 +48,7 @@ module Refinery
           it "uses wrapped fallback html" do
             section = SectionPresenter.new(:content => 'foobar')
             section.has_content?.should be_truthy
-            section.wrapped_html.should == "<div class=\"section-wrapper\" id=\"-wrapper\"><div class=\"inner\"><section class=\"section\"><div class=\"inner\">foobar</div></section></div></div>"
+            section.wrapped_html.should == "<div id=\"-wrapper\" class=\"section-wrapper\"><div class=\"inner\"><section class=\"section\"><div class=\"inner\">foobar</div></section></div></div>"
           end
         end
       end
